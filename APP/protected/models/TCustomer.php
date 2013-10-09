@@ -9,9 +9,10 @@
  * @property string $firstname
  * @property string $lastname
  * @property string $password
- * @property string $salt
  * @property string $last_seen
  * @property string $status
+ * @property string $preferred_lang
+ * @property integer $bad_logins
  *
  * The followings are the available model relations:
  * @property TCustomerMailbox[] $tCustomerMailboxes
@@ -36,14 +37,16 @@ class TCustomer extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, firstname, lastname, password', 'required'),
-			array('username, password', 'length', 'max'=>128),
+			array('bad_logins', 'numerical', 'integerOnly'=>true),
+			array('username', 'length', 'max'=>128),
 			array('firstname, lastname', 'length', 'max'=>100),
-		//	array('salt', 'length', 'max'=>32),
-		//	array('status', 'length', 'max'=>1),
-		//	array('last_seen', 'safe'),
+			array('password', 'length', 'max'=>64),
+			array('status', 'length', 'max'=>1),
+			array('preferred_lang', 'length', 'max'=>3),
+			array('last_seen', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('username, last_seen, status', 'safe', 'on'=>'search'),
+			array('customer_id, username, firstname, lastname, password, last_seen, status, preferred_lang, bad_logins', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,14 +69,15 @@ class TCustomer extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-		//	'customer_id' => 'Customer',
-			'username' => 'E-mail address (username)',
-			'firstname' => 'First name',
-			'lastname' => 'Last name',
+			'customer_id' => 'Customer',
+			'username' => 'Username',
+			'firstname' => 'Firstname',
+			'lastname' => 'Lastname',
 			'password' => 'Password',
-		//	'salt' => 'Salt',
-		//	'last_seen' => 'Last Seen',
-		//	'status' => 'Status',
+			'last_seen' => 'Last Seen',
+			'status' => 'Status',
+			'preferred_lang' => 'Preferred Lang',
+			'bad_logins' => 'Bad Logins',
 		);
 	}
 
@@ -95,14 +99,15 @@ class TCustomer extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		//$criteria->compare('customer_id',$this->customer_id,true);
+		$criteria->compare('customer_id',$this->customer_id,true);
 		$criteria->compare('username',$this->username,true);
-		//$criteria->compare('firstname',$this->firstname,true);
-		//$criteria->compare('lastname',$this->lastname,true);
-		//$criteria->compare('password',$this->password,true);
-		//$criteria->compare('salt',$this->salt,true);
+		$criteria->compare('firstname',$this->firstname,true);
+		$criteria->compare('lastname',$this->lastname,true);
+		$criteria->compare('password',$this->password,true);
 		$criteria->compare('last_seen',$this->last_seen,true);
 		$criteria->compare('status',$this->status,true);
+		$criteria->compare('preferred_lang',$this->preferred_lang,true);
+		$criteria->compare('bad_logins',$this->bad_logins);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

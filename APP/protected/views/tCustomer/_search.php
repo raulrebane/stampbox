@@ -32,11 +32,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'salt'); ?>
-		<?php echo $form->textField($model,'salt',array('size'=>32,'maxlength'=>32)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'last_seen'); ?>
 		<?php echo $form->textField($model,'last_seen'); ?>
 	</div>
@@ -44,6 +39,16 @@
 	<div class="row">
 		<?php echo $form->label($model,'status'); ?>
 		<?php echo $form->textField($model,'status',array('size'=>1,'maxlength'=>1)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'preferred_lang'); ?>
+		<?php echo $form->textField($model,'preferred_lang',array('size'=>3,'maxlength'=>3)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'bad_logins'); ?>
+		<?php echo $form->textField($model,'bad_logins'); ?>
 	</div>
 
 	<div class="row buttons">

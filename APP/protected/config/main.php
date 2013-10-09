@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'StampMail',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -46,11 +46,6 @@ return array(
 			),
 		),
 		*/
-/*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-*/
 		'db'=>array(
 //    			'tablePrefix'=>'ds',
     			'connectionString' => 'pgsql:host=localhost;dbname=ds',
@@ -59,16 +54,6 @@ return array(
     			'charset' => 'UTF8',
 		),
 
-		// uncomment the following to use a MySQL database
-		/*
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
-		*/
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
@@ -81,11 +66,10 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				/*
 				array(
 					'class'=>'CWebLogRoute',
+				        'levels'=>'error, info',
 				),
-				*/
 			),
 		),
 	),

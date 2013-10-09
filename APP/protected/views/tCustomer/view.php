@@ -26,8 +26,9 @@ $this->menu=array(
 		'firstname',
 		'lastname',
 		'password',
-		'salt',
 		'last_seen',
 		'status',
+		'preferred_lang',
+		'bad_logins',
 	),
 )); ?>

@@ -25,17 +25,21 @@
 	<?php echo CHtml::encode($data->password); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('salt')); ?>:</b>
-	<?php echo CHtml::encode($data->salt); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('last_seen')); ?>:</b>
 	<?php echo CHtml::encode($data->last_seen); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
 	<?php echo CHtml::encode($data->status); ?>
+	<br />
+
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('preferred_lang')); ?>:</b>
+	<?php echo CHtml::encode($data->preferred_lang); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('bad_logins')); ?>:</b>
+	<?php echo CHtml::encode($data->bad_logins); ?>
 	<br />
 
 	*/ ?>
