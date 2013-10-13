@@ -32,7 +32,7 @@ class TCustomerController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update'),
+				'actions'=>array('index','view','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -52,7 +52,8 @@ class TCustomerController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			// allow user to only view their own data
+			'model'=>$this->loadModel(Yii::App()->user->getId()),
 		));
 	}
 
@@ -71,7 +72,13 @@ class TCustomerController extends Controller
 		{
 			$model->attributes=$_POST['TCustomer'];
 			$model->password = crypt($model->password, self::blowfishSalt());
+			
+			// default value for last_seen is current server timestamp
 			$model->last_seen = Yii::app()->dateFormatter->formatDateTime(time(), 'short');
+			// default status A - active
+			$model->status = 'A';
+			// no bad logins yet
+			$model->bad_logins = 0;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->customer_id));
 		}
