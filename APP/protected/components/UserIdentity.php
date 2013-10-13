@@ -19,13 +19,12 @@ class UserIdentity extends CUserIdentity
 	$record=TCustomer::model()->findByAttributes(array('username'=>$this->username));
         if($record===null)
             $this->errorCode=self::ERROR_USERNAME_INVALID;
-        else if($record->password!==$this->password)  
+        else if ($record->password !== crypt($this->password, $record->password))  
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
         else
 
         {
-            $this->_id=$record->firstname;
-//            $this->setState('title', $record->title);
+            $this->_id=$record->customer_id;
             $this->errorCode=self::ERROR_NONE;
         }
         return !$this->errorCode;

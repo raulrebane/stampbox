@@ -61,12 +61,13 @@
 		<?php echo $form->error($model,'preferred_lang'); ?>
 	</div>
 
+<!--
 	<div class="row">
 		<?php echo $form->labelEx($model,'bad_logins'); ?>
 		<?php echo $form->textField($model,'bad_logins'); ?>
 		<?php echo $form->error($model,'bad_logins'); ?>
 	</div>
-
+-->
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

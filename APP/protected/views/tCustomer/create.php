@@ -4,15 +4,11 @@
 
 $this->breadcrumbs=array(
 	'Tcustomers'=>array('index'),
-	'Create',
+	'Register',
 );
 
-$this->menu=array(
-	array('label'=>'List TCustomer', 'url'=>array('index')),
-	array('label'=>'Manage TCustomer', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Create TCustomer</h1>
+<h1>Join our wonderful service and change your e-mail forever</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

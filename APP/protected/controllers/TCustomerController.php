@@ -28,16 +28,16 @@ class TCustomerController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('create'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('raulrebane71@gmail.com'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -70,6 +70,8 @@ class TCustomerController extends Controller
 		if(isset($_POST['TCustomer']))
 		{
 			$model->attributes=$_POST['TCustomer'];
+			$model->password = crypt($model->password, self::blowfishSalt());
+			$model->last_seen = Yii::app()->dateFormatter->formatDateTime(time(), 'short');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->customer_id));
 		}
@@ -169,5 +171,29 @@ class TCustomerController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+/**
+ * Generate a random salt in the crypt(3) standard Blowfish format.
+ *
+ * @param int $cost Cost parameter from 4 to 31.
+ *
+ * @throws Exception on invalid cost parameter.
+ * @return string A Blowfish hash salt for use in PHP's crypt()
+ */
+	function blowfishSalt($cost = 13)
+	{
+	    if (!is_numeric($cost) || $cost < 4 || $cost > 31) {
+	        throw new Exception("cost parameter must be between 4 and 31");
+	    }
+	    $rand = array();
+	    for ($i = 0; $i < 8; $i += 1) {
+	        $rand[] = pack('S', mt_rand(0, 0xffff));
+	    }
+	    $rand[] = substr(microtime(), 2, 6);
+	    $rand = sha1(implode('', $rand), true);
+	    $salt = '$2a$' . sprintf('%02d', $cost) . '$';
+	    $salt .= strtr(substr(base64_encode($rand), 0, 22), array('+' => '.'));
+	    return $salt;
 	}
 }

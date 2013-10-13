@@ -41,9 +41,9 @@ class TCustomer extends CActiveRecord
 			array('username', 'length', 'max'=>128),
 			array('firstname, lastname', 'length', 'max'=>100),
 			array('password', 'length', 'max'=>64),
-			array('status', 'length', 'max'=>1),
+			/*array('status', 'length', 'max'=>1),*/
 			array('preferred_lang', 'length', 'max'=>3),
-			array('last_seen', 'safe'),
+//			array('last_seen', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('customer_id, username, firstname, lastname, password, last_seen, status, preferred_lang, bad_logins', 'safe', 'on'=>'search'),
