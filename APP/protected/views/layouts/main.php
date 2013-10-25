@@ -6,26 +6,66 @@
 	<meta name="language" content="en" />
 
 	<!-- blueprint CSS framework -->
+        <!-- copied from Division design -->
+        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" rel="stylesheet">
+        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/carousel.css" rel="stylesheet">
+        <style id="holderjs-style" type="text/css">.holderjs-fluid {font-size:16px;font-weight:bold;text-align:center;font-family:sans-serif;margin:0}</style>
+    
+        <script src="libs/jquery/js/jquery-2.0.3.min.js"></script>
+        <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+        <script src="libs/holder/js/holder.js"></script>
+        
+ <!--       
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
 	<!--[if lt IE 8]>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
 	<![endif]-->
-
+<!--
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+-->
 </head>
 
 <body>
+<!--
+    <div id="header">
+    <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+    </div><!-- header -->
+    
+    <div class="navbar-wrapper">
+         <div class="container">
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Stampbox</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="#about">For Private</a></li>
+                <li><a href="#about">For Business</a></li>
+                <li><a href="#contact">Pricing</a></li>
+                <li><a href="#contact">Help</a></li>
+              </ul>
+              
+              <form class="navbar-form navbar-right">
+                <button type="submit" class="btn btn-link">Login</button>
+                <button type="submit" class="btn btn-success">Sign up for free</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
 
-<div class="container" id="page">
-
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
-
+      </div>
+    </div>
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
@@ -48,12 +88,10 @@
 
 	<div class="clear"></div>
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by Goodwin Communications<br/>
-		All Rights Reserved.<br/>
-	</div><!-- footer -->
-
-</div><!-- page -->
+        <footer>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>© 2013 Good Win Communications · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+        </footer>
 
 </body>
 </html>
