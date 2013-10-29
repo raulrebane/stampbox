@@ -30,21 +30,14 @@
 </head>
 
 <body>
-<!--
-    <div id="header">
-    <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-    </div><!-- header -->
-    
     <div class="navbar-wrapper">
-         <div class="container">
+        <div class="container">
         <div class="navbar navbar-inverse navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+        <div class="container">
+        <div class="navbar-header">
+
+
+<!--
               <a class="navbar-brand" href="#">Stampbox</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -55,43 +48,49 @@
                 <li><a href="#contact">Help</a></li>
               </ul>
               
-              <form class="navbar-form navbar-right">
-                <button type="submit" class="btn btn-link">Login</button>
-                <button type="submit" class="btn btn-success">Sign up for free</button>
-                
-              </form>
             </div>
           </div>
         </div>
 
       </div>
     </div>
-	<div id="mainmenu">
+-->
+<!--	<div class="navbar-brand"><!-- mainmenu begins-->
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
+				array('encodeLabel' => false, 'label'=>'Stampbox', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'My account', 'url'=>array('tCustomer/view&id='.Yii::app()->user->id), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
+			'lastItemCssClass'=>"navbar-right",
+			'htmlOptions' => array('class'=>"nav navbar-nav"),
 		)); ?>
 	</div><!-- mainmenu -->
+              <form class="navbar-form navbar-right">
+                <button type="submit" class="btn btn-link">Login</button>
+                <button type="submit" class="btn btn-success">Sign up for free</button>
+              </form>
+	</div>
+	</div>
+	</div>
+	</div>
+
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
-	<?php echo $content; ?>
+	<div class="container marketing">
+		<?php echo $content; ?>
 
-	<div class="clear"></div>
-
-        <footer>
-            <p class="pull-right"><a href="#">Back to top</a></p>
-            <p>© 2013 Good Win Communications · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-        </footer>
-
+        	<footer>
+            		<p class="pull-right"><a href="#">Back to top</a></p>
+            		<p>© 2013 Good Wind Communications · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+        	</footer>
+	</div>
 </body>
 </html>

@@ -74,7 +74,7 @@ class TCustomerController extends Controller
 			$model->password = crypt($model->password, self::blowfishSalt());
 			
 			// default value for last_seen is current server timestamp
-			$model->last_seen = Yii::app()->dateFormatter->formatDateTime(time(), 'short');
+			$model->last_seen = Yii::app()->dateFormatter->format('dd/MM/yyyy HH:mm:ss', time());
 			// default status A - active
 			$model->status = 'A';
 			// no bad logins yet
