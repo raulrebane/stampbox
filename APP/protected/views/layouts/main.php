@@ -10,23 +10,18 @@
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" rel="stylesheet">
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/carousel.css" rel="stylesheet">
         <style id="holderjs-style" type="text/css">.holderjs-fluid {font-size:16px;font-weight:bold;text-align:center;font-family:sans-serif;margin:0}</style>
-    
-        <script src="libs/jquery/js/jquery-2.0.3.min.js"></script>
-        <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-        <script src="libs/holder/js/holder.js"></script>
-        
- <!--       
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
+
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery-2.0.3.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/holder.js"></script>
+
 <!--
+
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+-->
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
--->
 </head>
 
 <body>
@@ -36,53 +31,69 @@
         <div class="container">
         <div class="navbar-header">
 
-
-<!--
-              <a class="navbar-brand" href="#">Stampbox</a>
-            </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li><a href="#about">For Private</a></li>
-                <li><a href="#about">For Business</a></li>
-                <li><a href="#contact">Pricing</a></li>
-                <li><a href="#contact">Help</a></li>
-              </ul>
-              
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
--->
-<!--	<div class="navbar-brand"><!-- mainmenu begins-->
+	<!-- mainmenu begins-->
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('encodeLabel' => false, 'label'=>'Stampbox', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'My account', 'url'=>array('tCustomer/view&id='.Yii::app()->user->id), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label'=>'My account', 'url'=>array('tCustomer/view&id='.Yii::app()->user->id)),
+				//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				//array('label'=>'Logout', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
-			'lastItemCssClass'=>"navbar-right",
 			'htmlOptions' => array('class'=>"nav navbar-nav"),
 		)); ?>
-	</div><!-- mainmenu -->
-              <form class="navbar-form navbar-right">
-                <button type="submit" class="btn btn-link">Login</button>
-                <button type="submit" class="btn btn-success">Sign up for free</button>
-              </form>
 	</div>
-	</div>
-	</div>
-	</div>
+	<!-- mainmenu -->
 
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+	<?php
+	/** Start Widget **/
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    		'id'=>'loginmodal',
+    		'options'=>array(
+        		'title'=>'Login',
+        		'width'=>400,
+        		'height'=>300,
+        		'autoOpen'=>false,
+        		'resizable'=>false,
+        		'modal'=>true,
+        		'overlay'=>array(
+            			'backgroundColor'=>'#000',
+            			'opacity'=>'0.5'
+        			),
+        		'buttons'=>array(
+            			'OK'=>'js:function(){alert("OK");}',
+            			'Cancel'=>'js:function(){$(this).dialog("close");}',
+        			),
+    			),
+		));
+		echo '<div class="form-group">
+			<label for="exampleInputEmail1">Username</label>
+    			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+  		</div>
+  		<div class="form-group">
+    			<label for="exampleInputPassword1">Password</label>
+    			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  		</div>';
+	$this->endWidget('zii.widgets.jui.CJuiDialog');	
+	/** End Widget **/
+	?>
+	<?php
+             if (Yii::app()->user->isGuest) {
+		echo '<form class="navbar-form navbar-right">';
+		echo '<a class="btn btn-link" onclick="$(\'#loginmodal\').dialog(\'open\'); return false;" href="#">Login</a>';
+		//echo <a href="index.php?r=site/login" class="btn btn-link">Login</a>;
+		echo '<a href="index.php?r=tCustomer/create" class="btn btn-success">Sign up for free</a>';
+              	echo '</form>';
+		} else {
+		echo '<form class="navbar-form navbar-right">';
+		echo '<a href="index.php?r=site/logout" class= "btn btn-success">Logout</a>';
+		}
+	?>
+	</div>
+	</div>
+	</div>
+	</div>
 
 	<div class="container marketing">
 		<?php echo $content; ?>
