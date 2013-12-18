@@ -4,33 +4,38 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
+   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- blueprint CSS framework -->
-        <!-- copied from Division design -->
-        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" rel="stylesheet">
+	<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css" rel="stylesheet">
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/carousel.css" rel="stylesheet">
         <style id="holderjs-style" type="text/css">.holderjs-fluid {font-size:16px;font-weight:bold;text-align:center;font-family:sans-serif;margin:0}</style>
 
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery-2.0.3.min.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.js"></script>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/holder.js"></script>
-
-<!--
-
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
--->
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-2.0.3.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/holder.js"></script>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
+        <script language="javascript">
+                $(function(){
+                $('.dropdown-toggle').dropdown();
+                $('.dropdown input, .dropdown label').click(function (e) {e.stopPropagation();});
+                });
+        </script>
 
 <body>
     <div class="navbar-wrapper">
-        <div class="container">
+      <div class="container">
         <div class="navbar navbar-inverse navbar-static-top">
         <div class="container">
         <div class="navbar-header">
-
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+	</div>
+	<div class="navbar-collapse collapse">
 	<!-- mainmenu begins-->
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
@@ -43,58 +48,23 @@
 			),
 			'htmlOptions' => array('class'=>"nav navbar-nav"),
 		)); ?>
+		<?php
+		  echo '<form class="navbar-form navbar-right">';
+             	  if (Yii::app()->user->isGuest) {
+		    echo '<a href="index.php?r=site/login" class="btn btn-link">Login</a>';
+		    echo '<a href="index.php?r=tCustomer/create" class="btn btn-success">Sign up for free</a>';
+              	    echo '</form>';
+		} else {
+		    echo '<a href="index.php?r=site/logout" class= "btn btn-success">Logout</a>';
+		}
+		?>
 	</div>
 	<!-- mainmenu -->
 
-	<?php
-	/** Start Widget **/
-	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-    		'id'=>'loginmodal',
-    		'options'=>array(
-        		'title'=>'Login',
-        		'width'=>400,
-        		'height'=>300,
-        		'autoOpen'=>false,
-        		'resizable'=>false,
-        		'modal'=>true,
-        		'overlay'=>array(
-            			'backgroundColor'=>'#000',
-            			'opacity'=>'0.5'
-        			),
-        		'buttons'=>array(
-            			'OK'=>'js:function(){alert("OK");}',
-            			'Cancel'=>'js:function(){$(this).dialog("close");}',
-        			),
-    			),
-		));
-		echo '<div class="form-group">
-			<label for="exampleInputEmail1">Username</label>
-    			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-  		</div>
-  		<div class="form-group">
-    			<label for="exampleInputPassword1">Password</label>
-    			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  		</div>';
-	$this->endWidget('zii.widgets.jui.CJuiDialog');	
-	/** End Widget **/
-	?>
-	<?php
-             if (Yii::app()->user->isGuest) {
-		echo '<form class="navbar-form navbar-right">';
-		echo '<a class="btn btn-link" onclick="$(\'#loginmodal\').dialog(\'open\'); return false;" href="#">Login</a>';
-		//echo <a href="index.php?r=site/login" class="btn btn-link">Login</a>;
-		echo '<a href="index.php?r=tCustomer/create" class="btn btn-success">Sign up for free</a>';
-              	echo '</form>';
-		} else {
-		echo '<form class="navbar-form navbar-right">';
-		echo '<a href="index.php?r=site/logout" class= "btn btn-success">Logout</a>';
-		}
-	?>
 	</div>
 	</div>
 	</div>
 	</div>
-
 	<div class="container marketing">
 		<?php echo $content; ?>
 
@@ -103,5 +73,11 @@
             		<p>© 2013 Good Wind Communications · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
         	</footer>
 	</div>
+	<script language="javascript">
+		$(function(){
+   		$('.dropdown-toggle').dropdown();
+   		$('.dropdown input, .dropdown label').click(function (e) {e.stopPropagation();});
+		});
+	</script>
 </body>
 </html>
