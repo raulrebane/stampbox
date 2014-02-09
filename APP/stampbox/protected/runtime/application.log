@@ -1,0 +1,872 @@
+2014/01/07 16:50:40 [error] [exception.CException] exception 'CException' with message 'Alias "bootstrap.components.Bootstrap" is invalid. Make sure it points to an existing directory or file.' in /var/www/yii-1.1.13.e9e4a0/framework/YiiBase.php:341
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/YiiBase.php(196): YiiBase::import('bootstrap.compo...', true)
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CModule.php(386): YiiBase::createComponent(Array)
+#2 /var/www/yii-1.1.13.e9e4a0/framework/base/CModule.php(103): CModule->getComponent('bootstrap')
+#3 /var/www/stampbox/protected/views/layouts/main.php(7): CModule->__get('bootstrap')
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(206): COutputProcessor->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#11 /var/www/stampbox/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(784): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#15 /var/www/stampbox/protected/controllers/SiteController.php(32): CController->render('index')
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#18 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#20 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('index')
+#21 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('site/index')
+#22 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#23 /var/www/stampbox/index.php(13): CApplication->run()
+#24 {main}
+REQUEST_URI=/stampbox/index.php?r=site/index
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/page&view=about
+---
+2014/01/07 18:20:11 [error] [exception.CException] exception 'CException' with message 'Bootstrap and its behaviors do not have a method or closure named "registerAllCss".' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:265
+Stack trace:
+#0 /var/www/stampbox/protected/views/layouts/main.php(7): CComponent->__call('registerAllCss', Array)
+#1 /var/www/stampbox/protected/views/layouts/main.php(7): Bootstrap->registerAllCss()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(206): COutputProcessor->run()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#9 /var/www/stampbox/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(784): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#13 /var/www/stampbox/protected/controllers/SiteController.php(32): CController->render('index')
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('')
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#20 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#21 /var/www/stampbox/index.php(13): CApplication->run()
+#22 {main}
+REQUEST_URI=/stampbox/index.php
+---
+2014/01/07 18:32:13 [error] [exception.CException] exception 'CException' with message 'Bootstrap and its behaviors do not have a method or closure named "registerAllCss".' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:265
+Stack trace:
+#0 /var/www/stampbox/protected/views/layouts/main.php(7): CComponent->__call('registerAllCss', Array)
+#1 /var/www/stampbox/protected/views/layouts/main.php(7): Bootstrap->registerAllCss()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(206): COutputProcessor->run()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#9 /var/www/stampbox/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(784): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#13 /var/www/stampbox/protected/controllers/SiteController.php(32): CController->render('index')
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('')
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#20 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#21 /var/www/stampbox/index.php(13): CApplication->run()
+#22 {main}
+REQUEST_URI=/stampbox/index.php
+---
+2014/01/07 19:05:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tCustomer/create".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/01/07 19:20:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tCustomer/create".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/01/07 19:32:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tCustomer/create".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/01/07 19:48:11 [error] [exception.CException] exception 'CException' with message 'Property "LoginForm.textField" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(2255): CComponent->__get('textField')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1980): CHtml::resolveValue(Object(LoginForm), 'textField')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1257): CHtml::activeInputField('text', Object(LoginForm), 'textField', Array)
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CActiveForm.php(657): CHtml::activeTextField(Object(LoginForm), 'textField', Array)
+#4 [internal function]: CActiveForm->textField(Object(LoginForm), 'textField', Array)
+#5 /var/www/yiibooster/widgets/TbActiveForm.php(1191): call_user_func_array(Array, Array)
+#6 /var/www/yiibooster/widgets/TbActiveForm.php(1100): TbActiveForm->verticalFieldRow(Array, Object(LoginForm), 'textField', Array)
+#7 /var/www/yiibooster/widgets/TbActiveForm.php(375): TbActiveForm->customFieldRowInternal(Array, Object(LoginForm), 'textField', Array)
+#8 /var/www/stampbox/protected/views/site/login.php(22): TbActiveForm->textFieldRow(Object(LoginForm), 'textField', Array)
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('login', Array, true)
+#13 /var/www/stampbox/protected/controllers/SiteController.php(98): CController->render('login', Array)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): SiteController->actionLogin()
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('login')
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('site/login')
+#20 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#21 /var/www/stampbox/index.php(13): CApplication->run()
+#22 {main}
+REQUEST_URI=/stampbox/index.php?r=site/login
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/01/07 20:31:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tCustomer/create".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/01/08 15:53:14 [error] [exception.CException] exception 'CException' with message 'UsermailboxController cannot find the requested view "index".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('index', Array, true)
+#1 /var/www/stampbox/protected/controllers/UsermailboxController.php(133): CController->render('index', Array)
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionIndex()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox
+---
+2014/01/08 15:53:27 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/vie...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/view
+---
+2014/01/08 15:54:12 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Usermailbox/vie...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=Usermailbox/view
+---
+2014/01/08 15:54:17 [error] [exception.CException] exception 'CException' with message 'UsermailboxController cannot find the requested view "index".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('index', Array, true)
+#1 /var/www/stampbox/protected/controllers/UsermailboxController.php(133): CController->render('index', Array)
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionIndex()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Usermailbox')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=Usermailbox
+---
+2014/01/08 15:55:12 [error] [exception.CException] exception 'CException' with message 'UsermailboxController cannot find the requested view "index".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('index', Array, true)
+#1 /var/www/stampbox/protected/controllers/UsermailboxController.php(133): CController->render('index', Array)
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionIndex()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('index')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/ind...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/index
+HTTP_REFERER=http://localhost/stampbox/index.php?r=Usermailbox/create
+---
+2014/01/08 15:55:41 [error] [exception.CException] exception 'CException' with message 'UsermailboxController cannot find the requested view "index".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('index', Array, true)
+#1 /var/www/stampbox/protected/controllers/UsermailboxController.php(133): CController->render('index', Array)
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionIndex()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('index')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Usermailbox/ind...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=Usermailbox/index
+---
+2014/01/08 15:55:47 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Usermailbox/vie...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=Usermailbox/view
+---
+2014/01/08 19:41:02 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Usermailbox/vie...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=Usermailbox/view
+---
+2014/01/08 19:49:46 [error] [php] include(TCustomer.php): failed to open stream: No such file or directory (/var/www/yii-1.1.13.e9e4a0/framework/YiiBase.php:421)
+Stack trace:
+#0 /var/www/stampbox/protected/components/UserIdentity.php(19): spl_autoload_call()
+#1 /var/www/stampbox/protected/models/LoginForm.php(52): UserIdentity->authenticate()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/validators/CInlineValidator.php(42): LoginForm->authenticate()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/validators/CValidator.php(213): CInlineValidator->validateAttribute()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/base/CModel.php(159): CInlineValidator->validate()
+#5 /var/www/stampbox/protected/controllers/SiteController.php(94): LoginForm->validate()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): SiteController->actionLogin()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(286): SiteController->runAction()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): SiteController->run()
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#12 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#13 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=site/login
+in /var/www/stampbox/protected/components/UserIdentity.php (19)
+in /var/www/stampbox/protected/models/LoginForm.php (52)
+in /var/www/stampbox/protected/controllers/SiteController.php (94)
+2014/01/08 19:51:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tcustomer/index".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tcustomer/index')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tcustomer/index
+---
+2014/01/08 19:51:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "tcustomer/view".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tcustomer/view')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=tcustomer/view
+---
+2014/01/08 19:52:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "Tcustomer/view".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('Tcustomer/view')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/stampbox/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/stampbox/index.php?r=Tcustomer/view
+---
+2014/01/08 19:52:12 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+---
+2014/01/11 16:48:08 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for type inet: "". The SQL statement executed was: INSERT INTO "ds"."t_customer_mailbox" ("customer_id", "e_mail", "e_mail_username", "e_mail_password", "status", "maildomain", "worker_ip", "worker_type", "last_seen") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7, :yp8).
+in /var/www/stampbox/protected/controllers/UsermailboxController.php (69)
+in /var/www/stampbox/index.php (13)
+2014/01/11 16:48:08 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for type inet: "". The SQL statement executed was: INSERT INTO "ds"."t_customer_mailbox" ("customer_id", "e_mail", "e_mail_username", "e_mail_password", "status", "maildomain", "worker_ip", "worker_type", "last_seen") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7, :yp8)' in /var/www/yii-1.1.13.e9e4a0/framework/db/CDbCommand.php:357
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(1023): CDbCommand->execute()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(795): CActiveRecord->insert(NULL)
+#2 /var/www/stampbox/protected/controllers/UsermailboxController.php(69): CActiveRecord->save()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionCreate()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('create')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/cre...')
+#14 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/stampbox/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=usermailbox/create
+---
+2014/01/11 17:32:12 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/yii-1.1.13.e9e4a0/framework/web/auth/CAccessControlFilter.php:179
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/auth/CAccessControlFilter.php(142): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('admin')
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/adm...')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/stampbox/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/admin
+HTTP_REFERER=http://localhost/stampbox/index.php?r=usermailbox/index
+---
+2014/01/11 17:32:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "list".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(270): CController->missingAction('list')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('list')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/lis...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/stampbox/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/list
+---
+2014/01/23 18:25:45 [error] [php] Undefined variable: DataProvider (/var/www/stampbox/protected/views/usermailbox/index.php:21)
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): UsermailboxController->renderFile()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): UsermailboxController->renderPartial()
+#2 /var/www/stampbox/protected/controllers/UsermailboxController.php(132): UsermailboxController->render()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): UsermailboxController->actionIndex()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): UsermailboxController->runAction()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): UsermailboxController->filterAccessControl()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): UsermailboxController->runActionWithFilters()
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): UsermailboxController->run()
+#13 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=usermailbox/index
+in /var/www/stampbox/protected/views/usermailbox/index.php (21)
+in /var/www/stampbox/protected/controllers/UsermailboxController.php (132)
+in /var/www/stampbox/index.php (13)
+2014/01/23 19:43:23 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/vie...')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/view
+---
+2014/01/23 20:05:16 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=/site/index
+---
+2014/01/23 20:07:42 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=usermailbox/index
+---
+2014/01/23 20:17:37 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=tCustomer/index
+---
+2014/01/23 20:18:39 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=tCustomer/index
+---
+2014/01/23 20:18:57 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=tCustomer/index
+---
+2014/01/23 20:19:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "changepsw".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(270): CController->missingAction('changepsw')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('changepsw')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/chang...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/stampbox/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+HTTP_REFERER=http://localhost/stampbox/index.php?r=tCustomer/view
+---
+2014/01/23 20:19:07 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+HTTP_REFERER=http://localhost/stampbox/index.php?r=tCustomer/changepsw
+---
+2014/01/23 20:20:36 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:336
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('view')
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/view')
+#10 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#11 /var/www/stampbox/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/view
+---
+2014/02/09 11:05:59 [error] [exception.CException] exception 'CException' with message 'Property "TCustomer.password1" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(143): CComponent->__get('password1')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(2255): CActiveRecord->__get('password1')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1980): CHtml::resolveValue(Object(TCustomer), 'password1')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1391): CHtml::activeInputField('password', Object(TCustomer), 'password1', Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CActiveForm.php(687): CHtml::activePasswordField(Object(TCustomer), 'password1', Array)
+#5 [internal function]: CActiveForm->passwordField(Object(TCustomer), 'password1', Array)
+#6 /var/www/yiibooster/widgets/TbActiveForm.php(1191): call_user_func_array(Array, Array)
+#7 /var/www/yiibooster/widgets/TbActiveForm.php(1100): TbActiveForm->verticalFieldRow(Array, Object(TCustomer), 'password1', Array)
+#8 /var/www/yiibooster/widgets/TbActiveForm.php(427): TbActiveForm->customFieldRowInternal(Array, Object(TCustomer), 'password1', Array)
+#9 /var/www/stampbox/protected/views/tCustomer/_form.php(26): TbActiveForm->passwordFieldRow(Object(TCustomer), 'password1', Array)
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#13 /var/www/stampbox/protected/views/tCustomer/create.php(14): CController->renderPartial('_form', Array)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('create', Array, true)
+#18 /var/www/stampbox/protected/controllers/TCustomerController.php(88): CController->render('create', Array)
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): TCustomerController->actionCreate()
+#20 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#21 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#22 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#23 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#24 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#26 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#27 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('create')
+#29 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#30 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#31 /var/www/stampbox/index.php(13): CApplication->run()
+#32 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/02/09 11:09:52 [error] [exception.CException] exception 'CException' with message 'Property "TCustomer.password1" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(143): CComponent->__get('password1')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(2255): CActiveRecord->__get('password1')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1980): CHtml::resolveValue(Object(TCustomer), 'password1')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1391): CHtml::activeInputField('password', Object(TCustomer), 'password1', Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CActiveForm.php(687): CHtml::activePasswordField(Object(TCustomer), 'password1', Array)
+#5 [internal function]: CActiveForm->passwordField(Object(TCustomer), 'password1', Array)
+#6 /var/www/yiibooster/widgets/TbActiveForm.php(1191): call_user_func_array(Array, Array)
+#7 /var/www/yiibooster/widgets/TbActiveForm.php(1100): TbActiveForm->verticalFieldRow(Array, Object(TCustomer), 'password1', Array)
+#8 /var/www/yiibooster/widgets/TbActiveForm.php(427): TbActiveForm->customFieldRowInternal(Array, Object(TCustomer), 'password1', Array)
+#9 /var/www/stampbox/protected/views/tCustomer/_form.php(26): TbActiveForm->passwordFieldRow(Object(TCustomer), 'password1', Array)
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#13 /var/www/stampbox/protected/views/tCustomer/create.php(14): CController->renderPartial('_form', Array)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('create', Array, true)
+#18 /var/www/stampbox/protected/controllers/TCustomerController.php(88): CController->render('create', Array)
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): TCustomerController->actionCreate()
+#20 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#21 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#22 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#23 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#24 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#26 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#27 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('create')
+#29 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#30 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#31 /var/www/stampbox/index.php(13): CApplication->run()
+#32 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/02/09 11:11:31 [error] [exception.CException] exception 'CException' with message 'Property "TCustomer.password1" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(143): CComponent->__get('password1')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(2255): CActiveRecord->__get('password1')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1980): CHtml::resolveValue(Object(TCustomer), 'password1')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/helpers/CHtml.php(1391): CHtml::activeInputField('password', Object(TCustomer), 'password1', Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/widgets/CActiveForm.php(687): CHtml::activePasswordField(Object(TCustomer), 'password1', Array)
+#5 [internal function]: CActiveForm->passwordField(Object(TCustomer), 'password1', Array)
+#6 /var/www/yiibooster/widgets/TbActiveForm.php(1191): call_user_func_array(Array, Array)
+#7 /var/www/yiibooster/widgets/TbActiveForm.php(1100): TbActiveForm->verticalFieldRow(Array, Object(TCustomer), 'password1', Array)
+#8 /var/www/yiibooster/widgets/TbActiveForm.php(427): TbActiveForm->customFieldRowInternal(Array, Object(TCustomer), 'password1', Array)
+#9 /var/www/stampbox/protected/views/tCustomer/_form.php(26): TbActiveForm->passwordFieldRow(Object(TCustomer), 'password1', Array)
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#13 /var/www/stampbox/protected/views/tCustomer/create.php(14): CController->renderPartial('_form', Array)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#16 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('create', Array, true)
+#18 /var/www/stampbox/protected/controllers/TCustomerController.php(88): CController->render('create', Array)
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): TCustomerController->actionCreate()
+#20 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#21 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#22 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#23 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#24 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#26 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#27 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('create')
+#29 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/creat...')
+#30 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#31 /var/www/stampbox/index.php(13): CApplication->run()
+#32 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/create
+HTTP_REFERER=http://localhost/stampbox/index.php?r=site/login
+---
+2014/02/09 11:42:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "stats".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(270): CController->missingAction('stats')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('stats')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('usermailbox/sta...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/stampbox/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/stampbox/index.php?r=usermailbox/stats
+HTTP_REFERER=http://localhost/stampbox/index.php?r=usermailbox/index
+---
+2014/02/09 12:55:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "changepsw".' in /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(270): CController->missingAction('changepsw')
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('changepsw')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/chang...')
+#3 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/stampbox/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+HTTP_REFERER=http://localhost/stampbox/index.php
+---
+2014/02/09 14:15:44 [error] [php] Undefined variable: id (/var/www/stampbox/protected/controllers/TCustomerController.php:156)
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): TCustomerController->runAction()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): TCustomerController->filterAccessControl()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): TCustomerController->runActionWithFilters()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): TCustomerController->run()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+in /var/www/stampbox/protected/controllers/TCustomerController.php (156)
+in /var/www/stampbox/index.php (13)
+2014/02/09 14:23:39 [error] [exception.CException] exception 'CException' with message 'Property "CWebApplication.UserIdentity" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/base/CModule.php(105): CComponent->__get('UserIdentity')
+#1 /var/www/stampbox/protected/controllers/TCustomerController.php(156): CModule->__get('UserIdentity')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): TCustomerController->actionChangepsw()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('changepsw')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/chang...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+HTTP_REFERER=http://localhost/stampbox/index.php
+---
+2014/02/09 14:29:34 [error] [exception.CException] exception 'CException' with message 'Property "CWebUser.getId" is not defined.' in /var/www/yii-1.1.13.e9e4a0/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/auth/CWebUser.php(140): CComponent->__get('getId')
+#1 /var/www/stampbox/protected/controllers/TCustomerController.php(156): CWebUser->__get('getId')
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): TCustomerController->actionChangepsw()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('changepsw')
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('tCustomer/chang...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#14 /var/www/stampbox/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+HTTP_REFERER=http://localhost/stampbox/index.php
+---
+2014/02/09 14:58:18 [error] [php] Use of undefined constant newpassword - assumed 'newpassword' (/var/www/stampbox/protected/controllers/TCustomerController.php:167)
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): TCustomerController->runAction()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): TCustomerController->filterAccessControl()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): TCustomerController->runActionWithFilters()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): TCustomerController->run()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+in /var/www/stampbox/protected/controllers/TCustomerController.php (167)
+in /var/www/stampbox/index.php (13)
+2014/02/09 15:02:30 [error] [php] Undefined variable: newpassword (/var/www/stampbox/protected/controllers/TCustomerController.php:172)
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): TCustomerController->runAction()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): TCustomerController->filterAccessControl()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): TCustomerController->runActionWithFilters()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): TCustomerController->run()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=tCustomer/changepsw
+in /var/www/stampbox/protected/controllers/TCustomerController.php (172)
+in /var/www/stampbox/index.php (13)
+2014/02/09 15:12:21 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42501]: Insufficient privilege: 7 ERROR:  permission denied for relation t_stamps_issued. The SQL statement executed was: SELECT COUNT(*) FROM "ds"."t_stamps_issued" "t".
+in /var/www/yiibooster/widgets/TbListView.php (43)
+in /var/www/stampbox/protected/views/myStamps/index.php (17)
+in /var/www/stampbox/protected/controllers/MyStampsController.php (133)
+2014/02/09 15:12:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42501]: Insufficient privilege: 7 ERROR:  permission denied for relation t_stamps_issued. The SQL statement executed was: SELECT COUNT(*) FROM "ds"."t_stamps_issued" "t"' in /var/www/yii-1.1.13.e9e4a0/framework/db/CDbCommand.php:541
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/CDbCommand.php(432): CDbCommand->queryInternal('fetchColumn', 0, Array)
+#1 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(1546): CDbCommand->queryScalar()
+#2 /var/www/yii-1.1.13.e9e4a0/framework/web/CActiveDataProvider.php(179): CActiveRecord->count(Object(CDbCriteria))
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/CDataProvider.php(224): CActiveDataProvider->calculateTotalItemCount()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/CActiveDataProvider.php(129): CDataProvider->getTotalItemCount()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/CDataProvider.php(168): CActiveDataProvider->fetchData()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/zii/widgets/CBaseListView.php(107): CDataProvider->getData()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/zii/widgets/CListView.php(203): CBaseListView->init()
+#8 /var/www/yiibooster/widgets/TbListView.php(43): CListView->init()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(147): TbListView->init()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(172): CBaseController->createWidget('bootstrap.widge...', Array)
+#11 /var/www/stampbox/protected/views/myStamps/index.php(17): CBaseController->widget('bootstrap.widge...', Array)
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(126): require('/var/www/stampb...')
+#13 /var/www/yii-1.1.13.e9e4a0/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/stampb...', Array, true)
+#14 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(869): CBaseController->renderFile('/var/www/stampb...', Array, true)
+#15 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(782): CController->renderPartial('index', Array, true)
+#16 /var/www/stampbox/protected/controllers/MyStampsController.php(133): CController->render('index', Array)
+#17 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): MyStampsController->actionIndex()
+#18 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#19 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#20 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#21 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#22 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#23 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#24 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#25 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#26 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): CController->run('')
+#27 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController('myStamps')
+#28 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#29 /var/www/stampbox/index.php(13): CApplication->run()
+#30 {main}
+REQUEST_URI=/stampbox/index.php?r=myStamps
+HTTP_REFERER=http://localhost/stampbox/index.php?r=gii/bootstrap
+---
+2014/02/09 15:48:21 [error] [php] include(TStampsTransactions.php): failed to open stream: No such file or directory (/var/www/yii-1.1.13.e9e4a0/framework/YiiBase.php:421)
+Stack trace:
+#0 /var/www/yii-1.1.13.e9e4a0/framework/db/ar/CActiveRecord.php(386): spl_autoload_call()
+#1 /var/www/yii-1.1.13.e9e4a0/framework/web/CActiveDataProvider.php(74): model()
+#2 /var/www/stampbox/protected/controllers/StampsTransactionsController.php(130): CActiveDataProvider->__construct()
+#3 /var/www/yii-1.1.13.e9e4a0/framework/web/actions/CInlineAction.php(49): StampsTransactionsController->actionIndex()
+#4 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(133): StampsTransactionsController->runAction()
+#6 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CInlineFilter.php(58): StampsTransactionsController->filterAccessControl()
+#9 /var/www/yii-1.1.13.e9e4a0/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(291): CFilterChain->run()
+#11 /var/www/yii-1.1.13.e9e4a0/framework/web/CController.php(265): StampsTransactionsController->runActionWithFilters()
+#12 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(282): StampsTransactionsController->run()
+#13 /var/www/yii-1.1.13.e9e4a0/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /var/www/yii-1.1.13.e9e4a0/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#15 /var/www/stampbox/index.php(13): CWebApplication->run()
+REQUEST_URI=/stampbox/index.php?r=StampsTransactions/index
+in /var/www/stampbox/protected/controllers/StampsTransactionsController.php (130)
+in /var/www/stampbox/index.php (13)
