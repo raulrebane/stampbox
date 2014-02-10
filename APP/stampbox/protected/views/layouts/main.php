@@ -6,7 +6,7 @@
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-    <div id="wrap">
+<div class="navbar-wrapper">
 <div class="container">
 <?php $this->widget('bootstrap.widgets.TbNavbar',array(
 	'type'=>'inverse',
@@ -37,7 +37,7 @@
                         ),
 	),
 )); ?>
-</div>   
+</div></div>   
     <div class="container">
         <?php if (!Yii::app()->user->isGuest)
             { echo '<row class="row-fluid"><column class="col1 span2">';
@@ -57,13 +57,12 @@
                     array('label'=>'History', 'url'=>'index.php?r=StampsTransactions/index'),
                    ),
                 ));
-        echo '</column><column class="col3 span8">';
+        echo '</column><column class="col2 span10">';
 	echo $content;
         echo '</column></row>';
             }
         else { echo $content;}
-?>
-    </div><div id="push"></div>
+	?>
     </div>
     <div id="footer"><div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>

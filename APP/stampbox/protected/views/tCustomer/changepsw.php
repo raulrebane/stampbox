@@ -30,18 +30,17 @@ $form = $this->beginWidget(
 array(
 'id' => 'verticalForm',
 'type'=> 'vertical',
-'htmlOptions' => array('class' => 'well span-4'), // for inset effect
+'htmlOptions' => array('class' => 'well span4 pull-right'), // for inset effect
 )
 ); 
 
-echo $form->passwordFieldRow($model, 'oldpassword', array('class' => 'span3'));
-echo $form->passwordFieldRow($model, 'newpassword', array('class' => 'span3'));
-echo $form->passwordFieldRow($model, 'password1', array('class' => 'span3'));
+echo $form->passwordFieldRow($model, 'oldpassword');
+echo $form->passwordFieldRow($model, 'newpassword');
+echo $form->passwordFieldRow($model, 'password1');
 
-$this->widget(
-'bootstrap.widgets.TbButton',
-array('buttonType' => 'submit', 'label' => 'Change password')
-);
+echo '<br>';
+$this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Change password', 'type' => 'primary'));
+$this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'link', 'label' => 'Cancel', 'url'=>'index.php?r=site/index'));
 
 $this->endWidget(); 
 unset($form);
