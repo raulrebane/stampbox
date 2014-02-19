@@ -41,6 +41,11 @@ class TbNavbar extends CWidget
 	public $brandUrl;
 
 	/**
+	 * @var strin the URL for the brand logo.
+	 */
+	public $brandLogo;
+
+	/**
 	 * @var array the HTML attributes for the brand link.
 	 */
 	public $brandOptions = array();
@@ -139,6 +144,9 @@ class TbNavbar extends CWidget
 		}
 
 		if ($this->brand !== false) {
+			if (isset($this->brandLogo)) {
+				echo CHtml::openTag('img', $this->brandLogo) . '>';
+			}
 			if ($this->brandUrl !== false) {
 				echo CHtml::openTag('a', $this->brandOptions) . $this->brand . '</a>';
 			} else {

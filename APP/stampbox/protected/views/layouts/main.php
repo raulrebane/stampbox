@@ -13,6 +13,7 @@
         'fixed'=> false,
 	'brand'=>CHtml::encode(Yii::app()->name),
 	'brandUrl'=> 'index.php?r=/site/index',
+	'brandLogo'=> '../images/SB_logo_01.png',
 	'collapse'=>true,
 	'items'=>array(
 		array(
