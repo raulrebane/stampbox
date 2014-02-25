@@ -26,7 +26,7 @@ array(
 
 // echo $form->errorSummary($model);
 
-        echo $form->textFieldRow($model, 'maildomain', array('class' => 'span3', 'disabled' => true));
+        echo $form->textFieldRow($model, 'maildomain', array('class' => 'span3'));
         echo $form->textFieldRow($model, 'incoming_hostname', array('class' => 'span3'));
         echo $form->numberFieldRow($model, 'incoming_port', array('class' => 'span3'));
         echo $form->textFieldRow($model, 'e_mail_username', array('class' => 'span3'));
@@ -46,8 +46,10 @@ unset($form);
 if (isset($model->top_senders))
 {
     $gridDataProvider = new CArrayDataProvider($model->top_senders);
-//    $gridColumns = array(
-//        array('name'=>'
+    $gridColumns = array(
+        array('name'=>'e-mail', 'header'=>'E-mail'),
+	array('name'=>'count', 'header'=>'# of mails'),);
             
-    $this->widget('bootstrap.widgets.TbGridView',array('dataProvider' => $gridDataProvider,'template' => "{items}",));
+    $this->widget('bootstrap.widgets.TbGridView',array('dataProvider' => $gridDataProvider,'template' => "{items}",'columns'=>$gridColumns));
 }
+?>
