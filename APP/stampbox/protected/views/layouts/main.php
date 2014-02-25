@@ -11,9 +11,10 @@
 <?php $this->widget('bootstrap.widgets.TbNavbar',array(
 	'type'=>'inverse',
         'fixed'=> false,
+//        'brand'=>CHtml::encode('<img>src="/stampbox/images/SB_logo_01.png"></img>Stampbox'),
+        'brandOptions'=>array('<img'=>'/stampbox/images/SB_logo_01.png"</img>',),
 	'brand'=>CHtml::encode(Yii::app()->name),
 	'brandUrl'=> 'index.php?r=/site/index',
-	'brandLogo'=> '../images/SB_logo_01.png',
 	'collapse'=>true,
 	'items'=>array(
 		array(
@@ -26,7 +27,7 @@
                         ),
 		  '<form class="navbar-form pull-right">
 		  <a href="index.php?r=site/login" class="btn">Login</a>
-		  <a href="index.php?r=tCustomer/create" class="btn btn-success">Sign up for free</a>
+		  <a href="index.php?r=register/step1" class="btn btn-success">Sign up for free</a>
               	  </form>',
             
             array(

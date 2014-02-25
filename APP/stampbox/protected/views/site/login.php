@@ -9,7 +9,7 @@ $form = $this->beginWidget(
 'bootstrap.widgets.TbActiveForm',
 array(
 'id' => 'verticalForm',
-'htmlOptions' => array('class' => 'well span-4 pull-right'), // for inset effect
+'htmlOptions' => array('class' => 'well span4 pull-right'), // for inset effect
 )
 ); 
 

@@ -58,7 +58,11 @@ return array(
                 'bootstrap' => array(
                     'class' => 'bootstrap.components.Bootstrap'
                 ),
-
+                'session' => array (
+                    'class' => 'system.web.CDbHttpSession',
+                    'connectionID' => 'db',
+                    'sessionTableName' => 'websessions',
+                ),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
@@ -73,7 +77,7 @@ return array(
 				// uncomment the following to show log messages on web pages
 				array(
 					'class'=>'CWebLogRoute',
-				        'levels'=>'error',
+				        'levels'=>'error, info',
 				),
 			),
 		),
