@@ -46,9 +46,10 @@ unset($form);
 if (isset($model->top_senders))
 {
     $gridDataProvider = new CArrayDataProvider($model->top_senders);
+    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
-        array('name'=>'e-mail', 'header'=>'E-mail'),
-	array('name'=>'count', 'header'=>'# of mails'),);
+        array('name'=>'e-mail', 'header'=>'E-mail','value' =>'$data->e-mail'),
+	array('name'=>'rcount', 'header'=>'# of mails','value'=>'$data->rcount'),);
             
     $this->widget('bootstrap.widgets.TbGridView',array('dataProvider' => $gridDataProvider,'template' => "{items}",'columns'=>$gridColumns));
 }
