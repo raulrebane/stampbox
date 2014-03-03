@@ -61,7 +61,7 @@ class RegisterController extends Controller
                         $model->registereddomain->mailtype = 'IMAP';
                         $model->registereddomain->incoming_hostname = $model->incoming_hostname;
                         $model->registereddomain->incoming_port = $model->incoming_port;
-                       // $model->registereddomain->save();
+                        $model->registereddomain->save();
                     }
                     if (!isset($model->registeredemail))
                     {
@@ -70,9 +70,8 @@ class RegisterController extends Controller
                         $model->registeredemail->e_mail = Yii::app()->user->username;
                         $model->registeredemail->e_mail_username = $model->e_mail_username;
                         $model->registeredemail->e_mail_password = $model->e_mail_password;
-                      //  $model->registeredemail->save();
+                        $model->registeredemail->save();
                     }
-                    Yii::log("Before inbox opening",'info', 'application');
                     Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",'info', 'application');
                     Yii::log("Username: " .$model->e_mail_username ." password: " .$model->e_mail_password,'info', 'application');
                     $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
@@ -94,7 +93,7 @@ class RegisterController extends Controller
 			$i = 0;
 			foreach($senders as $value)
 			{
-				$model->topsenders[] = ['id'=>$i, 'e-mail'=>$senders
+                            
 			}
                     }
                     imap_close($inbox);
