@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <link href="/stampbox/css/sticky-footer.css" rel="stylesheet">
 </head>
 <body>
 <div class="navbar-wrapper">
@@ -68,7 +69,7 @@
     </div>
     <div id="footer"><div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>© 2013 Good Wind Communications · <a href="#">Privacy</a> <br> <a href="#">Terms</a></p>
+        <p>© 2013 Good Wind Communications<br><a href="#">Privacy</a> <br> <a href="#">Terms</a></p>
         </div></div>
 </div>
 </body>

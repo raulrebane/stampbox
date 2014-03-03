@@ -5,6 +5,25 @@
 
 $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
 
+if (isset($model->top_senders))
+{
+    $gridDataProvider = new CArrayDataProvider($model->top_senders);
+//    $gridDataProvider->setData($model->top_senders);
+    $gridColumns = array(
+        array('name'=>'Name', 'header'=>'Name'),
+        array('name'=>'e-mail', 'header'=>'E-mail'),
+	array('name'=>'rcount', 'header'=>'# of mails'),);
+            
+    $this->widget('bootstrap.widgets.TbGridView',array(
+        'id'=>'invitation-grid',
+        'type'=>'striped bordered',
+        'enablePagination'=>FALSE,
+        'dataProvider' => $gridDataProvider,
+        'template' => "{items}",
+        'columns'=>$gridColumns));
+}
+else
+{
 //echo Yii::app()->user->getFlash('info');
 $this->widget('bootstrap.widgets.TbAlert', array(
         'block'=>true, // display a larger alert block?
@@ -32,25 +51,8 @@ array(
         echo $form->textFieldRow($model, 'e_mail_username', array('class' => 'span3'));
         echo $form->passwordFieldRow($model, 'e_mail_password', array('class' => 'span3'));
 
-?>
-        <div class="form-actions">        
-            <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Get Contacts')); ?>
-        </div>
-
-<?php
+$this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Get Contacts'));
 $this->endWidget(); 
 unset($form);
-?>
-<br>
-<?php
-if (isset($model->top_senders))
-{
-    $gridDataProvider = new CArrayDataProvider($model->top_senders);
-    $gridDataProvider->setData($model->top_senders);
-    $gridColumns = array(
-        array('name'=>'e-mail', 'header'=>'E-mail','value' =>'$data->e-mail'),
-	array('name'=>'rcount', 'header'=>'# of mails','value'=>'$data->rcount'),);
-            
-    $this->widget('bootstrap.widgets.TbGridView',array('dataProvider' => $gridDataProvider,'template' => "{items}",'columns'=>$gridColumns));
 }
 ?>
