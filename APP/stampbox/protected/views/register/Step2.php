@@ -8,16 +8,18 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
 if (isset($model->top_senders))
 {
     $gridDataProvider = new CArrayDataProvider($model->top_senders);
+    $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
         array('name'=>'Name', 'header'=>'Name'),
         array('name'=>'e-mail', 'header'=>'E-mail'),
-	array('name'=>'rcount', 'header'=>'# of mails'),);
+	array('name'=>'rcount', 'header'=>'# of mails')
+        ,);
             
     $this->widget('bootstrap.widgets.TbGridView',array(
         'id'=>'invitation-grid',
         'type'=>'striped bordered',
-        'enablePagination'=>FALSE,
+        'enablePagination'=>TRUE,
         'dataProvider' => $gridDataProvider,
         'template' => "{items}",
         'columns'=>$gridColumns));

@@ -89,8 +89,8 @@ class RegisterController extends Controller
                             $overview = imap_fetch_overview($inbox,$email_number,0);
                             $mailfrom = imap_mime_header_decode($overview[0]->from);
                             if (count($mailfrom) == 2) {
-                                $fromname = rtrim($mailfrom[0]->text);
-                                $fromemail =  trim($mailfrom[1]->text, " <>");}
+                                $fromname = utf8_encode(rtrim($mailfrom[0]->text));
+                                $fromemail = trim($mailfrom[1]->text, " <>");}
                             else {
                                 if (strpos($overview[0]->from, "<")) {
 					 list($fromname, $fromemail) = explode("<", $overview[0]->from);}
@@ -99,7 +99,7 @@ class RegisterController extends Controller
 					$fromname = $overview[0]->from;
 				}
                                 $fromemail = trim($fromemail, " <>");
-                                $fromname = rtrim($fromname); }
+                                $fromname = utf8_encode(rtrim($fromname)); }
                             if (array_key_exists($fromemail,$senders)) {
                                 $senders[$fromemail]['rcount']++; }
                             else {
