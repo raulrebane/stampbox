@@ -34,10 +34,11 @@ array(
         echo $form->dropDownListRow($model, 'userlang', array('Eng', 'Est', 'Fin'), array('class' => 'span2'));
 
 ?>
-        <div class="form-actions">        
+<!--        <div class="form-actions">        
+-->
             <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Register')); ?>
-        </div>
-
+<!--        </div>
+-->
 <?php
 $this->endWidget(); 
 unset($form);

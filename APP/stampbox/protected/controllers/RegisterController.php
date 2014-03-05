@@ -116,6 +116,15 @@ class RegisterController extends Controller
                     usort($senders, "self::cmp");
 //                    Yii::log("After sort", 'info', 'application');
 		    $model->top_senders = array_values($senders);
+                    foreach ($model->top_senders as $i)
+                    {
+                        $invite = new Invitations;
+                        $invite->customer_id = Yii::app()->user->getId();
+                        $invite->invited_email = $i['e-mail'];
+                        $invite->from_count = $i['rcount'];
+                        $invite->name = $i['Name'];
+                        $invite->save();
+                    }
 		    $this->render('Step2',array('model'=>$model,));
                     Yii::app()->end();
                 }
@@ -128,16 +137,16 @@ class RegisterController extends Controller
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;
         }
-//        if (isset($registereddomain))
-//        {          
-//            $registeredemail = usermailbox::model()->findByAttributes(array('e_mail'=>Yii::app()->user->username));
-//            if (isset($registeredemail))
-//            {                
-//            }
-//        }
-//        Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');
 
+        Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');
         $this->render('Step2',array('model'=>$model,));
+    }
+
+    public function ActionInvite($id,$name,$email,$rcount) {
+        Yii::log("$email with $id now invited", 'info','application');
+        if(!isset($_GET['ajax']))
+//            $this->redirect(Yii::app()->request->urlReferrer);
+            return true;
     }
     
     function blowfishSalt($cost = 13)

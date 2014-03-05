@@ -7,7 +7,11 @@
     <link href="/stampbox/css/sticky-footer.css" rel="stylesheet">
 </head>
 <body>
-<div class="navbar-wrapper">
+<!--    <div class="container">
+        <img src ="/stampbox/images/SB_logo_01.png" />
+    </div>
+-->
+<div class="navbar-wrapper"> 
 <div class="container">
 <?php $this->widget('bootstrap.widgets.TbNavbar',array(
 	'type'=>'inverse',

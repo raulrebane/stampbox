@@ -11,10 +11,14 @@ if (isset($model->top_senders))
     $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
+        array(
+            'id' => 'selectedIds',
+            'class' => 'CCheckBoxColumn'
+            ),
         array('name'=>'Name', 'header'=>'Name'),
         array('name'=>'e-mail', 'header'=>'E-mail'),
-	array('name'=>'rcount', 'header'=>'# of mails')
-        ,);
+	array('name'=>'rcount', 'header'=>'# of mails'),
+        );
             
     $this->widget('bootstrap.widgets.TbGridView',array(
         'id'=>'invitation-grid',
@@ -37,21 +41,19 @@ $this->widget('bootstrap.widgets.TbAlert', array(
     ));
 
 $form = $this->beginWidget(
-'bootstrap.widgets.TbActiveForm',
-array(
-'id' => 'Step2',
-'type'=>'horizontal',
-'htmlOptions' => array('class' => 'well span-4'), // for inset effect
-)
-); 
+    'bootstrap.widgets.TbActiveForm',
+    array(
+        'id' => 'Step2',
+        'type'=>'horizontal',
+        'htmlOptions' => array('class' => 'well span8'), // for inset effect
+        )
+    ); 
 
-// echo $form->errorSummary($model);
-
-        echo $form->textFieldRow($model, 'maildomain', array('class' => 'span3'));
-        echo $form->textFieldRow($model, 'incoming_hostname', array('class' => 'span3'));
-        echo $form->numberFieldRow($model, 'incoming_port', array('class' => 'span3'));
-        echo $form->textFieldRow($model, 'e_mail_username', array('class' => 'span3'));
-        echo $form->passwordFieldRow($model, 'e_mail_password', array('class' => 'span3'));
+        echo $form->textFieldRow($model, 'maildomain', array('class' => 'span5'));
+        echo $form->textFieldRow($model, 'incoming_hostname', array('class' => 'span5'));
+        echo $form->numberFieldRow($model, 'incoming_port', array('class' => 'span5'));
+        echo $form->textFieldRow($model, 'e_mail_username', array('class' => 'span5'));
+        echo $form->passwordFieldRow($model, 'e_mail_password', array('class' => 'span5'));
 
 $this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Get Contacts'));
 $this->endWidget(); 

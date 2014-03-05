@@ -9,6 +9,8 @@
  * @property string $invited_when
  * @property integer $from_count
  * @property integer $to_count
+ * @property string $invite
+ * @property string $name 
  */
 class Invitations extends CActiveRecord
 {
@@ -30,6 +32,11 @@ class Invitations extends CActiveRecord
 		return 'ds.t_invitations';
 	}
 
+	public function  PrimaryKey()
+	{
+		return array('customer_id', 'invited_email');
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -41,10 +48,11 @@ class Invitations extends CActiveRecord
 			array('customer_id, invited_email', 'required'),
 			array('from_count, to_count', 'numerical', 'integerOnly'=>true),
 			array('invited_email', 'length', 'max'=>100),
+			array('invite', 'length', 'max'=>1),
 			array('invited_when', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('customer_id, invited_email, invited_when, from_count, to_count', 'safe', 'on'=>'search'),
+			array('customer_id, invited_email, invited_when, from_count, to_count, invite', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,10 +74,12 @@ class Invitations extends CActiveRecord
 	{
 		return array(
 			'customer_id' => 'Customer',
-			'invited_email' => 'Invited Email',
-			'invited_when' => 'Invited When',
-			'from_count' => 'From Count',
-			'to_count' => 'To Count',
+			'invited_email' => 'E-mail',
+			'invited_when' => 'Invited',
+			'from_count' => 'Received',
+			'to_count' => 'Sent',
+			'invite' => 'Invite',
+                        'name' => 'Name',
 		);
 	}
 
@@ -89,6 +99,7 @@ class Invitations extends CActiveRecord
 		$criteria->compare('invited_when',$this->invited_when,true);
 		$criteria->compare('from_count',$this->from_count);
 		$criteria->compare('to_count',$this->to_count);
+		$criteria->compare('invite',$this->invite,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
