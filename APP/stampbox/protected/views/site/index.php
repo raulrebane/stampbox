@@ -43,17 +43,19 @@ if (Yii::app()->user->isGuest)
                 'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
                 'label'=>'You have:',));
         echo '<br><h1>' .$stampcount['count'] .'<small> Stamps left</small></h1></div></div>
-              <div class="box col1 col1-link stampcolor" onclick="location.href=\'/stampbox/index.php?r=/shop/buystamps\';">
-              <div class="content-col1-center">Buy stamps</div></div>
-              <div class="box col1 stampyellow" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
-              <div class="content-col1-center">Change password</div></div>
+              <div class="box col1 col1-link stampcolor" onclick="location.href=\'#\';">
+              <div class="content-col1-center"><p>Buy stamps</p></div></div>
+              <div class="box col1 col1-link stampcolor" onclick="location.href=\'/stampbox/index.php?r=register/step2\';">
+              <div class="content-col1-center"><p>Add e-mail</p></div></div>
               <div class="box col2 stampwhite"><div class="content-col2">';
               $this->widget('bootstrap.widgets.TbLabel', array(
                 'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
                 'label'=>'Invited:',));        
         echo '<h1>' .$invitationcount["invited"] .' of ' .$invitationcount["invitedtotal"] .'</h1></div></div>
+    <div class="box col1 col1-link stampyellow" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
+    <div class="content-col1-center">Change password</div></div>
     <div class="box col5 stampblue">Blue</div>
-    <div class="box col1 stampgreen">Green</div>
-    <div class="box col1 stampyellow">Yellow</div>';
+    <div class="box col1 col1-link stampgreen">Green</div>
+    <div class="box col1 col1-link stampyellow">Yellow</div>';
 }
 ?>
