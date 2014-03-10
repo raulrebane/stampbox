@@ -15,14 +15,26 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 
 if (isset($model->top_senders))
 {
-//    $model->Invitations = new Invitations('search');
-//    $gridDataProvider = $model->Invitations->search();
-//    var_dump($gridDataProvider);
-    
+$form = $this->beginWidget(
+    'bootstrap.widgets.TbActiveForm',
+    array(
+        'id' => 'Step2',
+        'type'=>'horizontal',
+        'htmlOptions' => array('class' => 'span8'), 
+        )
+    );     
+
     $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'id'=>'Email', ));    
     $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
+        array(
+            'id' => 'selectedIds',
+            'class' => 'CCheckBoxColumn',
+            'selectableRows'=>100,
+            'header'=>'Invite',
+            'name'=>'e-mail',
+            ),
         array('name'=>'Name', 'header'=>'Name'),
         array('name'=>'e-mail', 'header'=>'E-mail'),
 	array('name'=>'rcount', 'header'=>'# of mails'),
@@ -31,13 +43,17 @@ if (isset($model->top_senders))
 //        var_dump($gridDataProvider);
     $this->widget('bootstrap.widgets.TbGridView',array(
         'id'=>'invitation-grid',
-        'type'=>'striped bordered',
+        'type'=>'bordered',
         'enablePagination'=>TRUE,
         'dataProvider' => $gridDataProvider,
         'template' => "{items}",
         'columns'=>$gridColumns));
-  }
- 
+
+    $this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Invite'));
+
+    $this->endWidget(); 
+    unset($form);
+    }
 else
 {
 //echo Yii::app()->user->getFlash('info');

@@ -79,6 +79,11 @@ return array(
 					'class'=>'CWebLogRoute',
 				        'levels'=>'error, info',
 				),
+                                array(
+                                        'class'=>'CFileLogRoute',
+                                        'categories'=>'system.db.*',
+                                        'logFile'=>'sql.log',
+                                ),
 			),
 		),
 	),

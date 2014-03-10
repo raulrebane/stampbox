@@ -44,7 +44,7 @@ class Register extends CFormModel
 			array('password, passwordrepeat', 'length', 'max'=>16),
                         array('username', 'email'),
                         array('password', 'compare', 'compareAttribute'=>'passwordrepeat'),
-                        array('incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
+                        array('maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
 		);
 	}
 

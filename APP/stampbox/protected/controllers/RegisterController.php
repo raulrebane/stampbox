@@ -46,11 +46,22 @@ class RegisterController extends Controller
        
     public function actionStep2()
     {
-        $model = new Register;
+        if (isset($_POST['selectedIds']))
+            {
+                foreach ($_POST['selectedIds'] as $id)
+                {
+                    $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$id));
+                    $invite->invite = 'Y';
+                    $invite->save();
+                }
+                $this->redirect(array('site/index'));
+             }        $model = new Register;
 
         if(isset($_POST['Register']))
 	{  
-            $model->attributes=$_POST['Register'];     
+            $model->attributes=$_POST['Register'];
+//            CVarDumper::Dump($model);
 //            if ($model->validate())
                 {
 		     $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
@@ -63,9 +74,11 @@ class RegisterController extends Controller
                         $model->registereddomain->incoming_hostname = $model->incoming_hostname;
                         $model->registereddomain->incoming_port = $model->incoming_port;
                         $model->registereddomain->save();
+//                        CVarDumper::Dump($model->registereddomain->getErrors(),100,true);              
                     }
                     $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
                                     array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
+//                    Yii::log("found e-mail $model->registeredemail", 'info', 'application');
 		    if ($model->registeredemail === NULL)
                     {
                         $model->registeredemail = new usermailbox();
@@ -73,7 +86,10 @@ class RegisterController extends Controller
                         $model->registeredemail->e_mail = Yii::app()->user->username;
                         $model->registeredemail->e_mail_username = $model->e_mail_username;
                         $model->registeredemail->e_mail_password = $model->e_mail_password;
+                        $model->registeredemail->status = 'A';
+                        $model->registeredemail->maildomain = $model->maildomain;
                         $model->registeredemail->save();
+//                        CVarDumper::Dump($model->registeredemail->getErrors(),100,true);
                     }
 //                    Yii::log("Before inbox opening",'info', 'application');
 //                    Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",'info', 'application');
@@ -146,7 +162,7 @@ class RegisterController extends Controller
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;
         }
-
+//        CVarDumper::Dump($model);
         Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');
         $this->render('Step2',array('model'=>$model,));
     }

@@ -33,7 +33,7 @@ if (Yii::app()->user->isGuest)
             'params' => array(':1'=>Yii::app()->user->getId(), ':2'=>'U'),
         ))->queryRow();
         $invitationcount = Yii::app()->db->createCommand(array(
-            'select'=> array('count(invited_email) as invitedtotal, count(invited_when) as invited'),
+            'select'=> array('count(invited_email) as invitedtotal, count(invite) as invited'),
             'from' => 'ds.t_invitations',
             'where'=> 'customer_id=:1',
             'params' => array(':1'=>Yii::app()->user->getId()),
