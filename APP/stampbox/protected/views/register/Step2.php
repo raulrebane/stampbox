@@ -19,25 +19,23 @@ if (isset($model->top_senders))
 //    $gridDataProvider = $model->Invitations->search();
 //    var_dump($gridDataProvider);
     
-//    $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'id'=>'Email', ));    
-//    $gridDataProvider->getPagination()->setPageSize(100);
+    $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'id'=>'Email', ));    
+    $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
-/*    $gridColumns = array(
+    $gridColumns = array(
         array('name'=>'Name', 'header'=>'Name'),
         array('name'=>'e-mail', 'header'=>'E-mail'),
 	array('name'=>'rcount', 'header'=>'# of mails'),
         );
-        var_dump($gridColumns);
+//        var_dump($gridColumns);
 //        var_dump($gridDataProvider);
-/*    $this->widget('bootstrap.widgets.TbGridView',array(
+    $this->widget('bootstrap.widgets.TbGridView',array(
         'id'=>'invitation-grid',
         'type'=>'striped bordered',
         'enablePagination'=>TRUE,
         'dataProvider' => $gridDataProvider,
         'template' => "{items}",
         'columns'=>$gridColumns));
-
- */
   }
  
 else

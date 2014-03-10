@@ -38,8 +38,7 @@ class RegisterController extends Controller
                     self::GenerateStamps(Yii::App()->user->getId(), $dbconnection, 100);
                     pg_close($dbconnection);
                     $this->redirect(array('Step2'));
-                }
-                
+                }                
             }
          }
         $this->render('Step1',array('model'=>$model,)); 
@@ -54,7 +53,9 @@ class RegisterController extends Controller
             $model->attributes=$_POST['Register'];     
 //            if ($model->validate())
                 {
-                    if (!isset($model->registereddomain))
+		     $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
+                                    array(':1'=>$model->maildomain));
+                    if ($model->registereddomain === NULL)
                     {
                         $model->registereddomain = new mailconfig();
                         $model->registereddomain->maildomain = $model->maildomain;
@@ -63,7 +64,9 @@ class RegisterController extends Controller
                         $model->registereddomain->incoming_port = $model->incoming_port;
                         $model->registereddomain->save();
                     }
-                    if (!isset($model->registeredemail))
+                    $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
+		    if ($model->registeredemail === NULL)
                     {
                         $model->registeredemail = new usermailbox();
                         $model->registeredemail->customer_id = Yii::app()->user->getId();
@@ -130,9 +133,9 @@ class RegisterController extends Controller
                         $invite->save();
                         }
                     }
-		    Yii:app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
+		    Yii::app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
                     $this->render('Step2',array('model'=>$model,));
-//                    Yii::app()->end();
+                    Yii::app()->end();
                 }
         }
         
