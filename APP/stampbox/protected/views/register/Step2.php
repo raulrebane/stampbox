@@ -4,17 +4,24 @@
 /* @var $form CActiveForm */
 
 $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
+$this->widget('bootstrap.widgets.TbAlert', array(
+        'block'=>true, // display a larger alert block?
+        'fade'=>true, // use transitions?
+        'closeText'=>'&times;', // close link text - if set to false, no close link is displayed
+        'alerts'=>array( // configurations per alert type
+            'success'=>array('block'=>true, 'fade'=>true, 'closeText'=>'&times;'), // success, info, warning, error or danger
+        ),
+    ));
 
 if (isset($model->top_senders))
 {
-    $gridDataProvider = new CArrayDataProvider($model->top_senders);
+    $model->Invitations = new Invitations('search');
+    $gridDataProvider = $model->Invitations->search();
+    var_dump($gridDataProvider);
+    
     $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
-        array(
-            'id' => 'selectedIds',
-            'class' => 'CCheckBoxColumn'
-            ),
         array('name'=>'Name', 'header'=>'Name'),
         array('name'=>'e-mail', 'header'=>'E-mail'),
 	array('name'=>'rcount', 'header'=>'# of mails'),
@@ -31,14 +38,7 @@ if (isset($model->top_senders))
 else
 {
 //echo Yii::app()->user->getFlash('info');
-$this->widget('bootstrap.widgets.TbAlert', array(
-        'block'=>true, // display a larger alert block?
-        'fade'=>true, // use transitions?
-        'closeText'=>'&times;', // close link text - if set to false, no close link is displayed
-        'alerts'=>array( // configurations per alert type
-            'success'=>array('block'=>true, 'fade'=>true, 'closeText'=>'&times;'), // success, info, warning, error or danger
-        ),
-    ));
+
 
 $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',

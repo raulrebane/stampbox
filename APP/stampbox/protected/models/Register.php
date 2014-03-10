@@ -27,6 +27,7 @@ class Register extends CFormModel
         public $registereddomain;
         public $registeredemail;
         public $top_senders;
+        public $Invitations;
 
 	/**
 	 * Declares the validation rules.

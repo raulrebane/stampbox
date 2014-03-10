@@ -125,7 +125,8 @@ class RegisterController extends Controller
                         $invite->name = $i['Name'];
                         $invite->save();
                     }
-		    $this->render('Step2',array('model'=>$model,));
+		    Yii:app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
+                    $this->render('Step2',array('model'=>$model,));
                     Yii::app()->end();
                 }
         }

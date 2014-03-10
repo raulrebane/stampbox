@@ -5,76 +5,67 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <link href="/stampbox/css/sticky-footer.css" rel="stylesheet">
+    <link href="/stampbox/css/stampbox.css" rel="stylesheet">
 </head>
 <body>
-<!--    <div class="container">
-        <img src ="/stampbox/images/SB_logo_01.png" />
-    </div>
--->
-<div class="navbar-wrapper"> 
+    <style type="text/css">
+        body {
+            background-color: #E6E2DF;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            -webkit-background-size: cover !important;
+            -moz-background-size: cover !important;
+            -o-background-size: cover !important;
+            background-size: cover !important;
+            background-image: url(/stampbox/images/mails.jpg);
+        }
+        #footer {
+            background-color: #FFF;
+            -webkit-box-shadow: -1px -3px 4px rgba(0, 0, 0, 0.065) !important;
+            -moz-box-shadow: -1px -3px 4px rgba(0, 0, 0, 0.065) !important;
+            box-shadow: -1px -3px 4px rgba(0, 0, 0, 0.065) !important;
+        }
+</style>
+<div class="navbar-wrapper">
 <div class="container">
-<?php $this->widget('bootstrap.widgets.TbNavbar',array(
-	'type'=>'inverse',
-        'fixed'=> false,
-//        'brand'=>CHtml::encode('<img>src="/stampbox/images/SB_logo_01.png"></img>Stampbox'),
-        'brandOptions'=>array('<img'=>'/stampbox/images/SB_logo_01.png"</img>',),
-	'brand'=>CHtml::encode(Yii::app()->name),
-	'brandUrl'=> 'index.php?r=/site/index',
-	'collapse'=>true,
-	'items'=>array(
-		array(
-			'class'=>'bootstrap.widgets.TbMenu',
-			'items'=>array(
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-	                          ),
-			'htmlOptions'=>array('class'=>'pull-left'),
+    <?php $this->widget('bootstrap.widgets.TbNavbar',array(
+                    'type'=>'inverse',
+                    'fixed'=> false,
+                    'brandOptions'=>array('<img'=>'/stampbox/images/SB_logo_01.png"</img>',),
+                    'brand'=>CHtml::encode(Yii::app()->name),
+                    'brandUrl'=> 'index.php?r=/site/index',
+                    'collapse'=>true,
+                    'items'=>array(
+                        array('class'=>'bootstrap.widgets.TbMenu',
+                            'items'=>array(
+                                array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+                                array('label'=>'Contact', 'url'=>array('/site/contact')),
+                            ),
+                        'htmlOptions'=>array('class'=>'pull-left'),
                         ),
-		  '<form class="navbar-form pull-right">
-		  <a href="index.php?r=site/login" class="btn">Login</a>
-		  <a href="index.php?r=register/step1" class="btn btn-success">Sign up for free</a>
-              	  </form>',
-            
-            array(
-			'class'=>'bootstrap.widgets.TbMenu',
-			'items'=>array(
-         			array('label'=>'Logout', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-                                   ),
-			'htmlOptions'=>array('class'=>'pull-right'),
+                    '<form class="navbar-form pull-right">
+                    <a href="index.php?r=site/login" class="btn">Login</a>
+                    <a href="index.php?r=register/step1" class="btn btn-success">Sign up for free</a>
+                    </form>',  
+                    array('class'=>'bootstrap.widgets.TbMenu',
+                        'items'=>array(
+                            array('label'=>'Logout', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
                         ),
-	),
-)); ?>
-</div></div>   
+                        'htmlOptions'=>array('class'=>'pull-right'),
+                    ),
+                    ),
+    )); ?>
+</div></div> 
+<div class="container">
+    <?php echo $content ?>
+</div>
+
+<div id="footer">
     <div class="container">
-        <?php if (!Yii::app()->user->isGuest)
-            { echo '<row class="row-fluid"><column class="col1 span2">';
-              $this->widget('bootstrap.widgets.TbMenu', array(
-                'type'=>'list',
-                'items'=>array(
-                    array('label'=>'My account'),
-                    array('label'=>'View', 'icon'=>'home', 'url'=>'index.php?r=tCustomer/view'),
-                    array('label'=>'Change password', 'icon'=>'', 'url'=>'index.php?r=tCustomer/changepsw'),
-                    array('label'=>'Reset password', 'icon'=>'pencil', 'url'=>'index.php?r=tCustomer/resetpsw'),
-                    array('label'=>'My mailboxes'),
-                    array('label'=>'View', 'icon'=>'user', 'url'=>'index.php?r=usermailbox/index'),
-                    array('label'=>'Statistics', 'icon'=>'cog', 'url'=>'index.php?r=usermailbox/stats'),
-                    array('label'=>'Help', 'icon'=>'flag', 'url'=>'#'),
-                    array('label'=>'My stamps'),
-                    array('label'=>'Buy', 'url'=>'#'),
-                    array('label'=>'History', 'url'=>'index.php?r=StampsTransactions/index'),
-                   ),
-                ));
-        echo '</column><column class="col2 span10">';
-	echo $content;
-        echo '</column></row>';
-            }
-        else { echo $content;}
-	?>
-    </div>
-    <div id="footer"><div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
         <p>© 2013 Good Wind Communications<br><a href="#">Privacy</a> <br> <a href="#">Terms</a></p>
-        </div></div>
+    </div>
 </div>
 </body>
 </html>

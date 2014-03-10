@@ -10,7 +10,7 @@
  * @property integer $from_count
  * @property integer $to_count
  * @property string $invite
- * @property string $name 
+ * @property string $name
  */
 class Invitations extends CActiveRecord
 {
@@ -32,11 +32,6 @@ class Invitations extends CActiveRecord
 		return 'ds.t_invitations';
 	}
 
-	public function  PrimaryKey()
-	{
-		return array('customer_id', 'invited_email');
-	}
-
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -47,12 +42,12 @@ class Invitations extends CActiveRecord
 		return array(
 			array('customer_id, invited_email', 'required'),
 			array('from_count, to_count', 'numerical', 'integerOnly'=>true),
-			array('invited_email', 'length', 'max'=>100),
+			array('invited_email, name', 'length', 'max'=>100),
 			array('invite', 'length', 'max'=>1),
 			array('invited_when', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('customer_id, invited_email, invited_when, from_count, to_count, invite', 'safe', 'on'=>'search'),
+			array('customer_id, invited_email, invited_when, from_count, to_count, invite, name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,15 +69,19 @@ class Invitations extends CActiveRecord
 	{
 		return array(
 			'customer_id' => 'Customer',
-			'invited_email' => 'E-mail',
-			'invited_when' => 'Invited',
+			'invited_email' => 'Email',
+			'invited_when' => 'Invitation date',
 			'from_count' => 'Received',
 			'to_count' => 'Sent',
 			'invite' => 'Invite',
-                        'name' => 'Name',
+			'name' => 'Name',
 		);
 	}
-
+        
+        public function primaryKey() {
+                return array('customer_id', 'invited_email');
+        }
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -94,12 +93,13 @@ class Invitations extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('customer_id',$this->customer_id,true);
+		$criteria->compare('customer_id',Yii::app()->user->getId(),true);
 		$criteria->compare('invited_email',$this->invited_email,true);
 		$criteria->compare('invited_when',$this->invited_when,true);
 		$criteria->compare('from_count',$this->from_count);
 		$criteria->compare('to_count',$this->to_count);
 		$criteria->compare('invite',$this->invite,true);
+		$criteria->compare('name',$this->name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
