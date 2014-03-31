@@ -82,6 +82,10 @@ and open the template in the editor.
     float: left;
 }
 
+.content-colauto {
+    padding: 15px 15px 0px;
+}
+
 .content-col2 {
     width: 220px;
     padding: 15px 15px 0px;   

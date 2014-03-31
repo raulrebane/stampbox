@@ -62,7 +62,7 @@ if (Yii::app()->user->isGuest)
         echo '<h1>' .$invitationcount["invited"] .' of ' .$invitationcount["invitedtotal"] .'</h1></div></div>
     <div class="box col1 col1-link stampyellow" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
     <div class="content-col1-center">Change password</div></div>';
-        echo '<div class="box span6 stampwhite"><div class="content-col2">';
+        echo '<div class="box span6 stampwhite"><div class="content-colauto">';
         $this->widget('bootstrap.widgets.TbLabel', array(
                 'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
                 'label'=>'Last 10 transactions:',));
