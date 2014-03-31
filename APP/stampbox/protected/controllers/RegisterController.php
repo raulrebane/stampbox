@@ -56,8 +56,9 @@ class RegisterController extends Controller
                     $invite->save();
                 }
                 $this->redirect(array('site/index'));
-             }        $model = new Register;
-
+             }
+             
+        $model = new Register;
         if(isset($_POST['Register']))
 	{  
             $model->attributes=$_POST['Register'];
@@ -95,13 +96,13 @@ class RegisterController extends Controller
 //                    Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",'info', 'application');
 //                    Yii::log("Username: " .$model->e_mail_username ." password: " .$model->e_mail_password,'info', 'application');
                     $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
-                                $model->e_mail_username,$model->e_mail_password) or die;
+                                $model->e_mail_username,$model->e_mail_password);
  //                   Yii::log("after inbox open",'info', 'application');
                     $emails = imap_search($inbox,'ALL');
                     /* if emails are returned, cycle through each... */
                     if($emails) {
                         $senders = array();
-                        $r = 0;
+ //                       $r = 0;
                         /* for every email... */
                         foreach($emails as $email_number) {
                         /* get information specific to this email */
@@ -125,8 +126,8 @@ class RegisterController extends Controller
                                 $senders[$fromemail]['e-mail'] = $fromemail;
                                 $senders[$fromemail]['Name'] = $fromname;
                                 $senders[$fromemail]['rcount'] = 1;
-                                $senders[$fromemail]['id'] = $r;
-                                $r++;
+  //                             $senders[$fromemail]['id'] = $r;
+  //                             $r++;
                             }
 			}
                     }

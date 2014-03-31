@@ -38,6 +38,14 @@ if (Yii::app()->user->isGuest)
             'where'=> 'customer_id=:1',
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
+        $lasttransactions = Yii::app()->db->createCommand(array(
+            'select'=> array('*'),
+            'from'=> 'ds.t_stamps_transactions',
+            'where'=> 'customer_id = :1',
+            'order'=> 'transaction_id desc',
+            'limit'=> '10',
+            'params'=> array(':1'=>Yii::app()->user->getId()),
+        ))->queryAll();
         echo '<div class="box col2 stampwhite"><div class="content-col2">';
             $this->widget('bootstrap.widgets.TbLabel', array(
                 'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
@@ -53,9 +61,25 @@ if (Yii::app()->user->isGuest)
                 'label'=>'Invited:',));        
         echo '<h1>' .$invitationcount["invited"] .' of ' .$invitationcount["invitedtotal"] .'</h1></div></div>
     <div class="box col1 col1-link stampyellow" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
-    <div class="content-col1-center">Change password</div></div>
-    <div class="box col5 stampblue">Blue</div>
-    <div class="box col1 col1-link stampgreen">Green</div>
-    <div class="box col1 col1-link stampyellow">Yellow</div>';
+    <div class="content-col1-center">Change password</div></div>';
+        echo '<div class="box span6 stampwhite"><div class="content-col2">';
+        $this->widget('bootstrap.widgets.TbLabel', array(
+                'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
+                'label'=>'Last 10 transactions:',));
+        $gridDataProvider = new CArrayDataProvider($lasttransactions, array('keyField'=>'transaction_id', ));  
+        $gridColumns = array(
+            array('name'=>'transaction_date', 'header'=>'Date'),
+            array('name'=>'stamps', 'header'=>'Stamps'),
+            array('name'=>'transaction_points', 'header'=>'Credits'),
+            array('name'=>'description', 'header'=>'Description')
+            );
+        $this->widget('bootstrap.widgets.TbGridView',array(
+            'id'=>'smallstatement-grid',
+            'type'=>'bordered',
+            'enablePagination'=>TRUE,
+            'dataProvider' => $gridDataProvider,
+            'template' => "{items}",
+            'columns'=>$gridColumns));      
+        echo '</div>';
 }
 ?>
