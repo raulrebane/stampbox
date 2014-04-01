@@ -62,8 +62,6 @@ class RegisterController extends Controller
         if(isset($_POST['Register']))
 	{  
             $model->attributes=$_POST['Register'];
-//            CVarDumper::Dump($model);
-//            if ($model->validate())
                 {
 		     $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                                     array(':1'=>$model->maildomain));
@@ -74,8 +72,7 @@ class RegisterController extends Controller
                         $model->registereddomain->mailtype = 'IMAP';
                         $model->registereddomain->incoming_hostname = $model->incoming_hostname;
                         $model->registereddomain->incoming_port = $model->incoming_port;
-                        $model->registereddomain->save();
-//                        CVarDumper::Dump($model->registereddomain->getErrors(),100,true);              
+                        $model->registereddomain->save();             
                     }
                     $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
                                     array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
@@ -90,19 +87,16 @@ class RegisterController extends Controller
                         $model->registeredemail->status = 'A';
                         $model->registeredemail->maildomain = $model->maildomain;
                         $model->registeredemail->save();
-//                        CVarDumper::Dump($model->registeredemail->getErrors(),100,true);
                     }
                     if ($model->registereddomain->incoming_auth == 'USERNAME') {
                         list($model->e_mail_username, ) = explode("@", $model->e_mail_username);
                     }
                     $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
                                 $model->e_mail_username,$model->e_mail_password);
- //                   Yii::log("after inbox open",'info', 'application');
                     $emails = imap_search($inbox,'ALL');
                     /* if emails are returned, cycle through each... */
                     if($emails) {
                         $senders = array();
- //                       $r = 0;
                         /* for every email... */
                         foreach($emails as $email_number) {
                         /* get information specific to this email */
@@ -126,16 +120,12 @@ class RegisterController extends Controller
                                 $senders[$fromemail]['e-mail'] = $fromemail;
                                 $senders[$fromemail]['Name'] = $fromname;
                                 $senders[$fromemail]['rcount'] = 1;
-  //                             $senders[$fromemail]['id'] = $r;
-  //                             $r++;
                             }
 			}
                     }
                     imap_close($inbox);
-//                   Yii::log("Before sort", 'info', 'application');
                     if (isset($senders)) {
                         usort($senders, "self::cmp");
-//                    Yii::log("After sort", 'info', 'application');
                         $model->top_senders = array_values($senders);
                         foreach ($model->top_senders as $i)
                         {

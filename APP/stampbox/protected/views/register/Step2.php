@@ -24,7 +24,7 @@ $form = $this->beginWidget(
         )
     );     
 
-    $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'id'=>'Email', ));    
+    $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'keyField'=>'Email', ));    
     $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
