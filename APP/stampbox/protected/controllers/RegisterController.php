@@ -92,9 +92,9 @@ class RegisterController extends Controller
                         $model->registeredemail->save();
 //                        CVarDumper::Dump($model->registeredemail->getErrors(),100,true);
                     }
-//                    Yii::log("Before inbox opening",'info', 'application');
-//                    Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",'info', 'application');
-//                    Yii::log("Username: " .$model->e_mail_username ." password: " .$model->e_mail_password,'info', 'application');
+                    if ($model->registereddomain->incoming_auth == 'USERNAME') {
+                        list($model->e_mail_username, ) = explode("@", $model->e_mail_username);
+                    }
                     $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
                                 $model->e_mail_username,$model->e_mail_password);
  //                   Yii::log("after inbox open",'info', 'application');
@@ -133,24 +133,30 @@ class RegisterController extends Controller
                     }
                     imap_close($inbox);
 //                   Yii::log("Before sort", 'info', 'application');
-                    usort($senders, "self::cmp");
+                    if (isset($senders)) {
+                        usort($senders, "self::cmp");
 //                    Yii::log("After sort", 'info', 'application');
-		    $model->top_senders = array_values($senders);
-                    foreach ($model->top_senders as $i)
-                    {
-                        $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
-                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$i['e-mail']));
-                        if ($invite == NULL)
+                        $model->top_senders = array_values($senders);
+                        foreach ($model->top_senders as $i)
                         {
-                        $invite = new Invitations;
-                        $invite->customer_id = Yii::app()->user->getId();
-                        $invite->invited_email = $i['e-mail'];
-                        $invite->from_count = $i['rcount'];
-                        $invite->name = $i['Name'];
-                        $invite->save();
+                            $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$i['e-mail']));
+                            if ($invite == NULL)
+                            {
+                                $invite = new Invitations;
+                                $invite->customer_id = Yii::app()->user->getId();
+                                $invite->invited_email = $i['e-mail'];
+                                $invite->from_count = $i['rcount'];
+                                $invite->name = $i['Name'];
+                                $invite->save();
+                            }
                         }
+                        Yii::app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
                     }
-		    Yii::app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
+                    else {
+                        Yii::app()->user->setFlash('success', 'Your e-mail inbox seems to be empty and there was nobody to invite');
+                        $this->redirect(array('site/index'));
+                    }
                     $this->render('Step2',array('model'=>$model,));
                     Yii::app()->end();
                 }
