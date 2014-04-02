@@ -80,6 +80,15 @@ if (Yii::app()->user->isGuest)
             'dataProvider' => $gridDataProvider,
             'template' => "{items}",
             'columns'=>$gridColumns));      
-        echo '</div>';
+        echo '</div></div>';
+        echo '<div class="box span6 stampwhite"><div class="content-colauto">';
+        $this->widget('bootstrap.widgets.TbHighCharts',
+            array(
+                'options' => array(
+                'series' => array(['data' => [1, 2, 3, 4, 5, 1, 2, 1, 4, 3, 1, 5]])
+                )
+            )
+        );
+        echo '</div></div>';
 }
 ?>

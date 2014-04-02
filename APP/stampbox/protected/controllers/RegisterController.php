@@ -17,28 +17,31 @@ class RegisterController extends Controller
             $model->attributes=$_POST['Register'];     
             if ($model->validate())
             {
-                $customer['username'] = $model->username;
-                $customer['firstname'] = $model->firstname;
-                $customer['lastname'] = $model->lastname;
-                $customer['password'] = crypt($model->password, self::blowfishSalt());
-                $customer['preferred_lang'] = $model->userlang;
-                $customer['last_seen'] = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
+                $customer = TCustomer::model()->find('username=:1', 
+                                    array(':1'=>mb_convert_case($model->username, MB_CASE_LOWER, "UTF-8")));
+                if ($customer === NULL) {
+                    $customer = new TCustomer();
+                    $customer->username = mb_convert_case($model->username, MB_CASE_LOWER, "UTF-8");
+                    $customer->firstname = $model->firstname;
+                    $customer->lastname = $model->lastname;
+                    $customer->password = crypt($model->password, self::blowfishSalt());
+                    $customer->preferred_lang = $model->userlang;
+                    $customer->last_seen = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
 			// default status A - active
-                $customer['status'] = 'A';
+                    $customer->status = 'A';
 			// no bad logins yet
-                $customer['bad_logins'] = 0;
-                $dbconnection = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234")
-                    or die('Could not connect: ' . pg_last_error());
-//                $dbconnection=Yii::app()->db;
-                $res = pg_insert($dbconnection, 'ds.t_customer', $customer);
-                if ($res) { 
+                    $customer->bad_logins = 0;
+                    $customer->save();
                     $identity=new UserIdentity($model->username,$model->password);
                     $identity->authenticate();
                     Yii::app()->user->login($identity);
                     self::GenerateStamps(Yii::App()->user->getId(), $dbconnection, 100);
                     pg_close($dbconnection);
                     $this->redirect(array('Step2'));
-                }                
+                }
+              else {
+               $model->addError('username', 'This e-mail is already registered'); 
+              }
             }
          }
         $this->render('Step1',array('model'=>$model,)); 
@@ -64,13 +67,13 @@ class RegisterController extends Controller
             $model->attributes=$_POST['Register'];
                 {
 		     $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
-                                    array(':1'=>$model->maildomain));
+                                    array(':1'=>mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8")));
                     if ($model->registereddomain === NULL)
                     {
                         $model->registereddomain = new mailconfig();
-                        $model->registereddomain->maildomain = $model->maildomain;
+                        $model->registereddomain->maildomain = mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8");
                         $model->registereddomain->mailtype = 'IMAP';
-                        $model->registereddomain->incoming_hostname = $model->incoming_hostname;
+                        $model->registereddomain->incoming_hostname = mb_convert_case($model->incoming_hostname, MB_CASE_LOWER, "UTF-8");
                         $model->registereddomain->incoming_port = $model->incoming_port;
                         $model->registereddomain->save();             
                     }

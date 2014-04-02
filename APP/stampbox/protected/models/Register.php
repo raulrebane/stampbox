@@ -39,6 +39,7 @@ class Register extends CFormModel
 		return array(
 			// required fields
 			array('username, firstname, lastname, password, passwordrepeat, userlang', 'required'),
+                        array('username', 'checkregistered'),
 			array('username', 'length', 'max'=>128),
 			array('firstname, lastname', 'length', 'max'=>100),
 			array('password, passwordrepeat', 'length', 'max'=>16),
@@ -47,7 +48,18 @@ class Register extends CFormModel
                         array('maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
 		);
 	}
+      
+        public function checkregistered()
+        {
+            $customer = TCustomer::model()->find('username=:1', 
+                                    array(':1'=>mb_convert_case($this->username, MB_CASE_LOWER, "UTF-8")));
+                if ($customer === !NULL) {
+                    $this->addError('username', 'This e-mail is already registered');
+                    return false;
+                }
 
+         return true;
+        }
 	/**
 	 * Declares attribute labels.
 	 */
