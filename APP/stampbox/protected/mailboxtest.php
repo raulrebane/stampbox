@@ -1,6 +1,6 @@
 <?php
     /* connect to gmail */
-    $hostname = '{imap.gmail.com:993/ssl/novalidate-cert}';
+    $hostname = '{17.172.34.114:993/ssl/novalidate-cert}';
     $username = '';
     $password = '';
 
