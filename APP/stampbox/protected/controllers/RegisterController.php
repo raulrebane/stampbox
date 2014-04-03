@@ -35,6 +35,7 @@ class RegisterController extends Controller
                     $identity=new UserIdentity($model->username,$model->password);
                     $identity->authenticate();
                     Yii::app()->user->login($identity);
+                    $dbconnection = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234");
                     self::GenerateStamps(Yii::App()->user->getId(), $dbconnection, 100);
                     pg_close($dbconnection);
                     $this->redirect(array('Step2'));
