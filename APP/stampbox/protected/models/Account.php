@@ -9,7 +9,7 @@
  * @property string $stamps_bal
 
  */
-class Customer extends CActiveRecord
+class Account extends CFormModel
 {
 	/**
 	 * Returns the static model of the specified AR class.

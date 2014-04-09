@@ -9,7 +9,7 @@
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 
 $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox;");
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
         {
@@ -25,7 +25,12 @@ if ($customermailboxes) {
                  ." username: " .$username ." pass: ". $custmailbox['e_mail_password']);
 	    } 
 	    else {
-//            	imap_createmailbox($inbox, "{".$mailconf['incoming_hostname'] ."}STAMPBOX");
+            	$mboxes = imap_list($inbox, "{".$mailconf['incoming_hostname'] ."}", "*");
+		if (is_array($mboxes)) {
+		 if (!in_array( "{".$mailconf['incoming_hostname'] ."}STAMPBOX", $mboxes)) {
+			imap_createmailbox($inbox, "{".$mailconf['incoming_hostname'] ."}STAMPBOX");
+		 }
+		}
 	    	$searchdate = date( "d-M-Y", strToTime ( "-1 days" ) );
             	$emails = imap_search($inbox,"SINCE $searchdate");
                 	if($emails) {
@@ -73,8 +78,7 @@ if ($customermailboxes) {
                         }
 			}
   	    	imap_expunge($inbox);
-	    	imap_close($inbox);
-            }
+	    	imap_close($inbox);}
            }
         }
     }

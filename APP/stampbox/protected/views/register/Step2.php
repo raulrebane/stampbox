@@ -24,7 +24,10 @@ $form = $this->beginWidget(
         )
     );     
 
-    $gridDataProvider = new CArrayDataProvider($model->top_senders, array( 'keyField'=>'e-mail', ));    
+    $gridDataProvider = new CArrayDataProvider($model->top_senders, 
+            array( 'keyField'=>'e-mail',     
+                   'sort'=>array('attributes'=>array('Name', 'e-mail', 'rcount',))
+                ,));    
     $gridDataProvider->getPagination()->setPageSize(100);
 //    $gridDataProvider->setData($model->top_senders);
     $gridColumns = array(
@@ -41,6 +44,7 @@ $form = $this->beginWidget(
         );
 //        var_dump($gridColumns);
 //        var_dump($gridDataProvider);
+    echo '<div class="box span12 stampwhite"><div class="content-colauto">';
     $this->widget('bootstrap.widgets.TbGridView',array(
         'id'=>'invitation-grid',
         'type'=>'bordered',
@@ -53,6 +57,7 @@ $form = $this->beginWidget(
 
     $this->endWidget(); 
     unset($form);
+    echo '</div></div>';
     }
 else
 {
