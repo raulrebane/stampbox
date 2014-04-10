@@ -85,6 +85,8 @@ if (Yii::app()->user->isGuest)
         $this->widget('bootstrap.widgets.TbHighCharts',
             array(
                 'options' => array(
+                    'title'=>array('text'=>'Stamped vs. non-Stamped e-mails received', x=>-20),
+                    'xAxis'=>array('categories'=>['30','20','10','1']),
                 'series' => array(['data' => [1, 2, 3, 4, 5, 1, 2, 1, 4, 3, 1, 5]])
                 )
             )
