@@ -105,10 +105,10 @@ if (Yii::app()->user->isGuest)
             array(
                 'options' => array(
                     'title'=>array('text'=>'Stamped vs. non-Stamped e-mails received', 'x'=>-20),
-                    'xAxis'=>array('categories'=>['week1','week2','week3','week4']),
+                    'xAxis'=>array('categories'=>array('week1','week2','week3','week4')),
                     'yAxis' => array('title' => array('text' => 'number of e-mails',)),
-                    'series' => array(['name'=>'Stamped', 'data' => [1, 3, 4, 5]],
-                                      ['name'=>'non-stamped', 'data'=>[5,5,2,1]])
+                    'series' => array(array('name'=>'Stamped', 'data' => array(1, 3, 4, 5)),
+                                      array('name'=>'non-stamped', 'data'=>array(5,5,2,1)))
                 )
             )
         );
