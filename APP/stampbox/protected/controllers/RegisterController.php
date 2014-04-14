@@ -50,6 +50,13 @@ class RegisterController extends Controller
        
     public function actionStep2()
     {
+        if(isset($_GET['sort'])) {
+//            $model = new Register;
+//            $model->top_senders = $_POST['maillist'];
+//            $this->render('Step2',array('model'=>$model,));
+            Yii::log("Got sort request", 'info', 'application');
+        }
+            
         if (isset($_POST['selectedIds']))
             {
                 foreach ($_POST['selectedIds'] as $id)
@@ -95,8 +102,8 @@ class RegisterController extends Controller
                     if ($model->registereddomain->incoming_auth == 'USERNAME') {
                         list($model->e_mail_username, ) = explode("@", $model->e_mail_username);
                     }
-                    Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert} - username: "
-                                .$model->e_mail_username ." and passw: " .$model->e_mail_password);
+//                    Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert} - username: "
+//                                .$model->e_mail_username ." and passw: " .$model->e_mail_password);
                     $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
                                 $model->e_mail_username,$model->e_mail_password);
                     $emails = imap_search($inbox,'ALL');

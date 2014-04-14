@@ -62,6 +62,25 @@ if (Yii::app()->user->isGuest)
         echo '<h1>' .$invitationcount["invited"] .' of ' .$invitationcount["invitedtotal"] .'</h1></div></div>
     <div class="box col1 col1-link stampyellow" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
     <div class="content-col1-center">Change password</div></div>';
+// invite friend
+    echo '<div class= "box col5 stampwhite"><div class="content-colauto">';
+        $this->widget('bootstrap.widgets.TbLabel', array(
+                'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+                'label'=>'Invite e-mail:',));
+        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',
+            array('id' => 'Invite','type'=>'inline','htmlOptions' => array('class' => 'span4'),));
+        $invite = new Dashboard();
+        echo '<div class="input-prepend"><span class="add-on">@</span>';
+        echo $form->textFieldRow($invite, 'invite_email', array('class' => 'span3','prepend' => '@'));
+        echo '</div>';
+        $this->widget('bootstrap.widgets.TbButton',array('buttonType' => 'submit', 'label' => 'Invite'));
+        $this->endWidget(); 
+        unset($form);
+        echo '</div></div>
+            <div class="box col1 col1-link stampgreen" onclick="location.href=\'/stampbox/index.php?r=/tCustomer/changepsw\';">
+            <div class="content-col1-center">Account balance</div></div>
+            <div class="box col1 col1-link stampgreen" onclick="location.href=\'/stampbox/index.php?r=/Account/Statement\';">
+             <div class="content-col1-center">Account statement</div></div>';
         echo '<div class="box span6 stampwhite"><div class="content-colauto">';
         $this->widget('bootstrap.widgets.TbLabel', array(
                 'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
@@ -85,12 +104,15 @@ if (Yii::app()->user->isGuest)
         $this->widget('bootstrap.widgets.TbHighCharts',
             array(
                 'options' => array(
-                    'title'=>array('text'=>'Stamped vs. non-Stamped e-mails received', x=>-20),
-                    'xAxis'=>array('categories'=>['30','20','10','1']),
-                'series' => array(['data' => [1, 2, 3, 4, 5, 1, 2, 1, 4, 3, 1, 5]])
+                    'title'=>array('text'=>'Stamped vs. non-Stamped e-mails received', 'x'=>-20),
+                    'xAxis'=>array('categories'=>['week1','week2','week3','week4']),
+                    'yAxis' => array('title' => array('text' => 'number of e-mails',)),
+                    'series' => array(['name'=>'Stamped', 'data' => [1, 3, 4, 5]],
+                                      ['name'=>'non-stamped', 'data'=>[5,5,2,1]])
                 )
             )
         );
         echo '</div></div>';
+
 }
 ?>

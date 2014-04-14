@@ -2,7 +2,7 @@
 
 class SiteController extends Controller
 {
-	/**
+        /**
 	 * Declares class-based actions.
 	 */
 	public function actions()
@@ -32,6 +32,14 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+        
+	public function actionInvite()
+	{
+		// renders the view file 'protected/views/site/index.php'
+		// using the default layout 'protected/views/layouts/main.php'
+		$this->render('index');
+	}
+        
 	/**
 	 * This is the action to handle external exceptions.
 	 */
