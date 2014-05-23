@@ -2,6 +2,13 @@
 
 class SiteController extends Controller
 {
+    /**
+    * @var string the default layout for the views. Defaults to '//layouts/main', meaning
+    * using  layout. See 'protected/views/layouts/main.php'.
+    */
+    public $layout='//layouts/main';
+
+    
         /**
 	 * Declares class-based actions.
 	 */
@@ -85,6 +92,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+            $this->layout = 'login';
 		$model=new LoginForm;
 
 		// if it is ajax validation request
