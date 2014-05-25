@@ -107,8 +107,8 @@ class SiteController extends Controller
                 else {
                     //$customer= new TCustomer();
                     //$customer->loadModel($tokenexists['customer_id']);
-                    $model->resettoken = $tokenexists['customer_id'];
-                    $this->redirect(array('site/newpasswd', 'uid'=>$tokenexists['customer_id']));
+                    Yii::app()->session['uid'] = $tokenexists['customer_id'];
+                    $this->redirect(array('site/newpasswd'));
                     //Yii::app()->end();
                 }
             }
@@ -119,9 +119,21 @@ class SiteController extends Controller
             $model = new ResetPasswd();
             if(isset($_POST['ResetPasswd']))
 		{
-                    YII::log('Resetpasswd set', 'info', 'application');
+                    YII::log('Resetpasswd set for customer ' .Yii::app()->session['uid'], 'info', 'application');
                     $model->attributes=$_POST['ResetPasswd'];
-                    $this->redirect($this->createUrl('site/login'));
+                    //$cust = new TCustomer();
+                    //$cust->findByPk($_GET['uid']);
+                    //$cust->password = crypt($model->newpassword, TCustomer::blowfishSalt());
+                    $command = Yii::app()->db->createCommand();
+                    $command->update('ds.t_customer', array('password'=>crypt($model->newpassword, TCustomer::blowfishSalt())),
+                                'customer_id=:id', array(':id'=>Yii::app()->session['uid']));
+                    //if ($cust->save()) {
+                        $this->redirect($this->createUrl('site/login')); 
+                    //}
+                    //else {
+                    //    $this->redirect($this->createUrl('index')); 
+                    //}
+                        
                 }          
             $this->render('newpasswd', array('model'=>$model));
             }
