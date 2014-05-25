@@ -82,8 +82,9 @@ class SiteController extends Controller
 				"Reply-To: no-reply@stampbox.eu\r\n".
 				"MIME-Version: 1.0\r\n".
 				"Content-type: text/plain; charset=UTF-8";
-                        $body = "your password reset link http://localhost/stampbox/index.php?r=site/checktoken&resettoken=" .$model->resettoken;
-			mail($model->emailaddress,$subject,$body,$headers);                        
+                        $body = "your password reset link " .Yii::app()->createAbsoluteUrl('site/checktoken') ."&resettoken=" .$model->resettoken;
+			mail($model->emailaddress,$subject,$body,$headers);
+                        $model->notified = TRUE;
                     }
                 }	
             $this->render('resetpasswd',array('model'=>$model));
