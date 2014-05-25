@@ -11,7 +11,7 @@
             <div class="row step-a">
                 <div class="col-md-6">
                     <div class="feature">
-                        <p>Enter your e-mail address and we will send you a link to reset your <b>Stampbox</b> login password</p>
+                        <p>Please enter new password for your <b>Stampbox</b> account</p>
                     </div>
                     <div class="feature">
                     </div>
@@ -24,9 +24,10 @@
                         'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
                         ?>
                         <div class="form-group">
-                            <?php echo $form->emailField($model, 'emailaddress', array('class' => 'form-control', 'id'=>'emailaddress', 'placeholder'=>'Enter email')); ?>
+                            <?php echo $form->passwordField($model, 'newpassword', array('class' => 'form-control', 'id'=>'newpassword', 'placeholder'=>'Enter new password')); ?>
+                            <?php echo $form->passwordField($model, 'verifynewpassword', array('class' => 'form-control', 'id'=>'verifynewpassword', 'placeholder'=>'Enter password again')); ?>
                         </div>
-                        <button type="submit" class="btn btn-aqua">Continue</button>
+                        <button type="submit" class="btn btn-aqua">Save</button>
                     <?php $this->endWidget(); unset($form);?>                       
                     </div>
                 </div>

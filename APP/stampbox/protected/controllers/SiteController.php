@@ -47,6 +47,54 @@ class SiteController extends Controller
 		$this->render('index');
 	}
         
+        public function actionresetpasswd() {
+            $this->layout = 'login';
+            $model = new ResetPasswd();
+            if(isset($_POST['ResetPasswd']))
+		{
+                    $model->attributes=$_POST['ResetPasswd'];
+                    //Yii::log('Reset password for ' .$model->emailaddress, 'info', 'application');
+                    $usernames = Yii::app()->db->createCommand(array('select'=> array('customer_id', 'e_mail'),
+                        'from' => 'ds.t_customer_mailbox',
+                        'where'=> 'e_mail = :1',
+                        'params' => array(':1'=>$model->emailaddress),))->queryRow();
+                    Yii::log('e-mail search returned: ' .$usernames['customer_id'], 'info', 'application');
+                    if ($usernames <> FALSE) {
+                        $alreadyreset = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
+                        'from' => 'ds.t_passwdresets',
+                        'where'=> 'customer_id = :1',
+                        'params' => array(':1'=>$usernames['customer_id']),))->queryRow();
+                        $command = Yii::app()->db->createCommand();
+                        if ($alreadyreset == FALSE) {
+                            $command->insert('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
+                                'e_mail'=>$usernames['e_mail'], 'token'=>uniqid($usernames['customer_id'], true),
+                                'sent'=>'now()'));
+                        }
+                        else {
+                            $command->update('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
+                                'e_mail'=>$usernames['e_mail'], 'token'=>uniqid($usernames['customer_id'], true),
+                                'sent'=>'now()'), 'customer_id=:id', array(':id'=>$usernames['customer_id']));
+                        }
+                    }
+                }	
+            $this->render('resetpasswd',array('model'=>$model));
+        } 
+        
+        public function actionChecktoken() {
+            $this->layout = 'login';
+            $model = new ResetPasswd();
+            $model->resettoken = Yii::app()->format->text( $_GET['resettoken'] );
+            $tokenexists = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
+                        'from' => 'ds.t_passwdresets',
+                        'where'=> 'token = :1',
+                        'params' => array(':1'=>$model->resettoken),))->queryRow();
+            if ($tokenexists == FALSE) {
+                
+            }
+            else {
+                
+            }
+        }
 	/**
 	 * This is the action to handle external exceptions.
 	 */

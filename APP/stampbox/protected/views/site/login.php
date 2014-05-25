@@ -16,7 +16,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 -->
         <div class="form-group">
             <?php
-            echo $form->textField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
+            echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
             echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder'=>'Password'));
             ?>
         </div>
