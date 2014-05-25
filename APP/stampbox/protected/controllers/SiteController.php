@@ -65,36 +65,66 @@ class SiteController extends Controller
                         'where'=> 'customer_id = :1',
                         'params' => array(':1'=>$usernames['customer_id']),))->queryRow();
                         $command = Yii::app()->db->createCommand();
+                        $model->resettoken = uniqid($usernames['customer_id'], true);
                         if ($alreadyreset == FALSE) {
                             $command->insert('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
-                                'e_mail'=>$usernames['e_mail'], 'token'=>uniqid($usernames['customer_id'], true),
+                                'e_mail'=>$usernames['e_mail'], 'token'=>$model->resettoken,
                                 'sent'=>'now()'));
                         }
                         else {
                             $command->update('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
-                                'e_mail'=>$usernames['e_mail'], 'token'=>uniqid($usernames['customer_id'], true),
+                                'e_mail'=>$usernames['e_mail'], 'token'=>$model->resettoken,
                                 'sent'=>'now()'), 'customer_id=:id', array(':id'=>$usernames['customer_id']));
                         }
+			//$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+			$subject='=?UTF-8?B?'.base64_encode('StampBox.eu password reset request').'?=';
+			$headers="From: Stampbox admin <admin@stampbox.eu>\r\n".
+				"Reply-To: no-reply@stampbox.eu\r\n".
+				"MIME-Version: 1.0\r\n".
+				"Content-type: text/plain; charset=UTF-8";
+                        $body = "your password reset link http://localhost/stampbox/index.php?r=site/checktoken&resettoken=" .$model->resettoken;
+			mail($model->emailaddress,$subject,$body,$headers);                        
                     }
                 }	
             $this->render('resetpasswd',array('model'=>$model));
         } 
         
         public function actionChecktoken() {
+            Yii::log('Checktoken begins', 'info', 'application');
             $this->layout = 'login';
             $model = new ResetPasswd();
-            $model->resettoken = Yii::app()->format->text( $_GET['resettoken'] );
-            $tokenexists = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
+
+            if (isset($_GET['resettoken'])) {
+                $model->resettoken = Yii::app()->format->text( $_GET['resettoken'] );
+                $tokenexists = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
                         'from' => 'ds.t_passwdresets',
                         'where'=> 'token = :1',
                         'params' => array(':1'=>$model->resettoken),))->queryRow();
-            if ($tokenexists == FALSE) {
-                
-            }
-            else {
-                
+                if ($tokenexists == FALSE) {
+                    $this->redirect($this->createUrl('index'));
+                }
+                else {
+                    //$customer= new TCustomer();
+                    //$customer->loadModel($tokenexists['customer_id']);
+                    $model->resettoken = $tokenexists['customer_id'];
+                    $this->redirect(array('site/newpasswd', 'uid'=>$tokenexists['customer_id']));
+                    //Yii::app()->end();
+                }
             }
         }
+        
+        public function actionNewpasswd() {
+            $this->layout = 'login';
+            $model = new ResetPasswd();
+            if(isset($_POST['ResetPasswd']))
+		{
+                    YII::log('Resetpasswd set', 'info', 'application');
+                    $model->attributes=$_POST['ResetPasswd'];
+                    $this->redirect($this->createUrl('site/login'));
+                }          
+            $this->render('newpasswd', array('model'=>$model));
+            }
+        
 	/**
 	 * This is the action to handle external exceptions.
 	 */

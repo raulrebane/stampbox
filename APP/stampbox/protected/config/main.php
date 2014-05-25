@@ -73,17 +73,23 @@ return array(
 				array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning, info',
+                                        'filter'=>'CLogFilter',
+                                        'logFile'=>'stampbox.log'
 				),
 				// uncomment the following to show log messages on web pages
 				array(
 					'class'=>'CWebLogRoute',
 				        'levels'=>'error, info',
+                                        'filter'=>'CLogFilter',
 				),
+                            /*
                                 array(
                                         'class'=>'CFileLogRoute',
                                         'categories'=>'system.db.*',
                                         'logFile'=>'sql.log',
                                 ),
+                             * 
+                             */
 			),
 		),
 	),

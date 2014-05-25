@@ -20,7 +20,7 @@
                     <div class="vertical-middle">
                     <?php $form = $this->beginWidget(
                         'bootstrap.widgets.TbActiveForm',array(
-                        'id' => 'ResetPasswdForm',
+                        'id' => 'ResetPasswd',
                         'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
                         ?>
                         <div class="form-group">
