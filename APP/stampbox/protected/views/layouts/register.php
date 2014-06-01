@@ -30,8 +30,26 @@
             <a href="/stampbox/index.php?r=register/Step1"><span>Don't have account?</span> Join us here</a>
         </div>
 
-        <?php echo $content ?>
- 
+
+        <div class="register-form">
+            <h1>Create <b>your</b> first <b>Stampbox</b></h1>
+            <div class="row step-a">
+                <div class="col-md-6">
+                    <div class="feature">
+                        <p>Works with all popular e-mail providers</p>
+                        <img src="images/fb3e1764.register-feature-services.png">
+                    </div>
+                    <div class="feature">
+                        <p>Works on all of your devices</p>
+                        <img src="images/9ce572d1.register-feature-devices.png">
+                    </div>
+                </div>
+                <div class="col-md-6 darker">
+                    <?php echo $content ?>
+                </div>
+            </div>
+        </div>
+        
     <script src="scripts/44101f0b.main.js"></script>
     <script src="scripts/a1187778.plugins.js"></script>
 </body>

@@ -11,7 +11,7 @@ return array(
 	'name'=>'StampBox',
 
 	// preloading 'log' component
-	'preload'=>array('bootstrap', 'log'),
+	'preload'=>array('log'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -55,9 +55,12 @@ return array(
     			'password' => 'Apua1234',
     			'charset' => 'UTF8',
 		),
+            /*
                 'bootstrap' => array(
                     'class' => 'bootstrap.components.Bootstrap'
                 ),
+             * 
+             */
                 'session' => array (
                     'class' => 'system.web.CDbHttpSession',
                     'connectionID' => 'db',

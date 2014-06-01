@@ -8,7 +8,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 <div class="login-form">
     <h1><b>Welcome</b> Back!</h1>
     <?php $form = $this->beginWidget(
-        'bootstrap.widgets.TbActiveForm',array(
+        'CActiveForm',array(
             'id' => 'verticalForm',
             'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
     ?>
@@ -26,5 +26,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
                 </label>
               </div>-->
         <button type="submit" class="btn btn-default"></button>
-        <?php $this->endWidget(); unset($form);?>
+        <?php $this->endWidget();
+        //unset($form);
+        ?>
 </div>

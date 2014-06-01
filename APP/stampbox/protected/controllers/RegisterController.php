@@ -10,8 +10,14 @@ class RegisterController extends Controller
     
     public function actionStep1() 
        {
+        $this->layout = 'register';
         $model = new Register;
         
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+            echo CActiveForm::validate(array($model)); 
+            Yii::app()->end(); 
+        }
+
         if(isset($_POST['Register']))
 	{  
             $model->attributes=$_POST['Register'];     
@@ -50,6 +56,7 @@ class RegisterController extends Controller
        
     public function actionStep2()
     {
+        $this->layout = 'register';
         if(isset($_GET['sort'])) {
 //            $model = new Register;
 //            $model->top_senders = $_POST['maillist'];
