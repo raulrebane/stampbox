@@ -8,12 +8,9 @@
 
 class Register extends CFormModel
 {
-	public $username;
-        public $firstname;
-        public $lastname;
-	public $password;
-	public $passwordrepeat;
-        public $userlang;
+	public $useremail;
+	public $emailusername;
+	public $emailpassword;
         
         // mailbox config related fields
         public $maildomain;
@@ -38,23 +35,26 @@ class Register extends CFormModel
 	{
 		return array(
 			// required fields
-			array('username, firstname, lastname, password, passwordrepeat, userlang', 'required'),
-                        array('username', 'checkregistered'),
-			array('username', 'length', 'max'=>128),
-			array('firstname, lastname', 'length', 'max'=>100),
-			array('password, passwordrepeat', 'length', 'max'=>16),
-                        array('username', 'email'),
-                        array('password', 'compare', 'compareAttribute'=>'passwordrepeat'),
+			array('useremail, emailusername, emailpassword', 'required'),
+                        array('useremail', 'checkregistered'),
+			array('useremail', 'length', 'max'=>128),
+			array('emailpassword', 'length', 'max'=>16),
+                        array('useremail', 'email'),
                         array('maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
 		);
 	}
       
-        public function checkregistered()
+        public function checkregistered($attribute,$params)
         {
-            $customer = TCustomer::model()->find('username=:1', 
-                                    array(':1'=>mb_convert_case($this->username, MB_CASE_LOWER, "UTF-8")));
+            //$customer = TCustomer::model()->find('username=:1', 
+            //                        array(':1'=>mb_convert_case($this->username, MB_CASE_LOWER, "UTF-8")));
+            $customer = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
+                        'from' => 'ds.t_customer_mailbox',
+                        'where'=> 'e_mail = :1',
+                        'params' => array(':1'=>$attribute),))->queryRow();
                 if ($customer === !NULL) {
-                    $this->addError('username', 'This e-mail is already registered');
+                    $this->addError('username', 'This e-mail address is already registered');
+                    echo 'jama';
                     return false;
                 }
 
@@ -66,12 +66,9 @@ class Register extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'username'=>'E-mail',
-                        'firstname'=>'First name',
-                        'lastname'=>'Last name',
-                        'password'=>'password',
-                        'passwordrepeat'=>'Repeat password',
-                        'userlang'=>'Language',
+			'useremail'=>'E-mail address: ',
+                        'emailpassword'=>'E-mail password: ',
+                        'emailusername'=>'User name: ',
                         'maildomain'=>'E-mail provider',
                         'incoming_hostname'=>'Mail server name',
                         'incoming_port'=>'Mail server port',

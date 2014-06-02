@@ -14,7 +14,8 @@ class RegisterController extends Controller
         $model = new Register;
         
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
-            echo CActiveForm::validate(array($model)); 
+            Yii::log("Ajax validation activated", 'info', 'application');
+            echo CActiveForm::validate($model); 
             Yii::app()->end(); 
         }
 
@@ -49,7 +50,7 @@ class RegisterController extends Controller
               else {
                $model->addError('username', 'This e-mail is already registered'); 
               }
-            }
+            }                
          }
         $this->render('Step1',array('model'=>$model,)); 
        }
