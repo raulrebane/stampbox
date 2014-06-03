@@ -14,7 +14,8 @@ class RegisterController extends Controller
         $model = new Register;
         
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
-            Yii::log("Ajax validation activated", 'info', 'application');
+            $model->attributes=$_POST['Register'];
+            Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
             echo CActiveForm::validate($model); 
             Yii::app()->end(); 
         }
@@ -25,14 +26,11 @@ class RegisterController extends Controller
             if ($model->validate())
             {
                 $customer = TCustomer::model()->find('username=:1', 
-                                    array(':1'=>mb_convert_case($model->username, MB_CASE_LOWER, "UTF-8")));
+                                    array(':1'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8")));
                 if ($customer === NULL) {
                     $customer = new TCustomer();
-                    $customer->username = mb_convert_case($model->username, MB_CASE_LOWER, "UTF-8");
-                    $customer->firstname = $model->firstname;
-                    $customer->lastname = $model->lastname;
-                    $customer->password = crypt($model->password, self::blowfishSalt());
-                    $customer->preferred_lang = $model->userlang;
+                    $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
+                    $customer->password = crypt($model->emailpassword, self::blowfishSalt());
                     $customer->last_seen = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
 			// default status A - active
                     $customer->status = 'A';
@@ -48,7 +46,7 @@ class RegisterController extends Controller
                     $this->redirect(array('Step2'));
                 }
               else {
-               $model->addError('username', 'This e-mail is already registered'); 
+               $model->addError('useremail', 'This e-mail is already registered'); 
               }
             }                
          }
