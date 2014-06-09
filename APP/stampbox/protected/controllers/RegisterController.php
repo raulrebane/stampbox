@@ -15,7 +15,7 @@ class RegisterController extends Controller
         
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
             $model->attributes=$_POST['Register'];
-            Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
             echo CActiveForm::validate($model); 
             Yii::app()->end(); 
         }
@@ -25,34 +25,50 @@ class RegisterController extends Controller
             $model->attributes=$_POST['Register'];     
             if ($model->validate())
             {
-                $customer = TCustomer::model()->find('username=:1', 
-                                    array(':1'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8")));
-                if ($customer === NULL) {
-                    $customer = new TCustomer();
-                    $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
-                    $customer->password = crypt($model->emailpassword, self::blowfishSalt());
-                    $customer->last_seen = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
-			// default status A - active
-                    $customer->status = 'A';
-			// no bad logins yet
-                    $customer->bad_logins = 0;
-                    $customer->save();
-                    $identity=new UserIdentity($model->username,$model->password);
+                $customer = new TCustomer();
+                $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
+                $customer->password = crypt($model->emailpassword, self::blowfishSalt());
+                $customer->registered_date = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
+                // default status V - verify
+                $customer->status = 'V';
+		// no bad logins yet
+                $customer->bad_logins = 0;
+                //$customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
+                $customer->country = geoip_country_code_by_name('dsdev.dnsdynamic.com');
+                if ($customer->save()) {
+                    //log in user right away
+                    $identity=new UserIdentity($model->useremail,$model->emailpassword);
                     $identity->authenticate();
-                    Yii::app()->user->login($identity);
-                    $dbconnection = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234");
-                    self::GenerateStamps(Yii::App()->user->getId(), $dbconnection, 100);
-                    pg_close($dbconnection);
-                    $this->redirect(array('Step2'));
+                    Yii::app()->user->login($identity);               
+                    //Generate 100 stamps for the user for registration
+                    self::GenerateStamps(Yii::App()->user->getId(), 100);
+                    
+                    $model->registeredemail = new usermailbox();
+                    $model->registeredemail->customer_id = Yii::app()->user->getId();
+                    $model->registeredemail->e_mail = $customer->username;
+                    $model->registeredemail->e_mail_username = $model->emailusername;
+                    $model->registeredemail->e_mail_password = $model->emailpassword;
+                    $model->registeredemail->status = 'V'; // V = verify
+                    list(, $model->registeredemail->maildomain) = explode("@", $customer->username);
+                    $model->registeredemail->save();
+                    
+                    
+                    $this->render('Step1complete', array('model'=>$model,));
+                    Yii::app()->end();
                 }
-              else {
-               $model->addError('useremail', 'This e-mail is already registered'); 
-              }
-            }                
-         }
+                else { 
+                    Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');
+                    throw new CHttpException(500,'We are sorry for not being able to service you. Request was sent for our administrators to investigate this problem. Please try again later.');
+                }
+            }
+            else {
+               $model->addError('useremail', 'This e-mail is already registered. If you think this is an error please contact us '); 
+            }
+        }                
         $this->render('Step1',array('model'=>$model,)); 
        }
-       
+    
+
     public function actionStep2()
     {
         $this->layout = 'register';
@@ -90,20 +106,6 @@ class RegisterController extends Controller
                         $model->registereddomain->incoming_hostname = mb_convert_case($model->incoming_hostname, MB_CASE_LOWER, "UTF-8");
                         $model->registereddomain->incoming_port = $model->incoming_port;
                         $model->registereddomain->save();             
-                    }
-                    $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
-                                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
-//                    Yii::log("found e-mail $model->registeredemail", 'info', 'application');
-		    if ($model->registeredemail === NULL)
-                    {
-                        $model->registeredemail = new usermailbox();
-                        $model->registeredemail->customer_id = Yii::app()->user->getId();
-                        $model->registeredemail->e_mail = Yii::app()->user->username;
-                        $model->registeredemail->e_mail_username = $model->e_mail_username;
-                        $model->registeredemail->e_mail_password = $model->e_mail_password;
-                        $model->registeredemail->status = 'A';
-                        $model->registeredemail->maildomain = $model->maildomain;
-                        $model->registeredemail->save();
                     }
                     if ($model->registereddomain->incoming_auth == 'USERNAME') {
                         list($model->e_mail_username, ) = explode("@", $model->e_mail_username);
@@ -206,8 +208,9 @@ class RegisterController extends Controller
 	    return $salt;
 	}
     
-    function GenerateStamps($userid, $dbconn, $howmany)
+    function GenerateStamps($userid, $howmany)
     {
+        $dbconnection = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234"); 
         $stamps['stamp_token'] = '';
         //$stamps['stamp_id'] = 'NULL';
         $stamps['batch_id'] = 1;
@@ -217,6 +220,7 @@ class RegisterController extends Controller
 
         for ($insert_count = 1; $insert_count <= $howmany; $insert_count++)
         {
+/*
             $rand = array();
 	    for ($i = 0; $i < 8; $i += 1) {
 	        $rand[] = pack('S', mt_rand(0, 0xffff));
@@ -224,9 +228,14 @@ class RegisterController extends Controller
 	    $rand[] = substr(microtime(), 2, 6);
 	    $rand = sha1(implode('', $rand), true);
             $stamps['stamp_token'] = strtr(substr(base64_encode($rand), 0, 64), array('+' => '.'));
+ * 
+ */
+            // replaced with token generated by CSecurityManager
+            $stamps['stamp_token'] = Yii::app()->SecurityManager->generateRandomString(32, TRUE);
             // Performing SQL insert
             $res = pg_insert($dbconn, 'ds.t_stamps_issued', $stamps);
         }
+        pg_close($dbconnection);
     }
     
     public function cmp(array $a, array $b) {

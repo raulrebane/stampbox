@@ -46,19 +46,15 @@ class Register extends CFormModel
       
         public function checkregistered($attribute,$params)
         {
-            //$customer = TCustomer::model()->find('username=:1', 
-            //                        array(':1'=>mb_convert_case($this->username, MB_CASE_LOWER, "UTF-8")));
-            Yii::log("useremail validation activated for attr: " .$attribute ." with value: " .$this->useremail, 'info', 'application');
             $customer = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
-                        'from' => 'ds.t_customer',
+                        'from' => 'ds.v_registered_email',
                         'where'=> 'username = :1',
-                        'params' => array(':1'=>$this->useremail),))->queryRow();
-            Yii::log("DB query returned customer_id: " .CVarDumper::dumpAsString($customer), 'info', 'application');
-                if ($customer === !NULL) {
-                    $this->addError('useremail', 'This e-mail address is already registered');
-                    return false;
-                }
-
+                        'params' => array(':1'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8")),))->queryRow();
+            //Yii::log("DB query returned customer_id: " .CVarDumper::dumpAsString($customer), 'info', 'application');
+            if ($customer == !FALSE) {
+                $this->addError('useremail', 'This e-mail address is already registered');
+                return false;
+            }
          return true;
         }
 	/**

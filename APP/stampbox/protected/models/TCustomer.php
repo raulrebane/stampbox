@@ -10,10 +10,12 @@
  * @property string $lastname
  * @property string $password
  * @property string $password1
- * @property string $last_seen
+ * @property string $registered_date
  * @property string $status
  * @property string $preferred_lang
  * @property integer $bad_logins
+ * @property string $customer_type
+ * @property string $country
  *
  * The followings are the available model relations:
  * @property TCustomerMailbox[] $tCustomerMailboxes
@@ -41,7 +43,7 @@ class TCustomer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, firstname, lastname, password', 'required'),
+			array('username, password', 'required'),
 			array('bad_logins', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>128),
 			array('firstname, lastname', 'length', 'max'=>100),
@@ -50,10 +52,10 @@ class TCustomer extends CActiveRecord
                     	array('newpassword', 'length', 'max'=>64),
                         array('password1', 'length', 'max'=>64),
 			array('preferred_lang', 'length', 'max'=>10),
-//			array('last_seen', 'safe'),
+			array('registered_date, customer_type, country, status', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('customer_id, username, firstname, lastname, password, last_seen, status, preferred_lang, bad_logins', 'safe', 'on'=>'search'),
+			array('customer_id, username, firstname, lastname, password, registered_date, status, preferred_lang, bad_logins', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,10 +86,12 @@ class TCustomer extends CActiveRecord
                         'password1' => 'Repeat password',
                         'newpassword' => 'New password',
                         'oldpassword' => 'Old password',
-			'last_seen' => 'Last login',
+			'registered_date' => 'Registration date',
 			'status' => 'Status',
 			'preferred_lang' => 'Preferred Lang',
 			'bad_logins' => 'Bad Logins',
+                        'customer_type' => 'Company/Private person',
+                        'country' => 'Country',
 		);
 	}
 
@@ -111,13 +115,7 @@ class TCustomer extends CActiveRecord
 
 		$criteria->compare('customer_id',$this->customer_id,true);
 		$criteria->compare('username',$this->username,true);
-		$criteria->compare('firstname',$this->firstname,true);
-		$criteria->compare('lastname',$this->lastname,true);
 		$criteria->compare('password',$this->password,true);
-		$criteria->compare('last_seen',$this->last_seen,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->compare('preferred_lang',$this->preferred_lang,true);
-		$criteria->compare('bad_logins',$this->bad_logins);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
