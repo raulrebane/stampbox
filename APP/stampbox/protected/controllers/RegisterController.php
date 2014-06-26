@@ -30,13 +30,13 @@ class RegisterController extends Controller
                                     array(':1'=>mb_convert_case($model->registeredemail->maildomain, MB_CASE_LOWER, "UTF-8")));
                 if ($model->registereddomain !== NULL)
                     {
-                        $mailboxcheck = json_encode(array($model->registeredemail->e_mail,
-                                $model->registeredemail->e_mail_username,
-                                $model->registeredemail->e_mail_password,
-                                $model->registereddomain->incoming_hostname,
-                                $model->registereddomain->incoming_port,
-                                $model->registereddomain->incoming_socket_type,
-                                $model->registereddomain->incoming_auth));
+                        $mailboxcheck = json_encode(array('e_mail'=>$model->registeredemail->e_mail,
+                                'username'=>$model->registeredemail->e_mail_username,
+                                'password'=>$model->registeredemail->e_mail_password,
+                                'hostname'=>$model->registereddomain->incoming_hostname,
+                                'port'=>$model->registereddomain->incoming_port,
+                                'socket_type'=>$model->registereddomain->incoming_socket_type,
+                                'auth_type'=>$model->registereddomain->incoming_auth));
                         $gmclient= new GearmanClient();
                         $gmclient->addServer("127.0.0.1", 4730);
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);

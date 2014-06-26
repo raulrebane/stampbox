@@ -6,8 +6,6 @@
  * and open the template in the editor.
  */
 
-openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-
 $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
 $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
 if ($customermailboxes) {
@@ -20,18 +18,9 @@ if ($customermailboxes) {
             else {$username = $custmailbox['e_mail_username'];}
             $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
                     $username,$custmailbox['e_mail_password']);
-	    if (!$inbox) {
-		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - connection failed: " .$custmailbox['e_mail'] ." with: " ."{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/ssl/novalidate-cert}INBOX"
-                 ." username: " .$username ." pass: ". $custmailbox['e_mail_password']);
-	    } 
-	    else {
-            	$mboxes = imap_list($inbox, "{".$mailconf['incoming_hostname'] ."}", "*");
-		if (is_array($mboxes)) {
-		 if (!in_array( "{".$mailconf['incoming_hostname'] ."}No Stamps e-mails", $mboxes)) {
-			imap_createmailbox($inbox, "{".$mailconf['incoming_hostname'] ."}No Stamps e-mails");
-		 }
-		}
-	    	$searchdate = date( "d-M-Y", strToTime ( "-1 days" ) );
+	    if ($inbox) 
+	    {
+	    	$searchdate = date( "d-M-Y", strToTime ( "-1000 days" ) );
             	$emails = imap_search($inbox,"SINCE $searchdate");
                 	if($emails) {
 //		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
@@ -59,14 +48,14 @@ if ($customermailboxes) {
                             		$foundsender = pg_fetch_assoc($foundsenderres);
                             		$creditstamp['customer_id'] = $custmailbox['customer_id'];
                             		$creditstamp['transaction_code'] = 'CRED';
-                            		$creditstamp['transaction_points'] = 50;
+                            		$creditstamp['amount'] = 90;
 //                            $creditstamp['stamp_id'] =  ;
                             		$creditstamp['description'] = $fromname .' ' .$fromemail .' ' .$overview[0]->date .' ' . $overview[0]->subject;
                             		$creditstamp['transaction_date'] = 'NOW()';
                             		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $creditstamp);
                             		$debitstamp['customer_id'] = $foundsender['customer_id'];
                             		$debitstamp['transaction_code'] = 'DEBIT';
-                            		$debitstamp['stamps'] = -1;
+                            		$debitstamp['amount'] = -1;
 //                          $debitstamp['stamp_id'] =  ;
                             		$debitstamp['description'] = $custmailbox['e_mail'] .' ' .$overview[0]->date .' ' . $overview[0]->subject;
                             		$debitstamp['transaction_date'] = 'NOW()';      
@@ -99,3 +88,4 @@ closelog();
  * 
  */
 ?>
+

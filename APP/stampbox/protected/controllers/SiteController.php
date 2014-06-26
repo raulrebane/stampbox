@@ -36,7 +36,8 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+            
+		$this->render('dashboard');
 	}
 
         
@@ -65,7 +66,7 @@ class SiteController extends Controller
                         'where'=> 'customer_id = :1',
                         'params' => array(':1'=>$usernames['customer_id']),))->queryRow();
                         $command = Yii::app()->db->createCommand();
-                        $model->resettoken = uniqid($usernames['customer_id'], true);
+                        $model->resettoken = Yii::app()->SecurityManager->generateRandomString(32, TRUE);
                         if ($alreadyreset == FALSE) {
                             $command->insert('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
                                 'e_mail'=>$usernames['e_mail'], 'token'=>$model->resettoken,
@@ -77,7 +78,7 @@ class SiteController extends Controller
                                 'sent'=>'now()'), 'customer_id=:id', array(':id'=>$usernames['customer_id']));
                         }
 			//$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-			$subject='=?UTF-8?B?'.base64_encode('StampBox.eu password reset request').'?=';
+			$subject='=?UTF-8?B?'.base64_encode('StampBox.eu password reset requested').'?=';
 			$headers="From: Stampbox admin <admin@stampbox.eu>\r\n".
 				"Reply-To: no-reply@stampbox.eu\r\n".
 				"MIME-Version: 1.0\r\n".

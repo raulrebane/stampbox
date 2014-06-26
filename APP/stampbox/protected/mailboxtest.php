@@ -1,7 +1,7 @@
 <?php
     /* connect to gmail */
-    $hostname = '{17.172.34.114:993/ssl/novalidate-cert}';
-    $username = '';
+    $hostname = '{imap.googlemail.com:993/ssl/novalidate-cert}';
+    $username = 'raulrebane71@gmail.com';
     $password = '';
 
     /* try to connect */
@@ -17,7 +17,7 @@
 
       /* begin output var */
       $output = '';
-      $top_senders = array();
+      //$top_senders = array();
 
       /* put the newest emails on top */
 //      rsort($emails);
@@ -27,12 +27,13 @@
 
         /* get information specific to this email */
         $overview = imap_fetch_overview($inbox,$email_number,0);
+        var_dump($overview);
 //        $message = imap_fetchbody($inbox,$email_number,2);
 
-	if (array_key_exists($overview[0]->from,$top_senders))
-		{ $top_senders[imap_utf8($overview[0]->from)] = $top_senders[$overview[0]->from] + 1; }
-	else
-		{$top_senders[imap_utf8($overview[0]->from)] = 1; }
+	//if (array_key_exists($overview[0]->from,$top_senders))
+	//	{ $top_senders[imap_utf8($overview[0]->from)] = $top_senders[$overview[0]->from] + 1; }
+	//else
+	//	{$top_senders[imap_utf8($overview[0]->from)] = 1; }
 
         /* output the email header information */
         //$output.= '<div class="toggler '.($overview[0]->seen ? 'read' : 'unread').'">';
@@ -47,7 +48,7 @@
 
 //      echo $output;
 	
-	var_dump($top_senders);
+	//var_dump($top_senders);
     } 
 
     /* close the connection */
