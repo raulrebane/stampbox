@@ -95,13 +95,9 @@ class usermailbox extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('customer_id',$this->customer_id,true);
+		$criteria->compare('customer_id',Yii::app()->user->getId(),true);
 		$criteria->compare('e_mail',$this->e_mail,true);
-		$criteria->compare('e_mail_username',$this->e_mail_username,true);
-		$criteria->compare('e_mail_password',$this->e_mail_password,true);
 		$criteria->compare('status',$this->status,true);
-		$criteria->compare('maildomain',$this->maildomain,true);
-		$criteria->compare('worker_ip',$this->worker_ip,true);
 		$criteria->compare('worker_type',$this->worker_type,true);
 		$criteria->compare('last_seen',$this->last_seen,true);
 

@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 
+openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
 $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
 if ($customermailboxes) {
@@ -16,14 +17,14 @@ if ($customermailboxes) {
             $mailconf = pg_fetch_assoc($mailboxconfig);
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
-            $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
+            $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
                     $username,$custmailbox['e_mail_password']);
 	    if ($inbox) 
 	    {
 	    	$searchdate = date( "d-M-Y", strToTime ( "-1000 days" ) );
             	$emails = imap_search($inbox,"SINCE $searchdate");
                 	if($emails) {
-//		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
+		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
                     	foreach($emails as $email_number) {
                         	$overview = imap_fetch_overview($inbox,$email_number,0);
                         	$mailfrom = imap_mime_header_decode($overview[0]->from);
@@ -42,23 +43,35 @@ if ($customermailboxes) {
                         	$fromemail = trim($fromemail, " <>");
                         	$fromname = utf8_encode(rtrim($fromname)); 
                         	}
+                                if ($fromemail == $custmailbox['e_mail']) { continue; }
 //                        $mailheaders = imap_fetchheader($inbox, $email_number);
                         	$foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
                         	if (pg_num_rows($foundsenderres) == 1) {
                             		$foundsender = pg_fetch_assoc($foundsenderres);
-                            		$creditstamp['customer_id'] = $custmailbox['customer_id'];
-                            		$creditstamp['transaction_code'] = 'CRED';
-                            		$creditstamp['amount'] = 90;
-//                            $creditstamp['stamp_id'] =  ;
-                            		$creditstamp['description'] = $fromname .' ' .$fromemail .' ' .$overview[0]->date .' ' . $overview[0]->subject;
-                            		$creditstamp['transaction_date'] = 'NOW()';
-                            		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $creditstamp);
+                                        $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
+                                                ."' and status = 'A' limit 1");
+                                        $transactionstamp = pg_fetch_assoc($transactionstampres);
+                                        $transactionstamp['from_email'] = $fromemail;
+                                        $transactionstamp['to_email'] = $custmailbox['e_mail'];
+                                        $transactionstamp['email_id'] = $overview[0]->message_id;
+                                        $transactionstamp['subject'] = $overview[0]->subject;
+                                        $transactionstamp['status'] = 'U';
+                                        $res = pg_update($dbconn, 'ds.t_stamps_issued', $transactionstamp, array('stamp_id' => $transactionstamp['stamp_id']));
+                                        
+                            		$credittrans['customer_id'] = $custmailbox['customer_id'];
+                            		$credittrans['transaction_code'] = 'CRED';
+                            		$credittrans['amount'] = 90;
+                                        $credittrans['stamp_id'] = $transactionstamp['stamp_id'];
+                            		$credittrans['description'] = '';
+                            		$credittrans['transaction_date'] = date('Y-m-d H:i:s', strtotime($overview[0]->date));
+                            		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $credittrans);
+                                        
                             		$debitstamp['customer_id'] = $foundsender['customer_id'];
                             		$debitstamp['transaction_code'] = 'DEBIT';
                             		$debitstamp['amount'] = -1;
-//                          $debitstamp['stamp_id'] =  ;
-                            		$debitstamp['description'] = $custmailbox['e_mail'] .' ' .$overview[0]->date .' ' . $overview[0]->subject;
-                            		$debitstamp['transaction_date'] = 'NOW()';      
+                                        $debitstamp['stamp_id'] = $transactionstamp['stamp_id'];
+                            		$debitstamp['description'] = $custmailbox['e_mail'];
+                            		$debitstamp['transaction_date'] = date('Y-m-d H:i:s', strtotime($overview[0]->date));      
                             		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $debitstamp);
 			    		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid ." from: " .$fromname ." " .$fromemail ." " .$overview[0]->date ." " . $overview[0]->subject);
 			    		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - with headers: " .imap_fetchheader($inbox, $email_number));
@@ -66,9 +79,11 @@ if ($customermailboxes) {
                         	}
                         }
 			}
-  	    	imap_expunge($inbox);
+  	    	//imap_expunge($inbox);
 	    	imap_close($inbox);}
-           }
+            else { echo "{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] 
+            ."/novalidate-cert}INBOX - user: " .$username ." " .$custmailbox['e_mail_password'];}
+            }
         }
     }
 //pg_free_result($mailboxconfig);
@@ -77,15 +92,5 @@ pg_close($dbconn);
 // close syslog
 closelog();
 
-/* 
- //                   Yii::log("after inbox open",'info', 'application');
-                    
-                    }
-                    imap_close($inbox);
-//                   Yii::log("Before sort", 'info', 'application');
-                    usort($senders, "self::cmp");
- * 
- * 
- */
 ?>
 

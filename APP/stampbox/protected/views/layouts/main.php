@@ -20,21 +20,19 @@
             <div id="sidebar-wrapper">
                 <div class="logo"></div>
                 <ul class="sidebar-nav main-menu">
-                    <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>" >Dashboard</a>
+                    <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>">Dashboard</a>
                     </li>
-                    <li><a href="#">Account statement</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('account/statement') ?>">Account statement</a>
                     </li>
-                    <li><a href="#">E-mail Accounts</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('usermailbox/index') ?>">E-mail Accounts</a>
                     </li>
-                    <li><a href="#">Invitations</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('whitelist/index') ?>">Whitelist</a>
+                    </li>
+                    <li><a href="<?php echo Yii::app()->createUrl('invitations/index') ?>">Invitations</a>
                     </li>
                 </ul>
                 <ul class="sidebar-nav user-menu">
-                    <li><a href="#" class="btn btn-aqua">Buy stamps</a>
-                    </li>
-                    <li><a href="#">Account Settings</a>
-                    </li>
-                    <li><a href="login.html">Logout</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('site/logout') ?>" class="btn btn-aqua">Logout</a>
                     </li>
                 </ul>
             </div>
