@@ -27,6 +27,7 @@ if ($customermailboxes) {
 		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
                     	foreach($emails as $email_number) {
                         	$overview = imap_fetch_overview($inbox,$email_number,0);
+                                
                         	$mailfrom = imap_mime_header_decode($overview[0]->from);
 	                        if (count($mailfrom) == 2) {
       	  		                $fromname = utf8_encode(rtrim($mailfrom[0]->text));
@@ -48,8 +49,12 @@ if ($customermailboxes) {
                         	$foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
                         	if (pg_num_rows($foundsenderres) == 1) {
                             		$foundsender = pg_fetch_assoc($foundsenderres);
+                                        $alreadystamped = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '"
+                                        .$foundsender['customer_id'] ."' and email_id = '" .$overview[0]->message_id ."';");
+                                        if (pg_num_rows($alreadystamped) >= 1) { continue; }
                                         $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
                                                 ."' and status = 'A' limit 1");
+                                        
                                         $transactionstamp = pg_fetch_assoc($transactionstampres);
                                         $transactionstamp['from_email'] = $fromemail;
                                         $transactionstamp['to_email'] = $custmailbox['e_mail'];

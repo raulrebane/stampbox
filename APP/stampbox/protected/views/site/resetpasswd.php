@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-6 darker">
                     <div class="vertical-middle">';
-                    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+                    $form = $this->beginWidget('CActiveForm',array(
                         'id' => 'ResetPasswdForm','htmlOptions' => array('class' => 'form', 'role'=>'form'),));
                         echo '<div class="form-group">';
                             echo $form->emailField($model, 'emailaddress', array('class' => 'form-control', 'id'=>'emailaddress', 

@@ -11,7 +11,7 @@ class AccountController extends Controller
     {
 	return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-		'actions'=>array('Statement','Balance'),
+		'actions'=>array('statement','balance'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users

@@ -20,15 +20,7 @@ return array(
 	),
 
 	'modules'=>array(
-		// uncomment the following to enable the Gii tool
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'a',
-			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','192.168.1.*'),
-                        'generatorPaths' => array('bootstrap.gii')
-		),
-		
+		// uncomment the following to enable the Gii too
 	),
 
 	// application components
@@ -36,6 +28,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+                        'loginUrl'=>array('site/login'),
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -55,12 +48,6 @@ return array(
     			'password' => 'Apua1234',
     			'charset' => 'UTF8',
 		),
-            /*
-                'bootstrap' => array(
-                    'class' => 'bootstrap.components.Bootstrap'
-                ),
-             * 
-             */
                 'session' => array (
                     'class' => 'system.web.CDbHttpSession',
                     'connectionID' => 'db',

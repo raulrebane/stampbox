@@ -93,9 +93,7 @@ class Invitations extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('customer_id',Yii::app()->user->getId(),true);
 		$criteria->compare('invited_email',$this->invited_email,true);
-		$criteria->compare('invited_when',$this->invited_when,true);
 		$criteria->compare('from_count',$this->from_count);
 		$criteria->compare('to_count',$this->to_count);
 		$criteria->compare('invite',$this->invite,true);

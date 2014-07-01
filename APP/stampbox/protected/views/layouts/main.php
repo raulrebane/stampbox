@@ -28,7 +28,7 @@
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('whitelist/index') ?>">Whitelist</a>
                     </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('invitations/index') ?>">Invitations</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('invite/index') ?>">Invitations</a>
                     </li>
                 </ul>
                 <ul class="sidebar-nav user-menu">

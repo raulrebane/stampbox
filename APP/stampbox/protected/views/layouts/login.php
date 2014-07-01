@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
-        <link rel="stylesheet" href="styles/stampbox.main.css">
+        <link rel="stylesheet" href="styles/bc1ea147.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
 </head>
 <body class="logged-out">
