@@ -10,9 +10,9 @@ class ShopController extends Controller
     
     public function actionBuy() 
        {
-        $model = new Register;
+        $dataProvider = new CActiveDataProvider('Offers', array('pagination'=>array('pageSize'=>100,)));
         
-        $this->render('Buy',array('model'=>$model,)); 
+        $this->render('buy',array('dataProvider'=>$dataProvider,)); 
        }
     
     public function actionCart() 

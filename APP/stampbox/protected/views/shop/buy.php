@@ -11,18 +11,16 @@
     <div class="widget widget-activity"><div class="title">Shop</div>
     <div class="content">
         <?php 
-        $gridDataProvider = new CArrayDataProvider($model->shop_grid, array('keyField'=>'offer_id',
-                'pagination'=>array('pageSize'=>1000,)));  
         $gridColumns = array(
-            array('name'=>'offer_amount', 'header'=>'Stamps', 'htmlOptions'=>array('class'=>'transaction', 'width'=>"25"),),
-            array('name'=>'offer_price', 'header'=>'Price', 'htmlOptions'=>array('class'=>'email'),),
-            array('name'=>'amount', 'htmlOptions'=>array('class'=>'transaction')),);
+            array('name'=>'offer_amount', 'header'=>'Stamps', 'htmlOptions'=>array('class'=>'transaction')),
+            array('name'=>'offer_price', 'header'=>'Price', 'htmlOptions'=>array('class'=>'email')),
+            );
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
             //'hideHeader'=>False,
             'template' => '{items}',
             'htmlOptions'=>array('class'=>'content'),
-            'dataProvider' => $gridDataProvider,
+            'dataProvider' => $dataProvider,
             'columns'=>$gridColumns));      
         ?>
     </div>

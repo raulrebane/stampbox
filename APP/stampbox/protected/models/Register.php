@@ -19,6 +19,10 @@ class Register extends CFormModel
         public $incoming_port;
         public $incoming_socket_type;
         public $incoming_auth;
+        public $outgoing_hostname;
+        public $outgoing_port;
+        public $outgoing_socket_type;
+        public $outgoing_auth;
         public $e_mail_username;
         public $e_mail_password;
         public $registereddomain;
@@ -68,7 +72,11 @@ class Register extends CFormModel
                         'emailusername'=>'User name: ',
                         'maildomain'=>'E-mail provider',
                         'incoming_hostname'=>'Mail server name',
-                        'incoming_port'=>'Mail server port',
+                        'incoming_port'=>'Port',
+                        'incoming_socket_type'=>'Connection security',
+                        'outgoing_hostname'=>'Mail server name',
+                        'outgoing_port'=>'Port',
+                        'outgoing_socket_type'=>'Connection security',
                         'e_mail_username'=>'E-Mail username',
                         'e_mail_password'=>'E-Mail password',
 		);

@@ -77,7 +77,11 @@ class RegisterController extends Controller
                     throw new CHttpException(500,'We are sorry for not being able to service you. Request was sent for our administrators to investigate this problem. Please try again later.');
                 }
                 if ($e_mail_verified) { $this->render('Invite', array('model'=>$model,)); }
-                else { $this->render('Step2'); }
+                else { 
+                    $model->maildomain = explode("@", $customer->username);
+                    $model->mailtype = 'IMAP';
+                    $model->incoming_auth = 'EMAIL';
+                    $this->render('Step2', array('model'=>$model)); }
             }
             else {
                $model->addError('useremail', 'This e-mail is already registered. If you think this is an error please contact us '); 
@@ -87,7 +91,7 @@ class RegisterController extends Controller
        }
     
     public function actionStep2() {
-        $this->layout = 'register';        
+        $this->layout = 'register2';        
         $model = new Register;
         if(isset($_POST['Register'])) {  
             $model->attributes=$_POST['Register']; {
@@ -109,6 +113,8 @@ class RegisterController extends Controller
         }
         //Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');
         list(, $model->maildomain) = explode("@", Yii::app()->user->username);
+        $model->mailtype = 'IMAP';
+        $model->incoming_auth = 'EMAIL';
         $this->render('Step2',array('model'=>$model,));
     }
     

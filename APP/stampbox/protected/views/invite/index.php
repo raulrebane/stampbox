@@ -29,7 +29,7 @@
                 'class' => 'CCheckBoxColumn',
                 'selectableRows'=>100,
                 'header'=>'Invite',
-                'name'=>'e-mail',),
+                'name'=>'invited_email',),
             array('name'=>'name', 'header'=>'Name'),
             array('name'=>'invited_email', 'header'=>'E-mail'),
             array('name'=>'from_count', 'header'=>'# of mails'),
