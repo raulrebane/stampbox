@@ -26,14 +26,14 @@ class RegisterController extends Controller
             if ($model->validate())
             {
                 $e_mail_verified = FALSE;
-                $model->registeredemail->maildomain = explode("@", $model->registeredemail->e_mail); 
+                $model->registeredemail->maildomain = explode("@", $model->useremail); 
                 $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                                     array(':1'=>mb_convert_case($model->registeredemail->maildomain, MB_CASE_LOWER, "UTF-8")));
                 if ($model->registereddomain !== NULL)
                     {
-                        $mailboxcheck = json_encode(array('e_mail'=>$model->registeredemail->e_mail,
-                                'username'=>$model->registeredemail->e_mail_username,
-                                'password'=>$model->registeredemail->e_mail_password,
+                        $mailboxcheck = json_encode(array('e_mail'=>$model->useremail,
+                                'username'=>$model->emailusername,
+                                'password'=>$model->emailpassword,
                                 'hostname'=>$model->registereddomain->incoming_hostname,
                                 'port'=>$model->registereddomain->incoming_port,
                                 'socket_type'=>$model->registereddomain->incoming_socket_type,
