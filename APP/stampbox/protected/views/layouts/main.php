@@ -30,6 +30,8 @@
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('invite/index') ?>">Invitations</a>
                     </li>
+                    <li><a href="<?php echo Yii::app()->createUrl('shop/buy') ?>">Buy Stamps</a>
+                    </li>
                 </ul>
                 <ul class="sidebar-nav user-menu">
                     <li><a href="<?php echo Yii::app()->createUrl('site/logout') ?>" class="btn btn-aqua">Logout</a>
