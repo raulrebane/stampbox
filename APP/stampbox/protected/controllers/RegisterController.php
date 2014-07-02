@@ -26,6 +26,7 @@ class RegisterController extends Controller
             if ($model->validate())
             {
                 $e_mail_verified = FALSE;
+                $model->registeredemail = new stdClass();
                 list(, $model->registeredemail->maildomain) = explode("@", $model->useremail); 
                 $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                                     array(':1'=>mb_convert_case($model->registeredemail->maildomain, MB_CASE_LOWER, "UTF-8")));
@@ -224,7 +225,7 @@ class RegisterController extends Controller
         $stamps['stamp_token'] = '';
         //$stamps['stamp_id'] = 'NULL';
         $stamps['batch_id'] = 1;
-        $stamps['issued_to'] = $userid;
+        $stamps['customer_id'] = $userid;
         $stamps['status'] = 'U';
         $stamps['timestamp'] = 'now()';
 
