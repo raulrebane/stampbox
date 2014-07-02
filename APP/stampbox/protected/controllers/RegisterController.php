@@ -26,6 +26,7 @@ class RegisterController extends Controller
             if ($model->validate())
             {
                 $e_mail_verified = FALSE;
+                list(, $model->registeredemail->maildomain) = explode("@", $customer->username); 
                 $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                                     array(':1'=>mb_convert_case($model->registeredemail->maildomain, MB_CASE_LOWER, "UTF-8")));
                 if ($model->registereddomain !== NULL)
