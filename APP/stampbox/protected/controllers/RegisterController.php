@@ -26,7 +26,7 @@ class RegisterController extends Controller
             if ($model->validate())
             {
                 $e_mail_verified = FALSE;
-                $model->registeredemail->maildomain = explode("@", $model->useremail); 
+                list(, $model->registeredemail->maildomain) = explode("@", $model->useremail); 
                 $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                                     array(':1'=>mb_convert_case($model->registeredemail->maildomain, MB_CASE_LOWER, "UTF-8")));
                 if ($model->registereddomain !== NULL)
@@ -79,7 +79,7 @@ class RegisterController extends Controller
                 }
                 if ($e_mail_verified) { $this->render('Invite', array('model'=>$model,)); }
                 else { 
-                    $model->maildomain = explode("@", $customer->username);
+                    list(, $model->maildomain) = explode("@", $customer->username);
                     $model->mailtype = 'IMAP';
                     $model->incoming_auth = 'EMAIL';
                     $this->render('Step2', array('model'=>$model)); }
