@@ -12,17 +12,28 @@
     <div class="widget widget-activity"><div class="title">My whitelist</div>
     <div class="content">
         <?php 
-        $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-            'name'=>'emailfinder',
-            'value'=>'',
-            'source'=>$this->createUrl('whitelist/Autocomplete'),
-            // additional javascript options for the autocomplete plugin
-            'options'=>array(
-			'showAnim'=>'fold',),
-        ));       
+         $form = $this->beginWidget(
+        'CActiveForm',array(
+            'id' => 'Whitelist',
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+        
+            echo $form->labelEx($model,'e_mail');
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'model'=>$model,
+                'name'=>'e_mail',
+                //'class'=>'form-control',
+                'value'=>'',
+                'source'=>$this->createUrl('whitelist/Autocomplete'),
+                // additional javascript options for the autocomplete plugin
+                'options'=>array(
+                            'showAnim'=>'fold',),
+            ));
+            echo '<button type="submit" class="btn btn-default">Add to whitelist</button>';
+        $this->endWidget();
+        
         $gridColumns = array(
-            array('name'=>'offer_amount', 'header'=>'Stamps', 'htmlOptions'=>array('class'=>'transaction')),
-            array('name'=>'offer_price', 'header'=>'Price', 'htmlOptions'=>array('class'=>'email')),
+            array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')),
+            array('class'=>'CButtonColumn','template'=>'{delete}'),
             );
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
@@ -30,7 +41,7 @@
             'template' => '{items}',
             'htmlOptions'=>array('class'=>'content'),
             'dataProvider' => $dataProvider,
-            'columns'=>$gridColumns));      
+            'columns'=>$gridColumns));
         ?>
     </div>
     </div>

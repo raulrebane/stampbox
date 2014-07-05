@@ -19,7 +19,7 @@ $invitationcount = Yii::app()->db->createCommand(array(
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
 $lasttransactions = Yii::app()->db->createCommand(array(
-            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
+            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject',),
             'from'=> 'ds.v_transactions',
             'where'=> 'customer_id = :1',
             'order'=> 'transaction_id desc',
@@ -47,8 +47,10 @@ $lasttransactions = Yii::app()->db->createCommand(array(
         $gridColumns = array(
             array('name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
-            array('name'=>'from_email', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
-                return $data['from_email'] .'<span>'.$data['subject'] .'</span>';}),
+            array('name'=>'description', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
+                if ($data['from_email'] == NULL) return $data['description'];
+                elseif ($data['amount'] < 0) return $data['to_email'] .'<span>'.$data['subject'] .'</span>';
+                else return $data['from_email'] .'<span>'.$data['subject'] .'</span>'; }),
             array('name'=>'amount', 'htmlOptions'=>array('class'=>'transaction')),
             array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'date'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
             array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'time'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));

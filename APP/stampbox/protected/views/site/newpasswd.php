@@ -19,7 +19,7 @@
                 <div class="col-md-6 darker">
                     <div class="vertical-middle">
                     <?php $form = $this->beginWidget(
-                        'bootstrap.widgets.TbActiveForm',array(
+                        'CActiveForm',array(
                         'id' => 'ResetPasswd',
                         'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
                         ?>

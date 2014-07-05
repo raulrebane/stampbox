@@ -277,6 +277,14 @@ class RegisterController extends Controller
             // Performing SQL insert
             $res = pg_insert($dbconnection, 'ds.t_stamps_issued', $stamps);
         }
+        $credittrans['customer_id'] = $stamps['customer_id'];
+        $credittrans['transaction_code'] = 'CRED';
+        $credittrans['amount'] = 100;
+        $credittrans['stamp_id'] = NULL;
+        $credittrans['description'] = 'Free stamps for joining';
+        $credittrans['transaction_date'] = 'now()';
+        $res = pg_insert($dbconnection, 'ds.t_stamps_transactions', $credittrans);
+        $res = pg_query($dbconnection, "update ds.t_account set stamps_bal = stamps_bal + 100 where customer_id = " .$stamps['customer_id'] .";");
         pg_close($dbconnection);
     }
     

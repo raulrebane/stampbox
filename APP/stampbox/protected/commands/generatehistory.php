@@ -21,7 +21,7 @@ if ($customermailboxes) {
                     $username,$custmailbox['e_mail_password']);
 	    if ($inbox) 
 	    {
-	    	$searchdate = date( "d-M-Y", strToTime ( "-1000 days" ) );
+	    	$searchdate = date( "d-M-Y", strToTime ( "-365 days" ) );
             	$emails = imap_search($inbox,"SINCE $searchdate");
                 	if($emails) {
 		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
@@ -67,21 +67,26 @@ if ($customermailboxes) {
                             		$credittrans['transaction_code'] = 'CRED';
                             		$credittrans['amount'] = 90;
                                         $credittrans['stamp_id'] = $transactionstamp['stamp_id'];
-                            		$credittrans['description'] = '';
+                            		$credittrans['description'] = NULL;
                             		$credittrans['transaction_date'] = date('Y-m-d H:i:s', strtotime($overview[0]->date));
                             		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $credittrans);
+                                        $res = pg_query($dbconn, "update ds.t_account set points_bal = points_bal + 90 where customer_id = " .$custmailbox['customer_id'] .";");
                                         
                             		$debitstamp['customer_id'] = $foundsender['customer_id'];
                             		$debitstamp['transaction_code'] = 'DEBIT';
                             		$debitstamp['amount'] = -1;
                                         $debitstamp['stamp_id'] = $transactionstamp['stamp_id'];
-                            		$debitstamp['description'] = $custmailbox['e_mail'];
+                            		$debitstamp['description'] = NULL;
                             		$debitstamp['transaction_date'] = date('Y-m-d H:i:s', strtotime($overview[0]->date));      
                             		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $debitstamp);
-			    		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid ." from: " .$fromname ." " .$fromemail ." " .$overview[0]->date ." " . $overview[0]->subject);
-			    		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - with headers: " .imap_fetchheader($inbox, $email_number));
+                                        $res = pg_query($dbconn, "update ds.t_account set stamps_bal = stamps_bal-1 where customer_id = " .$foundsender['customer_id'] .";");
+                                        
+			    		//syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid ." from: " .$fromname ." " .$fromemail ." " .$overview[0]->date ." " . $overview[0]->subject);
+			    		//syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - with headers: " .imap_fetchheader($inbox, $email_number));
                             		//imap_mail_move($inbox, $overview[0]->uid,'STAMPBOX',CP_UID);
                         	}
+                                //syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid ." from: " .$fromname ." " .$fromemail ." " .$overview[0]->date ." " . $overview[0]->subject);
+                                //imap_mail_move($inbox, $overview[0]->uid, 'no-',CP_UID);
                         }
 			}
   	    	//imap_expunge($inbox);
