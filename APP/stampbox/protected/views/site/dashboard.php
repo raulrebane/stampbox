@@ -12,14 +12,14 @@
             'where'=> 'customer_id=:1',
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
-        $invitationcount = Yii::app()->db->createCommand(array(
+$invitationcount = Yii::app()->db->createCommand(array(
             'select'=> array('count(invited_email) as invitedtotal, count(invite) as invited'),
             'from' => 'ds.t_invitations',
             'where'=> 'customer_id=:1',
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
 $lasttransactions = Yii::app()->db->createCommand(array(
-            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'from_email', 'to_email', 'subject'),
+            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
             'from'=> 'ds.v_transactions',
             'where'=> 'customer_id = :1',
             'order'=> 'transaction_id desc',
@@ -93,18 +93,20 @@ $lasttransactions = Yii::app()->db->createCommand(array(
             </div>
         </div></div>
         <div class="col-md-12">
-                                    <div class="widget widget-invitations">
-                                        <div class="title">Invitations</div>
-                                        <div class="content">
-                                            <div class="subtitle">Sent</div>
-                                            <p>180 <span>of</span> 1021</p>
-                                            <div class="subtitle">Received</div>
-                                            <p>32</p>
-                                        </div>
-                                        <div class="footer">
-                                            <div class="btn btn-dark">Invite friends to receive free credits</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="widget widget-invitations">
+                <div class="title">Invitations</div>
+                <div class="content">
+                    <div class="subtitle">Sent</div>
+                    <p> <?php echo $invitationcount['invited'] ?><span>of</span> <?php echo $invitationcount['invitedtotal'] ?></p>
+<!--
+                    <div class="subtitle">Received</div>
+                    <p>32</p>
+-->
+                </div>
+                <div class="footer">
+                    <div class="btn btn-dark">Invite friends to receive free credits</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

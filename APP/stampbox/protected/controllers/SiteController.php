@@ -8,6 +8,12 @@ class SiteController extends Controller
     */
     public $layout='//layouts/main';
 
+        public function filters()
+        {
+            return array(
+                'accessControl', // perform access control for CRUD operations
+            );
+        }
     
         /**
 	 * Declares class-based actions.
@@ -32,16 +38,12 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('resetpasswrd, Checktoken, Newpasswd'),
+				'actions'=>array('resetpasswrd, checktoken, newpasswd'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','invite','update','changepsw, Logout'),
+				'actions'=>array('index','invite','update','changepsw, logout'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('raulrebane71@gmail.com'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

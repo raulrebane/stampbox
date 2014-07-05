@@ -53,7 +53,7 @@ class RegisterController extends Controller
                 $customer->password = crypt($model->emailpassword, self::blowfishSalt());
                 $customer->registered_date = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
                 // set status A - Active if e_mail was successfully verified, else set V - verify
-                if ($e_mail_verified) { $customer->status = 'A';} 
+                if ($e_mail_verified == TRUE) { $customer->status = 'A';} 
                 else { $customer->status = 'V';}
                 $customer->bad_logins = 0;
                 //$customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
@@ -62,7 +62,7 @@ class RegisterController extends Controller
                     //log in user right away
                     $identity=new UserIdentity($model->useremail,$model->emailpassword);
                     $identity->authenticate();
-                    Yii::app()->user->login($identity);               
+                    Yii::app()->user->login($identity, 3600*24*30);               
                     //Generate 100 stamps for the user for registration
                     self::GenerateStamps(Yii::App()->user->getId(), 100);
                     $model->registeredemail = new usermailbox();
@@ -70,15 +70,42 @@ class RegisterController extends Controller
                     $model->registeredemail->e_mail = $customer->username;
                     $model->registeredemail->e_mail_username = $model->emailusername;
                     $model->registeredemail->e_mail_password = $model->emailpassword;
-                    $model->registeredemail->status = 'V'; // V = verify
+                    if ($e_mail_verified == TRUE) { $model->registeredemail->status = 'A'; }
+                    else { $model->regsteredemail->status = 'V'; } // V = verify
                     list(, $model->registeredemail->maildomain) = explode("@", $customer->username);
                     $model->registeredemail->save();
+                    $dbcommand =  Yii::app()->db->createCommand();
+                    $dbcommand->insert('ds.t_account', array(
+                        'customer_id'=>Yii::app()->user->getId(),
+                        'points_bal'=>0,
+                        'stamps_bal'=>100));
+                    $dbcommand->insert('ds.t_stamps_transactions', array(
+                            'customer_id'=>Yii::app()->user->getId(),
+                            'transaction_code'=>'BONUS',
+                            'amount'=>100,
+                            'description'=>'Free stamps for registration',
+                            'transaction_date'=>'now()'));
                 }
                 else { 
                     Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');
                     throw new CHttpException(500,'We are sorry for not being able to service you. Request was sent for our administrators to investigate this problem. Please try again later.');
                 }
-                if ($e_mail_verified) { $this->render('Invite', array('model'=>$model,)); }
+                if ($e_mail_verified) {
+                    $loadinvitations = json_encode(array('customer_id'=>Yii::App()->user->getID(),
+                                'e_mail'=>$model->useremail,
+                                'username'=>$model->emailusername,
+                                'password'=>$model->emailpassword,
+                                'hostname'=>$model->registereddomain->incoming_hostname,
+                                'port'=>$model->registereddomain->incoming_port,
+                                'socket_type'=>$model->registereddomain->incoming_socket_type,
+                                'auth_type'=>$model->registereddomain->incoming_auth));
+                    $gmclient= new GearmanClient();
+                    $gmclient->addServer("127.0.0.1", 4730);
+                    $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    
+                    $this->redirect(array('invite/index')); 
+                    
+                }
                 else { 
                     list(, $model->maildomain) = explode("@", $customer->username);
                     $model->mailtype = 'IMAP';
@@ -97,20 +124,24 @@ class RegisterController extends Controller
         $model = new Register;
         if(isset($_POST['Register'])) {  
             $model->attributes=$_POST['Register']; {
-		     $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
-                                    array(':1'=>mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8")));
-                    if ($model->registereddomain === NULL)
-                    {
-                        $model->registereddomain = new mailconfig();
-                        $model->registereddomain->maildomain = mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8");
-                        $model->registereddomain->mailtype = 'IMAP';
-                        $model->registereddomain->incoming_hostname = mb_convert_case($model->incoming_hostname, MB_CASE_LOWER, "UTF-8");
-                        $model->registereddomain->incoming_port = $model->incoming_port;
-                        $model->registereddomain->save();             
-                    }
-                    if ($model->registereddomain->incoming_auth == 'USERNAME') {
-                        list($model->e_mail_username, ) = explode("@", $model->e_mail_username);
-                    }
+		$model->registereddomain = mailconfig::model()->find('maildomain=:1', 
+                    array(':1'=>mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8")));
+                if ($model->registereddomain === NULL)
+                {
+                    $model->registereddomain = new mailconfig();
+                    $model->registereddomain->maildomain = mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8");
+                    $model->registereddomain->mailtype = 'IMAP';
+                    $model->registereddomain->incoming_hostname = mb_convert_case($model->incoming_hostname, MB_CASE_LOWER, "UTF-8");
+                    $model->registereddomain->incoming_port = $model->incoming_port;
+                    $model->registereddomain->incoming_socket_type = $model->incoming_socket_type;
+                    $model->registereddomain->incoming_auth = 'EMAIL';
+                    $model->registereddomain->outgoing_hostname = $model->outgoing_hostname;
+                    $model->registereddomain->outgoing_port = $model->outgoing_port;
+                    $model->registereddomain->outgoing_socket_type = $model->outgoing_socket_type;
+                    $model->registereddomain->save();             
+                }
+                $this->redirect(array('invite/index'));
+                    
             }
         }
         //Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');

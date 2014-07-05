@@ -24,8 +24,10 @@
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('account/statement') ?>">Account statement</a>
                     </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('usermailbox/index') ?>">E-mail Accounts</a>
+                    <!--
+                    <li><a href="<?php //echo Yii::app()->createUrl('usermailbox/index') ?>">E-mail Accounts</a>
                     </li>
+                    -->
                     <li><a href="<?php echo Yii::app()->createUrl('whitelist/index') ?>">Whitelist</a>
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('invite/index') ?>">Invitations</a>

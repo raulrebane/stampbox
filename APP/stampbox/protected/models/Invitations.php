@@ -92,7 +92,7 @@ class Invitations extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->compare('customer_id', Yii::App()->user->getId());
 		$criteria->compare('invited_email',$this->invited_email,true);
 		$criteria->compare('from_count',$this->from_count);
 		$criteria->compare('to_count',$this->to_count);

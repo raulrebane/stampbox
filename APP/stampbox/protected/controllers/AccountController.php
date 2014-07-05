@@ -7,11 +7,18 @@
 
 class AccountController extends Controller
 {
+    public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+    
     public function accessRules()
     {
 	return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-		'actions'=>array('statement','balance'),
+		'actions'=>array('Statement','Balance'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -23,7 +30,7 @@ class AccountController extends Controller
        {
         $model = new Account();
         $model->statement_grid = Yii::app()->db->createCommand(array(
-            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'from_email', 'to_email', 'subject'),
+            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
             'from'=> 'ds.v_transactions',
             'where'=> 'customer_id = :1',
             'order'=> 'transaction_date desc',
