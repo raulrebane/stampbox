@@ -38,7 +38,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('resetpasswrd, checktoken, newpasswd'),
+				'actions'=>array('resetpasswrd, checktoken, newpasswd, login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -58,7 +58,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-            if (Yii::app()->user->isGuest) { $this->redirect(array('site/login')); }
+            //if (Yii::app()->user->isGuest) { $this->redirect(array('site/login')); }
             $this->render('dashboard');
 	}
 
