@@ -38,11 +38,11 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('resetpasswrd, checktoken, newpasswd, login'),
+				'actions'=>array('resetpasswrd', 'checktoken', 'newpasswd', 'login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','invite','update','changepsw, logout'),
+				'actions'=>array('index','invite','update','changepsw', 'logout'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
