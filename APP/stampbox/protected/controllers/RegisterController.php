@@ -64,7 +64,6 @@ class RegisterController extends Controller
                     $identity->authenticate();
                     Yii::app()->user->login($identity, 3600*24*30);               
                     //Generate 100 stamps for the user for registration
-                    self::GenerateStamps(Yii::App()->user->getId(), 100);
                     $model->registeredemail = new usermailbox();
                     $model->registeredemail->customer_id = Yii::app()->user->getId();
                     $model->registeredemail->e_mail = $customer->username;
@@ -79,12 +78,7 @@ class RegisterController extends Controller
                         'customer_id'=>Yii::app()->user->getId(),
                         'points_bal'=>0,
                         'stamps_bal'=>100));
-                    $dbcommand->insert('ds.t_stamps_transactions', array(
-                            'customer_id'=>Yii::app()->user->getId(),
-                            'transaction_code'=>'BONUS',
-                            'amount'=>100,
-                            'description'=>'Free stamps for registration',
-                            'transaction_date'=>'now()'));
+                    self::GenerateStamps(Yii::App()->user->getId(), 100);
                 }
                 else { 
                     Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');

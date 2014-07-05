@@ -62,7 +62,10 @@ if ($customermailboxes) {
                                         if (pg_num_rows($alreadystamped) >= 1) { continue; }
                                         $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
                                                 ."' and status = 'A' limit 1");
-                                        
+                                        if ($transactionstampres == FALSE) {
+                                            imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                            continue;
+                                        }
                                         $transactionstamp = pg_fetch_assoc($transactionstampres);
                                         $transactionstamp['from_email'] = $fromemail;
                                         $transactionstamp['to_email'] = $custmailbox['e_mail'];
@@ -93,7 +96,9 @@ if ($customermailboxes) {
 			    		//syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - with headers: " .imap_fetchheader($inbox, $email_number));
                             		//imap_mail_move($inbox, $overview[0]->uid,'STAMPBOX',CP_UID);
                         	}
+                                else {
                                 imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                }
                         }
 			}
   	    	imap_expunge($inbox);
