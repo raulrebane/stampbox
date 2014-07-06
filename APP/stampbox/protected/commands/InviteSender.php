@@ -21,14 +21,14 @@ function inviteSender_fn($job)
     ;
     $mailer = Swift_Mailer::newInstance($transport);
     $message = Swift_Message::newInstance('RE: ' .$mboxparams->subject)
-        ->setFrom(array($mboxparams->from => $mboxparams->fromname))
-        ->setTo(array($mboxparams->to => $mboxparams->toname))
-        ->setBody("Hello " .$mboxparams->toname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail " 
+        ->setFrom(array($mboxparams->to => $mboxparams->toname))
+        ->setTo(array($mboxparams->from => $mboxparams->fromname))
+        ->setBody("Hello " .$mboxparams->fromname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail " 
             ."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
             ."this link http://dsdev.dnsdynamic.com/stampbox/index.php?r=register/Step1 and you will receive a free trial and ensure that your emails " 
             ."will always be on top of my list.\r\n"
             ."Best regards,\r\n"
-            .$mboxparams->fromname);
+            .$mboxparams->toname);
     $result = $mailer->send($message);
     if ($result) {
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
