@@ -98,6 +98,36 @@ if ($customermailboxes) {
                         	}
                                 else {
                                 imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                $mailto = imap_mime_header_decode($overview[0]->to);
+	                        if (count($mailto) == 2) {
+      	  		                $toname = utf8_encode(rtrim($mailfrom[0]->text));
+        	                        $toemail = trim($mailto[1]->text, " <>");
+                        		}
+                        	else {
+                            	  if (strpos($overview[0]->to, "<")) {
+                                	list($toname, $toemail) = explode("<", $overview[0]->to);
+                            	  	}
+                            	  else {
+                                	$toemail = $overview[0]->to;
+                                	$toname = $overview[0]->to;
+                            		}
+                        	$toemail = trim($toemail, " <>");
+                        	$toname = utf8_encode(rtrim($toname)); 
+                        	}
+                                $inviteparams = json_encode(array(
+                                    'outgoing_hostname'=>$mailconf['outgoing_hostname'],
+                                    'outgoing_port'=>$mailconf['outgoing_port'],
+                                    'e_mail_username'=>$custmailbox['e_mail_username'],
+                                    'e_mail_password'=>$custmailbox['e_mail_password'],
+                                    'subject'=>$overview[0]->subject,
+                                    'from'=>$fromemail,
+                                    'fromname'=>$fromname,
+                                    'to'=>$toemail,
+                                    'toname'=>$toname
+                                ));
+                                $gmclient= new GearmanClient();
+                                $gmclient->addServer("127.0.0.1", 4730);
+                                $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
                                 }
                         }
 			}
