@@ -15,7 +15,7 @@ function inviteSender_fn($job)
 {
     $jsonstr = $job->workload();
     $mboxparams = json_decode($jsonstr);
-    $transport = Swift_SmtpTransport::newInstance($mboxparams->outgoing_hostname, $mboxparams->outgoing_port)
+    $transport = Swift_SmtpTransport::newInstance($mboxparams->outgoing_hostname, $mboxparams->outgoing_port, $mboxparams->outgoing_socket_type)
         ->setUsername($mboxparams->e_mail_username)
         ->setPassword($mboxparams->e_mail_password)
     ;

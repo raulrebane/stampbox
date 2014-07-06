@@ -18,7 +18,7 @@ if ($customermailboxes) {
             $mailconf = pg_fetch_assoc($mailboxconfig);
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
-            $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
+            $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
                     $username,$custmailbox['e_mail_password']);
 	    if (!$inbox) {
 		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - connection failed: " .$custmailbox['e_mail'] ." with: " ."{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/ssl/novalidate-cert}INBOX"
@@ -97,7 +97,7 @@ if ($customermailboxes) {
                             		//imap_mail_move($inbox, $overview[0]->uid,'STAMPBOX',CP_UID);
                         	}
                                 else {
-                                imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                //imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 $mailto = imap_mime_header_decode($overview[0]->to);
 	                        if (count($mailto) == 2) {
       	  		                $toname = utf8_encode(rtrim($mailfrom[0]->text));
@@ -117,6 +117,7 @@ if ($customermailboxes) {
                                 $inviteparams = json_encode(array(
                                     'outgoing_hostname'=>$mailconf['outgoing_hostname'],
                                     'outgoing_port'=>$mailconf['outgoing_port'],
+				    'outgoing_socket_type'=>$mailconf['outgoing_socket_type'],
                                     'e_mail_username'=>$custmailbox['e_mail_username'],
                                     'e_mail_password'=>$custmailbox['e_mail_password'],
                                     'subject'=>$overview[0]->subject,
@@ -127,7 +128,7 @@ if ($customermailboxes) {
                                 ));
                                 $gmclient= new GearmanClient();
                                 $gmclient->addServer("127.0.0.1", 4730);
-                                $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+                                $result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);
                                 }
                         }
 			}
