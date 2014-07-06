@@ -12,20 +12,34 @@ while ($worker->work());
 
 function inviteSender_fn($job)
 {
-  $jsonstr = $job->workload();
-  $mboxparams = json_decode($jsonstr);
-  if ($inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/ssl/novalidate-cert}",
-                                $mboxparams->username,$mboxparams->password)) {
+    $jsonstr = $job->workload();
+    $mboxparams = json_decode($jsonstr);
+    $transport = Swift_SmtpTransport::newInstance($mboxparams->outgoing_hostname, $mboxparams->outgoing_port)
+        ->setUsername($mboxparams->e_mail_username)
+        ->setPassword($mboxparams->e_mail_password)
+    ;
+    $mailer = Swift_Mailer::newInstance($transport);
+    $message = Swift_Message::newInstance('RE: ' .$mboxparams->subject)
+        ->setFrom(array($mboxparams->from => $mboxparams->fromname))
+        ->setTo(array($mboxparams->to => $mboxparams->toname))
+        ->setBody("Hello " .$mboxparams->toname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail " 
+            ."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
+            ."this link http://dsdev.dnsdynamic.com/stampbox/index.php?r=register/Step1 and you will receive a free trial and ensure that your emails " 
+            ."will always be on top of my list.\r\n"
+            ."Best regards,\r\n"
+            .$mboxparams->fromname);
+    $result = $mailer->send($message);
+    if ($result) {
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-        syslog(LOG_ERR, "Successful mailbox open with: " .$jsonstr);
+        syslog(LOG_ERR, "Successful mail delivery with: " .$jsonstr);
         closelog();
         return json_encode(array('status'=>'OK'));
-  }
-  else {
-    openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams));
-    closelog();
-    return json_encode(array('status'=>'ERROR', 'reason'=>imap_errors()));
-  }
+    }
+    else {
+        openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
+        syslog(LOG_ERR, "Error delivering mail with: " .$jsonstr);
+        closelog();
+        return json_encode(array('status'=>'ERROR', 'reason'=>imap_errors()));
+    }
 }
 ?>
