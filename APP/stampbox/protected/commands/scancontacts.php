@@ -98,7 +98,6 @@ if ($customermailboxes) {
                         	}
                                 else {
 				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
-                                imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 $mailto = imap_mime_header_decode($overview[0]->to);
 	                        if (count($mailto) == 2) {
       	  		                $toname = utf8_encode(rtrim($mailto[0]->text));
@@ -130,6 +129,7 @@ if ($customermailboxes) {
                                 $gmclient= new GearmanClient();
                                 $gmclient->addServer("127.0.0.1", 4730);
                                 $result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);
+                                imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 }
                         }
 			}
