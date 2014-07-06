@@ -20,7 +20,7 @@
             <div id="sidebar-wrapper">
                 <div class="logo"></div>
                 <ul class="sidebar-nav main-menu">
-                    <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>">Dashboard</a>
+                    <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>">Overview</a>
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('account/statement') ?>">Account statement</a>
                     </li>
