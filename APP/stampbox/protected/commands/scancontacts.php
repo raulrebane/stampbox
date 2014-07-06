@@ -97,7 +97,7 @@ if ($customermailboxes) {
                             		//imap_mail_move($inbox, $overview[0]->uid,'STAMPBOX',CP_UID);
                         	}
                                 else {
-                                //imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 $mailto = imap_mime_header_decode($overview[0]->to);
 	                        if (count($mailto) == 2) {
       	  		                $toname = utf8_encode(rtrim($mailfrom[0]->text));
