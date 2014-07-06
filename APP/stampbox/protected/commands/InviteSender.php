@@ -1,4 +1,5 @@
 <?php
+require_once '/home/raulr/swiftmailer/lib/swift_required.php';
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
