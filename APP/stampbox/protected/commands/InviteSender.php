@@ -14,6 +14,7 @@ while ($worker->work());
 function inviteSender_fn($job)
 {
     $jsonstr = $job->workload();
+    syslog(LOG_INFO, "Got invite e-mail request with: " .$jsonstr);
     $mboxparams = json_decode($jsonstr);
     $transport = Swift_SmtpTransport::newInstance($mboxparams->outgoing_hostname, $mboxparams->outgoing_port, $mboxparams->outgoing_socket_type)
         ->setUsername($mboxparams->e_mail_username)
@@ -32,7 +33,7 @@ function inviteSender_fn($job)
     $result = $mailer->send($message);
     if ($result) {
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-        syslog(LOG_ERR, "Successful mail delivery with: " .$jsonstr);
+        syslog(LOG_INFO, "Successful mail delivery with: " .$jsonstr);
         closelog();
         return json_encode(array('status'=>'OK'));
     }
