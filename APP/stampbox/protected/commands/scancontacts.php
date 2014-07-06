@@ -34,7 +34,7 @@ if ($customermailboxes) {
 	    	$searchdate = date( "d-M-Y", strToTime ( "-1 days" ) );
             	$emails = imap_search($inbox,"SINCE $searchdate");
                 	if($emails) {
-//		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
+		    	syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
                     	foreach($emails as $email_number) {
                         	$overview = imap_fetch_overview($inbox,$email_number,0);
                         	$mailfrom = imap_mime_header_decode($overview[0]->from);
@@ -97,10 +97,11 @@ if ($customermailboxes) {
                             		//imap_mail_move($inbox, $overview[0]->uid,'STAMPBOX',CP_UID);
                         	}
                                 else {
+				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
                                 imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 $mailto = imap_mime_header_decode($overview[0]->to);
 	                        if (count($mailto) == 2) {
-      	  		                $toname = utf8_encode(rtrim($mailfrom[0]->text));
+      	  		                $toname = utf8_encode(rtrim($mailto[0]->text));
         	                        $toemail = trim($mailto[1]->text, " <>");
                         		}
                         	else {
