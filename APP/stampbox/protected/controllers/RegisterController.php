@@ -12,7 +12,7 @@ class RegisterController extends Controller
        {
         $this->layout = 'register';
         $model = new Register;
-        
+        Yii::log('In step1:', 'info', 'application');
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
             $model->attributes=$_POST['Register'];
             //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');

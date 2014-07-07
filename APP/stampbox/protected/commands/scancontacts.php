@@ -9,7 +9,7 @@
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 
 $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and e_mail = 'stampboxdemo@yahoo.com;");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
         {
@@ -98,22 +98,23 @@ if ($customermailboxes) {
                         	}
                                 else {
 				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
-                                $mailto = imap_mime_header_decode($overview[0]->to);
-	                        if (count($mailto) == 2) {
-      	  		                $toname = utf8_encode(rtrim($mailto[0]->text));
-        	                        $toemail = trim($mailto[1]->text, " <>");
-                        		}
-                        	else {
-                            	  if (strpos($overview[0]->to, "<")) {
-                                	list($toname, $toemail) = explode("<", $overview[0]->to);
-                            	  	}
-                            	  else {
-                                	$toemail = $overview[0]->to;
-                                	$toname = $overview[0]->to;
-                            		}
-                        	$toemail = trim($toemail, " <>");
-                        	$toname = utf8_encode(rtrim($toname)); 
-                        	}
+//                                $mailto = imap_mime_header_decode($overview[0]->to);
+//	                        if (count($mailto) == 2) {
+//      	  		                $toname = utf8_encode(rtrim($mailto[0]->text));
+//        	                        $toemail = trim($mailto[1]->text, " <>");
+//                        		}
+//                        	else {
+//                            	  if (strpos($overview[0]->to, "<")) {
+//                                	list($toname, $toemail) = explode("<", $overview[0]->to);
+//                            	  	}
+//                            	  else {
+//                                	$toemail = $overview[0]->to;
+//                                	$toname = $overview[0]->to;
+//                            		}
+//                        	$toemail = trim($toemail, " <>");
+//                        	$toname = utf8_encode(rtrim($toname)); 
+//                        	}
+                                $toemail = $toname = $custmailbox['e_mail'];
                                 $inviteparams = json_encode(array(
                                     'outgoing_hostname'=>$mailconf['outgoing_hostname'],
                                     'outgoing_port'=>$mailconf['outgoing_port'],
