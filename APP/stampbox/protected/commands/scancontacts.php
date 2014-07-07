@@ -9,7 +9,7 @@
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 
 $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and e_mail = 'stampboxdemo@yahoo.com;");
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and e_mail = 'stampboxdemo@yahoo.com';");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
         {
@@ -56,10 +56,15 @@ if ($customermailboxes) {
 //                        $mailheaders = imap_fetchheader($inbox, $email_number);
                         	$foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
                         	if (pg_num_rows($foundsenderres) == 1) {
-                            		$foundsender = pg_fetch_assoc($foundsenderres);
+                            		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - found registered sender: " .$fromemail);
+					$foundsender = pg_fetch_assoc($foundsenderres);
                                         $alreadystamped = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '"
                                         .$foundsender['customer_id'] ."' and email_id = '" .$overview[0]->message_id ."';");
-                                        if (pg_num_rows($alreadystamped) >= 1) { continue; }
+                                        if (pg_num_rows($alreadystamped) >= 1) { 
+						$stampedstamp = pg_fetch_assoc($alreadystamped);
+						syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - email already processed with stampid: " .$stampedstamp['email_id']);
+						continue; 
+						syslog(LOG_INFO, "This should never happen when stamp was found");}
                                         $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
                                                 ."' and status = 'A' limit 1");
                                         if ($transactionstampres == FALSE) {
