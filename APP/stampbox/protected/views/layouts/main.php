@@ -19,15 +19,26 @@
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <div class="logo"></div>
+                <?php $this->widget('zii.widgets.CMenu',array(
+                    'items'=>array(
+                        array('label'=>'Overview', 'url'=>array('/site/index')),
+                        array('label'=>'Account statement', 'url'=>array('/account/statement')),
+                        array('label'=>'E-mail accounts', 'url'=>array('/usermailbox/index')),
+                        array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
+                        array('label'=>'Invite', 'url'=>array('/invite/index')),
+                        array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
+                        ),
+                    'htmlOptions' => array('class'=>'sidebar-nav main-menu',
+                        ),
+                    )); ?>
+                    <!--
                 <ul class="sidebar-nav main-menu">
                     <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>">Overview</a>
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('account/statement') ?>">Account statement</a>
                     </li>
-                    <!--
                     <li><a href="<?php //echo Yii::app()->createUrl('usermailbox/index') ?>">E-mail Accounts</a>
                     </li>
-                    -->
                     <li><a href="<?php echo Yii::app()->createUrl('whitelist/index') ?>">Whitelist</a>
                     </li>
                     <li><a href="<?php echo Yii::app()->createUrl('invite/index') ?>">Invitations</a>
@@ -35,6 +46,7 @@
                     <li><a href="<?php echo Yii::app()->createUrl('shop/buy') ?>">Buy Stamps</a>
                     </li>
                 </ul>
+                    -->
                 <ul class="sidebar-nav user-menu">
                     <li><a href="<?php echo Yii::app()->createUrl('site/logout') ?>" class="btn btn-aqua">Logout</a>
                     </li>

@@ -35,7 +35,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
             <div class="balance"><?php echo $stampcount['stamps_bal'] ?> <div class="suffix">Stamps</div> 
             <?php echo $stampcount['points_bal'] ?> <div class="suffix">Points left</div>
             </div>
-            <div class="btn btn-aqua buy-more" onclick="href=<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</div>
+            <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
         </div>
         </div>
     </div>
@@ -64,12 +64,12 @@ $lasttransactions = Yii::app()->db->createCommand(array(
         ?>
     </div>
     <div class="footer">
-        <div class="btn btn-dark">See all</div>
+        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('account/statement')?>">See all</a>
     </div>
     </div></div></div></div>    
     <div class="col-md-5"><div class="row">
         <div class="col-md-12"><div class="widget widget-accounts">
-        <div class="title">Stapboxed email accounts</div>
+        <div class="title">Stampboxed email accounts</div>
             <div class="content">
                 <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
                     'criteria'=>array(
