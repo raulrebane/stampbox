@@ -31,22 +31,6 @@
                     'htmlOptions' => array('class'=>'sidebar-nav main-menu',
                         ),
                     )); ?>
-                    <!--
-                <ul class="sidebar-nav main-menu">
-                    <li class="active"><a href="<?php echo Yii::app()->createUrl('site/index') ?>">Overview</a>
-                    </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('account/statement') ?>">Account statement</a>
-                    </li>
-                    <li><a href="<?php //echo Yii::app()->createUrl('usermailbox/index') ?>">E-mail Accounts</a>
-                    </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('whitelist/index') ?>">Whitelist</a>
-                    </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('invite/index') ?>">Invitations</a>
-                    </li>
-                    <li><a href="<?php echo Yii::app()->createUrl('shop/buy') ?>">Buy Stamps</a>
-                    </li>
-                </ul>
-                    -->
                 <ul class="sidebar-nav user-menu">
                     <li><a href="<?php echo Yii::app()->createUrl('site/logout') ?>" class="btn btn-aqua">Logout</a>
                     </li>

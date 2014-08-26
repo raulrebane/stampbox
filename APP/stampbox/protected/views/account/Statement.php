@@ -10,7 +10,7 @@
 ?>
 <div class="row">
     <div class="col-md-12">
-    <div class="widget widget-activity"><div class="title">Activity</div>
+    <div class="widget widget-activity"><div class="title">Account activity</div>
     <div class="content">
         <?php 
         $gridDataProvider = new CArrayDataProvider($model->statement_grid, array('keyField'=>'transaction_id',
