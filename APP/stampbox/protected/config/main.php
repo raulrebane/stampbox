@@ -17,6 +17,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                'application.extensions.*'
 	),
 
 	'modules'=>array(
@@ -95,5 +96,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+                'PAYPAL_MODE'=>'sandbox',
 	),
 );
