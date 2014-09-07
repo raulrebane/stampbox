@@ -26,7 +26,7 @@
                   'template'=>'{addtocart}',
                   'buttons'=>array('addtocart'=>array(
                         'label'=>'Buy',
-                        'url'=>'Yii::app()->createUrl("/shop/AddToCart", array("id" =>$data["offer_id"]))',
+                        'url'=>'Yii::app()->createUrl("shop/AddToCart", array("id" =>$data["offer_id"]))',
                         )),
                 ),
             )));

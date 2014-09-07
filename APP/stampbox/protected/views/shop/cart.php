@@ -18,7 +18,7 @@
                 <td>Total</td>
             </tr>
             <tr>
-                <td><?php echo 'Stamps pack - ' .$model->stamp_amount .' stamps'?></td>
+                <td><?php echo 'Stampbox pack - ' .$model->stamp_amount .' stamps'?></td>
                 <td><?php echo round($model->price/1.2/$model->stamp_amount, 3) ?></td>
                 <td><?php echo $model->stamp_amount ?></td>
                 <td><?php echo round($model->price/1.2, 2) ?></td>
@@ -47,7 +47,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;"></td>
+                <td><a href="<?php echo Yii::app()->createUrl('shop/PayPalExpress'); ?>">
+                        <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;">
+                    </a>
+                </td>
             </tr>
         </table>
     </div>
