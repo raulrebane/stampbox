@@ -72,12 +72,25 @@ class ShopController extends Controller
          /*Look at next step b to see the definition*/
             $ppal=new ExpressCheckout;
             $paymentDetails=$ppal->getPaymentDetails($_REQUEST['token']);
+            $model = Shoppingcart::model()->find('customer_id=:1', array(':1'=>Yii::app()->user->getId()));
+            if ($model->paypal_token !== $_REQUEST['token'])
+            {   
+                Yii::log('Got Paypal payment but no such cart: ' .CVarDumper::dumpAsString($paymentDetails), 'error', 'application');
+                $this->redirect(array('shop/cart'));
+            }
             Yii::log('Paypal payment: ' .CVarDumper::dumpAsString($paymentDetails), 'info', 'application');
             if($paymentDetails['ACK']=="Success")
             {
                 $ack=$ppal->doPayment($paymentDetails);
-                Yii::log('Paypal payment completed: ' .CVarDumper::dumpAsString($paymentDetails), 'info', 'application');
-                
+                $model->delete();
+                Yii::log('Paypal payment completed: ' .CVarDumper::dumpAsString($ack), 'info', 'application');
+                $gmclient= new GearmanClient();
+                $gmclient->addServer("127.0.0.1", 4730);
+                $stampparams = json_encode(array('customer_id'=>$model->customer_id, 'howmany'=>$model->stamp_amount, 
+                                                'stampid'=>$model->batch_id, 'description'=>'Bought stamps, Paypal' 
+                                                ));
+                $result = json_decode($gmclient->do("issuestamps", $params),TRUE);
+                $this->redirect(array('site/dashboard'));
             }
         }
     
@@ -85,6 +98,8 @@ class ShopController extends Controller
         {  
            /*The user flow  wil come here when a user cancels the payment */
            /*Do what you want*/   
+           $model = Shoppingcart::model()->find('customer_id=:1', array(':1'=>Yii::app()->user->getId()));
+           $model->delete();
            $this->redirect(array('shop/buy'));
         }
 }
