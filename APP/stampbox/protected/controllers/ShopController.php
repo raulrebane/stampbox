@@ -87,9 +87,9 @@ class ShopController extends Controller
                 $gmclient= new GearmanClient();
                 $gmclient->addServer("127.0.0.1", 4730);
                 $stampparams = json_encode(array('customer_id'=>$model->customer_id, 'howmany'=>$model->stamp_amount, 
-                                                'stampid'=>$model->batch_id, 'description'=>'Bought stamps, Paypal' 
-                                                ));
-                $result = json_decode($gmclient->do("issuestamps", $params),TRUE);
+                                                'stampid'=>$model->batch_id, 'description'=>'Paypal transaction: ' 
+                                                .$ack['TRANSACTIONID']));
+                $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
                 $this->redirect(array('site/dashboard'));
             }
         }
