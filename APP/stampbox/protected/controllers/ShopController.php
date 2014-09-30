@@ -90,7 +90,7 @@ class ShopController extends Controller
                                                 'stampid'=>$model->batch_id, 'description'=>'Paypal transaction: ' 
                                                 .$ack['TRANSACTIONID']));
                 $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
-                $this->redirect(array('site/dashboard'));
+                $this->redirect(array('site/index'));
             }
         }
     
