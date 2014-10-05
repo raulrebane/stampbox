@@ -52,7 +52,6 @@ class WhitelistController extends Controller
     $res =array();
 
         if (isset($_GET['term'])) {
-            // http://www.yiiframework.com/doc/guide/database.dao
             $qtxt ="SELECT distinct(invited_email) FROM ds.t_invitations WHERE invited_email LIKE :username";
             $command =Yii::app()->db->createCommand($qtxt);
             $command->bindValue(":username", '%'.$_GET['term'].'%', PDO::PARAM_STR);

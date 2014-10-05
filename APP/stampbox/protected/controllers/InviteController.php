@@ -38,7 +38,10 @@ class InviteController extends Controller
             }
             $this->redirect(array('site/index'));
         }
-        
+        if(isset($_POST['refresh'])) {
+            
+        }
+            
         $sort = new CSort();
         $sort->attributes = array(
             'invited_email',
@@ -46,11 +49,16 @@ class InviteController extends Controller
             'name',
             'last_email_date',
         );
+        $sort->defaultOrder=array('last_email_date'=>CSort::SORT_DESC);
 
         $dataProvider=new CActiveDataProvider('Invitations', array(
             'criteria'=>array('condition'=>'customer_id='.Yii::app()->user->getId()),
             'sort'=>$sort, 'pagination'=>array('pageSize'=>1000,)));
         $this->render('index',array('dataProvider'=>$dataProvider,));
+    }
+    
+    public function actionRefresh() {
+        
     }
 
 }

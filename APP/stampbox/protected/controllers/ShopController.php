@@ -69,11 +69,12 @@ class ShopController extends Controller
 
     public function actionPaypalReturn()
         {
-         /*Look at next step b to see the definition*/
+            /* Here we assume that customer session is lost.
+             */
             $ppal=new ExpressCheckout;
             $paymentDetails=$ppal->getPaymentDetails($_REQUEST['token']);
-            $model = Shoppingcart::model()->find('customer_id=:1', array(':1'=>Yii::app()->user->getId()));
-            if ($model->paypal_token !== $_REQUEST['token'])
+            $model = Shoppingcart::model()->find('paypal_token=:1', array(':1'=>$_REQUEST['token']));
+            if ($model === NULL)
             {   
                 Yii::log('Got Paypal payment but no such cart: ' .CVarDumper::dumpAsString($paymentDetails), 'error', 'application');
                 $this->redirect(array('shop/cart'));

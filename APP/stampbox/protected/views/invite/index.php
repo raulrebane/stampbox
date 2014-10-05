@@ -5,46 +5,61 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$form = $this->beginWidget('CActiveForm',array(
+    'id' => 'Invite',
+    //'type'=>'horizontal',
+    'htmlOptions' => array('class'=>'form', 'role'=>'form'),
+    )); 
 ?>
 
 <div class="row">
     <div class="col-md-12">
-    <div class="widget widget-activity"><div class="title">Activity</div>
-    <div class="content">
-        <?php   
-        /*
-        $gridColumns = array(
-            array('name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
-            array('name'=>'from_email', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
-                return $data['from_email'] .'<span>'.$data['subject'] .'</span>';}),
-            array('name'=>'amount', 'htmlOptions'=>array('class'=>'transaction')),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'date'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'time'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
-        
-        */ 
-        $gridColumns = array(
-            array(
-                'id' => 'selectedIds',
-                'class' => 'CCheckBoxColumn',
-                'selectableRows'=>100,
-                'header'=>'Invite',
-                'name'=>'invited_email',),
-            array('name'=>'name', 'header'=>'Name'),
-            array('name'=>'invited_email', 'header'=>'E-mail'),
-            array('name'=>'from_count', 'header'=>'# of mails'),
-            array('name'=>'last_email_date', 'header'=> 'Last e-mail')
-        );
-        $this->widget('zii.widgets.grid.CGridView',array(
-            'enablePagination'=>FALSE,
-            //'hideHeader'=>TRUE,
-            'template' => '{items}',
-            'htmlOptions'=>array('class'=>'content'),
-            'dataProvider' => $dataProvider,
-            'columns'=>$gridColumns
-            ));      
+        <div class="row"><div class="col-sm-offset-8">
+        <?php 
+            $model = new usermailbox;
+            $useremails = usermailbox::model()->findAll('customer_id = :1', array(':1'=>Yii::app()->user->getId()));
+            $emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
+            echo $form->labelEx($model,'e_mail');
+            echo $form->dropDownList($model, 'e_mail',$emailslist);
         ?>
-    </div>
-    </div>
+        <button type="submit" name="refresh" class="btn btn-default">Refresh contacts</button>
+        </div></div>
+        <div class="widget widget-activity">
+            <div class="title"></div>
+            <div class="content">
+            <div class="row"><button type="submit" class="btn btn-aqua">Invite</button></div>
+            <?php   
+                $gridColumns = array(
+                    array(
+                    'id' => 'selectedIds',
+                    'class' => 'CCheckBoxColumn',
+                    'selectableRows'=>1000,
+                    'header'=>'Invite',
+                    'name'=>'invited_email',
+                    'disabled'=>function($data) {if ($data['invite']==='Y') return TRUE; else return FALSE;},
+                    'checked'=>'($row<100)'),
+                    array('name'=>'name', 'header'=>'Name'),
+                    array('name'=>'invited_email', 'header'=>'E-mail'),
+                    array('name'=>'from_count', 'header'=>'# of mails'),
+                    array('name'=>'last_email_date', 'header'=> 'Last e-mail')
+                );
+                $this->widget('zii.widgets.grid.CGridView',array(
+                    'enablePagination'=>FALSE,
+                    //'hideHeader'=>TRUE,
+                    'template' => '{items}',
+                    'htmlOptions'=>array('class'=>'content'),
+                    'dataProvider' => $dataProvider,
+                    'columns'=>$gridColumns
+                ));      
+            ?>
+            <div class="row"><button type="submit" class="btn btn-aqua">Invite</button></div>
+            </div>
+        </div>
     </div>
 </div>
+
+<?php
+$this->endWidget(); 
+unset($form);
+
+?>
