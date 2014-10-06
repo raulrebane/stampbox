@@ -11,6 +11,14 @@ $form = $this->beginWidget('CActiveForm',array(
     'htmlOptions' => array('class'=>'form', 'role'=>'form'),
     )); 
 ?>
+<style>
+ .loading{
+    background-color: #eee;
+    background-image: url('loading.gif');
+    background-position:  center center;
+    background-repeat: no-repeat;
+    opacity: 0.8; }
+</style>
 
 <div class="row">
     <div class="col-md-12">
@@ -22,12 +30,13 @@ $form = $this->beginWidget('CActiveForm',array(
             echo $form->labelEx($model,'e_mail');
             echo $form->dropDownList($model, 'e_mail',$emailslist);
         ?>
-        <button type="submit" name="refresh" class="btn btn-default">Refresh contacts</button>
+        <button type="submit" name="refresh" class="btn btn-default" 
+            onsubmit="js:function(){$(#content).addClass("loading");}">Refresh contacts</button>
         </div></div>
         <div class="widget widget-activity">
             <div class="title"></div>
             <div class="content">
-            <div class="row"><button type="submit" class="btn btn-aqua">Invite</button></div>
+                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>
             <?php   
                 $gridColumns = array(
                     array(
@@ -37,7 +46,7 @@ $form = $this->beginWidget('CActiveForm',array(
                     'header'=>'Invite',
                     'name'=>'invited_email',
                     'disabled'=>function($data) {if ($data['invite']==='Y') return TRUE; else return FALSE;},
-                    'checked'=>'($row<100)'),
+                    'checked'=>'($row<100 AND $data["invite"] <> "Y")'),
                     array('name'=>'name', 'header'=>'Name'),
                     array('name'=>'invited_email', 'header'=>'E-mail'),
                     array('name'=>'from_count', 'header'=>'# of mails'),
@@ -52,7 +61,7 @@ $form = $this->beginWidget('CActiveForm',array(
                     'columns'=>$gridColumns
                 ));      
             ?>
-            <div class="row"><button type="submit" class="btn btn-aqua">Invite</button></div>
+            <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>
             </div>
         </div>
     </div>

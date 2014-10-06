@@ -42,18 +42,31 @@ class usermailbox extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('customer_id, e_mail, status, maildomain', 'required'),
+			array('e_mail, e_mail_username, e_mail_password', 'required'),
+                        array('e_mail', 'email'),
+                        //array('e_mail', 'checkregistered'),
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
 			array('e_mail_password', 'length', 'max'=>32),
-			array('status', 'length', 'max'=>1),
-			array('worker_type', 'length', 'max'=>20),
-			array('last_seen', 'length', 'max'=>6),
-			array('worker_ip', 'safe'),
+			array('customer_id, worker_ip', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('customer_id, e_mail, e_mail_username, e_mail_password, status, maildomain, worker_ip, worker_type, last_seen', 'safe', 'on'=>'search'),
 		);
 	}
+        
+        public function checkregistered($attribute,$params)
+        {
+            $customer = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
+                        'from' => 'ds.v_registered_email',
+                        'where'=> 'username = :1',
+                        'params' => array(':1'=>mb_convert_case($this->e_mail, MB_CASE_LOWER, "UTF-8")),))->queryRow();
+            //Yii::log("DB query returned customer_id: " .CVarDumper::dumpAsString($customer), 'info', 'application');
+            if ($customer == !FALSE) {
+                $this->addError('useremail', 'This e-mail address is already registered');
+                return false;
+            }
+         return true;
+        }
 
 	/**
 	 * @return array relational rules.

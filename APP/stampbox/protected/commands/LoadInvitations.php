@@ -73,8 +73,8 @@ function loadInvitations_fn($job)
                 //usort($senders, "self::cmp");
                 $top_senders = array_values($senders);
                 foreach ($top_senders as $i) {
-                //$invite = pg_query($dbconn, "select * from ds.t_invitations where invited_email = '".$i['e_mail'] ."' and customer_id = ".$custmailbox['customer_id'] .";");
-                //if (!$invite) {
+                $invite = pg_query($dbconn, "select * from ds.t_invitations where invited_email = '".$i['e_mail'] ."' and customer_id = ".$custmailbox['customer_id'] .";");
+                if (!$invite) {
                     $invited['customer_id'] = $custmailbox['customer_id'];
                     $invited['invited_email'] = $i['e-mail'];
                     $invited['from_count'] = $i['rcount'];
@@ -82,7 +82,16 @@ function loadInvitations_fn($job)
                     $invited['last_email_date'] = date('Y-m-d H:i:s', $i['last_email_date']);
                     $res = pg_insert($dbconn, 'ds.t_invitations', $invited);
                     
-                //}
+                }
+                else {
+                    $invited['customer_id'] = $custmailbox['customer_id'];
+                    $invited['invited_email'] = $i['e-mail'];
+                    $invited['from_count'] = $i['rcount'];
+                    $invited['name'] = $i['Name'];
+                    $invited['last_email_date'] = date('Y-m-d H:i:s', $i['last_email_date']);
+                    $res = pg_update($dbconn, 'ds.t_invitations', $invited, array('customer_id='.$custmailbox['customer_id'] 
+                                .'and invited_email = ' .$i['e-mail']));
+                }
                 }
             }
         }

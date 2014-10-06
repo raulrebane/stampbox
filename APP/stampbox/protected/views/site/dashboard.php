@@ -91,7 +91,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
                 ));?>
             </div>
             <div class="footer">
-                <div class="btn btn-dark"><i class="icon-plus-circled"></i> Add account</div>
+                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="icon-plus-circled"></i>Add account</a>
             </div>
         </div></div>
         <div class="col-md-12">
@@ -106,7 +106,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
 -->
                 </div>
                 <div class="footer">
-                    <div class="btn btn-dark">Invite friends to receive free credits</div>
+                    <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
                 </div>
             </div>
         </div>

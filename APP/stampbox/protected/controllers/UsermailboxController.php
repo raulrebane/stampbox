@@ -27,7 +27,7 @@ public function accessRules()
 {
 return array(
 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-'actions'=>array('index', 'view', 'create','update'),
+'actions'=>array('index','create','update'),
 'users'=>array('@'),
 ),
 array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -47,8 +47,7 @@ array('deny',  // deny all users
 */
 public function actionView($id)
 {
-$this->render('view',array(
-'model'=>$this->loadModel($id),
+$this->render('view',array('model'=>$this->loadModel($id),
 ));
 }
 
@@ -67,12 +66,10 @@ if(isset($_POST['usermailbox']))
 {
 $model->attributes=$_POST['usermailbox'];
 if($model->save())
-$this->redirect(array('view','id'=>$model->e_mail));
+$this->redirect(array('usermailbox/index'));
 }
 
-$this->render('create',array(
-'model'=>$model,
-));
+$this->render('create',array('model'=>$model,));
 }
 
 /**
@@ -82,21 +79,22 @@ $this->render('create',array(
 */
 public function actionUpdate($id)
 {
-$model=$this->loadModel($id);
+    $model=$this->loadModel($id);
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-if(isset($_POST['usermailbox']))
-{
-$model->attributes=$_POST['usermailbox'];
-if($model->save())
-$this->redirect(array('view','id'=>$model->e_mail));
-}
+    if(isset($_POST['usermailbox']))
+    {
+        $model->attributes=$_POST['usermailbox'];
+        if($model->save())
+            $this->redirect(array('usermailbox/index'));
+        else {
+            Yii::log('Update customer mailbox failed' .CVarDumper::dumpAsString($model), 'info', 'application');
+        }
+    }
 
-$this->render('update',array(
-'model'=>$model,
-));
+    $this->render('update',array('model'=>$model,));
 }
 
 /**
@@ -105,11 +103,8 @@ $this->render('update',array(
 public function actionIndex()
 {
 $dataProvider=new CActiveDataProvider('usermailbox',array(
-    'criteria'=>array(
-        'condition'=>'customer_id=' .Yii::App()->user->getId(),),));
-$this->render('index',array(
-'dataProvider'=>$dataProvider,
-));
+    'criteria'=>array('condition'=>'customer_id=' .Yii::App()->user->getId(),),));
+$this->render('index',array('dataProvider'=>$dataProvider));
 }
 
 /**
@@ -119,10 +114,10 @@ $this->render('index',array(
 */
 public function loadModel($id)
 {
-$model=usermailbox::model()->findByPk($id);
-if($model===null)
-throw new CHttpException(404,'The requested page does not exist.');
-return $model;
+    $model=usermailbox::model()->findByPk($id);
+    if($model===null OR $model->customer_id <> Yii::App()->user->getID())
+        throw new CHttpException(404,'The requested page does not exist.');
+    return $model;
 }
 
 /**

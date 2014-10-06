@@ -1,35 +1,26 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+<?php $form=$this->beginWidget('CActiveForm',array(
 	'id'=>'usermailbox-form',
 	'enableAjaxValidation'=>false,
-)); ?>
+)); 
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+    echo $form->labelEx($model,'e_mail');
+    echo $form->textField($model, 'e_mail', array('class'=>'form-control', 'placeholder'=>'e-mail address'));
+    echo $form->error($model, 'e_mail');
 
-<?php echo $form->errorSummary($model); ?>
+    echo $form->labelEx($model,'e_mail_username');
+    echo $form->textField($model, 'e_mail_username', array('class'=>'form-control', 'placeholder'=>'e-mail account username'));
+    echo $form->error($model, 'e_mail_username');
 
-	<?php echo $form->textFieldRow($model,'customer_id',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'e_mail',array('class'=>'span5','maxlength'=>100)); ?>
-
-	<?php echo $form->textFieldRow($model,'e_mail_username',array('class'=>'span5','maxlength'=>100)); ?>
-
-	<?php echo $form->textFieldRow($model,'e_mail_password',array('class'=>'span5','maxlength'=>32)); ?>
-
-	<?php echo $form->textFieldRow($model,'status',array('class'=>'span5','maxlength'=>1)); ?>
-
-	<?php echo $form->textFieldRow($model,'maildomain',array('class'=>'span5','maxlength'=>100)); ?>
-
-	<?php echo $form->textFieldRow($model,'worker_ip',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'worker_type',array('class'=>'span5','maxlength'=>20)); ?>
-
-	<?php echo $form->textFieldRow($model,'last_seen',array('class'=>'span5','maxlength'=>6)); ?>
-
+    echo $form->labelEx($model,'e_mail_password');
+    echo $form->textField($model, 'e_mail_password', array('class'=>'form-control', 'placeholder'=>'e-mail account password'));
+    echo $form->error($model, 'e_mail_password');
+?>
 <div class="form-actions">
-	<?php $this->widget('bootstrap.widgets.TbButton', array(
+	<?php $this->widget('zii.widgets.jui.CJuiButton', array(
 			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+			'caption'=>$model->isNewRecord ? 'Create' : 'Save',
+                        'name'=>'emailbtn',
+                        'htmlOptions'=>array('class'=>'btn btn-default')
 		)); ?>
 </div>
 
