@@ -33,7 +33,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
         <div class="widget widget-balance"><div class="title">You have</div>
         <div class="content">
             <div class="balance"><?php echo $stampcount['stamps_bal'] ?> <div class="suffix">Stamps</div> 
-            <?php echo $stampcount['points_bal'] ?> <div class="suffix">Points left</div>
+            <?php echo $stampcount['points_bal'] ?> <div class="suffix">Credits</div>
             </div>
             <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
         </div>
@@ -86,7 +86,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),
                         array('name'=>'status', 'htmlOptions'=>array('class'=>'status'), 'type'=>'raw', 'value'=>function($data) {
-                        if ($data->status = 'A') return '<i class="icon-ok"></i>'; else return '<i class="icon-cw"></i>'; }),
+                        if ($data->status === 'A') return '<i class="icon-ok"></i>'; else return '<i class="icon-cw"></i>'; }),
                     )
                 ));?>
             </div>

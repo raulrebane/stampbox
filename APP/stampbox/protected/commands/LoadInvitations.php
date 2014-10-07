@@ -89,8 +89,8 @@ function loadInvitations_fn($job)
                     $invited['from_count'] = $i['rcount'];
                     $invited['name'] = $i['Name'];
                     $invited['last_email_date'] = date('Y-m-d H:i:s', $i['last_email_date']);
-                    $res = pg_update($dbconn, 'ds.t_invitations', $invited, array('customer_id='.$custmailbox['customer_id'] 
-                                .'and invited_email = ' .$i['e-mail']));
+                    $res = pg_update($dbconn, 'ds.t_invitations', $invited, array('customer_id'=>$custmailbox['customer_id'], 
+                                'invited_email'=>$i['e-mail']));
                 }
                 }
             }

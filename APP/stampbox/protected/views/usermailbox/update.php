@@ -1,18 +1,32 @@
-<?php
-$this->breadcrumbs=array(
-	'Usermailboxes'=>array('index'),
-	$model->e_mail=>array('view','id'=>$model->e_mail),
-	'Update',
-);
+<?php $form=$this->beginWidget('CActiveForm',array(
+	'id'=>'usermailbox-form',
+	'enableAjaxValidation'=>false,
+)); 
+/*
+    echo $form->labelEx($model,'e_mail');
+    echo $form->textField($model, 'e_mail', array('class'=>'form-control', 'placeholder'=>'e-mail address'));
+    echo $form->error($model, 'e_mail');
+*/
+    echo $form->labelEx($model,'e_mail_username');
+    echo $form->textField($model, 'e_mail_username', array('class'=>'form-control', 'placeholder'=>'e-mail account username'));
+    echo $form->error($model, 'e_mail_username');
 
-	$this->menu=array(
-	array('label'=>'List usermailbox','url'=>array('index')),
-	array('label'=>'Create usermailbox','url'=>array('create')),
-	array('label'=>'View usermailbox','url'=>array('view','id'=>$model->e_mail)),
-	array('label'=>'Manage usermailbox','url'=>array('admin')),
-	);
-	?>
+    echo $form->labelEx($model,'e_mail_password');
+    echo $form->textField($model, 'e_mail_password', array('class'=>'form-control', 'placeholder'=>'e-mail account password'));
+    echo $form->error($model, 'e_mail_password');
 
-	<h1>Update usermailbox <?php echo $model->e_mail; ?></h1>
+    echo $form->labelEx($model,'status');
+    echo $form->dropDownList($model, 'status', array('A' => 'Active', 'N' => 'Disabled'));
+    echo $form->error($model, 'status');
+    
+?>
+<div class="form-actions">
+	<?php $this->widget('zii.widgets.jui.CJuiButton', array(
+			'buttonType'=>'submit',
+			'caption'=>'Save',
+                        'name'=>'emailbtn',
+                        'htmlOptions'=>array('class'=>'btn btn-default')
+		)); ?>
+</div>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
+<?php $this->endWidget(); ?>

@@ -65,6 +65,8 @@ $model=new usermailbox;
 if(isset($_POST['usermailbox']))
 {
 $model->attributes=$_POST['usermailbox'];
+list(, $model->maildomain) = explode("@", $model->e_mail); 
+$model->customer_id = Yii::App()->user->getId();
 if($model->save())
 $this->redirect(array('usermailbox/index'));
 }

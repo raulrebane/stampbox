@@ -47,6 +47,7 @@ class usermailbox extends CActiveRecord
                         //array('e_mail', 'checkregistered'),
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
 			array('e_mail_password', 'length', 'max'=>32),
+                        array('status', 'length', 'max'=>1),
 			array('customer_id, worker_ip', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

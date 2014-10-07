@@ -1,15 +1,32 @@
-<?php
-$this->breadcrumbs=array(
-	'Usermailboxes'=>array('index'),
-	'Create',
-);
+<?php $form=$this->beginWidget('CActiveForm',array(
+	'id'=>'usermailbox-form',
+	'enableAjaxValidation'=>false,
+)); 
 
-$this->menu=array(
-array('label'=>'List usermailbox','url'=>array('index')),
-array('label'=>'Manage usermailbox','url'=>array('admin')),
-);
+    echo $form->labelEx($model,'e_mail');
+    echo $form->textField($model, 'e_mail', array('class'=>'form-control', 'placeholder'=>'e-mail address'));
+    echo $form->error($model, 'e_mail');
+
+    echo $form->labelEx($model,'e_mail_username');
+    echo $form->textField($model, 'e_mail_username', array('class'=>'form-control', 'placeholder'=>'e-mail account username'));
+    echo $form->error($model, 'e_mail_username');
+
+    echo $form->labelEx($model,'e_mail_password');
+    echo $form->passwordField($model, 'e_mail_password', array('class'=>'form-control', 'placeholder'=>'e-mail account password'));
+    echo $form->error($model, 'e_mail_password');
+
+    echo $form->labelEx($model,'status');
+    echo $form->dropDownList($model, 'status', array('A' => 'Active', 'N' => 'Disabled'));
+    echo $form->error($model, 'status');
+    
 ?>
+<div class="form-actions">
+	<?php $this->widget('zii.widgets.jui.CJuiButton', array(
+			'buttonType'=>'submit',
+			'caption'=>'Save',
+                        'name'=>'emailbtn',
+                        'htmlOptions'=>array('class'=>'btn btn-default')
+		)); ?>
+</div>
 
-<h1>Create usermailbox</h1>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->endWidget(); ?>
