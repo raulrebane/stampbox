@@ -12,7 +12,6 @@ class RegisterController extends Controller
        {
         $this->layout = 'register';
         $model = new Register;
-        Yii::log('In step1:', 'info', 'application');
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
             $model->attributes=$_POST['Register'];
             //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
@@ -22,6 +21,7 @@ class RegisterController extends Controller
 
         if(isset($_POST['Register']))
 	{  
+            Yii::log('In step1:', 'info', 'application');
             $model->attributes=$_POST['Register'];     
             if ($model->validate())
             {
@@ -70,7 +70,7 @@ class RegisterController extends Controller
                     $model->registeredemail->e_mail_username = $model->emailusername;
                     $model->registeredemail->e_mail_password = $model->emailpassword;
                     if ($e_mail_verified == TRUE) { $model->registeredemail->status = 'A'; }
-                    else { $model->regsteredemail->status = 'V'; } // V = verify
+                    else { $model->registeredemail->status = 'V'; } // V = verify
                     list(, $model->registeredemail->maildomain) = explode("@", $customer->username);
                     $model->registeredemail->save();
                     $dbcommand =  Yii::app()->db->createCommand();
@@ -101,10 +101,13 @@ class RegisterController extends Controller
                     
                 }
                 else { 
-                    list(, $model->maildomain) = explode("@", $customer->username);
-                    $model->mailtype = 'IMAP';
-                    $model->incoming_auth = 'EMAIL';
-                    $this->render('Step2', array('model'=>$model)); }
+                    Yii::log('Going to step2:', 'info', 'application');
+		    //list(, $model->maildomain) = explode("@", $customer->username);
+                    //$model->mailtype = 'IMAP';
+                    //$model->incoming_auth = 'EMAIL';
+                    //$this->render('Step2', array('model'=>$model)); 
+		    //Yii::app()->end();
+		    $this->redirect(array('register/step2'));}
             }
             else {
                $model->addError('useremail', 'This e-mail is already registered. If you think this is an error please contact us '); 
