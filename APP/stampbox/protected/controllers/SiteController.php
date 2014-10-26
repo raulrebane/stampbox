@@ -38,11 +38,11 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('resetpasswd', 'checktoken', 'newpasswd', 'login'),
+				'actions'=>array('index','resetpasswd', 'checktoken', 'newpasswd', 'login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','invite','update','changepsw', 'logout'),
+				'actions'=>array('invite','update','changepsw', 'logout'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -58,8 +58,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-            //if (Yii::app()->user->isGuest) { $this->redirect(array('site/login')); }
-            $this->render('dashboard');
+            if (Yii::app()->user->isGuest) { 
+                $this->layout = 'home';
+                $this->render('index'); }
+            else {
+            $this->render('dashboard'); }
 	}
 
         
