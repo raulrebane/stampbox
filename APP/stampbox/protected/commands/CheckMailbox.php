@@ -15,7 +15,7 @@ function checkMailbox_fn($job)
 {
   $jsonstr = $job->workload();
   $mboxparams = json_decode($jsonstr);
-  if ($inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/ssl/novalidate-cert}",
+  if ($inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/" .$mboxparams->socket_type ."/novalidate-cert}",
                                 $mboxparams->username,$mboxparams->password)) {
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
         syslog(LOG_ERR, "Successful mailbox open with: " .$jsonstr);
