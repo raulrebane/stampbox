@@ -38,7 +38,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','resetpasswd', 'checktoken', 'newpasswd', 'login'),
+				'actions'=>array('index','resetpasswd', 'checktoken', 'newpasswd', 'login', 'help', 'pricing', 'terms'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -67,10 +67,26 @@ class SiteController extends Controller
 
         
 	public function actionInvite()
-	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
+	{   
 		$this->render('index');
+	}
+        
+        public function actionPricing()
+	{
+            $this->layout = 'home';
+            $this->render('pricing');
+	}
+        
+        public function actionTerms()
+	{
+            $this->layout = 'home';	
+            $this->render('terms');
+	}
+        
+        public function actionHelp()
+	{
+            $this->layout = 'home';
+            $this->render('help');
 	}
         
         public function actionresetpasswd() {
