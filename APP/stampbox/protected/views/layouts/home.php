@@ -77,8 +77,8 @@
                     <h1><b>Stampbox</b> - the email courier</h1>
                     <h2>The only way to make emails worth your time</h2>
                     <div class="menu visible-xs">
-                        <a href="login.html" class="btn btn-aqua login">Log in</a>
-                        <a href="signup.html" class="btn btn-aqua signup">Sign up for free</a>
+                        <a href="<?php echo Yii::app()->createUrl('site/login')?>" class="btn btn-aqua login">Log in</a>
+                        <a href="<?php echo Yii::app()->createUrl('register/Step1')?>" class="btn btn-aqua signup">Sign up for free</a>
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
