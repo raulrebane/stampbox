@@ -1,0 +1,532 @@
+@media (min-width: 768px) {
+  .container {
+    width: 960px;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+form:focus {
+  outline: none;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {   
+  border-color: rgba(126, 239, 104, 0.8);
+  box-shadow: none;
+  outline: 0 none;
+  &:focus {
+    border-color: rgba(126, 239, 104, 0.8);
+    box-shadow: none;
+    outline: 0 none;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+.home {
+  background-color: #FFF;
+
+  .bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 400px;
+    background-image: url(../images/home_bg.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+
+  .container {
+
+    .header {
+      .logo {
+        width: 60px;
+        height: 60px;
+        background-image: url(../images/logo-white-trans.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-top: 29px;
+        margin-left: 14px;
+      }
+      ul.menu {
+        display: inline-block;
+        margin: 0px;
+        margin-right: 14px;
+        margin-top: 39px;
+        list-style-type: none;
+        padding: 0px;
+        li {
+          display: inline-block;
+          margin: 0px;
+          padding: 0px;
+          a {
+            color: #FFF;
+            text-transform: uppercase;
+            font-family: "Brandon Grot W01 Bold";
+            font-size: 12px;
+            margin-right: 25px;
+            text-decoration: none;
+            &:hover {
+              border-bottom: 1px solid #fff;
+            }
+            &.btn {
+              text-transform: uppercase;
+              font-size: 12px;
+              letter-spacing: 1px;
+              height: 40px;
+              padding: 12px 18px;
+              margin-right: 0px;
+              border: none;
+              &.login {
+                background-color: #95bb42;
+              }
+              &.signup {
+                background-color: #262626;
+              }
+              &.active, &:hover {
+                text-decoration: none;
+                border: none;
+              }
+            }
+          }
+          &.active {
+            a {
+              border-bottom: 1px solid #fff;
+            }
+          }
+        }
+      }
+    }
+
+    .hero {
+      h1 {
+        color: #FFF;
+        font-family:"Brandon Grot W01 Light";
+        font-size: 58px;
+        text-align: center;
+        letter-spacing: -2px;
+        margin-top: 28px;
+        margin-bottom: 0px;
+        b {
+          font-family: "BrandonGrotW01-Regular";
+        }
+      }
+      h2 {
+        color: #FFF;
+        font-family:"Brandon Grot W01 Light";
+        font-size: 30px;
+        text-align: center;
+        margin-top: 3px;
+        margin-bottom: 50px;
+      }
+    }
+
+    .video-holder {
+      max-width: 780px;
+      cursor: pointer;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .feature {
+      margin-top: 27px;
+      h3 {
+        font-family: "BrandonGrotW01-Regular";
+        font-size: 47px;
+        color: #3a3735;
+        letter-spacing: -2px;
+        margin: 0px;
+        margin-bottom: 24px;
+        line-height: 47px;
+      }
+      p {
+        font-family: "BrandonGrotW01-Regular";
+        font-size: 18px;
+        line-height: 23px;
+        margin-bottom: 23px;
+        b {
+          font-family: "Brandon Grot W01 Medium";
+        }
+      }
+    }
+
+    .split {
+      margin-top: 57px;
+      margin-bottom: 62px;
+      .line {
+        border-top: 1px solid #e9e9e9;
+      }
+    }
+  }
+
+  .wide {
+    background-color: #00b0b1;
+    text-align: center;
+    color: #FFF;
+    margin-top: 64px;
+    h2 {
+      font-family: "BrandonGrotW01-Regular";
+      font-size: 42px;
+      margin-top: 55px;
+      margin-bottom: 0px;
+    }
+    h1 {
+      font-family:"Brandon Grot W01 Light";
+      font-size: 58px;
+      text-align: center;
+      letter-spacing: -2px;
+      margin-top: 0px;
+      b {
+        font-family: "BrandonGrotW01-Regular";
+      }
+    }
+    p {
+      font-family: "BrandonGrotW01-Regular";
+      font-size: 18px;
+      max-width: 640px;
+      margin: 31px auto;
+      line-height: 23px;
+      word-break: keep-all;
+      margin-bottom: 136px;
+    }
+  }
+
+  .footer {
+    img {
+      margin-top: -90px;
+      width: 100%;
+      height: auto;
+      max-width: 327px;
+    }
+    h1 {
+      color: #3a3735;
+      font-family: "BrandonGrotW01-Regular";
+      font-size: 31px;
+      letter-spacing: -1px;
+      margin-top: 56px;
+      margin-bottom: 53px;
+    }
+    .line {
+      display: inline-block;
+      width: 131px;
+      height: 3px;
+      background-color: #3a3735;
+      border-radius: 2px;
+      margin-bottom: 100px;
+    }
+  }
+  @media (max-width: 767px) {
+    .bg {
+      height: 504px;
+    }
+    .mobile-menu-trigger {
+      z-index: 2000;
+      width: 52px;
+      height: 52px;
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      background-color: #161616;
+      opacity: .9;
+      cursor: pointer;
+      -webkit-transition: .4s ease-in-out;
+      -moz-transition: .4s ease-in-out;
+      -ms-transition: .4s ease-in-out;
+      -o-transition: .4s ease-in-out;
+      transition: .4s ease-in-out;
+      &.open {
+        right: 80%;
+      }
+    }
+    .mobile-menu-trigger:hover {
+    }
+    .mobile-menu-trigger .bar{
+      display:block;
+      position:absolute;
+      width:17px;
+      height:3px;
+      top:50%;
+      left:50%;
+      margin-top:-1px;
+      margin-left:-9px;
+      background-color:#fff;
+      -webkit-transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,transform 0.15s ease-out;
+      -moz-transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,transform 0.15s ease-out;
+      transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,transform 0.15s ease-out;
+      -webkit-transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,
+      -webkit-transform 0.15s ease-out;
+      -moz-transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,
+      -webkit-transform 0.15s ease-out;
+      transition:margin 0.15s ease-out 0.25s,opacity 0.15s ease-out 0.25s,
+      -webkit-transform 0.15s ease-out
+    }
+    .mobile-menu-trigger .bar.bar-1{
+      margin-top:-8px
+    }
+    .mobile-menu-trigger .bar.bar-3{
+      margin-top:6px
+    }
+    .mobile-menu-trigger.open .bar{
+      -webkit-transform:scale(0.85);
+      -moz-transform:scale(0.85);
+      -ms-transform:scale(0.85);
+      -o-transform:scale(0.85);
+      transform:scale(0.85);
+      -webkit-transition:margin 0.15s ease-out,opacity 0.15s ease-out,transform 0.15s ease-out 0.25s;
+      -moz-transition:margin 0.15s ease-out,opacity 0.15s ease-out,transform 0.15s ease-out 0.25s;
+      transition:margin 0.15s ease-out,opacity 0.15s ease-out,transform 0.15s ease-out 0.25s;
+      -webkit-transition:margin 0.15s ease-out,opacity 0.15s ease-out,-webkit-transform 0.15s ease-out 0.25s;
+      -moz-transition:margin 0.15s ease-out,opacity 0.15s ease-out,-webkit-transform 0.15s ease-out 0.25s;
+      transition:margin 0.15s ease-out,opacity 0.15s ease-out,-webkit-transform 0.15s ease-out 0.25s
+    }
+    .mobile-menu-trigger.open .bar-1{
+      margin-top:-1px;
+      -webkit-transform:rotate3d(0, 0, 1, -45deg);
+      -moz-transform:rotate3d(0, 0, 1, -45deg);
+      -ms-transform:rotate3d(0, 0, 1, -45deg);
+      -o-transform:rotate3d(0, 0, 1, -45deg);
+      transform:rotate3d(0, 0, 1, -45deg)
+    }
+    .mobile-menu-trigger.open .bar-2{
+      opacity:0
+    }
+    .mobile-menu-trigger.open .bar-3{
+      margin-top:-1px;
+      -webkit-transform:rotate3d(0, 0, 1, 45deg);
+      -moz-transform:rotate3d(0, 0, 1, 45deg);
+      -ms-transform:rotate3d(0, 0, 1, 45deg);
+      -o-transform:rotate3d(0, 0, 1, 45deg);
+      transform:rotate3d(0, 0, 1, 45deg)
+    }
+    .mobile-menu {
+      position: fixed;
+      top: 0px;
+      right: -80%;
+      width: 80%;
+      height: 100%;
+      background-color: #262626;
+      padding-top: 70px;
+      z-index: 2000;
+      -webkit-transition: .4s ease-in-out;
+      -moz-transition: .4s ease-in-out;
+      -ms-transition: .4s ease-in-out;
+      -o-transition: .4s ease-in-out;
+      transition: .4s ease-in-out;
+      &.open {
+        right: 0%;
+      }
+      .item {
+        display: block;
+        margin: 0px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        color: #FFF;
+        text-align: center;
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+      .btn {
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+        height: 40px;
+        padding: 12px 18px;
+        display: block !important;
+        width: 80%;
+        margin: 10px auto;
+        &.login {
+          background-color: #95bb42;
+        }
+        &.signup {
+          color: #262626;
+          background-color: #FFF;
+        }
+        &:first-of-type {
+          margin-top: 30px;
+        }
+      }
+    }
+    .container {
+      .header {
+        .logo {
+          margin-top: 43px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .menu {
+          display: none;
+        }
+      }
+      .hero {
+        h1 {
+          font-size: 36px;
+          margin-top: 40px;
+          line-height: 40px;
+          b {
+            font-size: 50px;
+            display: block;
+          }
+        }
+        h2 {
+          font-size: 20px;
+          line-height: 20px;
+          margin-top: 10px;
+          margin-bottom: 44px;
+        }
+        .menu {
+          .btn {
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            height: 40px;
+            margin-bottom: 47px;
+            padding: 12px 18px;
+            &.login {
+              background-color: #95bb42;
+            }
+            &.signup {
+              background-color: #262626;
+            }
+          }
+        }
+      }
+      .feature {
+        margin-top: 0px;
+        h3 {
+          font-size: 30px;
+          text-align: center;
+          padding: 0px 20px;
+          margin-top: 20px;
+          line-height: 32px;
+          letter-spacing: -1px;
+        }
+        p {
+          font-size: 15px;
+          text-align: center;
+          line-height: 20px;
+          padding: 0px 20px;
+          margin-bottom: 19px;
+        }
+        img {
+          width: 221px;
+          margin: 0px auto;
+          margin-bottom: 28px;
+        }
+      }
+
+      .split {
+        margin-top: 22px;
+        margin-bottom: 12px;
+      }
+    }
+
+    .wide {
+      h2 {
+        font-size: 28px;
+        margin-top: 36px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 35px;
+        letter-spacing: 0px;
+        margin-top: 19px;
+        line-height: 41px;
+        b {
+          display: block;
+          font-size: 50px;
+        }
+      }
+      p {
+        font-size: 15px;
+        margin: 24px auto;
+        line-height: 20px;
+        margin-bottom: 67px;
+      }
+    }
+
+    .footer {
+      img {
+        margin-top: -45px;
+        width: 200px;
+      }
+      h1 {
+        color: #3a3735;
+        font-family: "BrandonGrotW01-Regular";
+        font-size: 31px;
+        letter-spacing: -1px;
+        margin-top: 40px;
+        margin-bottom: 27px;
+      }
+      .line {
+        display: inline-block;
+        width: 131px;
+        height: 3px;
+        background-color: #3a3735;
+        border-radius: 2px;
+        margin-bottom: 100px;
+      }
+    }
+  }
+}
+
+.widget {
+  table {
+    tr {
+      th {
+        padding: 10px;
+        a {
+          color: #00b0b1;
+          font-family: "Brandon Grot W01 Bold";
+          font-size: 10px;
+          text-transform: uppercase;
+        }
+      }
+      td {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.ui-autocomplete {
+  border-radius: 0px;
+  border-color: #e9e5dd;
+  li {
+    border: none;
+    a {
+      font-family: "BrandonGrotW01-Regular";
+      font-size: 14px;
+      color: #3a3735;
+      border: none;
+      border-radius: 0px;
+      line-height: 40px!important;
+      &:hover {
+        background: #e9e5dd!important;
+        border-color: transparent;
+      }
+      &:active {
+        background: #e9e5dd!important;
+        border-color: transparent;
+      }
+      &:focus {
+        background: #e9e5dd!important;
+        border-color: transparent;
+      }
+    }
+  }
+
+}

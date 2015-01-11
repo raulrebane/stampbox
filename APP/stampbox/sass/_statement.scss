@@ -1,0 +1,56 @@
+#p-statement {
+	.m-period-select {
+		margin-bottom: 20px;
+		h1 {
+			font-family: "Brandon Grot W01 Medium";
+			font-size: 18px;
+		}
+		ul {
+			margin: 0px;
+			padding: 0px;
+			list-style-type: none;
+			li {
+				margin: 0px;
+				padding: 0px;
+				padding-right: 5px;
+				display: inline-block;
+				a {
+					color: #00b0b1;
+					font-family: "Brandon Grot W01 Medium";
+					font-size: 14px;
+					text-decoration: underline;
+					line-height: 35px;
+					&.btn {
+						vertical-align: top;
+						color: #fff;
+						text-decoration: none;
+						height: 40px;
+						line-height: 40px;
+						padding: 0px;
+						padding-left: 10px;
+						padding-right: 10px;
+						border: 1px solid #F5F5F5;
+					}
+				}
+				&.date-selectors {
+					display: block;
+					input[type="text"] {
+						cursor: pointer;
+						width: 140px;
+						height: 40px;
+						line-height: 40px;
+						border: 1px solid #e9e5dd;
+						font-size: 14px;
+						padding-left: 17px;
+						padding-right: 17px;
+						color: #3a3735;
+						font-family: "Brandon Grot W01 Medium";
+						background-image: url(../images/icon-date.png);
+						background-position: right 10px center;
+						background-repeat: no-repeat;
+					}
+				}
+			}
+		}
+	}
+}

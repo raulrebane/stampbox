@@ -50,6 +50,22 @@ class SiteController extends Controller
 			),
 		);
 	}
+        
+        // this method is called before any controller action is performed
+        // you may place customized code here
+        protected function beforeAction($action)
+        {
+            if(parent::beforeAction($action))
+            {
+                if (Yii::app()->user->isGuest) 
+                    { $this->layout = 'public'; }
+                else 
+                    { $this->layout = 'secure'; }
+                return true;
+            }
+            else
+            return false;
+    }
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -58,11 +74,12 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-            if (Yii::app()->user->isGuest) { 
-                $this->layout = 'home';
-                $this->render('index'); }
-            else {
-            $this->render('dashboard'); }
+            if (Yii::app()->user->isGuest) 
+                {   //$this->layout = 'public';
+                    $this->render('index'); }
+            else 
+                {   //$this->layout = 'secure';
+                    $this->render('dashboard'); }
 	}
 
         
@@ -73,19 +90,16 @@ class SiteController extends Controller
         
         public function actionPricing()
 	{
-            $this->layout = 'home';
             $this->render('pricing');
 	}
         
         public function actionTerms()
-	{
-            $this->layout = 'home';	
+	{	
             $this->render('terms');
 	}
         
         public function actionHelp()
 	{
-            $this->layout = 'home';
             $this->render('help');
 	}
         
@@ -120,8 +134,8 @@ class SiteController extends Controller
                         }
 			//$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
 			$subject='=?UTF-8?B?'.base64_encode('StampBox.eu password reset requested').'?=';
-			$headers="From: Stampbox admin <admin@stampbox.eu>\r\n".
-				"Reply-To: no-reply@stampbox.eu\r\n".
+			$headers="From: Stampbox admin <support@stampbox.email>\r\n".
+				"Reply-To: support@stampbox.email\r\n".
 				"MIME-Version: 1.0\r\n".
 				"Content-type: text/plain; charset=UTF-8";
                         $body = "your password reset link " .Yii::app()->createAbsoluteUrl('site/checktoken') ."&resettoken=" .$model->resettoken;

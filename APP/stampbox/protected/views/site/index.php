@@ -18,7 +18,7 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <div class="video-holder">
-                        <img src="images/314e0d29.home_video_bg.png">
+                        <img src="images/home_video_bg.png">
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
@@ -27,12 +27,12 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-6">
                     <h3>Why free is not always good</h3>
-                    <img src="images/33ecda06.home_feature_a.jpg" class="visible-xs">
+                    <img src="images/home_feature_a.jpg" class="visible-xs">
                     <p>In today’s world the main channel of communications  is email as it is comfortable and <b>"free"</b>.</p>
                     <p>This has led to a situation where your inboxes are filled with "noise" and it takes immense time to go through, analyse and digest. <b>Time is still a very valuable asset!</b></p>
                 </div>
                 <div class="col-sm-4 hidden-xs">
-                    <img src="images/33ecda06.home_feature_a.jpg">
+                    <img src="images/home_feature_a.jpg">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -44,11 +44,11 @@
             <div class="row feature">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-4 hidden-xs">
-                    <img src="images/f38e9ccf.home_feature_b.jpg">
+                    <img src="images/home_feature_b.jpg">
                 </div>
                 <div class="col-sm-6">
                     <h3>How to filter important from not-so-important?</h3>
-                    <img src="images/f38e9ccf.home_feature_b.jpg" class="visible-xs">
+                    <img src="images/home_feature_b.jpg" class="visible-xs">
                     <p>The filter is money. If the sender is in great need of passing on the message, then to guarantee that you would find time to read the letter, the time you spend has to be compensated.</p>
                 </div>
                 <div class="col-sm-1"></div>
@@ -72,7 +72,7 @@
         <div class="container footer">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                     <img src="images/d125a1fc.home_footer_icon.png">
+                     <img src="images/home_footer_icon.png">
                      <h1>From now on all the important messages are delivered.</h1>
                      <div class="line"></div>
                 </div>

@@ -8,9 +8,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Stampbox</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
-        <link rel="stylesheet" href="styles/bc1ea147.main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
+        <link rel="stylesheet" href="css/main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
 </head>
 <body class="logged-out">
@@ -26,14 +26,14 @@
 
         <div class="logo"></div>
         <div class="menu">
-            <a href="/stampbox/index.php?r=site/resetpasswd">Forgot your password?</a>
-            <a href="/stampbox/index.php?r=register/Step1"><span>Don't have account?</span> Join us here</a>
+            <a href="<?php echo Yii::app()->createUrl('site/resetpassword')?>">Forgot your password?</a>
+            <a href="<?php echo Yii::app()->createUrl('register/Step1')?>"><span>Don't have account?</span> Join us here</a>
         </div>
 
         <?php echo $content ?>
  
-    <script src="scripts/44101f0b.main.js"></script>
-    <script src="scripts/a1187778.plugins.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/plugins.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
