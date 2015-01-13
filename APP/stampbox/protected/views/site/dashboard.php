@@ -32,8 +32,9 @@ $lasttransactions = Yii::app()->db->createCommand(array(
     <div class="col-md-12">
         <div class="widget widget-balance"><div class="title">You have</div>
         <div class="content">
-            <div class="balance"><?php echo $stampcount['stamps_bal'] ?> <div class="suffix">Stamps</div> 
-            <?php echo $stampcount['points_bal'] ?> <div class="suffix">Credits</div>
+            <div class="balance">
+                <div class="count"><?php echo $stampcount['stamps_bal'] ?> <div class="suffix">Stamps</div></div> 
+                <div class="count"><?php echo $stampcount['points_bal'] ?> <div class="suffix">Credits</div></div>
             </div>
             <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
         </div>

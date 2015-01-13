@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="css/main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -28,21 +28,21 @@
 
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <a class="logo" href="<?php echo Yii::app()->createUrl('secure/overview') ?>"></a>
+                <a class="logo" href="<?php echo Yii::app()->createUrl('site/dashboard') ?>"></a>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
-                        array('label'=>'Overview', 'url'=>array('/secure/overview')),
-                        array('label'=>'Account statement', 'url'=>array('/secure/account')),
-                        array('label'=>'E-mail accounts', 'url'=>array('/secure/usermailbox')),
-                        array('label'=>'Whitelist', 'url'=>array('/secure/whitelist')),
-                        array('label'=>'Invite', 'url'=>array('/secure/invite')),
-                        array('label'=>'Buy stamps', 'url'=>array('/secure/shop/buy')),
+                        array('label'=>'Overview', 'url'=>array('/site/dashboard')),
+                        array('label'=>'Account statement', 'url'=>array('/account/statement')),
+                        array('label'=>'E-mail accounts', 'url'=>array('/usermailbox/index')),
+                        array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
+                        array('label'=>'Invite', 'url'=>array('/invite/index')),
+                        array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
                         ),
                     'htmlOptions' => array('class'=>'sidebar-nav main-menu',
                         ),
                     )); ?>
                 <ul class="sidebar-nav user-menu">
-                    <li><a href="<?php echo Yii::app()->createUrl('secure/logout') ?>" class="btn btn-aqua">Logout</a>
+                    <li><a href="<?php echo Yii::app()->createUrl('site/logout') ?>" class="btn btn-aqua">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <script src="scripts/main.js"></script>
-        <script src="scripts/a1187778.plugins.js"></script>
+        <script src="scripts/plugins.js"></script>
         <script src="scripts/stampbox-flipswitch.js"></script>
     </body>
 </html>

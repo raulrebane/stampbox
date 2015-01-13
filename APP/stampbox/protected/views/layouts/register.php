@@ -26,7 +26,7 @@
 
         <div class="logo"></div>
         <div class="menu">
-            <a href="<?php echo Yii::app()->createUrl('site/resetpassword')?>">Forgot your password?</a>
+            <a href="<?php echo Yii::app()->createUrl('site/ResetPasswd')?>">Forgot your password?</a>
         </div>
 
 

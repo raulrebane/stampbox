@@ -13,6 +13,9 @@ class Account extends CFormModel
 {
     public $statement_grid;
     public $statement_range;
+    public $from_date;
+    public $to_date;
+    public $period;
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -26,5 +29,9 @@ class Account extends CFormModel
 		);
 	}
 
-
+        public function rules() 
+        {
+            return array(
+		array('from_date, to_date', 'date'));    
+        }
 }

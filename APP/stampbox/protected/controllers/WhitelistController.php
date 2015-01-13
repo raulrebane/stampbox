@@ -7,7 +7,9 @@
  */
 class WhitelistController extends Controller
 {
-   public function filters()
+    public $layout = '//layouts/secure';
+    
+    public function filters()
     {
         return array(
             'accessControl', // perform access control for operations
@@ -19,7 +21,7 @@ class WhitelistController extends Controller
     {
         return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                        'actions'=>array('index','autocomplete'),
+                        'actions'=>array('index','delete','autocomplete'),
                         'users'=>array('@'),
                 ),
                 array('deny',  // deny all users
@@ -45,6 +47,13 @@ class WhitelistController extends Controller
         }
         $dataProvider = new CActiveDataProvider('Whitelist', array('pagination'=>array('pageSize'=>100,)));
         $this->render('index',array('model'=>$model, 'dataProvider'=>$dataProvider,)); 
+    }
+
+    public function actionDelete($email) 
+    {
+        $model = Whitelist::model()->find('e_mail=:email', array(':email'=>$email));
+        $model->delete();
+        $this->redirect(array('whitelist/index'));
     }
     
     public function actionAutocomplete() 
