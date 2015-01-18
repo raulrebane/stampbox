@@ -48,9 +48,10 @@ class UsermailboxController extends Controller
         $this->render('create',array('model'=>$model,));
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate($email)
     {
-        $model=$this->loadModel($id);
+        $model = usermailbox::model()->find('e_mail=:email AND customer_id=:customer_id', array(':email'=>$email, 'customer_id'=>Yii::App()->user->getId()));
+	//$model=$this->loadModel($email);
 
     // Uncomment the following line if AJAX validation is needed
     // $this->performAjaxValidation($model);

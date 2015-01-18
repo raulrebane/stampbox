@@ -23,7 +23,7 @@ class SiteController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','resetpasswd', 'checktoken', 'newpasswd', 'login', 'help', 'pricing', 'terms'),
+				'actions'=>array('index','resetpasswd', 'checktoken', 'newpasswd', 'login', 'help', 'pricing', 'terms', 'error'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
