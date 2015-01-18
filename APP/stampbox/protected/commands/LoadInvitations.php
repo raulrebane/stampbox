@@ -73,7 +73,7 @@ function loadInvitations_fn($job)
                 //usort($senders, "self::cmp");
                 $top_senders = array_values($senders);
                 foreach ($top_senders as $i) {
-                $invite = pg_query($dbconn, "select * from ds.t_invitations where invited_email = '".$i['e_mail'] ."' and customer_id = ".$custmailbox['customer_id'] .";");
+                $invite = pg_query($dbconn, "select * from ds.t_invitations where invited_email = '".$i['e-mail'] ."' and customer_id = ".$custmailbox['customer_id'] .";");
                 if (!$invite) {
                     $invited['customer_id'] = $custmailbox['customer_id'];
                     $invited['invited_email'] = $i['e-mail'];

@@ -6,30 +6,19 @@
  * and open the template in the editor.
  */
 ?>
-<div class="row">
-    <div class="col-md-12">
+<div id="p-shop" class="row">
+    <div class="m-products col-md-12">
+        
     <div class="widget widget-activity"><div class="title">Shop</div>
     <div class="content">
         <?php 
         //$gridColumns = 
-        $this->widget('zii.widgets.grid.CGridView',array(
-            'enablePagination'=>FALSE,
-            //'hideHeader'=>False,
-            'template' => '{items}',
+        $this->widget('zii.widgets.CListView',array(
+            'itemView' => 'saleitem',
             'htmlOptions'=>array('class'=>'content'),
             'dataProvider' => $dataProvider,
-            'columns'=>//$gridColumns));      
-            array(
-            array('name'=>'offer_amount', 'header'=>'Stamps', 'htmlOptions'=>array('class'=>'transaction')),
-            array('name'=>'offer_price', 'header'=>'Price', 'htmlOptions'=>array('class'=>'email')),
-            array('class'=>'CButtonColumn', 
-                  'template'=>'{addtocart}',
-                  'buttons'=>array('addtocart'=>array(
-                        'label'=>'Buy',
-                        'url'=>'Yii::app()->createUrl("shop/AddToCart", array("id" =>$data["offer_id"]))',
-                        )),
-                ),
-            )));
+            'template' => '{items}'
+            ));
         ?>
     </div>
     </div>

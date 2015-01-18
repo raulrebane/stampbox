@@ -12,10 +12,10 @@
     <div class="content">
         <table>
             <tr>
-                <td>Item</td>
-                <td>Price</td>
-                <td>Quantity</td>
-                <td>Total</td>
+                <td><h3>Item</h3></td>
+                <td><h3>Price</h3></td>
+                <td><h3>Quantity</h3></td>
+                <td><h3>Total</h3></td>
             </tr>
             <tr>
                 <td><?php echo 'Stampbox pack - ' .$model->stamp_amount .' stamps'?></td>

@@ -62,7 +62,7 @@ class AccountController extends Controller
             }
             Yii::log('Statement for $model->from_date , $model->to_date', 'info', 'application');
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
+                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1 and transaction_date between :2 and :3',
                 'order'=> 'transaction_date desc',
@@ -76,7 +76,7 @@ class AccountController extends Controller
             $model->attributes=$_POST['Account'];
             //Yii::log('Received statement attributes', 'info', 'application');
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
+                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1 and transaction_date between :2 and :3',
                 'order'=> 'transaction_date desc',
@@ -85,7 +85,7 @@ class AccountController extends Controller
             ))->queryAll();           
         } else 
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject'),
+                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1',
                 'order'=> 'transaction_date desc',

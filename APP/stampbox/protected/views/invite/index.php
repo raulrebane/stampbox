@@ -11,29 +11,23 @@ $form = $this->beginWidget('CActiveForm',array(
     'htmlOptions' => array('class'=>'form', 'role'=>'form'),
     )); 
 ?>
-<style>
- .loading{
-    background-color: #eee;
-    background-image: url('loading.gif');
-    background-position:  center center;
-    background-repeat: no-repeat;
-    opacity: 0.8; }
-</style>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="row"><div class="col-sm-offset-8">
+<div id="p-invite" class="row">
+    <div class="col-md-12 m-refresh">
         <?php 
             $model = new usermailbox;
             $useremails = usermailbox::model()->findAll('customer_id = :1', array(':1'=>Yii::app()->user->getId()));
             $emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
-            echo $form->labelEx($model,'e_mail');
+            echo '<h1>' .$form->labelEx($model,'e_mail') .'</h1>';
             echo $form->dropDownList($model, 'e_mail',$emailslist);
         ?>
-        <button type="submit" name="refresh" class="btn btn-default" 
-            onsubmit="js:function(){$(#content).addClass("loading");}">Refresh contacts</button>
-        </div></div>
-        <div class="widget widget-activity">
+        <button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+    <div class="widget widget-activity">
             <div class="title"></div>
             <div class="content">
                 <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>

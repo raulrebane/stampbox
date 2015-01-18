@@ -62,21 +62,41 @@ $form = $this->beginWidget('CActiveForm',array(
     <div class="widget widget-activity"><div class="title">Account activity</div>
     <div class="content">
         <?php 
+        $sort = new CSort();
+        $sort->attributes = array(
+            'e_mail',
+            'transaction_date',
+        );
+        $sort->defaultOrder=array('transaction_id'=>CSort::SORT_DESC);
+  
         $gridDataProvider = new CArrayDataProvider($model->statement_grid, array('keyField'=>'transaction_id',
-                'pagination'=>array('pageSize'=>1000,)));  
+                'pagination'=>array('pageSize'=>1000,),'sort'=>$sort,));  
         $gridColumns = array(
-            array('name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
+            array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
-            array('name'=>'info', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['from_email'] == NULL) return $data['description'];
-                elseif ($data['amount'] < 0) return $data['to_email'] .'<span>'.$data['subject'] .'</span>';
-                else return $data['from_email'] .'<span>'.$data['subject'] .'</span>';}),
-            array('name'=>'amount', 'htmlOptions'=>array('class'=>'transaction')),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'date'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'time'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
+            array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
+                if ($data['e_mail'] == NULL) return $data['description'];
+                else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
+            array('header'=>'Stamp(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'htmlOptions'=>array('class'=>'transaction neg hidden-xs hidden-md'), 
+                'value'=>function($data) { if ($data['amount'] < 0) return number_format($data['amount'], 0); else return '';}),
+            array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'htmlOptions'=>array('class'=>'transaction hidden-xs hidden-md'), 
+                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 2); else return '';}),
+            array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
+                'cssClassExpression'=>'function($data) { if ($data["amount"] < 0) return "transaction neg";
+                else return "transaction";})',
+                'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
+                if ($data['amount'] < 0) return number_format($data['amount'], 0);
+                else return number_format($data['amount'], 0);}),
+            array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
+            array('header'=>'Time', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'time hidden-xs'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
+      
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
-            'hideHeader'=>TRUE,
+            //'hideHeader'=>TRUE,
             'template' => '{items}',
             'htmlOptions'=>array('class'=>'content'),
             'dataProvider' => $gridDataProvider,

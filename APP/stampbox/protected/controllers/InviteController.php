@@ -7,6 +7,8 @@
  */
 class InviteController extends Controller
 {
+    public $layout = '//layouts/secure';
+    
     public function filters()
     {
         return array(

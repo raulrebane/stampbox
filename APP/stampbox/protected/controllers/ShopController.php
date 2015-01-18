@@ -7,6 +7,7 @@
  */
 class ShopController extends Controller
 {
+    public $layout = '//layouts/secure';
     
     public function actionBuy() 
        {
