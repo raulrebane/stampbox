@@ -58,13 +58,13 @@
             $res = pg_insert($dbconnection, 'ds.t_stamps_issued', $stamps);
         }
         $credittrans['customer_id'] = $stamps['customer_id'];
-        $credittrans['transaction_code'] = 'CRED';
+        $credittrans['transaction_code'] = 'SCR';
         $credittrans['amount'] = $stampsparams->howmany;
         $credittrans['stamp_id'] = NULL;
         $credittrans['description'] = $stampsparams->description;
         $credittrans['transaction_date'] = 'now()';
         $res = pg_insert($dbconnection, 'ds.t_stamps_transactions', $credittrans);
-        $res = pg_query($dbconnection, "update ds.t_account set stamps_bal = stamps_bal + 100 where customer_id = " .$stamps['customer_id'] .";");
+        $res = pg_query($dbconnection, "update ds.t_account set stamps_bal = stamps_bal + ".$stampsparams->howmany ." where customer_id = " .$stamps['customer_id'] .";");
         pg_close($dbconnection);
 
         closelog();

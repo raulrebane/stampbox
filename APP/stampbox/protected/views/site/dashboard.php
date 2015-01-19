@@ -19,7 +19,7 @@ $invitationcount = Yii::app()->db->createCommand(array(
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
 $lasttransactions = Yii::app()->db->createCommand(array(
-            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'from_email', 'to_email', 'subject',),
+            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject',),
             'from'=> 'ds.v_transactions',
             'where'=> 'customer_id = :1',
             'order'=> 'transaction_id desc',
@@ -45,23 +45,37 @@ $lasttransactions = Yii::app()->db->createCommand(array(
     <div class="content">
         <?php 
         $gridDataProvider = new CArrayDataProvider($lasttransactions, array('keyField'=>'transaction_id', ));  
+
         $gridColumns = array(
-            array('name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
+            array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
-            array('name'=>'description', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['from_email'] == NULL) return $data['description'];
-                elseif ($data['amount'] < 0) return $data['to_email'] .'<span>'.$data['subject'] .'</span>';
-                else return $data['from_email'] .'<span>'.$data['subject'] .'</span>'; }),
-            array('name'=>'amount', 'htmlOptions'=>array('class'=>'transaction')),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'date'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
-            array('name'=>'transaction_date', 'htmlOptions'=>array('class'=>'time'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
+            array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
+                if ($data['e_mail'] == NULL) return $data['description'];
+                else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
+            array('header'=>'Stamp(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'htmlOptions'=>array('class'=>'transaction neg hidden-xs hidden-md'), 
+                'value'=>function($data) { if ($data['amount'] < 0) return number_format($data['amount'], 0); else return '';}),
+            array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'htmlOptions'=>array('class'=>'transaction hidden-xs hidden-md'), 
+                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 3); else return '';}),
+            array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
+                if ($data['amount'] < 0) return number_format($data['amount'], 0);
+                else return number_format($data['amount'], 3);}),
+            array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
+            array('header'=>'Time', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'time hidden-xs'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
+      
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
-            'hideHeader'=>TRUE,
+            //'hideHeader'=>TRUE,
             'template' => '{items}',
             'htmlOptions'=>array('class'=>'content'),
             'dataProvider' => $gridDataProvider,
             'columns'=>$gridColumns));      
+      
         ?>
     </div>
     <div class="footer">

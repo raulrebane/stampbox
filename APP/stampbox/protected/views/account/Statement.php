@@ -82,13 +82,12 @@ $form = $this->beginWidget('CActiveForm',array(
                 'value'=>function($data) { if ($data['amount'] < 0) return number_format($data['amount'], 0); else return '';}),
             array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
                 'htmlOptions'=>array('class'=>'transaction hidden-xs hidden-md'), 
-                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 2); else return '';}),
+                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 3); else return '';}),
             array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
-                'cssClassExpression'=>'function($data) { if ($data["amount"] < 0) return "transaction neg";
-                else return "transaction";})',
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
                 'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
                 if ($data['amount'] < 0) return number_format($data['amount'], 0);
-                else return number_format($data['amount'], 0);}),
+                else return number_format($data['amount'], 3);}),
             array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
                 'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
             array('header'=>'Time', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
