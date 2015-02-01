@@ -48,7 +48,7 @@
         $stamps['batch_id'] = $stampsparams->stampid;
         $stamps['customer_id'] = $stampsparams->customer_id;
         $stamps['status'] = 'A';
-        $stamps['timestamp'] = 'now()';
+        $stamps['issued'] = 'now()';
 
         for ($insert_count = 1; $insert_count <= $stampsparams->howmany; $insert_count++)
         {
