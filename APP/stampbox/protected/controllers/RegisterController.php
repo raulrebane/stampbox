@@ -40,7 +40,7 @@ class RegisterController extends Controller
                                 'socket_type'=>$model->registereddomain->incoming_socket_type,
                                 'auth_type'=>$model->registereddomain->incoming_auth));
                         $gmclient= new GearmanClient();
-                        $gmclient->addServer("127.0.0.1", 4730);
+                        $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
                         if ($result['status'] == 'ERROR') {
                             $model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct');
@@ -56,8 +56,10 @@ class RegisterController extends Controller
                 if ($e_mail_verified == TRUE) { $customer->status = 'A';} 
                 else { $customer->status = 'V';}
                 $customer->bad_logins = 0;
-                //$customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
-                $customer->country = geoip_country_code_by_name('dsdev.dnsdynamic.com');
+                
+                // TO-DO if this fails. Add error checking and presume customer is non-EU
+                $customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
+                
                 if ($customer->save()) {
                     //log in user right away
                     $identity=new UserIdentity($model->useremail,$model->emailpassword);
@@ -77,8 +79,14 @@ class RegisterController extends Controller
                     $dbcommand->insert('ds.t_account', array(
                         'customer_id'=>Yii::app()->user->getId(),
                         'points_bal'=>0,
-                        'stamps_bal'=>100));
-                    self::GenerateStamps(Yii::App()->user->getId(), 100);
+                        'stamps_bal'=>0));
+                    //self::GenerateStamps(Yii::App()->user->getId(), 100);
+                    $gmclient= new GearmanClient();
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                    $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
+                                                'stampid'=>1, 'description'=>'Free stamps for joining'));
+                    $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
+                    
                 }
                 else { 
                     Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');
@@ -94,7 +102,7 @@ class RegisterController extends Controller
                                 'socket_type'=>$model->registereddomain->incoming_socket_type,
                                 'auth_type'=>$model->registereddomain->incoming_auth));
                     $gmclient= new GearmanClient();
-                    $gmclient->addServer("127.0.0.1", 4730);
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
                     
                     $this->redirect(array('invite/index')); 

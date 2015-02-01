@@ -87,7 +87,7 @@ class ShopController extends Controller
                 $model->delete();
                 Yii::log('Paypal payment completed: ' .CVarDumper::dumpAsString($ack), 'info', 'application');
                 $gmclient= new GearmanClient();
-                $gmclient->addServer("127.0.0.1", 4730);
+                $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                 $stampparams = json_encode(array('customer_id'=>$model->customer_id, 'howmany'=>$model->stamp_amount, 
                                                 'stampid'=>$model->batch_id, 'description'=>'Paypal transaction: ' 
                                                 .$ack['TRANSACTIONID']));

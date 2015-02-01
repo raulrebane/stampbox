@@ -60,7 +60,7 @@ class InviteController extends Controller
                         'socket_type'=>$maildomain->incoming_socket_type,
                         'auth_type'=>$maildomain->incoming_auth));
                     $gmclient= new GearmanClient();
-                    $gmclient->addServer("127.0.0.1", 4730);
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
                 }
             }
