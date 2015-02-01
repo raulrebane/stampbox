@@ -20,7 +20,7 @@ $form = $this->beginWidget('CActiveForm',
     echo $form->hiddenField($model, 'mailtype');
     echo $form->hiddenField($model, 'incoming_auth');
     
-    echo $form->labelEx($model,'incoming_hostname');
+    //echo $form->labelEx($model,'incoming_hostname');
     echo $form->textField($model, 'incoming_hostname', array('class'=>'form-control', 'placeholder'=>'e-mail server name'));
     echo $form->error($model, 'incoming_hostname');
     
@@ -34,8 +34,9 @@ $form = $this->beginWidget('CActiveForm',
     </div>
 </div>
 <div class="col-md-6 darker">
+    <div class="feature">
 <?php
-    echo $form->labelEx($model,'outgoing_hostname');
+    //echo $form->labelEx($model,'outgoing_hostname');
     echo $form->textField($model, 'outgoing_hostname', array('class'=>'form-control', 'placeholder'=>'e-mail server name'));
     echo $form->error($model, 'outgoing_hostname');
     
@@ -46,6 +47,7 @@ $form = $this->beginWidget('CActiveForm',
     echo $form->dropDownList($model, 'outgoing_socket_type',
               array('ssl' => 'SSL', 'tls' => 'TLS'));
 ?>
+    </div>
 </div>
 <button type="submit" class="btn btn-default"></button>
 

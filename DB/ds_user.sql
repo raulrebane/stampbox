@@ -1,4 +1,0 @@
-CREATE ROLE ds_user LOGIN PASSWORD Apua1234
-  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
-
-grant usage on all sequences in schema ds to ds_user;

@@ -20,16 +20,6 @@ return array(
                 'application.extensions.*'
 	),
 
-	'modules'=>array(
-		// uncomment the following to enable the Gii tool
-            		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'a',
-			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','192.168.1.*'),
-		),
-	),
-
 	// application components
 	'components'=>array(
 		'user'=>array(
@@ -50,9 +40,9 @@ return array(
 		*/
 		'db'=>array(
 //    			'tablePrefix'=>'ds',
-    			'connectionString' => 'pgsql:host=localhost;dbname=ds',
-    			'username' => 'ds_user',
-    			'password' => 'Apua1234',
+    			'connectionString' => 'pgsql:host=;dbname=stampbox',
+    			'username' => 'sbweb',
+    			'password' => 'sbweb',
     			'charset' => 'UTF8',
 		),
                 'session' => array (
@@ -73,20 +63,6 @@ return array(
                                         'filter'=>'CLogFilter',
                                         'logFile'=>'stampbox.log'
 				),
-				// uncomment the following to show log messages on web pages
-				array(
-					'class'=>'CWebLogRoute',
-				        'levels'=>'error, info',
-                                        'filter'=>'CLogFilter',
-				),
-                                /*
-                                array(
-                                        'class'=>'CFileLogRoute',
-                                        'categories'=>'system.db.*',
-                                        'logFile'=>'sql.log',
-                                ),
-                                 * 
-                                 */
 			),
 		),
 	),
@@ -95,7 +71,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'support@stampbox.email',
                 'PAYPAL_MODE'=>'sandbox',
 	),
 );

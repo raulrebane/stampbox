@@ -23,6 +23,11 @@ $form = $this->beginWidget('CActiveForm',array(
         echo $form->labelEx($model, 'emailpassword');
         echo $form->passwordField($model, 'emailpassword', array('class'=>'form-control', 'placeholder'=>'E-mail password'));
         echo $form->error($model, 'emailpassword', '', FALSE);
+        
+        echo $form->labelEx($model, 'agreewithterms');
+        echo $form->checkBox($model, 'agreewithterms', array('class'=>'push-left'));
+        //echo $form->labelEx($model, 'agreewithterms');
+        echo $form->error($model, 'agreewithterms', '', FALSE);
 ?>
 <!--        <div class="form-actions">        
 -->         

@@ -1,7 +1,0 @@
-﻿delete from ds.t_stamps_issued where customer_id >= 688;
-delete from ds.t_stamps_transactions where customer_id >= 688;
-delete from ds.t_account where customer_id >= 688;
-delete from ds.t_whitelist where customer_id >= 688;
-delete from ds.t_invitations where customer_id >= 688;
-delete from ds.t_customer_mailbox where customer_id >= 688;
-delete from ds.t_customer where customer_id >= 688;

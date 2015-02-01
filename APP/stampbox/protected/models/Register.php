@@ -29,6 +29,7 @@ class Register extends CFormModel
         public $registeredemail;
         public $top_senders;
         public $Invitations;
+        public $agreewithterms;
 
 	/**
 	 * Declares the validation rules.
@@ -39,7 +40,7 @@ class Register extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, emailusername, emailpassword', 'required'),
+			array('useremail, emailusername, emailpassword, agreewithterms', 'required'),
                         array('useremail', 'checkregistered'),
 			array('useremail', 'length', 'max'=>128),
 			array('emailpassword', 'length', 'max'=>16),
@@ -71,14 +72,15 @@ class Register extends CFormModel
                         'emailpassword'=>'E-mail password: ',
                         'emailusername'=>'User name: ',
                         'maildomain'=>'E-mail provider',
-                        'incoming_hostname'=>'Mail server name',
+                        'incoming_hostname'=>'Incoming mail server',
                         'incoming_port'=>'Port',
                         'incoming_socket_type'=>'Connection security',
-                        'outgoing_hostname'=>'Mail server name',
+                        'outgoing_hostname'=>'Outgoing mail server',
                         'outgoing_port'=>'Port',
                         'outgoing_socket_type'=>'Connection security',
                         'e_mail_username'=>'E-Mail username',
                         'e_mail_password'=>'E-Mail password',
+                        'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement'
 		);
 	}
 
