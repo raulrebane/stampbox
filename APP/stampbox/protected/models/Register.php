@@ -40,12 +40,12 @@ class Register extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, emailusername, emailpassword, agreewithterms', 'required'),
+			array('useremail, agreewithterms', 'required'),
                         array('useremail', 'checkregistered'),
 			array('useremail', 'length', 'max'=>128),
 			array('emailpassword', 'length', 'max'=>16),
                         array('useremail', 'email'),
-                        array('maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
+                        array('emailusername, emailpassword, maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
 		);
 	}
       

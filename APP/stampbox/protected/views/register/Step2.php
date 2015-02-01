@@ -29,7 +29,7 @@ $form = $this->beginWidget('CActiveForm',
     
     echo $form->labelEx($model,'incoming_socket_type');
     echo $form->dropDownList($model, 'incoming_socket_type',
-              array('ssl' => 'SSL', 'tls' => 'TLS'));
+              array('NULL'=>'None', 'ssl' => 'SSL', 'tls' => 'TLS'));
 ?>
     </div>
 </div>
@@ -45,7 +45,7 @@ $form = $this->beginWidget('CActiveForm',
     
     echo $form->labelEx($model,'outgoing_socket_type');
     echo $form->dropDownList($model, 'outgoing_socket_type',
-              array('ssl' => 'SSL', 'tls' => 'TLS'));
+              array('NULL'=>'None', 'ssl' => 'SSL', 'tls' => 'TLS'));
 ?>
     </div>
 </div>

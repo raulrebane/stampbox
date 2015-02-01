@@ -72,13 +72,13 @@ class mailconfig extends CActiveRecord
 		return array(
 			'maildomain' => 'Maildomain',
 			'mailtype' => 'Mailtype',
-			'incoming_hostname' => 'Incoming Hostname',
-			'incoming_port' => 'Incoming Port',
-			'incoming_socket_type' => 'Incoming Socket Type',
+			'incoming_hostname' => 'Mail server name',
+			'incoming_port' => 'Port',
+			'incoming_socket_type' => 'Connection security',
 			'incoming_auth' => 'Incoming Auth',
-			'outgoing_hostname' => 'Outgoing Hostname',
-			'outgoing_port' => 'Outgoing Port',
-			'outgoing_socket_type' => 'Outgoing Socket Type',
+			'outgoing_hostname' => 'Mail sending server',
+			'outgoing_port' => 'Port',
+			'outgoing_socket_type' => 'Security',
 			'outgoing_auth' => 'Outgoing Auth',
 		);
 	}
