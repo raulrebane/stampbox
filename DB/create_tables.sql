@@ -74,13 +74,13 @@ CREATE TABLE ds.t_mailbox_config
   maildomain character varying(100) NOT NULL,
   mailtype character varying(10) NOT NULL,
   incoming_hostname character varying(255),
-  incoming_port character varying(255),
-  incoming_socket_type character varying(255),
-  incoming_auth character varying(255),
+  incoming_port integer,
+  incoming_socket_type character varying(10),
+  incoming_auth character varying(10),
   outgoing_hostname character varying(255),
-  outgoing_port character varying(255),
-  outgoing_socket_type character varying(255),
-  outgoing_auth character varying(255)
+  outgoing_port integer,
+  outgoing_socket_type character varying(10),
+  outgoing_auth character varying(10)
 )
 WITH (
   OIDS=FALSE
