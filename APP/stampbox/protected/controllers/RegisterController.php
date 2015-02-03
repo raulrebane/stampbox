@@ -59,6 +59,7 @@ class RegisterController extends Controller
                 $customer->bad_logins = 0;
                 
                 // try to use forwarded address first, then remoteaddress. If both fail or IP not in geoip db then put country as XX
+                $headers = apache_request_headers();
                 if ( array_key_exists( 'X-Forwarded-For', $headers ) && filter_var( $headers['X-Forwarded-For'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) 
                 {
                     $customer->country = geoip_country_code_by_name($headers['X-Forwarded-For']); 
