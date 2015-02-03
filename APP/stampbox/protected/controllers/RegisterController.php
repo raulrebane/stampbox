@@ -43,9 +43,10 @@ class RegisterController extends Controller
                         $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
                         if ($result['status'] == 'ERROR') {
-                            $model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct');
-                            $this->render('Step1',array('model'=>$model,)); 
-                            Yii::app()->end();
+                            //Changed to allow registering without username/password
+                            //$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct');
+                            //$this->render('Step1',array('model'=>$model,)); 
+                            //Yii::app()->end();
                         } else { $e_mail_verified = TRUE;}
                     }
                 $customer = new TCustomer();
@@ -57,8 +58,20 @@ class RegisterController extends Controller
                 else { $customer->status = 'V';}
                 $customer->bad_logins = 0;
                 
-                // TO-DO if this fails. Add error checking and presume customer is non-EU
-                $customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
+                // try to use forwarded address first, then remoteaddress. If both fail or IP not in geoip db then put country as XX
+                if ( array_key_exists( 'X-Forwarded-For', $headers ) && filter_var( $headers['X-Forwarded-For'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) 
+                {
+                    $customer->country = geoip_country_code_by_name($headers['X-Forwarded-For']); 
+                    if (!$customer->country) {
+                        $customer->country = 'XX';
+                    }
+                }
+                else {
+                    $customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
+                    if (!$customer->country) {
+                        $customer->country = 'XX';
+                    }
+                }
                 
                 if ($customer->save()) {
                     //log in user right away
@@ -69,10 +82,18 @@ class RegisterController extends Controller
                     $model->registeredemail = new usermailbox();
                     $model->registeredemail->customer_id = Yii::app()->user->getId();
                     $model->registeredemail->e_mail = $customer->username;
-                    $model->registeredemail->e_mail_username = $model->emailusername;
-                    $model->registeredemail->e_mail_password = $model->emailpassword;
-                    if ($e_mail_verified == TRUE) { $model->registeredemail->status = 'A'; }
-                    else { $model->registeredemail->status = 'V'; } // V = verify
+                    if ($e_mail_verified == TRUE) { 
+                        // e_mail credentials were verified and working
+                        $model->registeredemail->status = 'A'; 
+                        $model->registeredemail->e_mail_username = NULL;
+                        $model->registeredemail->e_mail_password = NULL;
+                    }
+                    else { 
+                        // V = unverified, not usable
+                        $model->registeredemail->status = 'V'; 
+                        $model->registeredemail->e_mail_username = $model->emailusername;
+                        $model->registeredemail->e_mail_password = $model->emailpassword;
+                    } 
                     list(, $model->registeredemail->maildomain) = explode("@", $customer->username);
                     $model->registeredemail->save();
                     $dbcommand =  Yii::app()->db->createCommand();
@@ -86,7 +107,6 @@ class RegisterController extends Controller
                     $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
                                                 'stampid'=>1, 'description'=>'Free stamps for joining'));
                     $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
-                    
                 }
                 else { 
                     Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');
@@ -156,79 +176,6 @@ class RegisterController extends Controller
         $this->render('Step2',array('model'=>$model,));
     }
     
-    public function actionInvite()
-    {
-        if (isset($_POST['selectedIds'])) {
-            foreach ($_POST['selectedIds'] as $id) {
-                $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
-                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$id));
-                $invite->invite = 'Y';
-                $invite->save();
-            }
-            $this->redirect(array('site/index'));
-        }
-//      Yii::log("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert} - username: "
-//                                .$model->e_mail_username ." and passw: " .$model->e_mail_password);
-        $inbox = imap_open("{".$model->incoming_hostname .":" .$model->incoming_port ."/ssl/novalidate-cert}",
-                                $model->e_mail_username,$model->e_mail_password);
-        $emails = imap_search($inbox,'ALL');
-        /* if emails are returned, cycle through each... */
-        if($emails) {
-            $senders = array();
-            /* for every email... */
-            foreach($emails as $email_number) {
-                /* get information specific to this email */
-                $overview = imap_fetch_overview($inbox,$email_number,0);
-                $mailfrom = imap_mime_header_decode($overview[0]->from);
-                if (count($mailfrom) == 2) {
-                    $fromname = utf8_encode(rtrim($mailfrom[0]->text));
-                    $fromemail = trim($mailfrom[1]->text, " <>");}
-                else {
-                    if (strpos($overview[0]->from, "<")) {
-                        list($fromname, $fromemail) = explode("<", $overview[0]->from);}
-                else {
-                    $fromemail = $overview[0]->from;
-                    $fromname = $overview[0]->from;
-		}
-                $fromemail = trim($fromemail, " <>");
-                $fromname = utf8_encode(rtrim($fromname)); }
-                if (array_key_exists($fromemail,$senders)) {
-                    $senders[$fromemail]['rcount']++; }
-                else {
-                    $senders[$fromemail]['e-mail'] = $fromemail;
-                    $senders[$fromemail]['Name'] = $fromname;
-                    $senders[$fromemail]['rcount'] = 1;
-                }
-            }
-        }
-        imap_close($inbox);
-        if (isset($senders)) {
-            usort($senders, "self::cmp");
-            $model->top_senders = array_values($senders);
-            foreach ($model->top_senders as $i) {
-                $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
-                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$i['e-mail']));
-                if ($invite == NULL) {
-                    $invite = new Invitations;
-                    $invite->customer_id = Yii::app()->user->getId();
-                    $invite->invited_email = $i['e-mail'];
-                    $invite->from_count = $i['rcount'];
-                    $invite->name = $i['Name'];
-                    $invite->save();
-                }
-            }
-            Yii::app()->user->setFlash('success', 'Here is the list of e-mail senders from your e-mail INBOX. Mark those you want to invite.');
-        }
-        else {
-            Yii::app()->user->setFlash('success', 'Your e-mail inbox seems to be empty and there was nobody to invite');
-            $this->redirect(array('site/index'));
-        }
-        $this->render('Step2',array('model'=>$model,));
-        Yii::app()->end();
-//        CVarDumper::Dump($model);
-
-    }
-
     /*
     public function ActionInvite($id,$name,$email,$rcount) {
         Yii::log("$email with $id now invited", 'info','application');
