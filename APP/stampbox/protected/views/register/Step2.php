@@ -30,15 +30,15 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
               array('NULL'=>'None', 'ssl' => 'SSL', 'tls' => 'TLS'));
     echo '</div>';
     
-    $this->endWidget(); 
-    unset($form);    
+    //$this->endWidget(); 
+    //unset($form);    
 ?>
 </div>
 <div class="col-md-6 darker">
 <?php
     echo '<br><h2>Outgoing mail server</h2>';
 
-    $form = $this->beginWidget('CActiveForm', array('id' => 'Step21', 'htmlOptions' => array('class'=>"form register", 'role'=>"form"))); 
+    //$form = $this->beginWidget('CActiveForm', array('id' => 'Step21', 'htmlOptions' => array('class'=>"form register", 'role'=>"form"))); 
 
     //echo $form->labelEx($model,'outgoing_hostname');
     echo $form->textField($model, 'outgoing_hostname', array('class'=>'form-control', 'placeholder'=>'e-mail server name'));
