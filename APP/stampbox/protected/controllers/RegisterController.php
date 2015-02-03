@@ -12,6 +12,7 @@ class RegisterController extends Controller
        {
         $this->layout = 'register';
         $model = new Register;
+        $model->scenario = 'Step1';
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
             $model->attributes=$_POST['Register'];
             //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
@@ -139,7 +140,8 @@ class RegisterController extends Controller
 		    $this->redirect(array('register/step2'));}
             }
             else {
-               $model->addError('useremail', 'This e-mail is already registered. If you think this is an error please contact us '); 
+                echo CActiveForm::validate($model); 
+                Yii::app()->end();               
             }
         }                
         $this->render('Step1',array('model'=>$model,)); 
@@ -148,6 +150,7 @@ class RegisterController extends Controller
     public function actionStep2() {
         $this->layout = 'register2';        
         $model = new Register;
+        $model->scenario = 'Step2';
         if(isset($_POST['Register'])) {  
             $model->attributes=$_POST['Register']; {
                 Yii::log('In Step2, got maildomain:', 'info', 'application');

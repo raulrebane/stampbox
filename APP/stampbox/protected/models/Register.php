@@ -40,14 +40,14 @@ class Register extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, emailpassword, agreewithterms', 'required'),
-                        array('useremail', 'checkregistered'),
-			array('useremail, emailusername', 'length', 'max'=>128),
-			array('emailpassword', 'length', 'max'=>255),
-                        array('useremail', 'email'),
-                        array('incoming_hostname, outgoing_hostname', 'length', 'max'=>'255'),
-                        array('incoming_port, outgoing_port', 'numerical', 'integerOnly'=>true),
-                        array('incoming_socket_type, outgoing_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
+			array('useremail, emailpassword, agreewithterms', 'required', 'on'=>'Step1'),
+                        array('useremail', 'checkregistered', 'on'=>'Step1'),
+			array('useremail, emailusername', 'length', 'max'=>128, 'on'=>'Step1'),
+			array('emailpassword', 'length', 'max'=>255, 'on'=>'Step1'),
+                        array('useremail', 'email', 'on'=>'Step1'),
+                        array('incoming_hostname, outgoing_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
+                        array('incoming_port, outgoing_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
+                        array('incoming_socket_type, outgoing_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
                         array('emailusername, maildomain', 'safe'),
 		);
 	}
