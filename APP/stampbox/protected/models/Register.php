@@ -42,10 +42,13 @@ class Register extends CFormModel
 			// required fields
 			array('useremail, emailpassword, agreewithterms', 'required'),
                         array('useremail', 'checkregistered'),
-			array('useremail', 'length', 'max'=>128),
-			array('emailpassword', 'length', 'max'=>16),
+			array('useremail, emailusername', 'length', 'max'=>128),
+			array('emailpassword', 'length', 'max'=>255),
                         array('useremail', 'email'),
-                        array('emailusername, maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
+                        array('incoming_hostname, outgoing_hostname', 'length', 'max'=>'255'),
+                        array('incoming_port, outgoing_port', 'numerical', 'integerOnly'=>true),
+                        array('incoming_socket_type, outgoing_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
+                        array('emailusername, maildomain', 'safe'),
 		);
 	}
       

@@ -17,7 +17,7 @@ function loadInvitations_fn($job)
     $mboxparams = json_decode($jsonstr);
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     syslog(LOG_INFO, "Starting invitation load: " .$jsonstr);
-    $dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
+    $dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
     $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and customer_id = " .$mboxparams->customer_id .";");
     if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
