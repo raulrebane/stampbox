@@ -150,6 +150,7 @@ class RegisterController extends Controller
         $model = new Register;
         if(isset($_POST['Register'])) {  
             $model->attributes=$_POST['Register']; {
+                Yii::log('In Step2, got maildomain:', 'info', 'application');
 		$model->registereddomain = mailconfig::model()->find('maildomain=:1', 
                     array(':1'=>mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8")));
                 if ($model->registereddomain === NULL)
@@ -164,7 +165,8 @@ class RegisterController extends Controller
                     $model->registereddomain->outgoing_hostname = $model->outgoing_hostname;
                     $model->registereddomain->outgoing_port = $model->outgoing_port;
                     $model->registereddomain->outgoing_socket_type = $model->outgoing_socket_type;
-                    $model->registereddomain->save();             
+                    $model->registereddomain->save();
+                    Yii::log('In Step2, saving maildomain:', 'info', 'application');
                 }
                 $this->redirect(array('invite/index'));
                     
