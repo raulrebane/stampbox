@@ -28,8 +28,8 @@ function inviteSender_fn($job)
         ->setTo(array($mboxparams->from => $mboxparams->fromname))
         ->setBody("Hello " .$mboxparams->fromname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail " 
             ."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
-            ."this link http://dsdev.dnsdynamic.com/stampbox/index.php?r=register/Step1 and you will receive a free trial and ensure that your emails " 
-            ."will always be on top of my list.\r\n"
+            ."this link https://www.stampbox.email/index.php?r=register/Step1 and you will receive a free trial and ensure that your emails " 
+            ."will always be on top of my list.\r\n\r\n"
             ."Best regards,\r\n"
             .$mboxparams->toname);
     $result = $mailer->send($message);

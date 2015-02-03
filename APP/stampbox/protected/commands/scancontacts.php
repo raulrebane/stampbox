@@ -54,7 +54,8 @@ if ($customermailboxes) {
                         	$fromname = utf8_encode(rtrim($fromname)); 
                         	}
                                 $foundwhitelist = pg_query($dbconn, "select * from ds.t_whitelist where e_mail = '".$fromemail ."' and customer_id = '".$custmailbox['customer_id'] ."';");
-                                if ($foundwhitelist) {
+                                if (pg_num_rows($foundwhitelist) >= 1) {
+                                    syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - e-mail sender " .$fromemail ." in whitelist");
                                     continue;
                                 }
                                 $foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
