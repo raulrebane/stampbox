@@ -102,7 +102,7 @@ class SiteController extends Controller
                         'where'=> 'customer_id = :1',
                         'params' => array(':1'=>$usernames['customer_id']),))->queryRow();
                         $command = Yii::app()->db->createCommand();
-                        $model->resettoken = Yii::app()->SecurityManager->generateRandomString(32, TRUE);
+                        $model->resettoken = Yii::app()->getSecurityManager->generateRandomString(32, TRUE);
                         if ($alreadyreset == FALSE) {
                             $command->insert('ds.t_passwdresets', array('customer_id'=>$usernames['customer_id'],
                                 'e_mail'=>$usernames['e_mail'], 'token'=>$model->resettoken,
