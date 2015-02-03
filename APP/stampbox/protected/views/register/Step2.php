@@ -4,14 +4,9 @@
 /* @var $form CActiveForm */
 
 $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
-
-?>
-
-<div class="col-md-6">
-<?php 
+$form = $this->beginWidget('CActiveForm', array('id' => 'Step2', 'htmlOptions' => array('class'=>"form register", 'role'=>"form"))); 
+    echo '<div class="col-md-6">';
     echo '<br><h2>Incoming mail server</h2>';
-    
-    $form = $this->beginWidget('CActiveForm', array('id' => 'Step2', 'htmlOptions' => array('class'=>"form register", 'role'=>"form"))); 
 
     echo $form->hiddenField($model, 'maildomain');
     echo $form->hiddenField($model, 'mailtype');
@@ -30,15 +25,8 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
               array('NULL'=>'None', 'ssl' => 'SSL', 'tls' => 'TLS'));
     echo '</div>';
     
-    //$this->endWidget(); 
-    //unset($form);    
-?>
-</div>
-<div class="col-md-6 darker">
-<?php
+    echo '</div><div class="col-md-6 darker">';
     echo '<br><h2>Outgoing mail server</h2>';
-
-    //$form = $this->beginWidget('CActiveForm', array('id' => 'Step21', 'htmlOptions' => array('class'=>"form register", 'role'=>"form"))); 
 
     //echo $form->labelEx($model,'outgoing_hostname');
     echo $form->textField($model, 'outgoing_hostname', array('class'=>'form-control', 'placeholder'=>'e-mail server name'));
