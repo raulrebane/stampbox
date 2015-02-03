@@ -8,8 +8,8 @@
 
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 
-$dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and e_mail = 'stampboxdemo@yahoo.com';");
+$dbconn = pg_connect("host=localhost dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
         {
@@ -53,8 +53,11 @@ if ($customermailboxes) {
                         	$fromemail = trim($fromemail, " <>");
                         	$fromname = utf8_encode(rtrim($fromname)); 
                         	}
-//                        $mailheaders = imap_fetchheader($inbox, $email_number);
-                        	$foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
+                                $foundwhitelist = pg_query($dbconn, "select * from ds.t_whitelist where e_mail = '".$fromemail ."' and customer_id = '".$custmailbox['customer_id'] ."';");
+                                if ($foundwhitelist) {
+                                    continue;
+                                }
+                                $foundsenderres = pg_query($dbconn, "select * from ds.t_customer_mailbox where e_mail = '".$fromemail ."';");                       
                         	if (pg_num_rows($foundsenderres) == 1) {
                             		syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - found registered sender: " .$fromemail);
 					$foundsender = pg_fetch_assoc($foundsenderres);
@@ -79,14 +82,19 @@ if ($customermailboxes) {
                                         $transactionstamp['status'] = 'U';
                                         $res = pg_update($dbconn, 'ds.t_stamps_issued', $transactionstamp, array('stamp_id' => $transactionstamp['stamp_id']));
                                         
+                                        $pricedef = pg_query($dbconn, "select * from ds.t_stamp_definition where batch_id = '".$transactionstamp['batch_id'] ."';");                       
+                                        if ($pricedef) {
+                                            $transactiondef = pg_fetch_assoc($pricedef);
+                                            $creditprice = $transactiondef['pts_earned'];
+                                        } else $creditprice = 0;
                             		$credittrans['customer_id'] = $custmailbox['customer_id'];
                             		$credittrans['transaction_code'] = 'CRED';
-                            		$credittrans['amount'] = 90;
+                            		$credittrans['amount'] = $creditprice;
                                         $credittrans['stamp_id'] = $transactionstamp['stamp_id'];
                             		$credittrans['description'] = NULL;
                             		$credittrans['transaction_date'] = date('Y-m-d H:i:s', strtotime($overview[0]->date));
                             		$res = pg_insert($dbconn, 'ds.t_stamps_transactions', $credittrans);
-                                        $res = pg_query($dbconn, "update ds.t_account set points_bal = points_bal + 90 where customer_id = " .$custmailbox['customer_id'] .";");
+                                        $res = pg_query($dbconn, "update ds.t_account set points_bal = points_bal + '".$creditprice ."' where customer_id = " .$custmailbox['customer_id'] .";");
                                         
                             		$debitstamp['customer_id'] = $foundsender['customer_id'];
                             		$debitstamp['transaction_code'] = 'DEBIT';
@@ -144,20 +152,8 @@ if ($customermailboxes) {
            }
         }
     }
-//pg_free_result($mailboxconfig);
-//pg_free_result($customermailboxes);
 pg_close($dbconn);
 // close syslog
 closelog();
 
-/* 
- //                   Yii::log("after inbox open",'info', 'application');
-                    
-                    }
-                    imap_close($inbox);
-//                   Yii::log("Before sort", 'info', 'application');
-                    usort($senders, "self::cmp");
- * 
- * 
- */
 ?>
