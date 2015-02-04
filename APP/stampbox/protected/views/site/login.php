@@ -4,7 +4,9 @@
 /* @var TbActiveForm $form */
 
 $this->pageTitle=Yii::app()->name . ' - Login';
+echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
 ?>
+
 <div class="login-form">
     <h1><b>Welcome</b> Back!</h1>
     <?php $form = $this->beginWidget(
@@ -12,8 +14,6 @@ $this->pageTitle=Yii::app()->name . ' - Login';
             'id' => 'verticalForm',
             'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
     ?>
-<!--    <form class="form" role="form" action="/stampbox/index.php?r=site/login">
--->
         <div class="form-group">
             <?php
             echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
@@ -27,6 +27,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
               </div>-->
         <button type="submit" class="btn btn-default"></button>
         <?php $this->endWidget();
+
         //unset($form);
         ?>
 </div>

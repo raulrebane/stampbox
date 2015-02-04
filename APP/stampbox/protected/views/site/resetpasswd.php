@@ -11,14 +11,14 @@
             <div class="row step-a">
                 <div class="col-md-6">
                     <div class="feature">
-                        <p>We have sent you link to reset your <b>Stampbox</b>password.</p>
+                        <p>We have sent you link to reset your <b>Stampbox</b> password.</p>
                     </div>
                     <div class="feature">
                     </div>
                 </div>
                 <div class="col-md-6 darker">
                     <div class="vertical-middle">';
-                        echo '<button type="submit" class="btn btn-aqua">OK</button>';                      
+                        //echo '<button type="submit" class="btn btn-aqua">OK</button>';                      
                     echo '</div>
                 </div>
             </div>
