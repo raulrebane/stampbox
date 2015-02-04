@@ -59,8 +59,8 @@ function Sendpasswdlink_fn($job)
     ;
     $mailer = Swift_Mailer::newInstance($transport);
     $message = Swift_Message::newInstance('RE: ' .$mboxparams->subject)
-        ->setFrom(array($mboxparams->to => $mboxparams->toname))
-        ->setTo(array($mboxparams->from => $mboxparams->fromname))
+        ->setFrom(array($mboxparams->from => $mboxparams->fromname))
+        ->setTo(array($mboxparams->to => $mboxparams->toname))
         ->setBody($mboxparams->body);
     $result = $mailer->send($message);
     if ($result) {
