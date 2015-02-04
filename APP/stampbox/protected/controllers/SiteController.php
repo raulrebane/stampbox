@@ -114,13 +114,13 @@ class SiteController extends Controller
                                 'sent'=>'now()'), 'customer_id=:id', array(':id'=>$usernames['customer_id']));
                         }
                         $sendmailparams = json_encode(array(
-                                    'outgoing_hostname'=>'',
+                                    'outgoing_hostname'=>'smtp.googlemail.com',
                                     'outgoing_port'=>'465',
 				    'outgoing_socket_type'=>'ssl',
                                     'e_mail_username'=>'support@stampbox.email',
                                     'e_mail_password'=>'Tere1Tere2',
                                     'subject'=>'www.stampbox.email password reset requested',
-                                    'from'=>'Stampbox <support@stampbox.email>',
+                                    'from'=>'support@stampbox.email',
                                     'fromname'=>'Stampbox support',
                                     'to'=>$model->emailaddress,
                                     'toname'=>'',
