@@ -137,10 +137,11 @@ class RegisterController extends Controller
                 }
             }
         }
+        /*
         else {
             echo CActiveForm::validate($model); 
             Yii::app()->end();               
-        }
+        }*/
         $this->render('Step1',array('model'=>$model,)); 
     }
     
