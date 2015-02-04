@@ -49,7 +49,8 @@ $lasttransactions = Yii::app()->db->createCommand(array(
 
         $gridColumns = array(
             array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
+            if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
+            elseif ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
             array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['e_mail'] == NULL) return $data['description'];
                 else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
