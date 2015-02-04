@@ -45,6 +45,7 @@ class Register extends CFormModel
 			array('useremail, emailusername', 'length', 'max'=>128, 'on'=>'Step1'),
 			array('emailpassword', 'length', 'max'=>255, 'on'=>'Step1'),
                         array('useremail', 'email', 'on'=>'Step1'),
+                        array('incoming_hostname, outgoing_hostname, incoming_port, outgoing_port, incoming_socket_type, outgoing_socket_type', 'required', 'on'=>'Step2'),
                         array('incoming_hostname, outgoing_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
                         array('incoming_port, outgoing_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
                         array('incoming_socket_type, outgoing_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
