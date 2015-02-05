@@ -19,7 +19,6 @@ class RegisterController extends Controller
             Yii::app()->end(); 
         }
         if(isset($_POST['Register'])) {  
-            Yii::log('In step1:', 'info', 'application');
             $model->attributes=$_POST['Register'];     
             if ($model->validate()) {
                 $e_mail_verified = FALSE;
@@ -69,6 +68,7 @@ class RegisterController extends Controller
                         $customer->country = 'XX';
                     }
                 }
+                //Yii::log('In step1 - about to save customer ' .CVarDumper::dumpAsString($customer), 'info', 'application');
                 if ($customer->save()) {
                     //log in user right away
                     $identity=new UserIdentity($model->useremail,$model->emailpassword);
@@ -90,8 +90,11 @@ class RegisterController extends Controller
                         $model->registeredemail->e_mail_username = $model->emailusername;
                         $model->registeredemail->e_mail_password = $model->emailpassword;
                     } 
-                    //list(, $model->registeredemail->maildomain) = explode("@", $customer->username);
-                    $model->registeredemail->save();
+                    //Yii::log('In step1 - about to save customer e-mail ' .CVarDumper::dumpAsString($model->registeredemail), 'info', 'application');
+                    if (!$model->registeredemail->save()) {
+                        Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($model->registeredemail)
+                                .$model->registeredemail->getErrors(), 'info', 'application');
+                    }
                     $dbcommand =  Yii::app()->db->createCommand();
                     $dbcommand->insert('ds.t_account', array(
                         'customer_id'=>Yii::app()->user->getId(),
@@ -123,7 +126,7 @@ class RegisterController extends Controller
                     $this->redirect(array('invite/index')); 
                     
                 }
-                elseif (isset($model->emailusername)) { 
+                elseif ($model->emailusername <> '') { 
                     Yii::log('Going to step2:', 'info', 'application');
 		    //list(, $model->maildomain) = explode("@", $customer->username);
                     //$model->mailtype = 'IMAP';
