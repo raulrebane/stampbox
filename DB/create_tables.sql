@@ -80,12 +80,12 @@ CREATE TABLE ds.t_mailbox_config
   outgoing_hostname character varying(255),
   outgoing_port integer,
   outgoing_socket_type character varying(10),
-  outgoing_auth character varying(10)
+  outgoing_auth character varying(10),
+  CONSTRAINT pk_mailbox_config PRIMARY KEY (maildomain)
 )
 WITH (
   OIDS=FALSE
 );
-
 
 CREATE TABLE ds.t_passwdresets
 (

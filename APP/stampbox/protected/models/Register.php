@@ -23,8 +23,6 @@ class Register extends CFormModel
         public $outgoing_port;
         public $outgoing_socket_type;
         public $outgoing_auth;
-        public $e_mail_username;
-        public $e_mail_password;
         public $registereddomain;
         public $registeredemail;
         public $top_senders;
@@ -74,8 +72,8 @@ class Register extends CFormModel
 	{
 		return array(
 			'useremail'=>'E-mail address: ',
-                        'emailpassword'=>'E-mail password: ',
-                        'emailusername'=>'User name: ',
+                        'emailpassword'=>'E-mail password',
+                        'emailusername'=>'E-Mail username',
                         'maildomain'=>'E-mail provider',
                         'incoming_hostname'=>'Incoming mail server',
                         'incoming_port'=>'Port',
@@ -83,8 +81,6 @@ class Register extends CFormModel
                         'outgoing_hostname'=>'Outgoing mail server',
                         'outgoing_port'=>'Port',
                         'outgoing_socket_type'=>'Connection security',
-                        'e_mail_username'=>'E-Mail username',
-                        'e_mail_password'=>'E-Mail password',
                         'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement'
 		);
 	}

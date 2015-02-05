@@ -39,25 +39,7 @@
             <a href="<?php echo Yii::app()->createUrl('site/ResetPasswd')?>">Forgot your password?</a>
         </div>
 
-
-        <div class="register-form">
-            <h1>Create <b>your</b> first <b>Stampbox</b></h1>
-            <div class="row step-a">
-                <div class="col-md-6">
-                    <div class="feature">
-                        <p>Works with all popular e-mail providers</p>
-                        <img src="images/register-feature-services.png">
-                    </div>
-                    <div class="feature">
-                        <p>Works on all of your devices</p>
-                        <img src="images/register-feature-devices.png">
-                    </div>
-                </div>
-                <div class="col-md-6 darker">
                     <?php echo $content ?>
-                </div>
-            </div>
-        </div>
  <!--       
     <script src="scripts/main.js"></script>
     <script src="scripts/plugins.js"></script>

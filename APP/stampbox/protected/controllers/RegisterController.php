@@ -35,6 +35,8 @@ class RegisterController extends Controller
                             'port'=>$model->registereddomain->incoming_port,
                             'socket_type'=>$model->registereddomain->incoming_socket_type,
                             'auth_type'=>$model->registereddomain->incoming_auth));
+                    //Yii::log('In Step1, got maildomain:' .CVarDumper::dumpAsString($model->registereddomain) 
+                    //        .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
                     $gmclient= new GearmanClient();
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
@@ -81,15 +83,13 @@ class RegisterController extends Controller
                     if ($e_mail_verified == TRUE) { 
                         // e_mail credentials were verified and working
                         $model->registeredemail->status = 'A'; 
-                        $model->registeredemail->e_mail_username = NULL;
-                        $model->registeredemail->e_mail_password = NULL;
                     }
                     else { 
                         // V = unverified, not usable
                         $model->registeredemail->status = 'V'; 
-                        $model->registeredemail->e_mail_username = $model->emailusername;
-                        $model->registeredemail->e_mail_password = $model->emailpassword;
                     } 
+                    $model->registeredemail->e_mail_username = $model->emailusername;
+                    $model->registeredemail->e_mail_password = $model->emailpassword;
                     //Yii::log('In step1 - about to save customer e-mail ' .CVarDumper::dumpAsString($model->registeredemail), 'info', 'application');
                     if (!$model->registeredemail->save()) {
                         Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($model->registeredemail)
@@ -126,8 +126,8 @@ class RegisterController extends Controller
                     $this->redirect(array('invite/index')); 
                     
                 }
-                elseif ($model->emailusername <> '') { 
-                    Yii::log('Going to step2:', 'info', 'application');
+                elseif ($model->emailusername <> '' and $model->registereddomain == NULL) { 
+                    //Yii::log('Going to step2:', 'info', 'application');
 		    //list(, $model->maildomain) = explode("@", $customer->username);
                     //$model->mailtype = 'IMAP';
                     //$model->incoming_auth = 'EMAIL';
@@ -135,7 +135,8 @@ class RegisterController extends Controller
 		    //Yii::app()->end();
 		    $this->redirect(array('register/step2'));}
                 else {
-                    Yii::log('New customer registered without e-mail parameters', 'info', 'application');
+                    Yii::log('New customer registered without e-mail parameters: ' .CVarDumper::dumpAsString($customer)
+                            , 'info', 'application');
                     $this->redirect(array('site/index'));
                 }
             }
@@ -154,7 +155,7 @@ class RegisterController extends Controller
         $model->scenario = 'Step2';
         if(isset($_POST['Register'])) {  
             $model->attributes=$_POST['Register']; 
-            Yii::log('In Step2, got maildomain:', 'info', 'application');
+            //Yii::log('In Step2, got maildomain:' .CVarDumper::dumpAsString($model), 'info', 'application');
             //list(, $model->maildomain) = explode("@", Yii::app()->user->username);
             // find user mailbox record
             $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
@@ -178,6 +179,7 @@ class RegisterController extends Controller
                     'port'=>$model->incoming_port,
                     'socket_type'=>$model->incoming_socket_type,
                     'auth_type'=>'EMAIL'));
+                //Yii::log('In Step2, going to validate mailbox:' .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
                 $gmclient= new GearmanClient();
                 $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                 $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
@@ -195,8 +197,11 @@ class RegisterController extends Controller
                         $model->registereddomain->outgoing_hostname = mb_convert_case($model->outgoing_hostname, MB_CASE_LOWER, "UTF-8");
                         $model->registereddomain->outgoing_port = $model->outgoing_port;
                         $model->registereddomain->outgoing_socket_type = $model->outgoing_socket_type;
-                        $model->registereddomain->save();
-                    }
+                        if (!$model->registereddomain->save()) {
+                            Yii::log('In Step2, save registered domain failed: ' .CVarDumper::dumpAsString($model->registereddomain)
+                                        .CVarDumper::dumpAsString($model->registereddomain->getErrors()), 'info', 'application');
+                        }
+                    }   
                     else {
                         // try to verify mailbox access using already stored mailbox data
                         // this can theoretically happen only if user was waiting to input data and  
@@ -208,6 +213,7 @@ class RegisterController extends Controller
                             'port'=>$model->registereddomain->incoming_port,
                             'socket_type'=>$model->registereddomain->incoming_socket_type,
                             'auth_type'=>'EMAIL'));
+                        //Yii::log('In Step2, going to validate mailbox with DB data:' .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
                         $gmclient= new GearmanClient();
                         $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
@@ -236,6 +242,7 @@ class RegisterController extends Controller
                     //Newly posted values work so we have successful domain config and :) we're saving
                     $model->registeredemail->status = 'A';
                     $model->registeredemail->save();
+                    //Yii::log('In Step2, update e-mail status to A:' .CVarDumper::dumpAsString($model->registeredemail), 'info', 'application');
                     if ($model->registereddomain === NULL) {
                         // init new record
                         $model->registereddomain = new mailconfig();
@@ -249,7 +256,10 @@ class RegisterController extends Controller
                     $model->registereddomain->outgoing_hostname = mb_convert_case($model->outgoing_hostname, MB_CASE_LOWER, "UTF-8");
                     $model->registereddomain->outgoing_port = $model->outgoing_port;
                     $model->registereddomain->outgoing_socket_type = $model->outgoing_socket_type;
-                    $model->registereddomain->save();
+                    if (!$model->registereddomain->save()) {
+                        Yii::log('In Step2, update registered domain with new values failed:' .CVarDumper::dumpAsString($model->registereddomain)
+                                    .CVarDumper::dumpAsString($model->registereddomain->getErrors()), 'info', 'application');
+                    }
                     $loadinvitations = json_encode(array('customer_id'=>Yii::App()->user->getID(),
                             'e_mail'=>$model->useremail,
                             'username'=>$model->emailusername,
