@@ -40,7 +40,8 @@ function loadInvitations_fn($job)
                     $percent_done = 0;
                     $total_percent = count($emails);
                     if ($total_percent < 100) { $reportinterval = 1;}
-                    else { $reportinterval = round($total_percent / 100, 0);                    }
+                    else { $reportinterval = round($total_percent / 100, 0);}
+                    syslog(LOG_INFO, "Reporting job status: " .$job->handle);
                     $job->sendstatus($percent_done, $total_percent);
                     foreach($emails as $email_number) {
                     /* get information specific to this email */
