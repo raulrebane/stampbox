@@ -71,6 +71,8 @@ class AccountController extends Controller
         }
         if (isset($_POST['Account'])) {
             $model->attributes=$_POST['Account'];
+            if ($model->from_date == '') { $model->from_date = Yii::app()->dateFormatter->format('yyyy/MM/dd',date('d-m-Y')); }
+            if ($model->to_date == '') { $model->to_date = Yii::app()->dateFormatter->format('yyyy/MM/dd',date('d-m-Y')); }
             //Yii::log('Received statement attributes', 'info', 'application');
             $model->statement_grid = Yii::app()->db->createCommand(array(
                 //'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
