@@ -36,9 +36,9 @@ if ($model->loading_inprogress == TRUE) {
 
     echo '<script type="text/javascript">';
     echo "function show_progress() {   
-        var url = '/stampbox/index.php?r=invite/GetProgress&task_id=";
-    echo $model->task_id;
-    echo "' ;
+        var url = '";
+    echo Yii::app()->createUrl('invite/GetProgress');
+    echo "&task_id=" .$model->task_id ."'; 
     $.getJSON(url, function(data) {
         var done = parseInt(data.done);
         console.log(data);
