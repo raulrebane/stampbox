@@ -244,6 +244,18 @@ WITH (
   OIDS=FALSE
 );
 
+CREATE TABLE ds.t_processing
+(
+  customer_id bigint NOT NULL,
+  action character varying(30),
+  percent_complete smallint,
+  task_id character varying(100) NOT NULL,
+  CONSTRAINT pk_processing_tasks PRIMARY KEY (customer_id, task_id)
+)
+WITH (
+  OIDS=FALSE
+);
+
 CREATE OR REPLACE VIEW ds.v_registered_email AS 
  SELECT t_customer.customer_id,
     t_customer.username

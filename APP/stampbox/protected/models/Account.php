@@ -32,6 +32,8 @@ class Account extends CFormModel
         public function rules() 
         {
             return array(
-		array('from_date, to_date', 'date'));    
+		array('from_date, to_date', 'date'),
+                array('from_date', 'compare','compareValue'=>'to_date','operator'=>'<=')
+                );    
         }
 }

@@ -5,6 +5,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+echo '<style>.no-close .ui-dialog-titlebar-close { display: none;}</style>';
+//$model->task_id = 'test';
+//$model->loading_inprogress = TRUE;
+
+/*
+* in the end must call $.fn.yiiGridView.update('invitation-grid'); to refresh gridview
+ */
+if ($model->loading_inprogress == TRUE) {
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id'=>'LoadInProgress',
+        'options'=>array(
+            'title'=>'Loading contacts... Please wait',
+            'width'=>400,
+            'height'=>100,
+            'autoOpen'=>true,
+            'resizable'=>false,
+            'modal'=>true,
+            'closeOnEscape'=>false,
+            'dialogClass'=>"no-close",
+            'overlay'=>array('backgroundColor'=>'#000','opacity'=>'0.8')
+            ),
+        ));
+    $this->widget('zii.widgets.jui.CJuiProgressBar', array(
+        'id'=>'progressbar',
+        'value'=>$model->percent_complete,
+        //'htmlOptions'=>array('style'=>'width:200px; height:20px; float:center;')
+    ));
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+
+    echo '<script type="text/javascript">';
+    echo "function show_progress() {   
+        var url = '/stampbox/index.php?r=invite/GetProgress&task_id=";
+    echo $model->task_id;
+    echo "' ;
+    $.getJSON(url, function(data) {
+        var done = parseInt(data.done);
+        console.log(data);
+        if (done > 100) { done = 100;}";
+    echo '$("#progressbar").progressbar( "value", done);
+            if (done == 100) {
+                $("#progressbar").progressbar( "destroy");
+                $("#LoadInProgress").dialog("close");';
+    echo "$.fn.yiiGridView.update('invitation-grid');
+            } else {";
+    echo 'setTimeout("show_progress()", 1000);                    
+        }
+    });
+}
+$(document).ready(function() {
+   setTimeout("show_progress()", 1000);
+});
+</script>';
+
+}
 $form = $this->beginWidget('CActiveForm',array(
     'id' => 'Invite',
     //'type'=>'horizontal',
@@ -15,11 +69,8 @@ $form = $this->beginWidget('CActiveForm',array(
 <div id="p-invite" class="row">
     <div class="col-md-12 m-refresh">
         <?php 
-            $model = new usermailbox;
-            $useremails = usermailbox::model()->findAll('customer_id = :1', array(':1'=>Yii::app()->user->getId()));
-            $emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
-            echo '<h1>' .$form->labelEx($model,'e_mail') .'</h1>';
-            echo $form->dropDownList($model, 'e_mail',$emailslist);
+            echo '<h1>' .$form->labelEx($model->mailboxlist,'e_mail') .'</h1>';
+            echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
         ?>
         <button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
         </div>
@@ -47,11 +98,12 @@ $form = $this->beginWidget('CActiveForm',array(
                     array('name'=>'last_email_date', 'header'=> 'Last e-mail')
                 );
                 $this->widget('zii.widgets.grid.CGridView',array(
+                    'id'=>'invitation-grid',
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>'content'),
-                    'dataProvider' => $dataProvider,
+                    'dataProvider' => $model->dataProvider,
                     'columns'=>$gridColumns
                 ));      
             ?>
