@@ -70,7 +70,7 @@ class InviteController extends Controller
                         'customer_id' => Yii::app()->user->getId(),
                         'action' => 'LoadInvitations',
                         'task_id' => $jobhandle));
-                    yii::log("saved $jobhandle", 'info', 'application');
+                    //yii::log("saved $jobhandle", 'info', 'application');
                 }
             }
         }
@@ -85,12 +85,12 @@ class InviteController extends Controller
                     'where' => "customer_id=:1 and action = 'LoadInvitations'",
                     'params' => array(':1' => Yii::app()->user->getId()),
                 ))->queryRow();
-        yii::log('found loadinprogress ' .CVarDumper::dumpAsString($loadInProgress),'info', 'application');
+        //yii::log('found loadinprogress ' .CVarDumper::dumpAsString($loadInProgress),'info', 'application');
         if ($loadInProgress !== FALSE) {
             $gmclient= new GearmanClient();
             $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
             $invitationStatus = $gmclient->jobStatus($loadInProgress['task_id']);
-            yii::log('gearman task status ' .CVarDumper::dumpAsString($invitationStatus),'info', 'application');
+            //yii::log('gearman task status ' .CVarDumper::dumpAsString($invitationStatus),'info', 'application');
             if ($invitationStatus[0] == FALSE) {
                 $dbcommand = Yii::app()->db->createCommand();
                 $dbcommand->delete('ds.t_processing', 'customer_id=:id', array(':id'=>Yii::app()->user->getId()));

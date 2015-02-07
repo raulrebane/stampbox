@@ -20,11 +20,11 @@ function loadInvitations_fn($job)
     $dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
     $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and customer_id = " 
             .$mboxparams->customer_id ." and e_mail='" .$mboxparams->e_mail ."';");
-    if ($customermailboxes) {
+    if (pg_num_rows($customermailboxes) > 0) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 
         {
         $mailboxconfig = pg_query($dbconn, "select * from ds.t_mailbox_config where maildomain = '" .$custmailbox['maildomain'] ."';");
-        if ($mailboxconfig) {
+        if (pg_num_rows($mailboxconfig) > 0) {
             $mailconf = pg_fetch_assoc($mailboxconfig);
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
@@ -41,7 +41,6 @@ function loadInvitations_fn($job)
                     $total_percent = count($emails);
                     if ($total_percent < 100) { $reportinterval = 1;}
                     else { $reportinterval = round($total_percent / 100, 0);}
-                    syslog(LOG_INFO, "Reporting job status: " .$job->handle);
                     $job->sendstatus($percent_done, $total_percent);
                     foreach($emails as $email_number) {
                     /* get information specific to this email */
