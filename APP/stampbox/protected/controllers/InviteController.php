@@ -116,9 +116,13 @@ class InviteController extends Controller
             'sort'=>$sort, 'pagination'=>array('pageSize'=>1000,)));
         
         $model->mailboxlist = new usermailbox;
-        $useremails = usermailbox::model()->findAll('customer_id = :1', array(':1' => Yii::app()->user->getId()));
-        $model->emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
-
+        $useremails = usermailbox::model()->findAll("customer_id = :1 and status = 'A'", array(':1' => Yii::app()->user->getId()));
+        if ($useremails) {
+            $model->emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
+        }
+        else {
+            unset($model->emailslist);
+        }
         $this->render('index',array('model'=>$model,));
     }
     

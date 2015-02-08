@@ -129,6 +129,9 @@ class RegisterController extends Controller
                         'customer_id' => Yii::app()->user->getId(),
                         'action' => 'LoadInvitations',
                         'task_id' => $jobhandle));
+                    Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                                                        .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
+                                                        .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');
                     $this->redirect(array('invite/index')); 
                     
                 }
@@ -143,6 +146,10 @@ class RegisterController extends Controller
                 else {
                     Yii::log('New customer registered without e-mail parameters: ' .CVarDumper::dumpAsString($customer)
                             , 'info', 'application');
+                    Yii::app()->user->setFlash('success', '<strong>You have successfully registered.</strong> We have credited your account with 100 free stamps to start using our service.'
+                                                        .'<br>People who use stampbox service can now receive stamped e-mail from you.');
+                    // <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                    Yii::app()->user->setFlash('warning', 'To receive credits for stamped e-mails you need to set up your mailbox access');
                     $this->redirect(array('site/index'));
                 }
             }
@@ -170,7 +177,9 @@ class RegisterController extends Controller
                 // how did we got here at all?
                 Yii::log('In Step2, '.Yii::app()->user->getId() .' ' .Yii::app()->user->username 
                         .' missing user mailbox record' , 'info', 'application');
-                $this->redirect(array('site/index'));
+                Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                                                    .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
+                                                    .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                $this->redirect(array('site/index'));
             }
             // find mail domain record 
             $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
@@ -225,7 +234,9 @@ class RegisterController extends Controller
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
                         if ($result['status'] == 'ERROR') {
                             // Saved values also did not work so nothing to do. Direct customer to homepage
-                            $this->redirect(array('site/index')); 
+                        Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                                                            .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
+                                                            .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                            $this->redirect(array('site/index')); 
                         }
                         else {
                             // Config loaded from DB actually works so we load contact and send to invite
@@ -240,7 +251,9 @@ class RegisterController extends Controller
                             $gmclient= new GearmanClient();
                             $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                             $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
-                            $this->redirect(array('invite/index')); 
+                            Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                                                                .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
+                                                                .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                            $this->redirect(array('invite/index')); 
                         }
                     }
                 } 
@@ -277,13 +290,14 @@ class RegisterController extends Controller
                     $gmclient= new GearmanClient();
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
-                    $this->redirect(array('invite/index')); 
+                    Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                                                        .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
+                                                        .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                    $this->redirect(array('invite/index')); 
                 }
             }
             else {
             }
         }
-        //Yii::app()->user->setFlash('success', 'Welcome - ' .Yii::app()->user->name .'<br>We have credited your account with 100 free Stamps to start using our service. You can now invite your contacts from your e-mail account');
         list(, $model->maildomain) = explode("@", Yii::app()->user->username);
         //$model->mailtype = 'IMAP';
         //$model->incoming_auth = 'EMAIL';

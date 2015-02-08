@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,10 +7,10 @@
 echo '<style>.no-close .ui-dialog-titlebar-close { display: none;}</style>';
 //$model->task_id = 'test';
 //$model->loading_inprogress = TRUE;
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+}
 
-/*
-* in the end must call $.fn.yiiGridView.update('invitation-grid'); to refresh gridview
- */
 if ($model->loading_inprogress == TRUE) {
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id'=>'LoadInProgress',
@@ -64,17 +63,17 @@ $form = $this->beginWidget('CActiveForm',array(
     //'type'=>'horizontal',
     'htmlOptions' => array('class'=>'form', 'role'=>'form'),
     )); 
-?>
 
-<div id="p-invite" class="row">
-    <div class="col-md-12 m-refresh">
-        <?php 
-            echo '<h1>' .$form->labelEx($model->mailboxlist,'e_mail') .'</h1>';
-            echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
-        ?>
-        <button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
+if (isset($model->emailslist)) {
+    echo '<div id="p-invite" class="row">
+    <div class="col-md-12 m-refresh">';
+    echo '<h1>' .$form->labelEx($model->mailboxlist,'e_mail') .'</h1>';
+    echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
+    echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
         </div>
-</div>
+</div>';
+}
+?>
 
 <div class="row">
     <div class="col-md-12">

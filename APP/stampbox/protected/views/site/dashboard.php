@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
- $stampcount = Yii::app()->db->createCommand(array(
+$stampcount = Yii::app()->db->createCommand(array(
             'select'=> array('points_bal', 'stamps_bal'),
             'from' => 'ds.t_account',
             'where'=> 'customer_id=:1',
@@ -27,7 +27,12 @@ $lasttransactions = Yii::app()->db->createCommand(array(
             'limit'=> '10',
             'params'=> array(':1'=>Yii::app()->user->getId()),
         ))->queryAll();
+
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+}
 ?>
+
 <div class="col-md-7">
     <div class="row">
     <div class="col-md-12">

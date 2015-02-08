@@ -19,7 +19,7 @@
 	<b>Content.</b> These terms of service (“<b>Terms</b>”) govern
 	your use and access to the Digital Stamp services (&quot;<b>Services</b>&quot;)
 	provided by Good Wind Communications OÜ, registry code 12317469,
-	address Rotermanni 8, 10111 Tallinn, Estonia, e-mail <span style="background: #ffff00">[●]</span>
+	address Rotermanni 8, 10111 Tallinn, Estonia, e-mail <span style="background: #ffff00">support@stampbox.email</span>
 	(“<b>us</b>” or “<b>GWC</b>”). References in these Terms to
 	“<b>you</b>” or to “<b>User</b>” are references to you, the
 	person or entity accessing or using the Services. The Terms contain
@@ -33,15 +33,14 @@
 	<b>Language of the Terms. </b>These Terms are available in English. 
 	</p>
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
-	<b>Availability of the Terms. <!-- The terms of the contract, including the standard terms, shall be presented to the other contracting party in a manner which enables them to be saved and reproduced. --><!-- The trader shall provide the consumer with the confirmation of the contract entered into, on a durable medium within a reasonable time after the entry into the contract but not later than at the time of delivery of the goods or before the provision of the service or performance begins.
-
-This means that GWC should send an e-mail confirmation on the conclusion of a contract. --></b>GWC
+	<b>Availability of the Terms. </b>GWC
 	will preserve the text of the Terms after the Terms are entered into
 	but the text of the Terms will not remain available to you. You may
 	save or print these Terms for future reference. A copy of the Terms
 	will be sent to you via e-mail upon request.</p>
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
-	<b>Registration information. </b>You warrant that any registration
+	<b>Registration information. </b>
+        You warrant that any registration
 	information that you submit to GWC is true, accurate and complete,
 	and you agree to keep it up to date.  
 	</p>
@@ -61,9 +60,9 @@ This means that GWC should send an e-mail confirmation on the conclusion of a co
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
 	<b>Notices. </b>Our notices to you may be sent via e-mail, to the
 	address that you have provided in your registration information. In
-	addition, we may notify you via the website <span style="background: #ffff00">[●]</span>.
+	addition, we may notify you via the website <span style="background: #ffff00">www.stampbox.email</span>.
 	Your notices to us must be sent via e-mail to the e-mail address
-	<span style="background: #ffff00">[●]</span>.</p>
+	<span style="background: #ffff00">support@stampbox.email</span>.</p>
 </ol>
 <ol start="2">
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.25in; margin-bottom: 0.17in; text-transform: uppercase; line-height: 115%; page-break-after: avoid">
@@ -73,7 +72,7 @@ This means that GWC should send an e-mail confirmation on the conclusion of a co
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
 	<b>Plug-In. </b>To use our Services, you are required to download
 	and install a relevant plug-in provided by us (“<b>Plug-In</b>”).
-	<!-- Please verify this and specify this part if you deem it necessary from the technical side. -->You
+	You
 	can download the Plug-In at <span style="background: #ffff00">[website]</span>.</p>
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
 	<b>Digital Stamp. </b>A “<b>Digital Stamp</b>” is information
@@ -390,7 +389,7 @@ Direct marketing for services or goods that are different from your services is 
 		In case of subscription Services agreement incorporating these
 		Terms is valid until the end of such subscription. You may
 		terminate these Terms at any time by way of cancellation, by
-		sending an e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">[●]</span></span><span style="font-weight: normal">.</span></p>
+		sending an e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">support@stampbox.email</span></span><span style="font-weight: normal">.</span></p>
 	</ol>
 </ol>
 <ol>
@@ -418,26 +417,12 @@ Direct marketing for services or goods that are different from your services is 
 		have not used any Digital Stamps yet. You acknowledge and agree
 		that if you use any Digital Stamps purchased, you lose your right
 		of withdrawal. The right of withdrawal can be used by sending an
-		e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">[●]</span></span><span style="font-weight: normal">.
-		The standard withdrawal form is available at </span><span style="font-weight: normal"><span style="background: #ffff00">[●]<!-- 
-Insert link to the standard withdrawal form. 
-
-Text of the standard withdrawal form:
- Standard withdrawal form
-(complete and return this form only if you wish to withdraw from the contract)
-— To Good Wind Communications OÜ, registry code 12317469, address Rotermanni 8, Tallinn, 1011, e-mail [●]:
-— I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract of sale of the following goods (*)/for the 
-provision of the following service (*),
-— Ordered on (*)/received on (*),
-— Name of consumer(s),
-— Address of consumer(s),
-— Signature of consumer(s) (only if this form is notified on paper),
-— Date
-(*) Delete as appropriate. --></span></span><span style="font-weight: normal">.</span></p>
+		e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">support@stampbox.email</span></span><span style="font-weight: normal">.
+                </span></span><span style="font-weight: normal">.</span></p>
 		<li><p lang="en-GB" align="justify" style="margin-top: 0.17in; margin-bottom: 0.17in; font-variant: normal; line-height: 115%; page-break-after: auto"><a name="_Ref396730439"></a>
 		<b>Amendments to the Terms. </b><span style="font-weight: normal">The
 		Terms may be amended by GWC at any time by posting an updated
-		version of the Terms on the website </span><span style="font-weight: normal"><span style="background: #ffff00">[●]</span></span><span style="font-weight: normal">
+		version of the Terms on the website </span><span style="font-weight: normal"><span style="background: #ffff00">www.stampbox.email</span></span><span style="font-weight: normal">
 		at least thirty (30) days in advance</span><font color="#676767"><font face="Helvetica, serif"><font size="3" style="font-size: 11pt"><span style="font-weight: normal"><span style="background: #ffffff">
 		</span></span></font></font></font><span style="font-weight: normal">of
 		the effective date of any such amendments. When we amend the Terms,
@@ -494,4 +479,4 @@ In the European Union, disputes with consumers must generally be settled in the 
 <p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; line-height: 115%">
 Rotermanni 8, 10111 Tallinn, Estonia</p>
 <p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; line-height: 115%">
-e-mail: [●]</p>
+e-mail: support@stampbox.email</p>
