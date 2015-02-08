@@ -28,7 +28,7 @@
 
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <a class="logo" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
+                <a class="logo hidden-xs hidden-sm" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),

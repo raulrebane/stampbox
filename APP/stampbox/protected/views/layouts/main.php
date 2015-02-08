@@ -28,7 +28,7 @@
 
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <div class="logo"></div>
+                <div class="logo hidden-xs hidden-sm"></div>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),

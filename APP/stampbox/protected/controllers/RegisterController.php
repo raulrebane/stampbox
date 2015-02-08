@@ -122,7 +122,13 @@ class RegisterController extends Controller
                                 'auth_type'=>$model->registereddomain->incoming_auth));
                     $gmclient= new GearmanClient();
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                    $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    //$result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    $jobhandle = $gmclient->doBackground("loadinvitations", $loadinvitations);
+                    $dbcommand = Yii::app()->db->createCommand();
+                    $dbcommand->insert('ds.t_processing', array(
+                        'customer_id' => Yii::app()->user->getId(),
+                        'action' => 'LoadInvitations',
+                        'task_id' => $jobhandle));
                     $this->redirect(array('invite/index')); 
                     
                 }
