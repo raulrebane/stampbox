@@ -177,9 +177,7 @@ class RegisterController extends Controller
                 // how did we got here at all?
                 Yii::log('In Step2, '.Yii::app()->user->getId() .' ' .Yii::app()->user->username 
                         .' missing user mailbox record' , 'info', 'application');
-                Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
-                                                    .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
-                                                    .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                $this->redirect(array('site/index'));
+                // should redirect to site/index
             }
             // find mail domain record 
             $model->registereddomain = mailconfig::model()->find('maildomain=:1', 
@@ -233,10 +231,14 @@ class RegisterController extends Controller
                         $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                         $result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
                         if ($result['status'] == 'ERROR') {
-                            // Saved values also did not work so nothing to do. Direct customer to homepage
-                        Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
+                        // Saved values also did not work so nothing to do. Direct customer to homepage
+                            Yii::app()->user->setFlash('success', 'We have credited your account with 100 free stamps to start using our service.'
                                                             .'<br>You can now invite your contacts from your e-mail account to start using Stampbox service'
-                                                            .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                            $this->redirect(array('site/index')); 
+                                                            .'<br>Add e-mail addresses into whitelist for those contacts you would like to receive without stamps.');                            
+                            Yii::app()->user->setFlash('warning', 'We could not access your e-mail using information that you provided. Our technical support has been notified');
+                            Yii::log('Error accessing mailbox with :' .CVarDumper::dumpAsString($mailboxcheck) .' with result '
+                                        .CVarDumper::dumpAsString($result), 'info', 'application');
+                            $this->redirect(array('site/index')); 
                         }
                         else {
                             // Config loaded from DB actually works so we load contact and send to invite
