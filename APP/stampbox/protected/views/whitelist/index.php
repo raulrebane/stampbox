@@ -8,7 +8,7 @@
 ?>
 
 <div id="p-whitelist" class="row">
-    <div class="col-md-12 m-add">
+    <div class="col-md-6 m-add">
     <h1>Add e-mail to list</h1>
         <?php 
          $form = $this->beginWidget('CActiveForm',array(
@@ -25,6 +25,24 @@
             ));
             echo '<button type="submit" class="btn btn-aqua">Add to whitelist</button>';
         $this->endWidget();
+        ?>
+    </div>
+    <div class="col-md-6 m-add">
+        <h1>Add from mailbox contacts</h1>
+        <?php $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id'=>'addFromContacts',
+        'options'=>array(
+            'title'=>'Add contacts to whitelist',
+            'width'=>800,
+            'height'=>1000,
+            'autoOpen'=>FALSE,
+            'resizable'=>true,
+            'modal'=>true,
+            'closeOnEscape'=>TRUE,
+            //'dialogClass'=>"no-close",
+            'overlay'=>array('backgroundColor'=>'#000','opacity'=>'0.8')
+            ),
+        ));
         ?>
     </div>
 </div>
