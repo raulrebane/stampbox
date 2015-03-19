@@ -43,6 +43,7 @@
             'overlay'=>array('backgroundColor'=>'#000','opacity'=>'0.8')
             ),
         ));
+        $this->endWidget('zii.widgets.jui.CJuiDialog');
         ?>
     </div>
 </div>
