@@ -42,8 +42,9 @@
             //'dialogClass'=>"no-close",
             'overlay'=>array('backgroundColor'=>'#000','opacity'=>'0.8')
             ),
-        ));
+        ));         
         $this->endWidget('zii.widgets.jui.CJuiDialog');
+        echo CHtml::button('Open Dialog', array('onclick'=>'$("#addFromContacts").dialog("open"); return false;',));
         ?>
     </div>
 </div>
