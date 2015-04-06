@@ -34,12 +34,12 @@
         ?>    
     </div>
 
-        <a class="logo" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
-        <div class="menu">
-            <a href="<?php echo Yii::app()->createUrl('site/ResetPasswd')?>">Forgot your password?</a>
-        </div>
+    <a class="logo" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
+    <div class="menu">
+        <a href="<?php echo Yii::app()->createUrl('site/ResetPasswd')?>">Forgot your password?</a>
+    </div>
 
-                    <?php echo $content ?>
+    <?php echo $content ?>
  <!--       
     <script src="scripts/main.js"></script>
     <script src="scripts/plugins.js"></script>

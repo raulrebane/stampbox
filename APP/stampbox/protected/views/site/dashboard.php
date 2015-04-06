@@ -106,6 +106,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                     'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>'content'),
+                    'selectableRows' => 0,
                     'dataProvider'=>$mailboxdataprovider,
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),

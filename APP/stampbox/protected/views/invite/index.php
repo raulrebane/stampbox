@@ -4,7 +4,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-echo '<style>.no-close .ui-dialog-titlebar-close { display: none;}</style>';
+?>
+<style>.no-close .ui-dialog-titlebar-close { display: none;}</style>
+
+<?php
 //$model->task_id = 'test';
 //$model->loading_inprogress = TRUE;
 foreach(Yii::app()->user->getFlashes() as $key => $message) {
@@ -32,32 +35,35 @@ if ($model->loading_inprogress == TRUE) {
         //'htmlOptions'=>array('style'=>'width:200px; height:20px; float:center;')
     ));
     $this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
 
-    echo '<script type="text/javascript">';
-    echo "function show_progress() {   
-        var url = '";
-    echo Yii::app()->createUrl('invite/GetProgress');
-    echo "&task_id=" .$model->task_id ."'; 
-    $.getJSON(url, function(data) {
-        var done = parseInt(data.done);
-        console.log(data);
-        if (done > 100) { done = 100;}";
-    echo '$("#progressbar").progressbar( "value", done);
+    <script type="text/javascript">
+        function show_progress() {   
+        var url = '<?php echo Yii::app()->createUrl('invite/GetProgress');
+                         echo "&task_id=" .$model->task_id; ?>';
+        $.getJSON(url, function(data) {
+            var done = parseInt(data.done);
+            if (done > 100) { done = 100;}
+            $("#progressbar").progressbar( "value", done);
             if (done == 100) {
                 $("#progressbar").progressbar( "destroy");
-                $("#LoadInProgress").dialog("close");';
-    echo "$.fn.yiiGridView.update('invitation-grid');
-            } else {";
-    echo 'setTimeout("show_progress()", 1000);                    
-        }
+                $("#LoadInProgress").dialog("close");
+                $.fn.yiiGridView.update('invitation-grid');
+            } 
+            else {
+                setTimeout("show_progress()", 1000);                    
+            }
+        });
+    }
+    
+    $(document).ready(function() {
+        setTimeout("show_progress()", 1000);
     });
-}
-$(document).ready(function() {
-   setTimeout("show_progress()", 1000);
-});
-</script>';
+    </script>
 
+<?php
 }
+
 $form = $this->beginWidget('CActiveForm',array(
     'id' => 'Invite',
     //'type'=>'horizontal',

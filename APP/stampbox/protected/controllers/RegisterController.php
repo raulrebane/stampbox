@@ -50,10 +50,8 @@ class RegisterController extends Controller
                 $customer = new TCustomer();
                 $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
                 $customer->password = crypt($model->emailpassword, self::blowfishSalt());
-                $customer->registered_date = Yii::app()->dateFormatter->format('yyyy/MM/dd HH:mm:ss', time());
-                // set status A - Active if e_mail was successfully verified, else set V - verify
-                if ($e_mail_verified == TRUE) { $customer->status = 'A';} 
-                else { $customer->status = 'V';}
+                $customer->registered_date = Yii::app()->dateFormatter->format('dd/MM/yyyy HH:mm:ss', time());
+                $customer->status = 'A';
                 $customer->bad_logins = 0;
                 
                 // try to use forwarded address first, then remoteaddress. If both fail or IP not in geoip db then put country as XX

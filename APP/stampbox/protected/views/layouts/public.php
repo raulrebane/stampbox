@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row header">
                 <div class="col-md-2">
-                    <div class="logo"></div>
+                    <div class="logo" onclick="location.href='<?php echo Yii::app()->createUrl('site/index') ?>'"></div>
                 </div>
                 <div class="col-md-10 text-right">
                     <?php

@@ -134,11 +134,11 @@ if ($customermailboxes) {
     }
 }
 pg_close($dbconn);
-flock($fp, LOCK_UN);
 }
 else {
     syslog(LOG_INFO, 'Could not aquire scancontacts.lock');
 }
+flock($fp, LOCK_UN);
 fclose($fp);
 // close syslog
 closelog();

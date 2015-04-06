@@ -1,10 +1,11 @@
 <div id="p-usermailbox" class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
     <div class="widget widget-accounts"><div class="title">Change e-mail account</div>
     <div class="content">
         <?php $form=$this->beginWidget('CActiveForm',array(
                 'id'=>'usermailbox-form',
                 'enableAjaxValidation'=>false,
+                'htmlOptions' => array('class'=>"form register"),
         )); 
         echo $form->labelEx($model,'e_mail');
         echo $form->textField($model, 'e_mail', array('class'=>'form-control', 'placeholder'=>'e-mail address', 'readonly'=>true));
@@ -26,7 +27,7 @@
 			'buttonType'=>'submit',
 			'caption'=>'Save',
                         'name'=>'emailbtn',
-                        'htmlOptions'=>array('class'=>'btn btn-default')
+                        'htmlOptions'=>array('class'=>'btn btn-active')
 		)); ?>
     </div>
     </div>

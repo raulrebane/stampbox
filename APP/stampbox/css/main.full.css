@@ -9077,7 +9077,7 @@ table tr td {
 /* line 273, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .content table tr {
   background-color: #FFF;
-  cursor: pointer;
+/*  cursor: pointer; -- removed by Raul */
   transition: all 0.4s ease 0s;
 }
 /* line 277, ../sass/_dashboard.scss */

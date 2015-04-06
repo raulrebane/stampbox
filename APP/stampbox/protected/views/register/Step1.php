@@ -10,7 +10,7 @@ echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
     <h1>Create <b>your</b> first <b>Stampbox</b></h1>
     <div class="row step-a">
         <div class="col-md-6">
-        <div class="feature">
+<!--        <div class="feature">
             <p>Works with all popular e-mail providers</p>
             <img src="images/register-feature-services.png">
         </div>
@@ -18,6 +18,17 @@ echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
             <p>Works on all of your devices</p>
             <img src="images/register-feature-devices.png">
         </div>
+-->
+            Stampbox works as add-on to your existing e-mail mailbox and you need to configure for our server 
+            to access your mailbox.<br>
+            <ul>
+                <li><b>E-mail</b> - Enter your e-mail address</li>
+                <li><b>E-mail username</b> - Typically your e-mail username is the same as your e-mail, but in some cases your e-mail username
+                is different from your e-mail address. Use the same what you use when you log into your e-mail account. You can change this information 
+                later.</li>
+                <li><b>E-mail password</b> - Enter your password that you use to log into your e-mail. We take security of your password very seriously and store it in 
+                encrypted format. Your password is safe with us. You can read more about security here.</li>
+            </ul>
         </div>
         <div class="col-md-6 darker">
 
