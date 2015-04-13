@@ -8,8 +8,8 @@
 ?>
 
 <div id="p-whitelist" class="row">
-    <div class="col-md-6 m-add">
-    <h1>Add e-mail to list</h1>
+    <div class="col-md-3 m-add">
+    <h1>Add to whitelist</h1>
         <?php 
          $form = $this->beginWidget('CActiveForm',array(
             'id' => 'Whitelist',
@@ -27,7 +27,7 @@
         $this->endWidget();
         ?>
     </div>
-    <div class="col-md-6 m-add">
+    <div class="col-md m-add">
         <?php
             $form = $this->beginWidget('CActiveForm',array(
                 'id' => 'WhitelistD',
@@ -36,9 +36,9 @@
                 ));               
         ?>
         <!-- Button trigger modal -->
-        <h1>Add from contacts</h1>
+        <h1>&nbsp;</h1>
         <button type="button" class="btn btn-primary btn-aqua" data-toggle="modal" data-target="#Whitelistdialog">
-            Add
+            Add from contacts
         </button>
 
         <!-- Modal -->
@@ -84,7 +84,7 @@
                 ?>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 <button type="submit" name="whitelistsubmit" class="btn btn-aqua">Add selected</button>
               </div>
             </div>
