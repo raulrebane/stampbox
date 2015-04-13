@@ -8760,7 +8760,11 @@ ul li:last-of-type {
 /* line 489, ../sass/_home.scss */
 .widget table tr th {
   padding: 10px;
+  font-family: "Brandon Grot W01 bold";
+  font-size: 10px;
+  text-transform: uppercase;
 }
+
 /* line 491, ../sass/_home.scss */
 .widget table tr th a {
   color: #00b0b1;
@@ -9616,6 +9620,7 @@ table tr td {
 }
 .register-form .steps {
   padding: 2em;
+  padding-bottom: 1em;
 }
 .register-form .steps .step {
   display: inline-block;

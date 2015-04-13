@@ -60,6 +60,7 @@ class SiteController extends Controller
                     $this->render('index'); }
             else 
                 {   //$this->layout = 'secure';
+                    
                     $this->render('dashboard'); }
 	}
 

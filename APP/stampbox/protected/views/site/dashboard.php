@@ -111,7 +111,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),
                         array('name'=>'status', 'htmlOptions'=>array('class'=>'status'), 'type'=>'raw', 'value'=>function($data) {
-                        if ($data->status === 'A') return '<i class="icon-ok"></i>'; else return '<i class="icon-cw"></i>'; }),
+                        if ($data->status === 'A') return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-exclamation-sign"></span>'; }),
                     )
                 ));?>
             </div>

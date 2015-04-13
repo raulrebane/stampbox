@@ -7,9 +7,27 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step1';
 echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
 ?>
 <div class="register-form">
-    <h1>Create <b>your</b> first <b>Stampbox</b></h1>
+    <h1>Create <b>your</b> first <b>Stampbox</b> in <b>4</b> steps</h1>
     <div class="row step-a">
         <div class="col-md-6">
+            <div class="steps">
+            <div class="step active step-1">
+                <span>1</span>
+                <small>Register e-mail</small>
+            </div>
+            <div class="step step-2">
+                <span>2</span>
+                <small>IMAP mail server</small>
+            </div>
+            <div class="step step-3">
+                <span>3</span>
+                <small>e-mail sending server</small>
+            </div>
+            <div class="step step-4">
+                <span>4</span>
+                <small>Invite friends</small>
+            </div>
+        </div>
 <!--        <div class="feature">
             <p>Works with all popular e-mail providers</p>
             <img src="images/register-feature-services.png">
