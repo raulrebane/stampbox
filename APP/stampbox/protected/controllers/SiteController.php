@@ -60,7 +60,24 @@ class SiteController extends Controller
                     $this->render('index'); }
             else 
                 {   //$this->layout = 'secure';
-                    
+                    $brokenmailboxes = Yii::app()->db->createCommand(array(
+                    'select'=> array('*'),
+                    'from'=> 'ds.t_customer_mailbox',
+                    'where'=> "customer_id = :1 AND (e_mail_username is NULL OR e_mail_username = '' OR e_mail_password is NULL OR e_mail_password = '' OR status <> 'A')",
+                    'params'=> array(':1'=>Yii::app()->user->getId()),
+                    ))->queryAll();
+                    if ($brokenmailboxes) {
+                        foreach ($brokenmailboxes as $mailbox) {
+                            //echo CVarDumper::dumpAsString($mailbox);
+                            $errortext = 'Your e-mail ' .$mailbox['e_mail'] .' is not working with stampbox because of following problem(s): ';
+                            if ($mailbox['e_mail_username'] === NULL or $mailbox['e_mail_username'] == '') { $errortext = $errortext .' e-mail username is not set - ';}
+                            if ($mailbox['e_mail_password'] === NULL or $mailbox['e_mail_password'] == '') { $errortext = $errortext .' e-mail password is not set - ';}
+                            if ($mailbox['status'] <> 'A') { $errortext = $errortext .' e-mail is not activated - ';}
+                            $errortext = $errortext . 'To fix these errors click <a href="' .Yii::app()->createUrl('usermailbox/update') 
+                                    .'&email=' .$mailbox['e_mail'] .'">here</a>';
+                            Yii::app()->user->setFlash('danger', $errortext); 
+                        }
+                    }
                     $this->render('dashboard'); }
 	}
 
