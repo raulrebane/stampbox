@@ -32,7 +32,14 @@ class WhitelistController extends Controller
         
     public function actionIndex() 
     {
-
+        Yii::log('Whitelist - index', 'info', 'application');
+        
+        if (isset($_POST['whitelistsubmit']) && isset($_POST['selectedIds'])) {
+            foreach ($_POST['selectedIds'] as $id) {
+            }
+            $this->redirect(array('site/index'));
+        }
+        
         $model = new Whitelist();
         
         if(isset($_POST['e_mail']))

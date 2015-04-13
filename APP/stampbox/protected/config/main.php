@@ -40,9 +40,9 @@ return array(
 		*/
 		'db'=>array(
 //    			'tablePrefix'=>'ds',
-    			'connectionString' => 'pgsql:host=;dbname=stampbox',
+    			'connectionString' => 'pgsql:host=localhost;port=6432;dbname=stampbox',
     			'username' => 'sbweb',
-    			'password' => 'sbweb',
+    			'password' => '',
     			'charset' => 'UTF8',
 		),
                 'session' => array (
@@ -72,6 +72,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'support@stampbox.email',
+                'gearman'=>array('gearmanserver'=>'127.0.0.1', 'port'=>4730),
                 'PAYPAL_MODE'=>'sandbox',
 	),
 );

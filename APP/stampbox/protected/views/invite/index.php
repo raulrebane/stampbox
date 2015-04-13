@@ -1,29 +1,85 @@
 <?php
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+?>
+<style>.no-close .ui-dialog-titlebar-close { display: none;}</style>
+
+<?php
+//$model->task_id = 'test';
+//$model->loading_inprogress = TRUE;
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+}
+
+if ($model->loading_inprogress == TRUE) {
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id'=>'LoadInProgress',
+        'options'=>array(
+            'title'=>'Loading contacts... Please wait',
+            'width'=>400,
+            'height'=>100,
+            'autoOpen'=>true,
+            'resizable'=>false,
+            'modal'=>true,
+            'closeOnEscape'=>false,
+            'dialogClass'=>"no-close",
+            'overlay'=>array('backgroundColor'=>'#000','opacity'=>'0.8')
+            ),
+        ));
+    $this->widget('zii.widgets.jui.CJuiProgressBar', array(
+        'id'=>'progressbar',
+        'value'=>$model->percent_complete,
+        //'htmlOptions'=>array('style'=>'width:200px; height:20px; float:center;')
+    ));
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
+
+    <script type="text/javascript">
+        function show_progress() {   
+        var url = '<?php echo Yii::app()->createUrl('invite/GetProgress');
+                         echo "&task_id=" .$model->task_id; ?>';
+        $.getJSON(url, function(data) {
+            var done = parseInt(data.done);
+            if (done > 100) { done = 100;}
+            $("#progressbar").progressbar( "value", done);
+            if (done == 100) {
+                $("#progressbar").progressbar( "destroy");
+                $("#LoadInProgress").dialog("close");
+                $.fn.yiiGridView.update('invitation-grid');
+            } 
+            else {
+                setTimeout("show_progress()", 1000);                    
+            }
+        });
+    }
+    
+    $(document).ready(function() {
+        setTimeout("show_progress()", 1000);
+    });
+    </script>
+
+<?php
+}
+
 $form = $this->beginWidget('CActiveForm',array(
     'id' => 'Invite',
     //'type'=>'horizontal',
     'htmlOptions' => array('class'=>'form', 'role'=>'form'),
     )); 
-?>
 
-<div id="p-invite" class="row">
-    <div class="col-md-12 m-refresh">
-        <?php 
-            $model = new usermailbox;
-            $useremails = usermailbox::model()->findAll('customer_id = :1', array(':1'=>Yii::app()->user->getId()));
-            $emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
-            echo '<h1>' .$form->labelEx($model,'e_mail') .'</h1>';
-            echo $form->dropDownList($model, 'e_mail',$emailslist);
-        ?>
-        <button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
+if (isset($model->emailslist)) {
+    echo '<div id="p-invite" class="row">
+    <div class="col-md-12 m-refresh">';
+    echo '<h1>' .$form->labelEx($model->mailboxlist,'e_mail') .'</h1>';
+    echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
+    echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
         </div>
-</div>
+</div>';
+}
+?>
 
 <div class="row">
     <div class="col-md-12">
@@ -47,11 +103,12 @@ $form = $this->beginWidget('CActiveForm',array(
                     array('name'=>'last_email_date', 'header'=> 'Last e-mail')
                 );
                 $this->widget('zii.widgets.grid.CGridView',array(
+                    'id'=>'invitation-grid',
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>'content'),
-                    'dataProvider' => $dataProvider,
+                    'dataProvider' => $model->dataProvider,
                     'columns'=>$gridColumns
                 ));      
             ?>

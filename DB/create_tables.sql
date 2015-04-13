@@ -74,18 +74,18 @@ CREATE TABLE ds.t_mailbox_config
   maildomain character varying(100) NOT NULL,
   mailtype character varying(10) NOT NULL,
   incoming_hostname character varying(255),
-  incoming_port character varying(255),
-  incoming_socket_type character varying(255),
-  incoming_auth character varying(255),
+  incoming_port integer,
+  incoming_socket_type character varying(10),
+  incoming_auth character varying(10),
   outgoing_hostname character varying(255),
-  outgoing_port character varying(255),
-  outgoing_socket_type character varying(255),
-  outgoing_auth character varying(255)
+  outgoing_port integer,
+  outgoing_socket_type character varying(10),
+  outgoing_auth character varying(10),
+  CONSTRAINT pk_mailbox_config PRIMARY KEY (maildomain)
 )
 WITH (
   OIDS=FALSE
 );
-
 
 CREATE TABLE ds.t_passwdresets
 (
@@ -239,6 +239,18 @@ CREATE TABLE ds.t_shoppingcart
   paypal_timestamp timestamp without time zone,
   paypal_correlation_id character varying(30),
   CONSTRAINT pk_customer_cart PRIMARY KEY (customer_id)
+)
+WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE ds.t_processing
+(
+  customer_id bigint NOT NULL,
+  action character varying(30),
+  percent_complete smallint,
+  task_id character varying(100) NOT NULL,
+  CONSTRAINT pk_processing_tasks PRIMARY KEY (customer_id, task_id)
 )
 WITH (
   OIDS=FALSE

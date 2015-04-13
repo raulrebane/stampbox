@@ -8,7 +8,7 @@
 class InviteController extends Controller
 {
     public $layout = '//layouts/secure';
-    
+            
     public function filters()
     {
         return array(
@@ -21,7 +21,7 @@ class InviteController extends Controller
     {
             return array(
                     array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                            'actions'=>array('index'),
+                            'actions'=>array('index', 'getprogress'),
                             'users'=>array('@'),
                     ),
                     array('deny',  // deny all users
@@ -31,6 +31,7 @@ class InviteController extends Controller
     }
         
     public function actionIndex() {
+       
         if (isset($_POST['invite']) && isset($_POST['selectedIds'])) {
             foreach ($_POST['selectedIds'] as $id) {
                 $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
@@ -60,12 +61,47 @@ class InviteController extends Controller
                         'socket_type'=>$maildomain->incoming_socket_type,
                         'auth_type'=>$maildomain->incoming_auth));
                     $gmclient= new GearmanClient();
-                    $gmclient->addServer("127.0.0.1", 4730);
-                    $result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                    //$result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    // implementing backgroung load of contacts
+                    $jobhandle = $gmclient->doBackground("loadinvitations", $loadinvitations);
+                    $dbcommand = Yii::app()->db->createCommand();
+                    $dbcommand->insert('ds.t_processing', array(
+                        'customer_id' => Yii::app()->user->getId(),
+                        'action' => 'LoadInvitations',
+                        'task_id' => $jobhandle));
+                    //yii::log("saved $jobhandle", 'info', 'application');
                 }
             }
         }
-            
+
+        $model = new stdClass();
+        $model->loading_inprogress = FALSE;
+        
+        // first let's check if there is currently loading from customer mailbox in progress
+        $loadInProgress = Yii::app()->db->createCommand(array(
+                    'select' => array('task_id'),
+                    'from' => 'ds.t_processing',
+                    'where' => "customer_id=:1 and action = 'LoadInvitations'",
+                    'params' => array(':1' => Yii::app()->user->getId()),
+                ))->queryRow();
+        //yii::log('found loadinprogress ' .CVarDumper::dumpAsString($loadInProgress),'info', 'application');
+        if ($loadInProgress !== FALSE) {
+            $gmclient= new GearmanClient();
+            $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+            $invitationStatus = $gmclient->jobStatus($loadInProgress['task_id']);
+            //yii::log('gearman task status ' .CVarDumper::dumpAsString($invitationStatus),'info', 'application');
+            if ($invitationStatus[0] == FALSE) {
+                $dbcommand = Yii::app()->db->createCommand();
+                $dbcommand->delete('ds.t_processing', 'customer_id=:id', array(':id'=>Yii::app()->user->getId()));
+            }
+            else {
+                $model->loading_inprogress = TRUE;
+                $model->task_id = $loadInProgress['task_id'];
+                $model->percent_complete = $invitationStatus[2];
+            }
+        }
+        
         $sort = new CSort();
         $sort->attributes = array(
             'invited_email',
@@ -75,15 +111,35 @@ class InviteController extends Controller
         );
         $sort->defaultOrder=array('last_email_date'=>CSort::SORT_DESC);
 
-        $dataProvider=new CActiveDataProvider('Invitations', array(
+        $model->dataProvider=new CActiveDataProvider('Invitations', array(
             'criteria'=>array('condition'=>'customer_id='.Yii::app()->user->getId()),
             'sort'=>$sort, 'pagination'=>array('pageSize'=>1000,)));
-        $this->render('index',array('dataProvider'=>$dataProvider,));
+        
+        $model->mailboxlist = new usermailbox;
+        $useremails = usermailbox::model()->findAll("customer_id = :1 and status = 'A'", array(':1' => Yii::app()->user->getId()));
+        if ($useremails) {
+            $model->emailslist = CHtml::listData($useremails, 'e_mail', 'e_mail');
+        }
+        else {
+            unset($model->emailslist);
+        }
+        $this->render('index',array('model'=>$model,));
     }
     
-    public function actionRefresh() {
-        
+    public function actionGetProgress($task_id) {
+        if (Yii::app()->request->isAjaxRequest) {
+            //yii::log('got ajax request', 'info', 'application');
+            if ($task_id == 'test') {
+                echo json_encode(array('done'=>date('s')));
+            }
+            else {
+                $gmclient= new GearmanClient();
+                $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                $invitationStatus = $gmclient->jobStatus($task_id);
+                if ($invitationStatus[0] == FALSE) { $invitationStatus[2] = 100;}
+                echo json_encode(array('done'=>$invitationStatus[2])); //to return value in ajax, simply echo it   
+            }
+        }
     }
-
 }
 ?>

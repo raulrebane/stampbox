@@ -73,20 +73,23 @@ $form = $this->beginWidget('CActiveForm',array(
                 'pagination'=>array('pageSize'=>1000,),'sort'=>$sort,));  
         $gridColumns = array(
             array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
+            if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
+            elseif ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
             array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['e_mail'] == NULL) return $data['description'];
                 else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
             array('header'=>'Stamp(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-sm hidden-md'), 
-                'htmlOptions'=>array('class'=>'transaction neg hidden-xs hidden-sm hidden-md'), 
-                'value'=>function($data) { if ($data['amount'] < 0) return number_format($data['amount'], 0); else return '';}),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-sm hidden-md'), 
+                'value'=>function($data) { if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0); else return '';}),
             array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-sm hidden-md'), 
-                'htmlOptions'=>array('class'=>'transaction hidden-xs hidden-sm hidden-md'), 
-                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 3); else return '';}),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-sm hidden-md'), 
+                'value'=>function($data) {if ($data['transaction_code'][0] == 'P') return number_format($data['amount'], 3); else return '';}),
             array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-sm visible-md'),
                 'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
                 'htmlOptions'=>array('class'=>'visible-xs visible-sm visible-md'), 'value'=>function($data) {
-                if ($data['amount'] < 0) return number_format($data['amount'], 0);
+                if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0);
                 else return number_format($data['amount'], 3);}),
             array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
                 'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),

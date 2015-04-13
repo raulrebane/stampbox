@@ -18,7 +18,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-55734110-1', 'auto');
+  ga('create', 'UA-59363252-1', 'auto');
   ga('send', 'pageview');
 
 </script>
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row header">
                 <div class="col-md-2">
-                    <div class="logo"></div>
+                    <div class="logo" onclick="location.href='<?php echo Yii::app()->createUrl('site/index') ?>'"></div>
                 </div>
                 <div class="col-md-10 text-right">
                     <?php

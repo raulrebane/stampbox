@@ -11,9 +11,7 @@ class AccountController extends Controller
     
     public function filters()
     {
-        return array(
-            'accessControl', // perform access control for CRUD operations
-        );
+        return array('accessControl');
     }
     
     public function accessRules()
@@ -21,12 +19,10 @@ class AccountController extends Controller
 	return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
 		'actions'=>array('Statement','Balance'),
-				'users'=>array('@'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+                    'users'=>array('@')),
+            array('deny',  // deny all users
+                'users'=>array('*')),
+	);
     }
      
     public function actionStatement() 
@@ -62,7 +58,8 @@ class AccountController extends Controller
             }
             Yii::log('Statement for $model->from_date , $model->to_date', 'info', 'application');
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                //'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                'select'=> array('*'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1 and transaction_date between :2 and :3',
                 'order'=> 'transaction_date desc',
@@ -74,9 +71,12 @@ class AccountController extends Controller
         }
         if (isset($_POST['Account'])) {
             $model->attributes=$_POST['Account'];
+            if ($model->from_date == '') { $model->from_date = Yii::app()->dateFormatter->format('yyyy/MM/dd',date('d-m-Y')); }
+            if ($model->to_date == '') { $model->to_date = Yii::app()->dateFormatter->format('yyyy/MM/dd',date('d-m-Y')); }
             //Yii::log('Received statement attributes', 'info', 'application');
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                //'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                'select'=> array('*'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1 and transaction_date between :2 and :3',
                 'order'=> 'transaction_date desc',
@@ -85,7 +85,8 @@ class AccountController extends Controller
             ))->queryAll();           
         } else 
             $model->statement_grid = Yii::app()->db->createCommand(array(
-                'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                //'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject'),
+                'select'=> array('*'),
                 'from'=> 'ds.v_transactions',
                 'where'=> 'customer_id = :1',
                 'order'=> 'transaction_date desc',
@@ -94,11 +95,4 @@ class AccountController extends Controller
             ))->queryAll();
         $this->render('Statement',array('model'=>$model,)); 
        }
-    
-       
-       
-    public function actionDoStatement($fromdate, $todate) 
-       {
-        
-       }       
 }

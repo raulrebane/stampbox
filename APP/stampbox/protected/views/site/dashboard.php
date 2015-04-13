@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
- $stampcount = Yii::app()->db->createCommand(array(
+$stampcount = Yii::app()->db->createCommand(array(
             'select'=> array('points_bal', 'stamps_bal'),
             'from' => 'ds.t_account',
             'where'=> 'customer_id=:1',
@@ -19,14 +19,20 @@ $invitationcount = Yii::app()->db->createCommand(array(
             'params' => array(':1'=>Yii::app()->user->getId()),
         ))->queryRow();
 $lasttransactions = Yii::app()->db->createCommand(array(
-            'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject',),
+            //'select'=> array('transaction_id', 'customer_id', 'amount', 'transaction_date', 'description', 'e_mail', 'subject',),
+            'select'=> array('*'),
             'from'=> 'ds.v_transactions',
             'where'=> 'customer_id = :1',
             'order'=> 'transaction_id desc',
             'limit'=> '10',
             'params'=> array(':1'=>Yii::app()->user->getId()),
         ))->queryAll();
+
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+}
 ?>
+
 <div class="col-md-7">
     <div class="row">
     <div class="col-md-12">
@@ -48,20 +54,23 @@ $lasttransactions = Yii::app()->db->createCommand(array(
 
         $gridColumns = array(
             array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
+            if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
+            elseif ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
             array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['e_mail'] == NULL) return $data['description'];
                 else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
             array('header'=>'Stamp(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'htmlOptions'=>array('class'=>'transaction neg hidden-xs hidden-md'), 
-                'value'=>function($data) { if ($data['amount'] < 0) return number_format($data['amount'], 0); else return '';}),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'value'=>function($data) { if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0); else return '';}),
             array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'htmlOptions'=>array('class'=>'transaction hidden-xs hidden-md'), 
-                'value'=>function($data) {if ($data['amount'] > 0) return number_format($data['amount'], 3); else return '';}),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'value'=>function($data) {if ($data['transaction_code'][0] == 'P') return number_format($data['amount'], 3); else return '';}),
             array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
                 'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
                 'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
-                if ($data['amount'] < 0) return number_format($data['amount'], 0);
+                if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0);
                 else return number_format($data['amount'], 3);}),
             array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
                 'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
@@ -97,6 +106,7 @@ $lasttransactions = Yii::app()->db->createCommand(array(
                     'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>'content'),
+                    'selectableRows' => 0,
                     'dataProvider'=>$mailboxdataprovider,
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),

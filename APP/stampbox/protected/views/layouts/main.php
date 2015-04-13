@@ -18,7 +18,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-55734110-1', 'auto');
+  ga('create', 'UA-59363252-1', 'auto');
   ga('send', 'pageview');
 
 </script>
@@ -28,7 +28,7 @@
 
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <div class="logo"></div>
+                <div class="logo hidden-xs hidden-sm"></div>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),

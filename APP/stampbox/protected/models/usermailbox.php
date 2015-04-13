@@ -42,13 +42,13 @@ class usermailbox extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('e_mail, e_mail_username, e_mail_password', 'required'),
+			array('e_mail, e_mail_password', 'required'),
                         array('e_mail', 'email'),
                         //array('e_mail', 'checkregistered'),
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
 			array('e_mail_password', 'length', 'max'=>32),
                         array('status', 'length', 'max'=>1),
-			array('customer_id, worker_ip', 'safe'),
+			array('e_mail_username, customer_id, worker_ip', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('customer_id, e_mail, e_mail_username, e_mail_password, status, maildomain, worker_ip, worker_type, last_seen', 'safe', 'on'=>'search'),

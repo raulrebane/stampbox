@@ -23,8 +23,6 @@ class Register extends CFormModel
         public $outgoing_port;
         public $outgoing_socket_type;
         public $outgoing_auth;
-        public $e_mail_username;
-        public $e_mail_password;
         public $registereddomain;
         public $registeredemail;
         public $top_senders;
@@ -40,12 +38,17 @@ class Register extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, emailusername, emailpassword, agreewithterms', 'required'),
-                        array('useremail', 'checkregistered'),
-			array('useremail', 'length', 'max'=>128),
-			array('emailpassword', 'length', 'max'=>16),
-                        array('useremail', 'email'),
-                        array('maildomain, mailtype, incoming_hostname, incoming_port,e_mail_username,e_mail_password', 'safe'),
+			array('useremail, emailpassword, agreewithterms', 'required', 'on'=>'Step1'),
+                        array('useremail', 'checkregistered', 'on'=>'Step1'),
+			array('useremail, emailusername', 'length', 'max'=>128, 'on'=>'Step1'),
+			array('emailpassword', 'length', 'max'=>255, 'on'=>'Step1'),
+                        array('useremail', 'email', 'on'=>'Step1'),
+                        array('agreewithterms', 'compare', 'compareValue'=>'1', 'message'=>'You have to agree with Terms and Conditions'),
+                        array('incoming_hostname, outgoing_hostname, incoming_port, outgoing_port, incoming_socket_type, outgoing_socket_type', 'required', 'on'=>'Step2'),
+                        array('incoming_hostname, outgoing_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
+                        array('incoming_port, outgoing_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
+                        array('incoming_socket_type, outgoing_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
+                        array('emailusername, maildomain, incoming_auth, outgoing_auth', 'safe'),
 		);
 	}
       
@@ -69,8 +72,8 @@ class Register extends CFormModel
 	{
 		return array(
 			'useremail'=>'E-mail address: ',
-                        'emailpassword'=>'E-mail password: ',
-                        'emailusername'=>'User name: ',
+                        'emailpassword'=>'E-mail password',
+                        'emailusername'=>'E-Mail username',
                         'maildomain'=>'E-mail provider',
                         'incoming_hostname'=>'Incoming mail server',
                         'incoming_port'=>'Port',
@@ -78,8 +81,6 @@ class Register extends CFormModel
                         'outgoing_hostname'=>'Outgoing mail server',
                         'outgoing_port'=>'Port',
                         'outgoing_socket_type'=>'Connection security',
-                        'e_mail_username'=>'E-Mail username',
-                        'e_mail_password'=>'E-Mail password',
                         'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement'
 		);
 	}

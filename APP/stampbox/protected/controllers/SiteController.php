@@ -113,14 +113,22 @@ class SiteController extends Controller
                                 'e_mail'=>$usernames['e_mail'], 'token'=>$model->resettoken,
                                 'sent'=>'now()'), 'customer_id=:id', array(':id'=>$usernames['customer_id']));
                         }
-			//$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-			$subject='=?UTF-8?B?'.base64_encode('StampBox.eu password reset requested').'?=';
-			$headers="From: Stampbox admin <support@stampbox.email>\r\n".
-				"Reply-To: support@stampbox.email\r\n".
-				"MIME-Version: 1.0\r\n".
-				"Content-type: text/plain; charset=UTF-8";
-                        $body = "your password reset link " .Yii::app()->createAbsoluteUrl('site/checktoken') ."&resettoken=" .$model->resettoken;
-			mail($model->emailaddress,$subject,$body,$headers);
+                        $sendmailparams = json_encode(array(
+                                    'outgoing_hostname'=>'smtp.googlemail.com',
+                                    'outgoing_port'=>'465',
+				    'outgoing_socket_type'=>'ssl',
+                                    'e_mail_username'=>'support@stampbox.email',
+                                    'e_mail_password'=>'Tere1Tere2',
+                                    'subject'=>'www.stampbox.email password reset requested',
+                                    'from'=>'support@stampbox.email',
+                                    'fromname'=>'Stampbox support',
+                                    'to'=>$model->emailaddress,
+                                    'toname'=>'',
+                                    'body'=> "your password reset link " .Yii::app()->createAbsoluteUrl('site/checktoken') ."&resettoken=" .$model->resettoken,
+                                ));
+                        $gmclient= new GearmanClient();
+                        $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                        $result = json_decode($gmclient->do("sendpasswdlink", $sendmailparams),TRUE);
                         $model->notified = TRUE;
                     }
                 }	
