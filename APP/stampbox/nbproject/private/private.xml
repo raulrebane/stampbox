@@ -5,6 +5,9 @@
         <group>
             <file>file:/home/raulr/stampbox/APP/stampbox/protected/controllers/WhitelistController.php</file>
             <file>file:/home/raulr/stampbox/APP/stampbox/protected/views/whitelist/index.php</file>
+            <file>file:/home/raulr/stampbox/APP/stampbox/protected/controllers/JoinStampboxController.php</file>
+            <file>file:/home/raulr/stampbox/APP/stampbox/protected/views/joinstampbox/Step1.php</file>
+            <file>file:/home/raulr/stampbox/APP/stampbox/protected/models/Joinstampbox.php</file>
         </group>
     </open-files>
 </project-private>

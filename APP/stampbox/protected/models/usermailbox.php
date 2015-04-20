@@ -10,6 +10,9 @@
  * @property string $e_mail_password
  * @property string $status
  * @property string $maildomain
+ * @property boolean $sending_service 
+ * @property boolean $receiving_service 
+ * @property boolean $sorting_service
  * @property string $worker_ip
  * @property string $worker_type
  * @property string $last_seen
@@ -42,16 +45,16 @@ class usermailbox extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('e_mail, e_mail_password', 'required'),
+			array('e_mail', 'required'),
                         array('e_mail', 'email'),
                         //array('e_mail', 'checkregistered'),
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
 			array('e_mail_password', 'length', 'max'=>32),
                         array('status', 'length', 'max'=>1),
-			array('e_mail_username, customer_id, worker_ip', 'safe'),
+			array('e_mail_username, customer_id, maildomain, sending_service, receiving_service, sorting_service', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('customer_id, e_mail, e_mail_username, e_mail_password, status, maildomain, worker_ip, worker_type, last_seen', 'safe', 'on'=>'search'),
+			array('customer_id, e_mail, e_mail_username, e_mail_password, status, maildomain', 'safe', 'on'=>'search'),
 		);
 	}
         
@@ -91,10 +94,9 @@ class usermailbox extends CActiveRecord
 			'e_mail_username' => 'E Mail Username',
 			'e_mail_password' => 'E Mail Password',
 			'status' => 'Status',
-			'maildomain' => 'Maildomain',
-			'worker_ip' => 'Worker Ip',
-			'worker_type' => 'Worker Type',
-			'last_seen' => 'Last Seen',
+                        'sending_service'=>'Sending stamps',
+                        'receiving_service'=>'Receiving stamps',
+                        'sorting_service'=>'E-mail sorting'
 		);
 	}
 
@@ -112,9 +114,6 @@ class usermailbox extends CActiveRecord
 		$criteria->compare('customer_id',Yii::app()->user->getId(),true);
 		$criteria->compare('e_mail',$this->e_mail,true);
 		$criteria->compare('status',$this->status,true);
-		$criteria->compare('worker_type',$this->worker_type,true);
-		$criteria->compare('last_seen',$this->last_seen,true);
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

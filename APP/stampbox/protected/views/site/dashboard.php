@@ -55,7 +55,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         $gridColumns = array(
             array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
             if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
-            elseif ($data['amount']<0) return '<i class="icon-reply"></i>'; else return '<i class="icon-forward"></i>';}),
+            elseif ($data['amount']<0) return '<i class="sbicon-reply"></i>'; else return '<i class="sbicon-forward"></i>';}),
             array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
                 if ($data['e_mail'] == NULL) return $data['description'];
                 else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
@@ -103,20 +103,33 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                 )); 
                 
                 $this->widget('zii.widgets.grid.CGridView', array(
-                    'hideHeader'=>TRUE,
+                    //'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>'content'),
                     'selectableRows' => 0,
+                    'enableSorting' => false,
                     'dataProvider'=>$mailboxdataprovider,
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),
-                        array('name'=>'status', 'htmlOptions'=>array('class'=>'status'), 'type'=>'raw', 'value'=>function($data) {
-                        if ($data->status === 'A') return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-exclamation-sign"></span>'; }),
+                        array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
+                        array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->receiving_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
+                        array('name'=>'sorting_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->sorting_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),                                
+                        array('class'=>'CButtonColumn','template'=>'{configure}', 
+                                'htmlOptions'=>array('class'=>'status'),
+                                'buttons'=>array('configure' => array(
+                                    'label'=>'',
+                                    'options'=>array('class'=>'glyphicon glyphicon-wrench'),
+                                    //'imageUrl'=>Yii::app()->request->baseUrl.'/images/btn-delete.png',
+                                    'url'=>'Yii::app()->createUrl("whitelist/delete", array("email"=>$data->e_mail))')
+                        )),                                    
                     )
                 ));?>
             </div>
             <div class="footer">
-                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="icon-plus-circled"></i>Add account</a>
+                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add account</a>
             </div>
         </div></div>
         <div class="col-md-12">

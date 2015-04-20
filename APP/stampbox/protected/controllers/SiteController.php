@@ -69,12 +69,12 @@ class SiteController extends Controller
                     if ($brokenmailboxes) {
                         foreach ($brokenmailboxes as $mailbox) {
                             //echo CVarDumper::dumpAsString($mailbox);
-                            $errortext = 'Your e-mail ' .$mailbox['e_mail'] .' is not working with stampbox because of following problem(s): ';
-                            if ($mailbox['e_mail_username'] === NULL or $mailbox['e_mail_username'] == '') { $errortext = $errortext .' e-mail username is not set - ';}
-                            if ($mailbox['e_mail_password'] === NULL or $mailbox['e_mail_password'] == '') { $errortext = $errortext .' e-mail password is not set - ';}
-                            if ($mailbox['status'] <> 'A') { $errortext = $errortext .' e-mail is not activated - ';}
-                            $errortext = $errortext . 'To fix these errors click <a href="' .Yii::app()->createUrl('usermailbox/update') 
-                                    .'&email=' .$mailbox['e_mail'] .'">here</a>';
+                            $errortext = 'Your e-mail ' .$mailbox['e_mail'] .' is not working with stampbox because of following problem(s): <ul>';
+                            if ($mailbox['e_mail_username'] === NULL or $mailbox['e_mail_username'] == '') { $errortext = $errortext .'<li>e-mail username is not set</li>';}
+                            if ($mailbox['e_mail_password'] === NULL or $mailbox['e_mail_password'] == '') { $errortext = $errortext .'<li>e-mail password is not set</li>';}
+                            if ($mailbox['status'] <> 'A') { $errortext = $errortext .'<li>e-mail is not activated</li>';}
+                            $errortext = $errortext . '</ul><br><a class="btn btn-aqua" href="' .Yii::app()->createUrl('usermailbox/update') 
+                                    .'&email=' .$mailbox['e_mail'] .'">Fix these errors</a>';
                             Yii::app()->user->setFlash('danger', $errortext); 
                         }
                     }
