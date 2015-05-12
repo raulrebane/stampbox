@@ -3,7 +3,7 @@
 /* @var $model Register */
 /* @var $form CActiveForm */
 
-$this->pageTitle=Yii::app()->name . ' - Register -> Step1';
+$this->pageTitle=Yii::app()->name . ' - Register';
 echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
 ?>
 <div class="register-form">
@@ -31,7 +31,7 @@ echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
         echo $form->error($model, 'useremail',array('validateOnChange'=>true));
         
         echo $form->labelEx($model, 'userpassword');
-        echo $form->textField($model, 'userpassword', array('class'=>'form-control', 'placeholder'=>'Select password'));
+        echo $form->passwordField($model, 'userpassword', array('class'=>'form-control', 'placeholder'=>'Select password'));
         //echo $form->error($model, 'emailusername', '', FALSE);
 
         echo $form->labelEx($model, 'userpassrepeat');
@@ -39,7 +39,7 @@ echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
         //echo $form->error($model, 'emailpassword', '', FALSE);
         
         echo $form->labelEx($model, 'agreewithterms');
-        echo $form->checkBox($model, 'agreewithterms', array('class'=>'push-left inline'));
+        echo $form->checkBox($model, 'agreewithterms', array('class'=>'push-left inline', 'tag'=>'Here'));
         //echo $form->labelEx($model, 'agreewithterms');
         //echo $form->error($model, 'agreewithterms', '', FALSE);
 ?>

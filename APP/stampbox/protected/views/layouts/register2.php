@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
         <link rel="stylesheet" href="css/main20150413.css">
-        <script src="scripts/vendor/d7100892.modernizr.js"></script>
+        <script src="scripts/bootstrap.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -38,10 +38,7 @@
 
 
         <div class="register-form">
-            <h1>Enter E-mail connection details</h1>
-                <div class="row step-a">
                     <?php echo $content ?>
-                </div>
         </div>
  <!--       
     <script src="scripts/44101f0b.main.js"></script>

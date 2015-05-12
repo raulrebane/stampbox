@@ -7,6 +7,77 @@
  */
 class RegisterController extends Controller
 {
+    public function actionIndex() {
+        $this->layout = 'register';
+        $model = new Register;
+        $model->scenario = 'register';
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+            $model->attributes=$_POST['Register'];
+            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+            echo CActiveForm::validate($model); 
+            Yii::app()->end(); 
+        }
+        if(isset($_POST['Register'])) {  
+            $model->attributes=$_POST['Register'];     
+            if ($model->validate()) {
+                $customer = new TCustomer();
+                $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
+                $customer->password = crypt($model->userpassword, self::blowfishSalt());
+                $customer->registered_date = Yii::app()->dateFormatter->format('dd/MM/yyyy HH:mm:ss', time());
+                $customer->status = 'A';
+                $customer->bad_logins = 0;
+                
+                // try to use forwarded address first, then remoteaddress. If both fail or IP not in geoip db then put country as XX
+                $headers = apache_request_headers();
+                if ( array_key_exists( 'X-Forwarded-For', $headers ) && filter_var( $headers['X-Forwarded-For'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+                    $customer->country = geoip_country_code_by_name($headers['X-Forwarded-For']); 
+                    if (!$customer->country) {
+                        $customer->country = 'XX';
+                    }
+                }
+                else {
+                    $customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
+                    if (!$customer->country) {
+                        $customer->country = 'XX';
+                    }
+                }
+                //Yii::log('In step1 - about to save customer ' .CVarDumper::dumpAsString($customer), 'info', 'application');
+                if ($customer->save()) {
+                    //log in user right away
+                    $identity=new UserIdentity($model->useremail,$model->userpassword);
+                    $identity->authenticate();
+                    Yii::app()->user->login($identity, 3600*24*30);
+                    $dbcommand =  Yii::app()->db->createCommand();
+                    $dbcommand->insert('ds.t_account', array(
+                        'customer_id'=>Yii::app()->user->getId(),
+                        'points_bal'=>0,
+                        'stamps_bal'=>0));
+                    //self::GenerateStamps(Yii::App()->user->getId(), 100);
+                    $gmclient= new GearmanClient();
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                    $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
+                                                'stampid'=>1, 'description'=>'Free stamps for joining'));
+                    $gmclient->doBackground("issuestamps", $stampparams);
+                    $model->registeredemail = new usermailbox();
+                    list(, $model->maildomain) = explode("@", $model->useremail); 
+                    $model->registeredemail->maildomain = mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8");
+                    $model->registeredemail->customer_id = Yii::app()->user->getId();
+                    $model->registeredemail->e_mail = $customer->username;
+                    $model->registeredemail->sending_service = TRUE;
+                    $model->registeredemail->receiving_service = FALSE;
+                    $model->registeredemail->sorting_service = FALSE;
+                    $model->registeredemail->status = 'A';
+                    if (!$model->registeredemail->save()) {
+                        Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($model->registeredemail)
+                                .$model->registeredemail->getErrors(), 'info', 'application');
+                        
+                    }
+                    $this->redirect(array('site/intro'));
+                }
+            }
+        }
+        $this->render('index', array('model'=>$model,)); 
+    }
     
     public function actionStep1() {
         $this->layout = 'register';

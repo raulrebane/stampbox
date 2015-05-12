@@ -19,7 +19,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('invite','update','changepsw', 'logout', 'index'),
+				'actions'=>array('invite','update','changepsw', 'logout', 'index', 'intro'),
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -47,7 +47,14 @@ class SiteController extends Controller
             else
             return false;
         }
-	/**
+
+        public function actionIntro()
+	{
+            $this->layout = 'register2';
+            $this->render('intro'); 
+        }
+
+        /**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
@@ -63,19 +70,16 @@ class SiteController extends Controller
                     $brokenmailboxes = Yii::app()->db->createCommand(array(
                     'select'=> array('*'),
                     'from'=> 'ds.t_customer_mailbox',
-                    'where'=> "customer_id = :1 AND (e_mail_username is NULL OR e_mail_username = '' OR e_mail_password is NULL OR e_mail_password = '' OR status <> 'A')",
+                    'where'=> "customer_id = :1 AND receiving_service = FALSE",
                     'params'=> array(':1'=>Yii::app()->user->getId()),
                     ))->queryAll();
                     if ($brokenmailboxes) {
                         foreach ($brokenmailboxes as $mailbox) {
                             //echo CVarDumper::dumpAsString($mailbox);
-                            $errortext = 'Your e-mail ' .$mailbox['e_mail'] .' is not working with stampbox because of following problem(s): <ul>';
-                            if ($mailbox['e_mail_username'] === NULL or $mailbox['e_mail_username'] == '') { $errortext = $errortext .'<li>e-mail username is not set</li>';}
-                            if ($mailbox['e_mail_password'] === NULL or $mailbox['e_mail_password'] == '') { $errortext = $errortext .'<li>e-mail password is not set</li>';}
-                            if ($mailbox['status'] <> 'A') { $errortext = $errortext .'<li>e-mail is not activated</li>';}
-                            $errortext = $errortext . '</ul><br><a class="btn btn-aqua" href="' .Yii::app()->createUrl('usermailbox/update') 
-                                    .'&email=' .$mailbox['e_mail'] .'">Fix these errors</a>';
-                            Yii::app()->user->setFlash('danger', $errortext); 
+                            $errortext = 'Your are not receiving credits for Stamped e-mails for you e-mail' .$mailbox['e_mail'];
+                            $errortext = $errortext . '<br><a class="btn btn-aqua" href="' .Yii::app()->createUrl('usermailbox/update') 
+                                    .'&email=' .$mailbox['e_mail'] .'">Setup your e-mail</a>';
+                            Yii::app()->user->setFlash('info', $errortext); 
                         }
                     }
                     $this->render('dashboard'); }
