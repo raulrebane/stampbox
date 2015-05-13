@@ -23,7 +23,7 @@ class RegisterController extends Controller
                 $customer = new TCustomer();
                 $customer->username = mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8");
                 $customer->password = crypt($model->userpassword, self::blowfishSalt());
-                $customer->registered_date = Yii::app()->dateFormatter->format('dd/MM/yyyy HH:mm:ss', time());
+                $customer->registered_date = date('Y-m-d G:i:s');
                 $customer->status = 'A';
                 $customer->bad_logins = 0;
                 
