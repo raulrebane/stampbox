@@ -9667,8 +9667,10 @@ table tr td {
 }
 /* line 18, ../sass/_register.scss */
 .register-form h2 {
-  font-size: 18px;
+  color: #FFF;
+  font-size: 30px;
   font-family: "Brandon Grot W01 Medium";
+  text-align: center;
   padding: 0px;
   margin: 0px;
   margin-bottom: 15px;
