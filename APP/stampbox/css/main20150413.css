@@ -3499,7 +3499,7 @@ output {
 /* line 115, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_forms.scss */
 .form-control {
   display: block;
-  width: 100%;
+  /*width: 100%;*/
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -9701,7 +9701,7 @@ table tr td {
 /* line 48, ../sass/_register.scss */
 .register-form .row {
   max-width: 800px;
-  margin: 0px auto;
+  margin: 1px auto;
 }
 /* line 53, ../sass/_register.scss */
 .register-form .col-md-6, .register-form .col-md-12 {
@@ -9831,7 +9831,38 @@ table tr td {
 .register-form .step-a form.register button:hover {
   background-position: 0px 0px;
 }
+.register-form .form-control {
+  display: block;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  /*background-color: #fff;*/
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
 
+.register-form .help {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: block;
+  background-size: contain;
+}
+
+.register-form .header-row {
+    border-bottom-style:solid;
+    border-width: 1px;
+    padding: 1px;
+    margin: 5px;
+}
 /* line 1, ../sass/_setup.scss */
 .setup {
   position: absolute;

@@ -23,6 +23,8 @@ class Signup extends CFormModel
         public $incoming_port;
         public $incoming_socket_type;
         public $incoming_auth;
+        
+        
         public $registereddomain;
         public $registeredemail;
 
@@ -40,7 +42,7 @@ class Signup extends CFormModel
 			array('useremail', 'length', 'max'=>128, 'on'=>'Step1'),
 			array('userpassword', 'length', 'max'=>255, 'on'=>'Step1'),
                         array('useremail', 'email', 'on'=>'Step1'),
-                        array('agreewithterms', 'compare', 'compareValue'=>'1', 'message'=>'You have to agree with Terms and Conditions'),
+                        array('agreewithterms', 'compare', 'compareValue'=>'1', 'message'=>'You have to agree with Terms and Conditions', 'on'=>'Step1'),
                     
                         array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step3'),
                         array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step3'),
@@ -127,7 +129,42 @@ class Signup extends CFormModel
                     $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
                     break;
                 case 'Step3':
-                    
+                    $this->registeredemail->customer_id = Yii::app()->user->getId();
+                    $this->registeredemail->e_mail = $this->useremail;
+                    $this->registeredemail->e_mail_username = $this->emailusername;
+                    $this->registeredemail->e_mail_password = $this->emailpassword;
+                    $this->registeredemail->sending_service = TRUE;
+                    $this->registeredemail->receiving_service = FALSE;
+                    $this->registeredemail->sorting_service = FALSE;
+                    $this->registeredemail->status = 'V';
+                    if (!$this->registeredemail->save()) {
+                        Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
+                                .$this->registeredemail->getErrors(), 'info', 'application');
+                        
+                    }
+                    if ($this->registereddomain == NULL) {
+                        $this->registereddomain = new mailconfig();
+                        $this->registereddomain->maildomain = $this->maildomain;
+                        $this->registereddomain->mailtype = 'IMAP';
+                        $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
+                        $this->registereddomain->incoming_port = $this->incoming_port;
+                        $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
+                        if ($this->registeredemail->e_mail == $this->registeredemail->e_mail_username) {
+                            $this->registereddomain->incoming_auth = 'EMAIL';
+                        }
+                        else {
+                            $this->registereddomain->incoming_auth = 'USERNAME';
+                        }
+                        $this->registereddomain->outgoing_hostname = NULL;
+                        $this->registereddomain->outgoing_port = NULL;
+                        $this->registereddomain->outgoing_socket_type = NULL;
+                        if (!$this->registereddomain->save()) {
+                            Yii::log('In Step2, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
+                                        .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
+                        }
+                    }
+                    break;
+                case 'Step4':
                     break;
             }
         }

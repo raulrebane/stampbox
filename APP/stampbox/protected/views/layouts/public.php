@@ -46,7 +46,7 @@
                             array('label'=>'Terms & conditions', 'url'=>array('/site/terms')),
                             array('label'=>'Help', 'url'=>array('/site/help')),
                             array('label'=>'Log in', 'url'=>array('/site/login'), 'linkOptions' => array('class'=>'btn btn-aqua login')),
-                            array('label'=>'Sign up for free', 'url'=>array('/register'), 'linkOptions' => array('class'=>'btn btn-aqua signup')),
+                            array('label'=>'Sign up for free', 'url'=>array('/signup/step1'), 'linkOptions' => array('class'=>'btn btn-aqua signup')),
                         ),
                         'htmlOptions' => array('class'=>'menu')
                     ));

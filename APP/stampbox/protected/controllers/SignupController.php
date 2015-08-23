@@ -70,7 +70,26 @@ class SignupController extends Controller
                 $model->Save('Step3');
                 $this->redirect(array('signup/step4')); 
             }
+            else {
+                Yii::log("Step3 validation error: " .CVarDumper::dumpAsString($model->getErrors()), 'info', 'application');
+            }
         }
+        $this->render('Step3',array('model'=>$model));
+    }
+
+    public function actionStep4() {
+        $this->layout = 'register';        
+        $model = new Signup();
+        $model->scenario = 'Step4';
+        //$model->useremail = Yii::app()->user->name;
+        //list(, $model->maildomain) = explode("@", $model->useremail);
+        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
+                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
+        if ($model->registeredemail == NULL) {
+            Yii::log('In Step4, e-mail record not found: ' .Yii::app()->user->username, 'info', 'application');
+            $this->redirect(array('site/index'));
+        }
+        
         $this->render('Step3',array('model'=>$model));
     }
     /*
