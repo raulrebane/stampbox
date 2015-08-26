@@ -89,8 +89,15 @@ class SignupController extends Controller
             Yii::log('In Step4, e-mail record not found: ' .Yii::app()->user->username, 'info', 'application');
             $this->redirect(array('site/index'));
         }
-        
-        $this->render('Step3',array('model'=>$model));
+        if(isset($_POST['Signup'])) {  
+            $model->attributes=$_POST['Signup'];     
+            if ($model->validate()) {
+                Yii::log("Step4 services save: " .Yii::app()->user->name, 'info', 'application');
+                $model->Save('Step4');
+                $this->redirect(array('site/index')); 
+            }
+        }
+        $this->render('Step4',array('model'=>$model));
     }
     /*
     public function ActionInvite($id,$name,$email,$rcount) {

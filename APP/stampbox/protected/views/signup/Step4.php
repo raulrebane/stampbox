@@ -10,57 +10,48 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step4';
     <div class="row step-a">
         <div class="col-md-12">
             <?php
-            $form = $this->beginWidget('CActiveForm', array('id' => 'Step3', 'htmlOptions' => array('class' => "register", 'role' => "form")));
-            if ($model->registereddomain == NULL || $model->registereddomain->incoming_auth == 'OTHER') {
-                echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
-                echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
-                echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
-            } else {
-                
-            }
+            $form = $this->beginWidget('CActiveForm', array('id' => 'Step4', 'htmlOptions' => array('class' => "register", 'role' => "form")));
             ?>
             <div class="row">
-                <?php echo $form->labelEx($model, 'emailpassword', array('class' => 'col-xs-4')); ?>
-                <?php echo $form->passwordField($model, 'emailpassword', array('class' => 'form-control col-xs-8', 'placeholder' => 'password for e-mail')); ?>
+                <?php 
+                echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'sendingservice');
+                ?>
             </div>
             <div class="row">
-                <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => 'col-xs-4'));?>
+                <div class="col-xs-offset-3">This service enables sending stamped e-mails to other users.<br></div>
+            </div>
+                 
+            <div class="row">
+                <?php 
+                echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'receivingservice');
+                ?>
             </div>
             <div class="row">
-                
+                <div class="col-xs-offset-3">This service enables receiving credits for e-mails that are stamped and 
+                    sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
             </div>
-
+                 
             <div class="row">
-                <?php echo $form->labelEx($model, 'incoming_port', array('class' => 'col-xs-4'));
-                if ($model->registereddomain->status <> 'A') {
-                    echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'placeholder' => 'Port'));
-                } else {
-                    echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'disabled' => true));
-                }?>
-            </div>
-            <div class="row">
-                <?php echo $form->error($model, 'incoming_port', array('class' => 'col-xs-offset-4')); ?>
-            </div>
-
-            <div class="row">
-                <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => 'col-xs-4'));
-                if ($model->registereddomain->status <> 'A') {
-                    echo '<div class="select-style">';
-                    echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-6'));
-                    echo '</div>';
-                } else {
-                    echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control col-xs-4', 'disabled' => true));
-                }?>
+                <?php 
+                echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'sortingservice');
+                ?>
             </div>
             <div class="row">
-                <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-4'));?>
+                <div class="col-xs-offset-3">This service sorts automatically incoming e-mail between inbox and no-stamp-emails 
+                    folder based on whether e-mail is stamped or not.<br></div>
             </div>
+                 
             <button type="submit" class="btn btn-default"></button>
             <div class="help">Help</div>
         </div>
     </div>
 </div>
 <?php
+$this->widget('ext.ibutton.IButton', array('selector'  => ':checkbox',
+    'options' =>array('labelOn'=>'Yes','labelOff'=>'No')));
 $this->endWidget();
 unset($form);
 ?>

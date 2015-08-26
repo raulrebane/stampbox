@@ -24,6 +24,9 @@ class Signup extends CFormModel
         public $incoming_socket_type;
         public $incoming_auth;
         
+        public $sendingservice;
+        public $receivingservice;
+        public $sortingservice;
         
         public $registereddomain;
         public $registeredemail;
@@ -49,6 +52,8 @@ class Signup extends CFormModel
                         array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step3'),
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step3'),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
+                    
+                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step4'),
 		);
 	}
       
@@ -79,7 +84,10 @@ class Signup extends CFormModel
                         'incoming_hostname'=>'Mail server name',
                         'incoming_port'=>'Port',
                         'incoming_socket_type'=>'Connection security',
-                        'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement'
+                        'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement',
+                        'sendingservice'=>'Sending service: ',
+                        'receivingservice'=>'Collection service: ',
+                        'sortingservice'=>'Protection service: '
 		);
 	}
 
@@ -138,7 +146,7 @@ class Signup extends CFormModel
                     $this->registeredemail->sorting_service = FALSE;
                     $this->registeredemail->status = 'V';
                     if (!$this->registeredemail->save()) {
-                        Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
+                        Yii::log('In step3 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .$this->registeredemail->getErrors(), 'info', 'application');
                         
                     }
@@ -159,12 +167,19 @@ class Signup extends CFormModel
                         $this->registereddomain->outgoing_port = NULL;
                         $this->registereddomain->outgoing_socket_type = NULL;
                         if (!$this->registereddomain->save()) {
-                            Yii::log('In Step2, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
+                            Yii::log('In Step3, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
                                         .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
                         }
                     }
                     break;
                 case 'Step4':
+                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
+                    if (!$this->registeredemail->save()) {
+                        Yii::log('In Step4, service status save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
+                                        .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
+                    }
                     break;
             }
         }
