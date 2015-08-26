@@ -37,7 +37,7 @@
   top: 0;
   left: 0;
   width: 0;
-  background: transparent url(../images/ibutton-slider-default.png) no-repeat scroll 0 -54px;
+  background: transparent url(../images/ibutton-slider-giva-original.png) no-repeat scroll 0 -54px;
   z-index: 3;
   padding-left: 3px;
 	/* set default width based on ON/OFF labels */
@@ -48,14 +48,14 @@
   height: 100%;
   width: 100%;
   padding-right: 3px;
-  background: transparent url(../images/ibutton-slider-default.png) no-repeat scroll 100% -54px;
+  background: transparent url(../images/ibutton-slider-giva-original.png) no-repeat scroll 100% -54px;
   z-index: 3; 
 }
 
 .ibutton-handle-middle {
   height: 100%;
   width: 100%;
-  background: transparent url(../images/ibutton-slider-default.png) no-repeat scroll 50% -54px;
+  background: transparent url(../images/ibutton-slider-giva-original.png) no-repeat scroll 50% -54px;
   z-index: 3; 
 }
 
@@ -74,7 +74,7 @@ div.ibutton-label-on, div.ibutton-label-off {
   top: 0;
   padding-top: 5px;
   overflow: hidden; 
-  background: transparent url(../images/ibutton-slider-default.png) no-repeat scroll 0 0;
+  background: transparent url(../images/ibutton-slider-giva-original.png) no-repeat scroll 0 0;
 }
 
 div.ibutton-label-on {
@@ -86,7 +86,7 @@ div.ibutton-label-on {
 }
 
 div.ibutton-label-on span {
-  padding-left: 5px;
+  padding-left: 8px;
 }
 
 div.ibutton-label-off {
@@ -94,7 +94,7 @@ div.ibutton-label-off {
   background-position: 100% 0;
   text-shadow: 0 -1px 2px rgba(153, 153, 153, 0.4);
   text-align: right;
-  right: 0;
+  right: 0; 
 	/* the off label needs to near the left edge (ideally just 5px away) 
 	 * it just needs to be close enough that it won't show under the handle if dragged to the left  
 	 */
@@ -102,33 +102,26 @@ div.ibutton-label-off {
 }
 
 div.ibutton-label-off span {
-  padding-right: 5px; 
+  padding-right: 8px; 
 }
 
 /* create an outline when button gets focus via keyboard */
 .ibutton-container label {
 	cursor: inherit;
-	padding: 1px 3px;
-	font-size: 1em !important;
+	border: 1px dotted transparent;
 }
 
 .ibutton-focus label {
 	/* we must use border, since outline doesn't work in IE */
 	border: 1px dotted #666 !important;
-	padding: 0 2px;
-}
-
-.ibutton-focus div.ibutton-label-on span label {
-	/* use white for more contrast */
-	border-color: #fff !important;
 }
 
 /* add padding to right/left so that text gets clipped before absolute edge */
 .ibutton-padding-left, .ibutton-padding-right {
 	position: absolute; 
-	top: 4px;
+	top: 4px; 
 	z-index: 2; 
-	background: transparent url(../images/ibutton-slider-default.png) no-repeat scroll 0 -4px; 
+	background: transparent url(../images/ibutton-slider-giva-original.png) no-repeat scroll 0 -4px; 
 	width: 3px;
 	height: 20px;
 }
