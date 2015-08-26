@@ -18,7 +18,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
             ?> 
             <div class="header-row">E-mail login settings</div>
             <?php
-            if ($model->registereddomain == NULL || $model->registereddomain->incoming_auth == 'OTHER') {
+            if ($model->registereddomain == NULL OR $model->registereddomain->incoming_auth == 'OTHER') {
                 echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
                 echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
                 echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
@@ -37,7 +37,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
             <div class="header-row">E-mail server settings</div>
             <div class="row">
                 <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => 'col-xs-4'));
-                if ($model->registereddomain->status <> 'A') {
+                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
                     echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail server name'));
                 } else {
                     echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'disabled' => true));
@@ -49,7 +49,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
 
             <div class="row">
                 <?php echo $form->labelEx($model, 'incoming_port', array('class' => 'col-xs-4'));
-                if ($model->registereddomain->status <> 'A') {
+                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
                     echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'placeholder' => 'Port'));
                 } else {
                     echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'disabled' => true));
@@ -61,7 +61,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
 
             <div class="row">
                 <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => 'col-xs-4'));
-                if ($model->registereddomain->status <> 'A') {
+                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
                     echo '<div class="select-style">';
                     echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-6'));
                     echo '</div>';

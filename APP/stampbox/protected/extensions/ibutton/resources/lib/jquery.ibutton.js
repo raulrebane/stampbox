@@ -78,7 +78,7 @@
 	// count instances
 	var counter = 0;
 	// detect iPhone
-	$.browser.iphone = (navigator.userAgent.toLowerCase().indexOf("iphone") > -1);
+	//$.browser.iphone = (navigator.userAgent.toLowerCase().indexOf("iphone") > -1);
 
 	var iButton = function (input, options){
 		var self = this
@@ -110,7 +110,7 @@
 		// toggles the state of a button (or can turn on/off)
 		this.toggle = function (t){
 			var toggle = (arguments.length > 0) ? t : !$input[0].checked;
-			$input.attr("checked", toggle).trigger("change");
+			$input.prop("checked", toggle).trigger("change");
 		};
 
 		// disable/enable the control
@@ -269,7 +269,7 @@
 			// if not dragging or click time under a certain millisecond, then just toggle
 			if( !mouse.dragging || (((new Date()).getTime() - dragStart.time) < options.clickOffset ) ){
 				var checked = $input[0].checked;
-				$input.attr("checked", !checked);
+				$input.prop("checked", !checked);
 
 				// run callback
 				if( $.isFunction(options.click) ) options.click.apply(self, [!checked, $input, options]);
@@ -282,7 +282,7 @@
 				// if the value is the same, don't run change event
 				if( $input[0].checked == checked ) changed = false;
 
-				$input.attr("checked", checked);
+				$input.prop("checked", checked);
 			}
 
 			// remove the active handler class
@@ -337,13 +337,13 @@
 		if( $input.is(":disabled") ) this.disable(true);
 
 		// special behaviors for IE
-		if( $.browser.msie ){
+		/*if( $.browser.msie ){
 			// disable text selection in IE, other browsers are controlled via CSS
 			$container.find("*").andSelf().attr("unselectable", "on");
 			// IE needs to register to the "click" event to make changes immediately (the change event only occurs on blur)
 			$input.bind("click.iButton", function (){ $input.triggerHandler("change.iButton"); });
 		}
-
+		*/
 		// run the init callback
 		if( $.isFunction(options.init) ) options.init.apply(self, [$input, options]);
 	};

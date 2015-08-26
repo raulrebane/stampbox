@@ -26,16 +26,16 @@ echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
             'id' => 'Step1',
         'htmlOptions' => array('class'=>"register", 'role'=>"form"),
         'enableAjaxValidation'=>true)); 
-        echo $form->labelEx($model,'useremail');
-        echo $form->EmailField($model, 'useremail', array('class'=>'form-control', 'placeholder'=>'Enter email'));
+        echo $form->labelEx($model,'useremail', array('class'=>'col-xs-12'));
+        echo $form->EmailField($model, 'useremail', array('class'=>'form-control col-xs-12', 'placeholder'=>'Enter email'));
         echo $form->error($model, 'useremail',array('validateOnChange'=>true));
 
-        echo $form->labelEx($model, 'userpassword');
-        echo $form->passwordField($model, 'userpassword', array('class'=>'form-control', 'placeholder'=>'Choose password'));
+        echo $form->labelEx($model, 'userpassword', array('class'=>'col-xs-12'));
+        echo $form->passwordField($model, 'userpassword', array('class'=>'form-control col-xs-12', 'placeholder'=>'Choose password'));
         //echo $form->error($model, 'emailpassword', '', FALSE);
 
-        echo $form->checkBox($model, 'agreewithterms', array('class'=>'col-sm-1'));
-        echo $form->labelEx($model, 'agreewithterms', array('class'=>'col-sm-11'));
+        echo $form->checkBox($model, 'agreewithterms', array('class'=>'col-xs-1'));
+        echo $form->labelEx($model, 'agreewithterms', array('class'=>'col-xs-11'));
 ?>
             <!--        <div class="form-actions">        
 -->         
