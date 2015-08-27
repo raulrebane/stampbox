@@ -79,7 +79,7 @@ class Signup extends CFormModel
 			'useremail'=>'E-mail: ',
                         'userpassword'=>'Password',
                         'emailpassword'=>'E-mail password',
-                        'emailusername'=>'E-Mail login name',
+                        'emailusername'=>'IMAP login name',
                         'maildomain'=>'E-mail provider',
                         'incoming_hostname'=>'Mail server name',
                         'incoming_port'=>'Port',
@@ -161,7 +161,7 @@ class Signup extends CFormModel
                             $this->registereddomain->incoming_auth = 'EMAIL';
                         }
                         else {
-                            $this->registereddomain->incoming_auth = 'USERNAME';
+                            $this->registereddomain->incoming_auth = 'OTHER';
                         }
                         $this->registereddomain->outgoing_hostname = NULL;
                         $this->registereddomain->outgoing_port = NULL;
