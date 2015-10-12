@@ -124,7 +124,7 @@ class Signup extends CFormModel
                           'points_bal'=>0,
                           'stamps_bal'=>0));
                         // Save customer e-mail
-        		        list(, $model->maildomain) = explode("@", $model->useremail);
+        		        list(, $this->maildomain) = explode("@", $this->useremail);
         		        $this->registeredemail = new usermailbox();
                         $this->registeredemail->customer_id = Yii::app()->user->getId();
                         $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
