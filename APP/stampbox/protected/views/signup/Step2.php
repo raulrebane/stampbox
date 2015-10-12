@@ -10,30 +10,58 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
     <div class="row step-a">
         <div class="col-md-6">
             <div class="feature">
+                <br><h3>To get you started with stampbox service we have credited your account with 100 <b>free</b> stamps.</h3>
+            </div>
+            <div class="feature">
                 Every time someone send you stamped e-mail you can earn real money.<br>
                 To subscribe to receiving money from stamped e-mails sent to you, you need to configure IMAP access 
                 for stampbox service to you e-mail account.
-                <?php $form = $this->beginWidget('CActiveForm',array(
-                    'id' => 'Step2Continue',
-                    'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-                ?>
-                <button type="submit" name="Continue" class="btn btn-aqua">Setup IMAP access</button>
-                <?php $this->endWidget(); unset($form);?>
-            </div>
-            <div class="feature">
-                <br><h3>To get you started with stampbox service we have credited your account with 100 <b>free</b> stamps.</h3>
             </div>
         </div>
         <div class="col-md-6 darker">
             <div class="feature">
-                You can configure IMAP access later from your service overview page or from the mailbox menu.
-                <?php $form = $this->beginWidget('CActiveForm',array(
-                    'id' => 'Step2Skip',
-                    'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            <?php
+            $form = $this->beginWidget('CActiveForm', array('id' => 'Step4', 'htmlOptions' => array('class' => "register", 'role' => "form")));
+            ?>
+            <div class="row">
+                <?php 
+                echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'sendingservice');
                 ?>
-                <button type="submit" name="Skip" class="btn btn-default">Skip configuration</button>
-                <?php $this->endWidget(); unset($form);?>
             </div>
+            <div class="row">
+                <div class="col-xs-offset-3">This service enables sending stamped e-mails to other users.<br></div>
+            </div>
+                 
+            <div class="row">
+                <?php 
+                echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'receivingservice');
+                ?>
+            </div>
+            <div class="row">
+                <div class="col-xs-offset-3">This service enables receiving credits for e-mails that are stamped and 
+                    sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
+            </div>
+                 
+            <div class="row">
+                <?php 
+                echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-3')); 
+                echo $form->checkBox($model, 'sortingservice');
+                ?>
+            </div>
+            <div class="row">
+                <div class="col-xs-offset-3">This service sorts automatically incoming e-mail between inbox and no-stamp-emails 
+                    folder based on whether e-mail is stamped or not.<br></div>
+            </div>
+            </div>
+            <button type="submit" class="btn btn-default"></button>
         </div>
     </div>
 </div>
+<?php
+$this->widget('ext.ibutton.IButton', array('selector'  => ':checkbox',
+    'options' =>array('labelOn'=>'Yes','labelOff'=>'No')));
+$this->endWidget();
+unset($form);
+?>
