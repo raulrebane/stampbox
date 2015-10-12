@@ -34,17 +34,24 @@ class SignupController extends Controller
     
     public function actionStep2() {
         $this->layout = 'register';        
-        if(isset($_POST['Continue'])) {  
-            Yii::log("Going to Step3 signup: " .Yii::app()->user->name, 'info', 'application');
-            $this->redirect(array('signup/step3')); 
+        $model = new Signup();
+        $model->scenario = 'Step4';
+        $model->sendingservice = 1;
+        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
+                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
+        if ($model->registeredemail == NULL) {
+            Yii::log('In Step2, e-mail record not found: ' .Yii::app()->user->username, 'info', 'application');
+            $this->redirect(array('site/index'));
         }
-        if (isset($_POST['Skip'])) {  
-            Yii::log("Going to skip Step3 signup: " .Yii::app()->user->name, 'info', 'application');
-            $this->redirect(array('site/index')); 
-        } 
-        //$model->mailtype = 'IMAP';
-        //$model->incoming_auth = 'EMAIL';
-        $this->render('Step2');
+        if(isset($_POST['Signup'])) {  
+            $model->attributes=$_POST['Signup'];     
+            if ($model->validate()) {
+                Yii::log("Step2 signup save: " .$model->useremail, 'info', 'application');
+                $model->Save('Step2');
+                $this->redirect(array('signup/step3')); 
+            }
+        }        
+        $this->render('Step2',array('model'=>$model);
     }
 
     public function actionStep3() {
