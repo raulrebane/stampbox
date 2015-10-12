@@ -14,7 +14,7 @@ class Signup extends CFormModel
         public $agreewithterms;
         
         public $emailusername;
-	public $emailpassword;
+        public $emailpassword;
         
         // mailbox config related fields
         public $maildomain;
@@ -53,7 +53,7 @@ class Signup extends CFormModel
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step3'),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
                     
-                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step4'),
+                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step2'),
 		);
 	}
       
@@ -95,8 +95,7 @@ class Signup extends CFormModel
         {
             switch ($step) {
                 case 'Step1':
-                    // we are in step1, register customer
-                    //Yii::log('About to create customer' .CVarDumper::dumpAsString($this), 'info', 'application');
+                    // we are in step1, register customer, create account, save mailbox and issue free stamps
                     $customer = new TCustomer();
                     $customer->username = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
                     $customer->password = crypt($this->userpassword, self::blowfishSalt());
@@ -113,38 +112,55 @@ class Signup extends CFormModel
                         $customer->country = geoip_country_code_by_name($_SERVER['REMOTE_ADDR']);
                         if (!$customer->country) { $customer->country = 'XX'; }
                     }
-                    Yii::log('In step1 - about to save customer ' .CVarDumper::dumpAsString($customer), 'info', 'application');
                     if ($customer->save()) {
-                    //log in user right away
+                        //log in user right away
                         $identity=new UserIdentity($this->useremail,$this->userpassword);
                         $identity->authenticate();
-                        Yii::app()->user->login($identity, 3600*24*30);               
+                        Yii::app()->user->login($identity, 3600*24*30);
+                        // Create account
+                        $dbcommand =  Yii::app()->db->createCommand();
+                        $dbcommand->insert('ds.t_account', array(
+                          'customer_id'=>Yii::app()->user->getId(),
+                          'points_bal'=>0,
+                          'stamps_bal'=>0));
+                        // Save customer e-mail
+        		        list(, $model->maildomain) = explode("@", $model->useremail);
+        		        $this->registeredemail = new usermailbox();
+                        $this->registeredemail->customer_id = Yii::app()->user->getId();
+                        $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
+			        $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
+                        $this->registeredemail->sending_service = TRUE;
+                        $this->registeredemail->receiving_service = FALSE;
+                        $this->registeredemail->sorting_service = FALSE;
+                        $this->registeredemail->status = 'V';
+                        if (!$this->registeredemail->save()) {
+                           Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
+                                .$this->registeredemail->getErrors(), 'info', 'application');
+                        }
+                        // Issue free stamps for customer
+                        $gmclient= new GearmanClient();
+                        $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                        $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
+                                                'stampid'=>1, 'description'=>'Free stamps for joining'));
+                        $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
                     }
                     else { 
                         Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'info', 'application');
                         throw new CHttpException(500,'We are sorry for not being able to service you. Request was sent for our administrators to investigate this problem. Please try again later.');
                     }
-                    $dbcommand =  Yii::app()->db->createCommand();
-                    $dbcommand->insert('ds.t_account', array(
-                        'customer_id'=>Yii::app()->user->getId(),
-                        'points_bal'=>0,
-                        'stamps_bal'=>0));
-                    //self::GenerateStamps(Yii::App()->user->getId(), 100);
-                    $gmclient= new GearmanClient();
-                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                    $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
-                                                'stampid'=>1, 'description'=>'Free stamps for joining'));
-                    $result = json_decode($gmclient->do("issuestamps", $stampparams),TRUE);
+                    break;
+                case 'Step2':
+                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
+                    if (!$this->registeredemail->save()) {
+                        Yii::log('In Step2, service status save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
+                                        .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
+                    }
                     break;
                 case 'Step3':
-                    $this->registeredemail->customer_id = Yii::app()->user->getId();
-                    $this->registeredemail->e_mail = $this->useremail;
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
-                    $this->registeredemail->sending_service = TRUE;
-                    $this->registeredemail->receiving_service = FALSE;
-                    $this->registeredemail->sorting_service = FALSE;
-                    $this->registeredemail->status = 'V';
                     if (!$this->registeredemail->save()) {
                         Yii::log('In step3 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .$this->registeredemail->getErrors(), 'info', 'application');
@@ -161,7 +177,7 @@ class Signup extends CFormModel
                             $this->registereddomain->incoming_auth = 'EMAIL';
                         }
                         else {
-                            $this->registereddomain->incoming_auth = 'OTHER';
+                            $this->registereddomain->incoming_auth = NULL;
                         }
                         $this->registereddomain->outgoing_hostname = NULL;
                         $this->registereddomain->outgoing_port = NULL;
@@ -173,13 +189,6 @@ class Signup extends CFormModel
                     }
                     break;
                 case 'Step4':
-                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
-                    if (!$this->registeredemail->save()) {
-                        Yii::log('In Step4, service status save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
-                                        .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
-                    }
                     break;
             }
         }
@@ -201,4 +210,3 @@ class Signup extends CFormModel
 	}
 
 }
-
