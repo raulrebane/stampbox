@@ -51,7 +51,7 @@ class SignupController extends Controller
                 $this->redirect(array('signup/step3')); 
             }
         }        
-        $this->render('Step2',array('model'=>$model);
+        $this->render('Step2',array('model'=>$model));
     }
 
     public function actionStep3() {
