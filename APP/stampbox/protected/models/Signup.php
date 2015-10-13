@@ -163,7 +163,7 @@ class Signup extends CFormModel
                     $this->registeredemail->e_mail_password = $this->emailpassword;
                     if (!$this->registeredemail->save()) {
                         Yii::log('In step3 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
-                                .$this->registeredemail->getErrors(), 'info', 'application');
+                                .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
                         
                     }
                     if ($this->registereddomain == NULL) {
