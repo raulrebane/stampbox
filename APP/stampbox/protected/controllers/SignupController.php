@@ -60,8 +60,8 @@ class SignupController extends Controller
         $model->useremail = Yii::app()->user->name;
         list(, $model->maildomain) = explode("@", $model->useremail);
         $model->mailtype = 'IMAP';
-        $model->registeredemail = new usermailbox();
-        $model->registeredemail->maildomain = mb_convert_case($model->maildomain, MB_CASE_LOWER, "UTF-8");
+        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
+                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
         $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
         if ($model->registereddomain !== NULL) {
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
