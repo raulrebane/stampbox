@@ -73,9 +73,14 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
             <div class="row">
                 <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-4'));?>
             </div>
-            <button type="submit" class="btn btn-default"></button>
-            <div class="help"><button type="button" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
-            <!-- Modal -->
+            <button type="submit" class="btn btn-active"></button>
+            <?php $this->endWidget(); unset($form); ?>            
+            <div class="help"><button type="button" class="btn btn-aqua" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
             <div class="modal fade" id="SignupHelpDlg" tabindex="-1" role="dialog" aria-labelledby="signuphelp" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -88,10 +93,3 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<?php
-$this->endWidget();
-unset($form);
-?>
