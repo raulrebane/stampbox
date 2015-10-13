@@ -67,6 +67,14 @@ class SignupController extends Controller
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;
             $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
+            switch ($model->registereddomain->incoming_auth == 'USERNAME') {
+            case 'EMAIL':
+                $model->emailusername = $model->useremail;
+                break;
+            case 'USERNAME':
+                list($model->emailusername,) = explode("@", $model->useremail);
+                break;
+            }
         }
         $model->scenario = 'Step3';
         if(isset($_POST['Signup'])) {  
@@ -75,7 +83,7 @@ class SignupController extends Controller
             if ($model->validate()) {
                 Yii::log("Step3 signup save: " .Yii::app()->user->name, 'info', 'application');
                 $model->Save('Step3');
-                $this->redirect(array('signup/step4')); 
+                $this->redirect(array('site/index')); 
             }
             else {
                 Yii::log("Step3 validation error: " .CVarDumper::dumpAsString($model->getErrors()), 'info', 'application');

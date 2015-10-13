@@ -23,7 +23,8 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
                 echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
                 echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
             } else {
-                
+                echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
+                echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'disabled' => true));
             }
             ?>
             <div class="row">
