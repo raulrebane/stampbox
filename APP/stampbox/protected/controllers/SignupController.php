@@ -35,7 +35,7 @@ class SignupController extends Controller
     public function actionStep2() {
         $this->layout = 'register';        
         $model = new Signup();
-        $model->scenario = 'Step4';
+        $model->scenario = 'Step2';
         $model->sendingservice = 1;
         $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
                     array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
