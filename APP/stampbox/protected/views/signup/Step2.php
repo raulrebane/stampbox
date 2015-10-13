@@ -19,23 +19,21 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
             </div>
         </div>
         <div class="col-md-6 darker">
-            <div class="feature">
             <?php
-            $form = $this->beginWidget('CActiveForm', array('id' => 'Step4', 'htmlOptions' => array('class' => "register", 'role' => "form")));
+            $form = $this->beginWidget('CActiveForm', array('id' => 'Step2', 'htmlOptions' => array('class' => "register", 'role' => "form")));
             ?>
             <div class="row">
                 <?php 
-                echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-3')); 
+                echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-4')); 
                 echo $form->checkBox($model, 'sendingservice');
                 ?>
             </div>
             <div class="row">
                 <div class="col-xs-offset-3">This service enables sending stamped e-mails to other users.<br></div>
             </div>
-                 
             <div class="row">
                 <?php 
-                echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-3')); 
+                echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-4')); 
                 echo $form->checkBox($model, 'receivingservice');
                 ?>
             </div>
@@ -43,17 +41,15 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
                 <div class="col-xs-offset-3">This service enables receiving credits for e-mails that are stamped and 
                     sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
             </div>
-                 
             <div class="row">
                 <?php 
-                echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-3')); 
+                echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-4')); 
                 echo $form->checkBox($model, 'sortingservice');
                 ?>
             </div>
             <div class="row">
                 <div class="col-xs-offset-3">This service sorts automatically incoming e-mail between inbox and no-stamp-emails 
                     folder based on whether e-mail is stamped or not.<br></div>
-            </div>
             </div>
             <button type="submit" class="btn btn-default"></button>
         </div>
@@ -63,5 +59,5 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
 $this->widget('ext.ibutton.IButton', array('selector'  => ':checkbox',
     'options' =>array('labelOn'=>'Yes','labelOff'=>'No')));
 $this->endWidget();
-unset($form);
+//unset($form);
 ?>
