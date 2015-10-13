@@ -67,13 +67,13 @@ class SignupController extends Controller
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;
             $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
-            switch ($model->registereddomain->incoming_auth == 'USERNAME') {
-            case 'EMAIL':
-                $model->emailusername = $model->useremail;
-                break;
-            case 'USERNAME':
-                list($model->emailusername,) = explode("@", $model->useremail);
-                break;
+            switch ($model->registereddomain->incoming_auth) {
+                case 'EMAIL':
+                    $model->emailusername = $model->useremail;
+                    break;
+                case 'USERNAME':
+                    list($model->emailusername,) = explode("@", $model->useremail);
+                    break;
             }
         }
         $model->scenario = 'Step3';
