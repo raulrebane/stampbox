@@ -14,8 +14,8 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
             </div>
             <div class="feature">
                 Every time someone send you stamped e-mail you can earn real money.<br>
-                To subscribe to receiving money from stamped e-mails sent to you, you need to configure IMAP access 
-                for stampbox service to you e-mail account.
+		To start using our services you can now choose which services you want in the right.<br>
+		To use Receiving service and Protection service you also need to configure IMAP access to your e-mail account.
             </div>
         </div>
         <div class="col-md-6 darker">
@@ -29,7 +29,7 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
                 ?>
             </div>
             <div class="row">
-                <div class="col-xs-offset-3">This service enables sending stamped e-mails to other users.<br></div>
+                <div class="col-xs-offset-4">This service enables sending stamped e-mails to other users.<br></div>
             </div>
             <div class="row">
                 <?php 
@@ -38,7 +38,7 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
                 ?>
             </div>
             <div class="row">
-                <div class="col-xs-offset-3">This service enables receiving credits for e-mails that are stamped and 
+                <div class="col-xs-offset-4">This service enables receiving credits for e-mails that are stamped and 
                     sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@ $this->pageTitle=Yii::app()->name . ' - Register -> Step2';
                 ?>
             </div>
             <div class="row">
-                <div class="col-xs-offset-3">This service sorts automatically incoming e-mail between inbox and no-stamp-emails 
+                <div class="col-xs-offset-4">This service sorts automatically incoming e-mail between inbox and no-stamp-emails 
                     folder based on whether e-mail is stamped or not.<br></div>
             </div>
             <button type="submit" class="btn btn-default"></button>
