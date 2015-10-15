@@ -2,7 +2,9 @@
 /* @var $this RegisterController */
 /* @var $model Register */
 /* @var $form CActiveForm */
-
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/assets/db174389/jui/css/base/jquery-ui.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/scripts/bootstrap.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
 $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
 ?>
 <div class="register-form">
@@ -84,7 +86,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
             <div class="modal fade" id="SignupHelpDlg" tabindex="-1" role="dialog" aria-labelledby="signuphelp" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header"></div>
+                        <div class="modal-header">IMAP settings help</div>
                         <div class="modal-body">
                             <?php
                             ?>
