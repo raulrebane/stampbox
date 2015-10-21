@@ -31,14 +31,14 @@ class UsermailboxController extends Controller
 
     public function actionCreate()
     {
-        $model=new usermailbox;
+        $model=new NewMailbox;
 
     // Uncomment the following line if AJAX validation is needed
     // $this->performAjaxValidation($model);
 
-        if(isset($_POST['usermailbox']))
+        if(isset($_POST['NewMailbox']))
         {
-            $model->attributes=$_POST['usermailbox'];
+            $model->attributes=$_POST['NewMailbox'];
             list(, $model->maildomain) = explode("@", $model->e_mail); 
             $model->customer_id = Yii::App()->user->getId();
             if($model->save())
