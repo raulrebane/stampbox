@@ -39,8 +39,6 @@ class UsermailboxController extends Controller
         if(isset($_POST['NewMailbox']))
         {
             $model->attributes=$_POST['NewMailbox'];
-            list(, $model->maildomain) = explode("@", $model->e_mail); 
-            $model->customer_id = Yii::App()->user->getId();
             if($model->save())
                 $this->redirect(array('usermailbox/index'));
         }
