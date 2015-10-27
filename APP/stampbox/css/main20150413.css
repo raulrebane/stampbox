@@ -2082,8 +2082,10 @@ pre code {
 
 /* line 39, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_grid.scss */
 .row {
-  margin-left: -10px;
-  margin-right: -10px;
+  /*margin-left: -10px;
+  margin-right: -10px;*/
+  margin: 1px auto;
+
 }
 /* line 14, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
 .row:before, .row:after {
@@ -2093,6 +2095,13 @@ pre code {
 /* line 19, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/mixins/_clearfix.scss */
 .row:after {
   clear: both;
+}
+
+.header-row {
+    border-bottom-style:solid;
+    border-width: 1px;
+    padding: 1px;
+    margin: 5px;
 }
 
 /* line 11, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/mixins/_grid-framework.scss */

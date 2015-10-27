@@ -36,11 +36,11 @@ class NewMailbox extends CFormModel
 			array('useremail', 'length', 'max'=>128, 'on'=>'Step1'),
                         array('useremail', 'email', 'on'=>'Step1'),
                          array('useremail', 'checkregistered', 'on'=>'Step1'),
-                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step2'),
-                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step3'),
-                        array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step3'),
-                        array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step3'),
-                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step3'),
+                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step1'),
+                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step2'),
+                        array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
+                        array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
+                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
 		);
 	}
@@ -87,25 +87,16 @@ class NewMailbox extends CFormModel
                   $this->registeredemail->customer_id = Yii::app()->user->getId();
                   $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
 		  $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
-                  $this->registeredemail->sending_service = TRUE;
-                  $this->registeredemail->receiving_service = FALSE;
-                  $this->registeredemail->sorting_service = FALSE;
+                  $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
+                  $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
+                  $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
                   $this->registeredemail->status = 'V';
                   if (!$this->registeredemail->save()) {
-                           Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
+                    Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .$this->registeredemail->getErrors(), 'info', 'application');
                   }
                   break;
                 case 'Step2':
-                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
-                    if (!$this->registeredemail->save()) {
-                        Yii::log('In Step2, service status save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
-                                        .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
-                    }
-                    break;
-                case 'Step3':
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
                     if (!$this->registeredemail->save()) {
@@ -132,6 +123,12 @@ class NewMailbox extends CFormModel
                             Yii::log('In Step3, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
                                         .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
                         }
+                    }
+                    break;
+                case 'Update':
+                    if (!$this->registeredemail->save()) {
+                        Yii::log('In Step2, service status save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
+                                        .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
                     }
                     break;
             }

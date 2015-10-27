@@ -22,7 +22,7 @@ class UsermailboxController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create','update','index'),
+                    'actions'=>array('create', 'step2', 'update','index'),
                     'users'=>array('@')),
             array('deny',  // deny all users
                 'users'=>array('*')),
@@ -32,18 +32,76 @@ class UsermailboxController extends Controller
     public function actionCreate()
     {
         $model=new NewMailbox;
-
-    // Uncomment the following line if AJAX validation is needed
-    // $this->performAjaxValidation($model);
-
+        $model->scenario = 'Step1';
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+            $model->attributes=$_POST['NewMailbox'];
+            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+            echo CActiveForm::validate($model); 
+            Yii::app()->end(); 
+        }
         if(isset($_POST['NewMailbox']))
         {
             $model->attributes=$_POST['NewMailbox'];
-            if($model->save())
+            if ($model->validate()) {
+                Yii::log("New e-mail step1 save: " .$model->useremail, 'info', 'application');
+                $model->Save('Step1');
+                if ($model->receivingservice == 1 or $model->sortingservice == 1) {
+                    Yii::app()->session['newemail'] = $model->useremail;
+                    $this->redirect(array('usermailbox/step2'));
+                }
                 $this->redirect(array('usermailbox/index'));
+            }
         }
+        $this->render('step1',array('model'=>$model,));
+    }
 
-        $this->render('create',array('model'=>$model,));
+    public function actionStep2()
+    {
+        if (!isset(Yii::app()->session['newemail'])) {
+            $this->redirect(array('usermailbox/index'));
+        }
+        $model=new NewMailbox;
+        $model->scenario = 'Step2';
+        $model->useremail = Yii::app()->session['newemail']; 
+        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
+                    array(':1'=>Yii::app()->user->getId(), ':2'=>$model->useremail));
+        if ($model->registeredemail == NULL) {
+            // how did we got here at all?
+            Yii::log('In Step2, '.Yii::app()->user->getId() .' ' .Yii::app()->user->username 
+                        .' missing user mailbox record' , 'info', 'application');
+                // should redirect to site/index
+            $this->redirect(array('usermailbox/index'));
+        }
+        $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
+        if ($model->registereddomain !== NULL)  {
+            $model->incoming_hostname = $model->registereddomain->incoming_hostname;
+            $model->incoming_port = $model->registereddomain->incoming_port;
+            $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
+            switch ($model->registereddomain->incoming_auth) {
+                case 'EMAIL':
+                    $model->emailusername = $model->useremail;
+                    break;
+                case 'USERNAME':
+                    list($model->emailusername,) = explode("@", $model->useremail);
+                    break;
+            }
+        }
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+            $model->attributes=$_POST['NewMailbox'];
+            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+            echo CActiveForm::validate($model); 
+            Yii::app()->end(); 
+        }
+        if(isset($_POST['NewMailbox']))
+        {
+            $model->attributes=$_POST['NewMailbox'];
+            if ($model->validate()) {
+                Yii::log("New e-mail step2 save: " .$model->useremail, 'info', 'application');
+                $model->Save('Step2');
+                $this->redirect(array('usermailbox/index'));
+            }
+        }
+        $this->render('step2',array('model'=>$model,));
     }
 
     public function actionUpdate($email)
