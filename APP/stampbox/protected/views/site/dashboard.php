@@ -47,7 +47,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         </div>
     </div>
     <div class="col-md-12">
-    <div class="widget widget-activity"><div class="title">Activity</div>
+    <div class="widget widget-activity"><div class="title">Stamps and credits activity</div>
     <div class="content">
         <?php 
         $gridDataProvider = new CArrayDataProvider($lasttransactions, array('keyField'=>'transaction_id', ));  
@@ -88,12 +88,12 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         ?>
     </div>
     <div class="footer">
-        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('account/statement')?>">See all</a>
+        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('account/statement')?>">See more...</a>
     </div>
     </div></div></div></div>    
     <div class="col-md-5"><div class="row">
         <div class="col-md-12"><div class="widget widget-accounts">
-        <div class="title">Stampboxed email accounts</div>
+        <div class="title">Stampboxed email's</div>
             <div class="content">
                 <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
                     'criteria'=>array(
@@ -123,13 +123,13 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                                     'label'=>'',
                                     'options'=>array('class'=>'glyphicon glyphicon-wrench'),
                                     //'imageUrl'=>Yii::app()->request->baseUrl.'/images/btn-delete.png',
-                                    'url'=>'Yii::app()->createUrl("whitelist/delete", array("email"=>$data->e_mail))')
+                                    'url'=>'Yii::app()->createUrl("usermailbox/update", array("email"=>$data->e_mail))')
                         )),                                    
                     )
                 ));?>
             </div>
             <div class="footer">
-                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add account</a>
+                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
             </div>
         </div></div>
         <div class="col-md-12">

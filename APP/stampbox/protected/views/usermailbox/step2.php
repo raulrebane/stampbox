@@ -66,7 +66,7 @@ $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAja
                 <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => 'col-xs-4'));
                 if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
                     echo '<div class="select-style">';
-                    echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-6'));
+                    echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-4'));
                     echo '</div>';
                 } else {
                     echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control col-xs-4', 'disabled' => true));
@@ -88,7 +88,7 @@ $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAja
                             'name'=>'cancelbtn',
                             'htmlOptions'=>array('class'=>'btn btn-default')
                 )); ?>
-            <div class="help"><button type="button" class="btn btn-aqua" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
+            <div class="help"><button type="button" class="btn btn-aqua pull-right" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
         </div>
     </div>
 </div>

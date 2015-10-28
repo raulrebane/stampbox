@@ -33,8 +33,8 @@
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),
-                        array('label'=>'Account statement', 'url'=>array('/account/statement')),
-                        array('label'=>'E-mail accounts', 'url'=>array('/usermailbox/index')),
+                        array('label'=>'My activity', 'url'=>array('/account/statement')),
+                        array('label'=>'Stampboxed e-mails', 'url'=>array('/usermailbox/index')),
                         array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
                         array('label'=>'Invite', 'url'=>array('/invite/index')),
                         array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
