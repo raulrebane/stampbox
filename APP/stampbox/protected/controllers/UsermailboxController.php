@@ -98,6 +98,7 @@ class UsermailboxController extends Controller
             if ($model->validate()) {
                 Yii::log("New e-mail step2 save: " .$model->useremail, 'info', 'application');
                 $model->Save('Step2');
+                Yii::app()->session->remove('newemail');
                 $this->redirect(array('usermailbox/index'));
             }
         }
@@ -107,6 +108,36 @@ class UsermailboxController extends Controller
     public function actionUpdate($email)
     {
         $model = usermailbox::model()->find('e_mail=:email AND customer_id=:customer_id', array(':email'=>$email, 'customer_id'=>Yii::App()->user->getId()));
+        $model=new NewMailbox;
+        $model->scenario = 'Update';
+        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2',
+                    array(':1'=>Yii::app()->user->getId(), ':2'=>$email));
+        if ($model->registeredemail == NULL) {
+            // how did we got here at all?
+            Yii::log('In e-mail update, '.Yii::app()->user->getId() .' ' .$email
+                        .' missing user mailbox record' , 'info', 'application');
+                // should redirect to site/index
+            $this->redirect(array('usermailbox/index'));
+        }
+        else {
+           Yii::app()->session['updateemail'] =  $email;
+           $model->emailusername = $model->registeredemail->e_mail_username;
+           $model->emailpassword = $model->registeredemail->e_mail_password;
+        }
+        $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
+        if ($model->registereddomain !== NULL)  {
+            $model->incoming_hostname = $model->registereddomain->incoming_hostname;
+            $model->incoming_port = $model->registereddomain->incoming_port;
+            $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
+            switch ($model->registereddomain->incoming_auth) {
+                case 'EMAIL':
+                    $model->emailusername = $model->useremail;
+                    break;
+                case 'USERNAME':
+                    list($model->emailusername,) = explode("@", $model->useremail);
+                    break;
+            }
+        }
 	//$model=$this->loadModel($email);
 
     // Uncomment the following line if AJAX validation is needed
@@ -115,8 +146,12 @@ class UsermailboxController extends Controller
         if(isset($_POST['usermailbox']))
         {
             $model->attributes=$_POST['usermailbox'];
-            if($model->save())
+            if ($model->validate()) {
+                Yii::log("e-mail update save: " .$model->useremail, 'info', 'application');
+                $model->Save('Update');
+		Yii::app()->session->remove('updateemail');
                 $this->redirect(array('usermailbox/index'));
+	    }
             else {
                 Yii::log('Update customer mailbox failed' .CVarDumper::dumpAsString($model), 'info', 'application');
             }

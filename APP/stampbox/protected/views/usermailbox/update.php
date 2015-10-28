@@ -1,37 +1,96 @@
+<?php
+$form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAjaxValidation'=>true,));
+?>
 <div id="p-usermailbox" class="row">
-    <div class="col-md-4">
-    <div class="widget widget-accounts"><div class="title">Change e-mail account</div>
-    <div class="content">
-        <?php $form=$this->beginWidget('CActiveForm',array(
-                'id'=>'usermailbox-form',
-                'enableAjaxValidation'=>false,
-                'htmlOptions' => array('class'=>"form register"),
-        )); 
-        echo $form->labelEx($model,'e_mail');
-        echo $form->textField($model, 'e_mail', array('class'=>'form-control', 'placeholder'=>'e-mail address', 'readonly'=>true));
-
-        echo $form->labelEx($model,'e_mail_username');
-        echo $form->textField($model, 'e_mail_username', array('class'=>'form-control', 'placeholder'=>'e-mail account username'));
-        echo $form->error($model, 'e_mail_username');
-
-        echo $form->labelEx($model,'e_mail_password');
-        echo $form->textField($model, 'e_mail_password', array('class'=>'form-control', 'placeholder'=>'e-mail account password'));
-        echo $form->error($model, 'e_mail_password');
-
-        echo $form->labelEx($model,'status');
-        echo $form->dropDownList($model, 'status', array('A' => 'Active', 'N' => 'Disabled'));
-        echo $form->error($model, 'status');
-        ?>
-    <div class="form-actions">
-	<?php $this->widget('zii.widgets.jui.CJuiButton', array(
-			'buttonType'=>'submit',
-			'caption'=>'Save',
-                        'name'=>'emailbtn',
-                        'htmlOptions'=>array('class'=>'btn btn-active')
-		)); ?>
-    </div>
-    </div>
-    </div>
-    </div>
+<div class="col-xs-6">
+<div class="widget widget-accounts"><div class="title">Setup new e-mail</div>
+<?php
+echo $form->hiddenField($model, 'maildomain');
+echo $form->hiddenField($model, 'mailtype');
+echo $form->hiddenField($model, 'incoming_auth');
+?>
+<div class="header-row">E-mail login settings</div>
+<?php
+if ($model->registereddomain == NULL OR $model->registereddomain->incoming_auth == 'OTHER') {
+echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
+echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
+echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
+} else {
+echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
+echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'disabled' => true));
+}
+?>
+<div class="row">
+<?php echo $form->labelEx($model, 'emailpassword', array('class' => 'col-xs-4')); ?>
+<?php echo $form->passwordField($model, 'emailpassword', array('class' => 'form-control col-xs-8', 'placeholder' => 'password for e-mail')); ?>
 </div>
-<?php $this->endWidget(); ?>
+<div class="row">
+<?php echo $form->error($model, 'emailpassword', array('class' => 'col-xs-offset-4')); ?>
+</div>
+<div class="header-row">E-mail server settings</div>
+<div class="row">
+<?php echo $form->labelEx($model, 'incoming_hostname', array('class' => 'col-xs-4'));
+if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail server name'));
+} else {
+echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'disabled' => true));
+} ?>
+</div>
+<div class="row">
+<?php echo $form->error($model, 'incoming_hostname', array('class' => 'col-xs-offset-4')); ?>
+</div>
+<div class="row">
+<?php echo $form->labelEx($model, 'incoming_port', array('class' => 'col-xs-4'));
+if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'placeholder' => 'Port'));
+} else {
+echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'disabled' => true));
+}?>
+</div>
+<div class="row">
+<?php echo $form->error($model, 'incoming_port', array('class' => 'col-xs-offset-4')); ?>
+</div>
+<div class="row">
+<?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => 'col-xs-4'));
+if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+echo '<div class="select-style">';
+echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-4'));
+echo '</div>';
+} else {
+echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control col-xs-4', 'disabled' => true));
+}?>
+</div>
+<div class="row">
+<?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-4'));?>
+</div>
+<div class="header-row"></div>
+<?php $this->widget('zii.widgets.jui.CJuiButton', array(
+'buttonType'=>'submit',
+'caption'=>'Save',
+'name'=>'emailbtn',
+'htmlOptions'=>array('class'=>'btn btn-aqua')
+)); ?>
+<?php $this->widget('zii.widgets.jui.CJuiButton', array(
+'buttonType'=>'submit',
+'caption'=>'Cancel',
+'name'=>'cancelbtn',
+'htmlOptions'=>array('class'=>'btn btn-default')
+)); ?>
+<div class="help"><button type="button" class="btn btn-aqua pull-right" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
+</div>
+</div>
+</div>
+<?php $this->endWidget(); unset($form); ?>
+<!-- Modal -->
+<div class="modal fade" id="SignupHelpDlg" tabindex="-1" role="dialog" aria-labelledby="signuphelp" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">IMAP settings help</div>
+<div class="modal-body">
+<?php
+?>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>
+</div>
