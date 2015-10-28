@@ -94,7 +94,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
     <div class="col-md-5"><div class="row">
         <div class="col-md-12"><div class="widget widget-accounts">
         <div class="title">Stampboxed email's</div>
-            <div class="content">
+            <div class="content table-responsive">
                 <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
                     'criteria'=>array(
                     'condition'=>'customer_id='.Yii::app()->user->getId(),
