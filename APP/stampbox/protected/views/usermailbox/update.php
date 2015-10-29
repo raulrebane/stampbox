@@ -3,7 +3,7 @@ $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAja
 ?>
 <div id="p-usermailbox" class="row">
 <div class="col-xs-6">
-<div class="widget widget-accounts"><div class="title">Setup new e-mail</div>
+<div class="widget widget-accounts"><div class="title">Configue e-mail</div>
 <?php
 echo $form->hiddenField($model, 'maildomain');
 echo $form->hiddenField($model, 'mailtype');
@@ -26,6 +26,36 @@ echo $form->textField($model, 'emailusername', array('class' => 'form-control co
 </div>
 <div class="row">
 <?php echo $form->error($model, 'emailpassword', array('class' => 'col-xs-offset-4')); ?>
+</div>
+<div class="header-row">Select services</div>
+<div class="row">
+<?php
+echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-4'));
+echo $form->checkBox($model, 'sendingservice');
+?>
+</div>
+<div class="row">
+<div class="col-xs-offset-4">This service enables sending stamped e-mails to other users.<br></div>
+</div>
+<div class="row">
+<?php
+echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-4'));
+echo $form->checkBox($model, 'receivingservice');
+?>
+</div>
+<div class="row">
+<div class="col-xs-offset-4">This service enables receiving credits for e-mails that are stamped and
+sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
+</div>
+<div class="row">
+<?php
+echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-4'));
+echo $form->checkBox($model, 'sortingservice');
+?>
+</div>
+<div class="row">
+<div class="col-xs-offset-4">This service sorts automatically incoming e-mail between inbox and no-stamp-emails
+folder based on whether e-mail is stamped or not.<br></div>
 </div>
 <div class="header-row">E-mail server settings</div>
 <div class="row">
@@ -80,7 +110,10 @@ echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-con
 </div>
 </div>
 </div>
-<?php $this->endWidget(); unset($form); ?>
+<?php $this->widget('ext.ibutton.IButton', array('selector' => ':checkbox',
+'options' =>array('labelOn'=>'Yes','labelOff'=>'No')));
+$this->endWidget(); 
+unset($form); ?>
 <!-- Modal -->
 <div class="modal fade" id="SignupHelpDlg" tabindex="-1" role="dialog" aria-labelledby="signuphelp" aria-hidden="true">
 <div class="modal-dialog">

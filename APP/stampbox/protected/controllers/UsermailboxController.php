@@ -107,7 +107,6 @@ class UsermailboxController extends Controller
 
     public function actionUpdate($email)
     {
-        $model = usermailbox::model()->find('e_mail=:email AND customer_id=:customer_id', array(':email'=>$email, 'customer_id'=>Yii::App()->user->getId()));
         $model=new NewMailbox;
         $model->scenario = 'Update';
         $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2',
@@ -123,6 +122,7 @@ class UsermailboxController extends Controller
            Yii::app()->session['updateemail'] =  $email;
            $model->emailusername = $model->registeredemail->e_mail_username;
            $model->emailpassword = $model->registeredemail->e_mail_password;
+	   $model->maildomain = $model->registeredemail->maildomain;
         }
         $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
         if ($model->registereddomain !== NULL)  {
@@ -138,14 +138,17 @@ class UsermailboxController extends Controller
                     break;
             }
         }
-	//$model=$this->loadModel($email);
 
-    // Uncomment the following line if AJAX validation is needed
-    // $this->performAjaxValidation($model);
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+            $model->attributes=$_POST['NewMailbox'];
+            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
 
-        if(isset($_POST['usermailbox']))
+        if(isset($_POST['NewMailbox']))
         {
-            $model->attributes=$_POST['usermailbox'];
+            $model->attributes=$_POST['NewMailbox'];
             if ($model->validate()) {
                 Yii::log("e-mail update save: " .$model->useremail, 'info', 'application');
                 $model->Save('Update');

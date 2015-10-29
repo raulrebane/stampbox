@@ -35,13 +35,15 @@ class NewMailbox extends CFormModel
 			array('useremail', 'required', 'on'=>'Step1'),
 			array('useremail', 'length', 'max'=>128, 'on'=>'Step1'),
                         array('useremail', 'email', 'on'=>'Step1'),
-                         array('useremail', 'checkregistered', 'on'=>'Step1'),
+                        array('useremail', 'checkregistered', 'on'=>'Step1'),
                         array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step1'),
                         array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step2'),
                         array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
                         array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
+                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Update'),
+                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'safe', 'on'=>'Update'),
 		);
 	}
       
@@ -127,6 +129,7 @@ class NewMailbox extends CFormModel
                     }
                     break;
                 case 'Update':
+                    //list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
                     $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
