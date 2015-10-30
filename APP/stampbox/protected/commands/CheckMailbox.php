@@ -24,7 +24,7 @@ function checkMailbox_fn($job)
   }
   else {
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams) .imap_errors());
+    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams) .var_dump(imap_errors()));
     closelog();
     return json_encode(array('status'=>'ERROR', 'reason'=>imap_errors()));
   }

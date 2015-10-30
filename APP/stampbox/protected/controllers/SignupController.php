@@ -81,6 +81,21 @@ class SignupController extends Controller
             Yii::log("Step3 debug: " .Yii::app()->user->name, 'info', 'application');
             $model->attributes=$_POST['Signup'];     
             if ($model->validate()) {
+		$mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
+			'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
+			'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
+		Yii::log('In Signup step3, verifying e-mail:' .CVarDumper::dumpAsString($model->registereddomain)
+		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
+		$gmclient= new GearmanClient();
+		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+		if ($result['status'] == 'ERROR') {
+			//Changed to allow registering without e-mail username
+			$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct<br>' .CVarDumper::dumpAsString($result['reason']));
+			$this->render('Step3',array('model'=>$model,));
+			Yii::app()->end();
+		} 
+		else { $e_mail_verified = TRUE;}
                 Yii::log("Step3 signup save: " .Yii::app()->user->name, 'info', 'application');
                 $model->Save('Step3');
                 $this->redirect(array('site/index')); 

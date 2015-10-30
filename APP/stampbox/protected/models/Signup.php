@@ -31,6 +31,7 @@ class Signup extends CFormModel
         public $registereddomain;
         public $registeredemail;
 
+	public $e_mail_verified;
 	/**
 	 * Declares the validation rules.
 	 * The rules state that username and password are required,
@@ -161,6 +162,7 @@ class Signup extends CFormModel
                 case 'Step3':
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
+		    $this->registeredemail->status = 'A';
                     if (!$this->registeredemail->save()) {
                         Yii::log('In step3 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
@@ -182,6 +184,7 @@ class Signup extends CFormModel
                         $this->registereddomain->outgoing_hostname = NULL;
                         $this->registereddomain->outgoing_port = NULL;
                         $this->registereddomain->outgoing_socket_type = NULL;
+                        $this->registereddomain->status = 'A';
                         if (!$this->registereddomain->save()) {
                             Yii::log('In Step3, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
                                         .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');

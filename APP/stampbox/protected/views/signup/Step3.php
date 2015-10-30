@@ -20,7 +20,7 @@ $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
             ?> 
             <div class="header-row">E-mail login settings</div>
             <?php
-            if ($model->registereddomain == NULL OR $model->registereddomain->incoming_auth == 'OTHER') {
+            if ($model->registereddomain == NULL OR $model->registereddomain->incoming_auth == '') {
                 echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
                 echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
                 echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
