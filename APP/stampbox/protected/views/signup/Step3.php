@@ -6,6 +6,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/assets/db174389/
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/scripts/bootstrap.js',CClientScript::POS_END);
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 $this->pageTitle = Yii::app()->name . ' - Register -> Step3';
+echo CHtml::errorSummary($model, '', '', array('class'=>"m-flash"));
 ?>
 <div class="register-form">
     <h2>IMAP settings for <b><?php echo Yii::app()->user->name ?></b></h2>

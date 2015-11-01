@@ -3,6 +3,10 @@ $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAja
 ?>
 <div id="p-usermailbox" class="row">
 <div class="col-xs-6">
+<?php foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+}
+?>
 <div class="widget widget-accounts"><div class="title">Configue e-mail</div>
 <?php
 echo $form->hiddenField($model, 'maildomain');
@@ -11,13 +15,15 @@ echo $form->hiddenField($model, 'incoming_auth');
 ?>
 <div class="header-row">E-mail login settings</div>
 <?php
-if ($model->registereddomain == NULL OR $model->registereddomain->incoming_auth == 'OTHER') {
+if ($model->registereddomain == NULL OR 
+        ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) {
 echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
 echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
 echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
 } else {
 echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
 echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'disabled' => true));
+echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
 }
 ?>
 <div class="row">

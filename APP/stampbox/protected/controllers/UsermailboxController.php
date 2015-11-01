@@ -22,7 +22,7 @@ class UsermailboxController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create', 'step2', 'update','index'),
+                    'actions'=>array('create', 'step2', 'update','index', 'delete'),
                     'users'=>array('@')),
             array('deny',  // deny all users
                 'users'=>array('*')),
@@ -39,6 +39,11 @@ class UsermailboxController extends Controller
             echo CActiveForm::validate($model); 
             Yii::app()->end(); 
         }
+
+        if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
+            $this->redirect(array('usermailbox/index'));
+        }
+
         if(isset($_POST['NewMailbox']))
         {
             $model->attributes=$_POST['NewMailbox'];
@@ -92,10 +97,32 @@ class UsermailboxController extends Controller
             echo CActiveForm::validate($model); 
             Yii::app()->end(); 
         }
+
+        if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
+            $this->redirect(array('usermailbox/index'));
+        }
+        
         if(isset($_POST['NewMailbox']))
         {
             $model->attributes=$_POST['NewMailbox'];
             if ($model->validate()) {
+		$mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
+			'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
+			'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
+		Yii::log('In Signup step3, verifying e-mail:' .CVarDumper::dumpAsString($model->registereddomain)
+		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
+		$gmclient= new GearmanClient();
+		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+		if ($result['status'] == 'ERROR') {
+			//Changed to allow registering without e-mail username
+			//$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct<br>' .CVarDumper::dumpAsString($result['reason']));
+                        Yii::app()->user->setFlash('danger', 'We could not access your e-mail inbox.<br>' 
+                                    .CVarDumper::dumpAsString($result['reason'])); 
+			$this->render('step2',array('model'=>$model,));
+			Yii::app()->end();
+		} 
+		else { $e_mail_verified = TRUE;}
                 Yii::log("New e-mail step2 save: " .$model->useremail, 'info', 'application');
                 $model->Save('Step2');
                 Yii::app()->session->remove('newemail');
@@ -145,11 +172,29 @@ class UsermailboxController extends Controller
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-
+        if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
+            $this->redirect(array('usermailbox/index'));
+        }
         if(isset($_POST['NewMailbox']))
         {
             $model->attributes=$_POST['NewMailbox'];
             if ($model->validate()) {
+		$mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
+			'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
+			'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
+		Yii::log('In Signup step3, verifying e-mail:' .CVarDumper::dumpAsString($model->registereddomain)
+		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
+		$gmclient= new GearmanClient();
+		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+		if ($result['status'] == 'ERROR') {
+			//Changed to allow registering without e-mail username
+                        Yii::app()->user->setFlash('danger', 'We could not access your e-mail inbox.<br>' 
+                                    .CVarDumper::dumpAsString($result['reason'])); 
+			$this->render('update',array('model'=>$model,));
+			Yii::app()->end();
+		} 
+		else { $e_mail_verified = TRUE;}
                 Yii::log("e-mail update save: " .$model->useremail, 'info', 'application');
                 $model->Save('Update');
 		Yii::app()->session->remove('updateemail');
@@ -167,6 +212,17 @@ class UsermailboxController extends Controller
         $dataProvider=new CActiveDataProvider('usermailbox',array(
             'criteria'=>array('condition'=>'customer_id=' .Yii::App()->user->getId())));
         $this->render('index',array('dataProvider'=>$dataProvider));
+    }
+
+    public function actionDelete($email)
+    {
+        Yii::log('deleting mailbox: ' .$email, 'info', 'application');
+        //if(Yii::app()->request->isPostRequest) {
+            // we only allow deletion via POST request
+            $this->loadModel($email)->delete();
+            $this->redirect(array('usermailbox/index'));
+        //}
+        // else throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
     }
 
     /**

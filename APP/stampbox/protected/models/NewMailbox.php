@@ -22,6 +22,8 @@ class NewMailbox extends CFormModel
         public $sortingservice;
         public $registereddomain;
         public $registeredemail;
+        
+        public $e_mail_verified;
 
 	/**
 	 * Declares the validation rules.
@@ -102,6 +104,12 @@ class NewMailbox extends CFormModel
 		    list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
+                    if ($e_mail_verified) {
+                        $this->registeredemail->status = 'A';
+                    }
+                    else {
+                        $this->registeredemail->status = 'V';
+                    }
                     if (!$this->registeredemail->save()) {
                         Yii::log('In step2 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
@@ -114,10 +122,16 @@ class NewMailbox extends CFormModel
                         $this->registereddomain->incoming_port = $this->incoming_port;
                         $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
                         if ($this->registeredemail->e_mail == $this->registeredemail->e_mail_username) {
-                            $this->registereddomain->incoming_auth = 'EMAIL';
+                                $this->registereddomain->incoming_auth = 'EMAIL';
                         }
                         else {
-                            $this->registereddomain->incoming_auth = NULL;
+                                $this->registereddomain->incoming_auth = 'OTHER';
+                        }
+                        if ($e_mail_verified) {
+                            $this->registereddomain->status = 'A';
+                        }
+                        else {
+                            $this->registereddomain->status = 'V';
                         }
                         $this->registereddomain->outgoing_hostname = NULL;
                         $this->registereddomain->outgoing_port = NULL;
@@ -135,6 +149,12 @@ class NewMailbox extends CFormModel
                     $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
                     $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
                     $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
+                    if ($e_mail_verified) {
+                        $this->registeredemail->status = 'A';
+                    }
+                    else {
+                        $this->registeredemail->status = 'V';
+                    }
                     if (!$this->registeredemail->save()) {
                         Yii::log('In update mailbox save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
                                         .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
@@ -151,7 +171,13 @@ class NewMailbox extends CFormModel
                             $this->registereddomain->incoming_auth = 'EMAIL';
                     }
                     else {
-                            $this->registereddomain->incoming_auth = NULL;
+                            $this->registereddomain->incoming_auth = 'OTHER';
+                    }
+                    if ($e_mail_verified) {
+                        $this->registereddomain->status = 'A';
+                    }
+                    else {
+                        $this->registereddomain->status = 'V';
                     }
                     if (!$this->registereddomain->save()) {
                             Yii::log('In update save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)

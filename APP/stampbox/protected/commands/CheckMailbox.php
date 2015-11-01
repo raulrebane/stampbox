@@ -15,8 +15,22 @@ function checkMailbox_fn($job)
 {
   $jsonstr = $job->workload();
   $mboxparams = json_decode($jsonstr);
-  if ($inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/" .$mboxparams->socket_type ."/novalidate-cert}",
-                                $mboxparams->username,$mboxparams->password)) {
+  // No such server exists
+  $mailserver = gethostbyname($mboxparams->hostname .'.');
+  if ($mailserver == $mboxparams->hostname) {
+      return json_encode(array('status'=>'ERROR', 'reason'=>'No such server'));
+  }
+  if ($mboxparams->port == '') {
+      return json_encode(array('status'=>'ERROR', 'reason'=>'Port is needed'));
+  }
+  if ($mboxparams->socket_type == '') {
+      $inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/novalidate-cert}", $mboxparams->username,$mboxparams->password);  
+  }
+  else {
+      $inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/" .$mboxparams->socket_type ."/novalidate-cert}",
+                                $mboxparams->username,$mboxparams->password);
+  }
+  if ($inbox) {
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
         syslog(LOG_ERR, "Successful mailbox open with: " .$jsonstr);
         closelog();
@@ -24,9 +38,10 @@ function checkMailbox_fn($job)
   }
   else {
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams) .var_dump(imap_errors()));
+    $mail_errors = imap_errors();
+    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams) .var_dump($mail_errors));
     closelog();
-    return json_encode(array('status'=>'ERROR', 'reason'=>imap_errors()));
+    return json_encode(array('status'=>'ERROR', 'reason'=>$mail_errors));
   }
 }
 ?>
