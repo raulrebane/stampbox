@@ -36,8 +36,15 @@ class WhitelistController extends Controller
         
         if (isset($_POST['whitelistsubmit']) && isset($_POST['selectedIds'])) {
             foreach ($_POST['selectedIds'] as $id) {
+                $add2whitelist = Whitelist::model()->find('customer_id=:1 and e_mail=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$id));
+                if ($add2whitelist) { continue; }
+                $add2whitelist = new Whitelist;
+                $add2whitelist->customer_id = Yii::app()->user->getId();
+                $add2whitelist->e_mail = $id;
+                $add2whitelist->save();
             }
-            $this->redirect(array('site/index'));
+            //$this->redirect(array('site/index'));
         }
         
         $model = new Whitelist();
