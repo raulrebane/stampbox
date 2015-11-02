@@ -136,6 +136,7 @@ class UsermailboxController extends Controller
     {
         $model=new NewMailbox;
         $model->scenario = 'Update';
+	$model->useremail = $email;
         $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2',
                     array(':1'=>Yii::app()->user->getId(), ':2'=>$email));
         if ($model->registeredemail == NULL) {
