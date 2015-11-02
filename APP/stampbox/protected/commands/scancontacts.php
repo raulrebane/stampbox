@@ -1,4 +1,5 @@
 <?php
+require_once '/usr/share/php/Swift/swift_required.php';
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -110,6 +111,19 @@ if ($customermailboxes) {
                         else {
                             syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
                             $toemail = $toname = $custmailbox['e_mail'];
+			    $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
+			    $mailer = Swift_Mailer::newInstance($transport);
+			    $message = Swift_Message::newInstance('RE: ' .$overview[0]->subject)
+				->setFrom(array($custmailbox['e_mail'] => $custmailbox['e_mail']))
+				->setTo(array($fromemail => $fromname))
+				->setBody("Hello " .$fromname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail "
+					."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
+					."this link https://www.stampbox.email/index.php?r=signup/step1 and you will receive a free trial and ensure that your emails "
+					."will always be on top of my list.\r\n\r\n"
+					."Best regards,\r\n"
+					.$custmailbox['e_mail']);
+			    $result = $mailer->send($message);
+/*
                             $inviteparams = json_encode(array(
                                 'outgoing_hostname'=>$mailconf['outgoing_hostname'],
                                 'outgoing_port'=>$mailconf['outgoing_port'],
@@ -124,6 +138,7 @@ if ($customermailboxes) {
                             $gmclient= new GearmanClient();
                             $gmclient->addServer("127.0.0.1", 4730);
                             $result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);
+*/
                             if ($custmailbox['sorting_service'] == TRUE) imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                         }
                     }
