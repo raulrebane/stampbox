@@ -122,7 +122,7 @@ class UsermailboxController extends Controller
 			$this->render('step2',array('model'=>$model,));
 			Yii::app()->end();
 		} 
-		else { $e_mail_verified = TRUE;}
+		else { $model->e_mail_verified = TRUE;}
                 Yii::log("New e-mail step2 save: " .$model->useremail, 'info', 'application');
                 $model->Save('Step2');
                 Yii::app()->session->remove('newemail');
@@ -194,7 +194,7 @@ class UsermailboxController extends Controller
 			$this->render('update',array('model'=>$model,));
 			Yii::app()->end();
 		} 
-		else { $e_mail_verified = TRUE;}
+		else { $model->e_mail_verified = TRUE;}
                 Yii::log("e-mail update save: " .$model->useremail, 'info', 'application');
                 $model->Save('Update');
 		Yii::app()->session->remove('updateemail');
