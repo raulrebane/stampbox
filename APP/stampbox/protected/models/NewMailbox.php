@@ -104,7 +104,7 @@ class NewMailbox extends CFormModel
 		    list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
-                    if ($e_mail_verified) {
+                    if ($this->e_mail_verified) {
                         $this->registeredemail->status = 'A';
                     }
                     else {
@@ -127,7 +127,7 @@ class NewMailbox extends CFormModel
                         else {
                                 $this->registereddomain->incoming_auth = 'OTHER';
                         }
-                        if ($e_mail_verified) {
+                        if ($this->e_mail_verified) {
                             $this->registereddomain->status = 'A';
                         }
                         else {
@@ -149,7 +149,7 @@ class NewMailbox extends CFormModel
                     $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
                     $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
                     $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
-                    if ($e_mail_verified) {
+                    if ($this->e_mail_verified) {
                         $this->registeredemail->status = 'A';
                     }
                     else {
@@ -173,7 +173,7 @@ class NewMailbox extends CFormModel
                     else {
                             $this->registereddomain->incoming_auth = 'OTHER';
                     }
-                    if ($e_mail_verified) {
+                    if ($this->e_mail_verified) {
                         $this->registereddomain->status = 'A';
                     }
                     else {
