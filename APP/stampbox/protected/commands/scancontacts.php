@@ -11,7 +11,7 @@ $fp = fopen("/var/run/stampbox/scancontacts.lock", "w+");
 // Locked, start processing
 if (flock($fp, LOCK_EX | LOCK_NB)) {
 $dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' AND (receiving_service = TRUE OR sorting_service = TRUE);");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) {
         $mailboxconfig = pg_query($dbconn, "select * from ds.t_mailbox_config where maildomain = '" .$custmailbox['maildomain'] ."';");
@@ -73,7 +73,7 @@ if ($customermailboxes) {
                             }
                             $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
                                 ."' and status = 'A' limit 1");
-                            if ($transactionstampres == FALSE) {
+                            if ($transactionstampres == FALSE AND $custmailbox['sorting_service'] == TRUE) {
                                 imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 continue;
                             }
@@ -124,7 +124,7 @@ if ($customermailboxes) {
                             $gmclient= new GearmanClient();
                             $gmclient->addServer("127.0.0.1", 4730);
                             $result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);
-                            imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                            if ($custmailbox['sorting_service'] == TRUE) imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                         }
                     }
 		}
