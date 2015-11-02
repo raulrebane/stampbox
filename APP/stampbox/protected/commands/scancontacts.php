@@ -8,7 +8,7 @@ require_once '/usr/share/php/Swift/swift_required.php';
  */
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 // try to acquire lock. If this fails then the previous cron script has not yet finished mailbox's processing
-$fp = fopen("/var/run/stampbox/scancontacts.lock", "w+");
+$fp = fopen("/var/lock/stampbox/scancontacts.lock", "w+");
 // Locked, start processing
 if (flock($fp, LOCK_EX | LOCK_NB)) {
 $dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
@@ -109,7 +109,6 @@ if ($customermailboxes) {
                             $res = pg_query($dbconn, "update ds.t_account set stamps_bal = stamps_bal-1 where customer_id = " .$foundsender['customer_id'] .";");
                         }
                         else {
-                            syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
                             $toemail = $toname = $custmailbox['e_mail'];
 			    $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
 			    $mailer = Swift_Mailer::newInstance($transport);
@@ -123,8 +122,10 @@ if ($customermailboxes) {
 					."Best regards,\r\n"
 					.$custmailbox['e_mail']);
 			    $result = $mailer->send($message);
+                            syslog(LOG_INFO, "Sending invitation: " .$custmailbox['customer_id'] ." : ".$overview[0]->uid
+                                    ." From: " .$custmailbox['e_mail'] . "To: $fromname $fromemail");
 /*
-                            $inviteparams = json_encode(array(
+                                $inviteparams = json_encode(array(
                                 'outgoing_hostname'=>$mailconf['outgoing_hostname'],
                                 'outgoing_port'=>$mailconf['outgoing_port'],
                                 'outgoing_socket_type'=>$mailconf['outgoing_socket_type'],
@@ -139,7 +140,10 @@ if ($customermailboxes) {
                             $gmclient->addServer("127.0.0.1", 4730);
                             $result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);
 */
-                            if ($custmailbox['sorting_service'] == TRUE) imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                            if ($custmailbox['sorting_service'] == TRUE) {
+                                imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
+                                syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
+                            }
                         }
                     }
 		}
