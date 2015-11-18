@@ -27,7 +27,7 @@
         <a class="logo" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
         <div class="menu">
             <a href="<?php echo Yii::app()->createUrl('site/ResetPasswd')?>">Forgot your password?</a>
-            <a href="<?php echo Yii::app()->createUrl('register')?>"><span>Don't have account?</span> Join us here</a>
+            <a href="<?php echo Yii::app()->createUrl('signup/Step1')?>"><span>Don't have account?</span> Join us here</a>
         </div>
 
         <?php echo $content ?>
