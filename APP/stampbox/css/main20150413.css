@@ -8356,7 +8356,9 @@ ul li:last-of-type {
 }
 /* line 92, ../sass/_home.scss */
 .home .container .header ul.menu li a.btn.login {
-  background-color: #95bb42;
+  background-color: transparent; /* #95bb42;*/
+  border-style: solid;
+  border-width: 2px
 }
 /* line 95, ../sass/_home.scss */
 .home .container .header ul.menu li a.btn.signup {

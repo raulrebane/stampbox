@@ -7,10 +7,6 @@
                 <div class="col-sm-10 hero">
                     <h1><b>Stampbox</b> - the email courier</h1>
                     <h2>The only way to make emails worth your time</h2>
-                    <div class="menu visible-xs">
-                        <a href="<?php echo Yii::app()->createUrl('site/login')?>" class="btn btn-aqua login">Log in</a>
-                        <a href="<?php echo Yii::app()->createUrl('register/Step1')?>" class="btn btn-aqua signup">Sign up for free</a>
-                    </div>
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -56,8 +52,7 @@
                 </div>
                 <div class="col-sm-1"></div>
             </div>
-        </div>
-        
+</div>
         <div class="wide">
             <div class="container">
                 <div class="row">
@@ -71,13 +66,18 @@
                 </div>
             </div>
         </div>
-
-        <div class="container footer">
+        <div class="container">
             <div class="row">
-                <div class="col-sm-12 text-center">
-                     <img src="images/home_footer_icon.png">
-                     <h1>From now on all the important messages are delivered.</h1>
-                     <div class="line"></div>
+            <div class="row feature">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6">
+                    <h3>From now on all the important messages are delivered.</h3>
+                    <img src="images/home_feature_c.png" class="visible-xs">
                 </div>
+                <div class="col-sm-4 hidden-xs">
+                    <img src="images/home_feature_c.png">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
             </div>
         </div>

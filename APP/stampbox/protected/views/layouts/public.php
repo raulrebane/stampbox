@@ -9,7 +9,6 @@
         <title>Stampbox</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
         <link rel="stylesheet" href="css/main20150413.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
 <script>
@@ -42,7 +41,7 @@
                     $this->widget('zii.widgets.CMenu',array(
                         'items'=>array(
                             array('label'=>'Home', 'url'=>array('/site/index')),
-                            array('label'=>'Pricing', 'url'=>array('/site/pricing')),
+                            //array('label'=>'Pricing', 'url'=>array('/site/pricing')),
                             array('label'=>'Terms & conditions', 'url'=>array('/site/terms')),
                             array('label'=>'Help', 'url'=>array('/site/help')),
                             array('label'=>'Log in', 'url'=>array('/site/login'), 'linkOptions' => array('class'=>'btn btn-aqua login')),
