@@ -8302,7 +8302,7 @@ ul li:last-of-type {
   left: 0px;
   width: 100%;
   height: 400px;
-  background-image: url(../images/home_bg.jpg);
+  background-image: url(../images/menuheader.png);
   background-position: center;
   background-size: cover;
 }
@@ -8377,11 +8377,11 @@ ul li:last-of-type {
 .home .container .hero h1 {
   color: #FFF;
   font-family: "Brandon Grot W01 Light";
-  font-size: 58px;
+  font-size: 50px;
   text-align: center;
   letter-spacing: -2px;
   margin-top: 28px;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 /* line 122, ../sass/_home.scss */
 .home .container .hero h1 b {
@@ -8396,6 +8396,15 @@ ul li:last-of-type {
   margin-top: 3px;
   margin-bottom: 50px;
 }
+.home .container .hero h3 {
+  color: #FFF;
+  font-family: "Brandon Grot W01 Light";
+  font-size: 24px;
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 50px;
+}
+
 /* line 136, ../sass/_home.scss */
 .home .container .video-holder {
   max-width: 780px;
@@ -8413,13 +8422,34 @@ ul li:last-of-type {
 /* line 147, ../sass/_home.scss */
 .home .container .feature h3 {
   font-family: "BrandonGrotW01-Regular";
-  font-size: 47px;
+  font-size: 40px;
   color: #3a3735;
   letter-spacing: -2px;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 0px;
   line-height: 47px;
 }
+.home .container .feature h31 {
+  font-family: "BrandonGrotW01-Regular";
+  font-size: 40px;
+  color: #00b0b1;
+  letter-spacing: -2px;
+  margin: 0px;
+  margin-bottom: 0px;
+  line-height: 47px;
+}
+
+.home .container .feature h4 {
+  font-family: "BrandonGrotW01-Regular";
+  font-size: 24px;
+  color: #00b0b1;
+  letter-spacing: -2px;
+  margin: 0px;
+  margin-bottom: 0px;
+  line-height: 47px;
+  text-align: center;
+}
+
 /* line 156, ../sass/_home.scss */
 .home .container .feature p {
   font-family: "BrandonGrotW01-Regular";
@@ -8445,22 +8475,22 @@ ul li:last-of-type {
   background-color: #00b0b1;
   text-align: center;
   color: #FFF;
-  margin-top: 64px;
+  /*margin-top: 64px;*/
 }
 /* line 181, ../sass/_home.scss */
 .home .wide h2 {
   font-family: "BrandonGrotW01-Regular";
-  font-size: 42px;
-  margin-top: 55px;
+  font-size: 24px;
+  margin-top: 20px;
   margin-bottom: 0px;
 }
 /* line 187, ../sass/_home.scss */
 .home .wide h1 {
   font-family: "Brandon Grot W01 Light";
-  font-size: 58px;
+  font-size: 42px;
   text-align: center;
   letter-spacing: -2px;
-  margin-top: 0px;
+  margin-top: 10px;
 }
 /* line 193, ../sass/_home.scss */
 .home .wide h1 b {
@@ -8474,7 +8504,6 @@ ul li:last-of-type {
   margin: 31px auto;
   line-height: 23px;
   word-break: keep-all;
-  margin-bottom: 136px;
 }
 /* line 209, ../sass/_home.scss */
 .home .footer img {
