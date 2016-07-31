@@ -8429,14 +8429,8 @@ ul li:last-of-type {
   margin-bottom: 0px;
   line-height: 47px;
 }
-.home .container .feature h31 {
-  font-family: "BrandonGrotW01-Regular";
-  font-size: 40px;
+.home .container .feature h3.blue {
   color: #00b0b1;
-  letter-spacing: -2px;
-  margin: 0px;
-  margin-bottom: 0px;
-  line-height: 47px;
 }
 
 .home .container .feature h4 {
@@ -8897,6 +8891,7 @@ table tr td {
 .btn.btn-aqua:hover {
   background-color: #008586;
 }
+
 /* line 39, ../sass/_dashboard.scss */
 .btn.btn-dark {
   background-color: #262626;
