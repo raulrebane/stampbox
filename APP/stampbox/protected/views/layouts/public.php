@@ -77,13 +77,43 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
             <?php
                 $model=new LoginForm;
                 $form = $this->beginWidget('CActiveForm',array(
-                'id' => 'verticalForm','action' => Yii::app()->createUrl('site/login'), 'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-            ?>
+                    'id' => 'login-form','action' => Yii::app()->createUrl('site/login'), 
+                    'htmlOptions' => array('class' => 'form', 'role'=>'form'),
+                    'enableClientValidation'=>true,
+                    'clientOptions' => array('validateOnSubmit' => true,'validateOnChange'=>false,
+                        'afterValidate' => 'js:function(form, data, hasError) {
+                            if (!hasError){
+                                str = $("#login-form").serialize() + "&ajax=login-form";
+                                $.ajax({type: "POST", url: "' . Yii::app()->createUrl('site/login') . '",
+                                data: str,
+                                dataType: "json",
+                                beforeSend : function() {$("#login").attr("disabled",true);},
+                                success: function(data, status) {
+                                    if(data.authenticated) {
+                                        window.location = data.redirectUrl;}
+                                    else {
+                                        $.each(data, function(key, value) {
+                                            var div = "#"+key+"_em_";
+                                            $(div).text(value);
+                                            $(div).show();
+                                            });
+                                        $("#login").attr("disabled",false);
+                                    }
+                            },
+                        });
+                        return false;
+                        }
+                    }',
+    ),
+));?>
             <div class="form-group">
             <?php
                 echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
+                echo $form->error($model, 'username');
+                
                 echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder'=>'Password'));
-            ?>
+                echo $form->error($model, 'password');
+            ?>  
             </div>
             <button type="submit" class="btn btn-aqua btn-block">Login</button>
             <?php $this->endWidget();?>

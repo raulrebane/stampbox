@@ -256,9 +256,14 @@ class SiteController extends Controller
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
+                    Yii::log("Login: " .$model->username .' ' .$model->password , 'info', 'application');
+                    $errors = CActiveForm::validate($model);
+                    if ($errors != '[]')
+                        {
+                            echo $errors;
+                            Yii::app()->end();
+                        }
+                }
 
 		// collect user input data
 		if(isset($_POST['LoginForm']))
@@ -266,10 +271,13 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+                            echo CJSON::encode(array( 'authenticated' => true,
+                                'redirectUrl' => CController::createUrl('site/index')));
+                            Yii::app()->end();
+                            //$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		//$this->render('login',array('model'=>$model));
 	}
 
 	/**
