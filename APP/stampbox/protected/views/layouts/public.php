@@ -11,6 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link rel="stylesheet" href="css/main20150413.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
+<?php
+Yii::app()->clientScript->registerCoreScript('jquery');     
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+?>
+        
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,7 +49,8 @@
                             //array('label'=>'Pricing', 'url'=>array('/site/pricing')),
                             array('label'=>'Terms & conditions', 'url'=>array('/site/terms')),
                             array('label'=>'Help', 'url'=>array('/site/help')),
-                            array('label'=>'Log in', 'url'=>array('/site/login'), 'linkOptions' => array('class'=>'btn btn-aqua login')),
+                            array('label'=>'Log in', 'url'=>array('/site/login'), 'linkOptions' => array('class'=>'btn btn-aqua login'), 
+                                'itemOptions' => array('data-toggle' => 'modal', 'data-target' =>'#Login')),
                             array('label'=>'Sign up', 'url'=>array('/signup/step1'), 'linkOptions' => array('class'=>'btn btn-aqua signup')),
                         ),
                         'htmlOptions' => array('class'=>'menu')
@@ -60,5 +66,31 @@
     <script src="scripts/main.js"></script>
     <script src="scripts/plugins.js"></script>
 
+<!-- Modal -->
+<div class="modal fade" id="Login" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="dialog-form" style="padding:20px;">
+            <?php
+                $model=new LoginForm;
+                $form = $this->beginWidget('CActiveForm',array(
+                'id' => 'verticalForm','action' => Yii::app()->createUrl('site/login'), 'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            ?>
+            <div class="form-group">
+            <?php
+                echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
+                echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder'=>'Password'));
+            ?>
+            </div>
+            <button type="submit" class="btn btn-aqua btn-block">Login</button>
+            <?php $this->endWidget();?>
+        </div>
+    </div>
+    </div>
+</div>
+    
 </body>
 </html>

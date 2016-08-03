@@ -8850,7 +8850,7 @@ ul li:last-of-type {
 
 /* line 1, ../sass/_dashboard.scss */
 body {
-  background-color: #f5f5f5;
+  //background-color: #f5f5f5;
   font-family: "Brandon Grot W01 Medium";
 }
 
@@ -9034,14 +9034,15 @@ table tr td {
 }
 /* line 161, ../sass/_dashboard.scss */
 .dashboard .widget .title {
-  background-color: #e9e5dd;
+  //background-color: #e9e5dd;
   width: 100%;
   min-height: 30px;
   color: #544c45;
-  text-align: center;
-  text-transform: uppercase;
+  text-align: left;
+  //text-transform: uppercase;
   line-height: 30px;
-  font-size: 10px;
+  font-size: 16px;
+  font-weight: bold;
   font-family: "Brandon Grot W01 Black";
 }
 /* line 172, ../sass/_dashboard.scss */
@@ -9063,19 +9064,56 @@ table tr td {
   width: 100%;
   padding-right: 104px;
   text-align: center;
+  height: 134;
+  
+}
+
+.dashboard .widget.widget-balance .content .stamps {
+  position: absolute;
+  top: 0px;
+  width: 104px;
+  height: 104px;
+  line-height: 60px;
+  font-size: 50px;
+  text-align: center;
+  border: 1px solid #00b0b1;
 }
 /* line 190, ../sass/_dashboard.scss */
-.dashboard .widget.widget-balance .content .balance .count {
+.dashboard .widget.widget-balance .content .stamps .count {
   display: inline-block;
 }
 /* line 194, ../sass/_dashboard.scss */
-.dashboard .widget.widget-balance .content .balance .suffix {
+.dashboard .widget.widget-balance .content .stamps .suffix {
   display: inline-block;
   font-size: 17px;
   line-height: 17px;
   width: 60px;
   text-align: left;
 }
+
+.dashboard .widget.widget-balance .content .credits {
+  position: absolute;
+  top: 0px;
+  width: 104px;
+  height: 104px;
+  line-height: 60px;
+  font-size: 50px;
+  text-align: center;
+  border: 1px solid #00b0b1;
+}
+/* line 190, ../sass/_dashboard.scss */
+.dashboard .widget.widget-balance .content .credits .count {
+  display: inline-block;
+}
+/* line 194, ../sass/_dashboard.scss */
+.dashboard .widget.widget-balance .content .credits .suffix {
+  display: inline-block;
+  font-size: 17px;
+  line-height: 17px;
+  width: 60px;
+  text-align: left;
+}
+
 /* line 203, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .buy-more {
   position: absolute;
@@ -9993,4 +10031,15 @@ table tr td {
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
+}
+.dialog-form {
+    
+}
+
+.dialog-form form input {
+  height: 42px;
+  border-radius: 0px;
+  border-color: #F1F1F1;
+  background-color: #F1F1F1;
+  margin: 16px;
 }
