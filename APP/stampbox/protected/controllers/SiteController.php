@@ -67,21 +67,21 @@ class SiteController extends Controller
                     $this->render('index'); }
             else 
                 {   //$this->layout = 'secure';
-                    $brokenmailboxes = Yii::app()->db->createCommand(array(
-                    'select'=> array('*'),
-                    'from'=> 'ds.t_customer_mailbox',
-                    'where'=> "customer_id = :1 AND receiving_service = FALSE",
-                    'params'=> array(':1'=>Yii::app()->user->getId()),
-                    ))->queryAll();
-                    if ($brokenmailboxes) {
-                        foreach ($brokenmailboxes as $mailbox) {
-                            //echo CVarDumper::dumpAsString($mailbox);
-                            $errortext = 'Your are not receiving credits for Stamped e-mails for you e-mail' .$mailbox['e_mail'];
-                            $errortext = $errortext . '<br><a class="btn btn-aqua" href="' .Yii::app()->createUrl('usermailbox/update') 
-                                    .'&email=' .$mailbox['e_mail'] .'">Setup your e-mail</a>';
-                            Yii::app()->user->setFlash('info', $errortext); 
-                        }
-                    }
+//                    $brokenmailboxes = Yii::app()->db->createCommand(array(
+//                    'select'=> array('*'),
+//                    'from'=> 'ds.t_customer_mailbox',
+//                    'where'=> "customer_id = :1 AND receiving_service = FALSE",
+//                    'params'=> array(':1'=>Yii::app()->user->getId()),
+//                    ))->queryAll();
+//                    if ($brokenmailboxes) {
+//                        foreach ($brokenmailboxes as $mailbox) {
+//                            //echo CVarDumper::dumpAsString($mailbox);
+//                            $errortext = 'Your are not receiving credits for Stamped e-mails for you e-mail' .$mailbox['e_mail'];
+//                            $errortext = $errortext . '<br><a class="btn btn-aqua" href="' .Yii::app()->createUrl('usermailbox/update') 
+//                                    .'&email=' .$mailbox['e_mail'] .'">Setup your e-mail</a>';
+//                            Yii::app()->user->setFlash('info', $errortext); 
+//                        }
+//                    }
                     $this->render('dashboard'); }
 	}
 

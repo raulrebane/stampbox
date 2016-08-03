@@ -9036,8 +9036,8 @@ table tr td {
 .dashboard .widget .title {
   //background-color: #e9e5dd;
   width: 100%;
-  min-height: 30px;
-  color: #544c45;
+  min-height: 40px;
+  color: #5E5E5E;
   text-align: left;
   //text-transform: uppercase;
   line-height: 30px;
@@ -9052,7 +9052,8 @@ table tr td {
 }
 /* line 177, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance {
-  height: 134px;
+height: 250px;
+width: 334px;
 }
 /* line 180, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .balance {
@@ -9069,18 +9070,23 @@ table tr td {
 }
 
 .dashboard .widget.widget-balance .content .stamps {
-  position: absolute;
-  top: 0px;
-  width: 104px;
-  height: 104px;
+  display: inline-block;
+  width: 160px;
+  height: 160px;
   line-height: 60px;
   font-size: 50px;
+  color: #00BEBF;
   text-align: center;
   border: 1px solid #00b0b1;
+  margin-right: 10px;
 }
+
 /* line 190, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .stamps .count {
-  display: inline-block;
+  //display: inline-block;
+  top: 28px;
+  position: relative;
+  text-align: center;
 }
 /* line 194, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .stamps .suffix {
@@ -9092,18 +9098,20 @@ table tr td {
 }
 
 .dashboard .widget.widget-balance .content .credits {
-  position: absolute;
-  top: 0px;
-  width: 104px;
-  height: 104px;
+  display: inline-block;
+  width: 160px;
+  height: 160px;
   line-height: 60px;
   font-size: 50px;
+  color: #00BEBF;
   text-align: center;
   border: 1px solid #00b0b1;
 }
 /* line 190, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .credits .count {
-  display: inline-block;
+  top: 28px;
+  position: relative;
+  text-align: center;
 }
 /* line 194, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .credits .suffix {
@@ -9116,14 +9124,11 @@ table tr td {
 
 /* line 203, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .buy-more {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 104px;
-  height: 104px;
-  line-height: 92px;
-  font-size: 16px;
-  text-decoration: underline;
+    position: relative;
+    top: 10px;
+    right: 0px;
+    width: 100%;
+    font-size: 14px;
 }
 /* line 218, ../sass/_dashboard.scss */
 .dashboard .widget.widget-activity .content {
@@ -10032,9 +10037,7 @@ table tr td {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
-.dialog-form {
-    
-}
+.dialog-form {}
 
 .dialog-form form input {
   height: 42px;

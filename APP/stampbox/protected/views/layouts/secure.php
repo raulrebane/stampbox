@@ -9,9 +9,7 @@
         <title>Stampbox</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link type="text/css" rel="stylesheet" href="//fast.fonts.net/cssapi/49c66566-c451-4985-90f6-153b894ab04f.css">
         <link rel="stylesheet" href="css/main20150413.css">
-        <script src="scripts/vendor/d7100892.modernizr.js"></script>
         <script src="scripts/bootstrap.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -27,8 +25,7 @@
     <body class="logged-in">
         <div id="wrapper">
 
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
+            <div id="mainmenu">
                 <a class="logo hidden-xs hidden-sm" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
@@ -38,18 +35,10 @@
                         array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
                         array('label'=>'Invite', 'url'=>array('/invite/index')),
                         array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
+                        array('label'=>'Help', 'url'=>array('/site/help')),
                         array('label'=>'Logout', 'url'=>array('/site/logout')),
                         ),
-                    'htmlOptions' => array('class'=>'sidebar-nav main-menu',
-                        ),
-                    )); ?>
-                <?php $this->widget('zii.widgets.CMenu',array(
-                    'items'=>array(
-                        //array('label'=>'Visit website', 'url'=>array('/')),
-                        array('label'=>'Terms of use', 'url'=>array('/site/terms')),
-                        array('label'=>'Help', 'url'=>array('/site/help'))
-                        ),
-                    'htmlOptions' => array('class'=>'sidebar-nav sub-menu',
+                    'htmlOptions' => array('class'=>'nav navbar-nav',
                         ),
                     )); ?>
             </div>
@@ -67,8 +56,5 @@
                 </div>
             </div>
         </div>
-        <script src="scripts/main.js"></script>
-        <script src="scripts/plugins.js"></script>
-        <script src="scripts/stampbox-flipswitch.js"></script>
     </body>
 </html>
