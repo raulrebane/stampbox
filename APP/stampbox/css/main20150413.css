@@ -9133,6 +9133,7 @@ width: 334px;
 /* line 218, ../sass/_dashboard.scss */
 .dashboard .widget.widget-activity .content {
   padding: 15px;
+  border: 1px solid #00b0b1;
 }
 /* line 220, ../sass/_dashboard.scss */
 .dashboard .widget.widget-activity .content table {
@@ -9183,6 +9184,8 @@ width: 334px;
 /* line 270, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .content {
   padding: 15px;
+  border: 1px solid #00b0b1;
+  
 }
 /* line 273, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .content table tr {
