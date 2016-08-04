@@ -23,7 +23,7 @@
 </script>
     </head>
     <body class="logged-in">
-        <div id="wrapper">
+        <div class="containersecure">
 
             <div id="mainmenu">
                 <a class="logo hidden-xs hidden-sm" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>

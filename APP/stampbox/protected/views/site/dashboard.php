@@ -33,7 +33,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 }
 ?>
 
-<div class="col-md-7">
+<div class="col-md-4">
     <div class="row">
     <div class="col-md-12">
         <div class="widget widget-balance">
@@ -49,53 +49,12 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-    <div class="widget widget-activity"><div class="title">Stamps and credits activity</div>
-    <div class="content">
-        <?php 
-        $gridDataProvider = new CArrayDataProvider($lasttransactions, array('keyField'=>'transaction_id', ));  
+    </div>
+</div>
 
-        $gridColumns = array(
-            array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
-            if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
-            elseif ($data['amount']<0) return '<i class="sbicon-reply"></i>'; else return '<i class="sbicon-forward"></i>';}),
-            array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
-                if ($data['e_mail'] == NULL) return $data['description'];
-                else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
-            array('header'=>'Stamp(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
-                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'value'=>function($data) { if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0); else return '';}),
-            array('header'=>'Credit(s)', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
-                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
-                'value'=>function($data) {if ($data['transaction_code'][0] == 'P') return number_format($data['amount'], 3); else return '';}),
-            array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
-                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
-                'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
-                if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0);
-                else return number_format($data['amount'], 3);}),
-            array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
-                'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
-            array('header'=>'Time', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
-                'htmlOptions'=>array('class'=>'time hidden-xs'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
-      
-        $this->widget('zii.widgets.grid.CGridView',array(
-            'enablePagination'=>FALSE,
-            //'hideHeader'=>TRUE,
-            'template' => '{items}',
-            'htmlOptions'=>array('class'=>'content'),
-            'dataProvider' => $gridDataProvider,
-            'columns'=>$gridColumns));      
-      
-        ?>
-    </div>
-    <div class="footer">
-        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('account/statement')?>">See more...</a>
-    </div>
-    </div></div></div></div>    
-    <div class="col-md-5"><div class="row">
-        <div class="col-md-12"><div class="widget widget-accounts">
+<div class="col-md-8">
+    <div class="row">
+    <div class="col-md-12"><div class="widget widget-accounts">
         <div class="title">Stampboxed email's</div>
             <div class="content table-responsive">
                 <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
@@ -108,7 +67,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                 $this->widget('zii.widgets.grid.CGridView', array(
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
-                    'htmlOptions'=>array('class'=>'content'),
+                    'htmlOptions'=>array('class'=>''),
                     'selectableRows' => 0,
                     'enableSorting' => false,
                     'dataProvider'=>$mailboxdataprovider,
@@ -132,24 +91,70 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                 ));?>
             </div>
             <div class="footer">
-                <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
-            </div>
-        </div></div>
-        <div class="col-md-12">
-            <div class="widget widget-invitations">
-                <div class="title">Invitations</div>
-                <div class="content">
-                    <div class="subtitle">Sent</div>
-                    <p> <?php echo $invitationcount['invited'] ?><span>of</span> <?php echo $invitationcount['invitedtotal'] ?></p>
-<!--
-                    <div class="subtitle">Received</div>
-                    <p>32</p>
--->
-                </div>
-                <div class="footer">
-                    <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
-                </div>
+                <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
             </div>
         </div>
+    </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="widget widget-activity">
+    <div class="title">Stamps and credits activity</div>
+    <div class="content">
+        <?php 
+        $gridDataProvider = new CArrayDataProvider($lasttransactions, array('keyField'=>'transaction_id', ));  
+
+        $gridColumns = array(
+//            array('header'=>'', 'name'=>'type', 'htmlOptions'=>array('class'=>'type', 'width'=>"25"), 'type'=>'raw', 'value'=>function($data) {
+//            if ($data['transaction_code'] == 'SCR' or $data['transaction_code'] == 'PDB') return ''; 
+//            elseif ($data['amount']<0) return '<i class="sbicon-reply"></i>'; else return '<i class="sbicon-forward"></i>';}),
+            array('header'=>'E-mail / Subject', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'), 'type'=>'raw', 'value'=>function($data) {
+                if ($data['e_mail'] == NULL) return $data['description'];
+                else return $data['e_mail'] .'<span>'.$data['subject'] .'</span>';}),
+            array('header'=>'Stamps', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'value'=>function($data) { if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0); else return '';}),
+            array('header'=>'Credits', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'hidden-xs hidden-md'), 
+                'value'=>function($data) {if ($data['transaction_code'][0] == 'P') return number_format($data['amount'], 3); else return '';}),
+            array('header'=>'Amount', 'name'=>'amount', 'headerHtmlOptions'=>array('class'=>'visible-xs visible-md'),
+                'cssClassExpression'=>'$data["amount"] < 0 ? "transaction neg" : "transaction"',
+                'htmlOptions'=>array('class'=>'visible-xs visible-md'), 'value'=>function($data) {
+                if ($data['transaction_code'][0] == 'S') return number_format($data['amount'], 0);
+                else return number_format($data['amount'], 3);}),
+            array('header'=>'Date', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'date hidden-xs'), 'value'=>'date("d/m/y", strtotime($data["transaction_date"]))'),
+            array('header'=>'Time', 'name'=>'transaction_date', 'headerHtmlOptions'=>array('class'=>'hidden-xs'), 
+                'htmlOptions'=>array('class'=>'time hidden-xs'), 'value'=>'date("H:i", strtotime($data["transaction_date"]))'));
+      
+        $this->widget('zii.widgets.grid.CGridView',array(
+            'enablePagination'=>FALSE,
+            //'hideHeader'=>TRUE,
+            'template' => '{items}',
+            'htmlOptions'=>array('class'=>''),
+            'dataProvider' => $gridDataProvider,
+            'columns'=>$gridColumns));      
+      
+        ?>
+    </div>
+    <div class="footer">
+        <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('account/statement')?>">See more...</a>
+    </div>
+    </div>
+</div>    
+
+<div class="col-md-12">
+    <div class="widget widget-invitations">
+    <div class="title">Invitations</div>
+    <div class="content">
+        <div class="subtitle">Sent</div>
+        <p> <?php echo $invitationcount['invited'] ?><span>of</span> <?php echo $invitationcount['invitedtotal'] ?></p>
+    </div>
+    <div class="footer">
+        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
+    </div>
     </div>
 </div>
