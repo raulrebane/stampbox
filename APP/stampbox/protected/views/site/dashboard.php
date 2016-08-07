@@ -168,10 +168,12 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
             'columns'=>$gridColumns));      
         ?>
     </div>
-    <div class="footer">
+    <div class="footer dashboard-form">
         <?php 
+            $model = new Whitelist();
             $form = $this->beginWidget('CActiveForm',array(
             'id' => 'Whitelist',
+            'action' => Yii::app()->createUrl('whitelist/index'), 
             'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'model'=>$model,

@@ -8372,7 +8372,6 @@ ul li:last-of-type {
 /* line 98, ../sass/_home.scss */
 .home .container .header ul.menu li a.btn.active, .home .container .header ul.menu li a.btn:hover {
   text-decoration: none;
-  border: none;
 }
 /* line 105, ../sass/_home.scss */
 .home .container .header ul.menu li.active a {
@@ -9245,7 +9244,7 @@ width: 334px;
 /* line 312, ../sass/_dashboard.scss */
 .dashboard .widget.widget-invitations .content {
   padding: 15px;
-  text-align: center;
+  border: 1px solid #00b0b1;
 }
 /* line 315, ../sass/_dashboard.scss */
 .dashboard .widget.widget-invitations .content .subtitle {
@@ -9276,9 +9275,9 @@ width: 334px;
 }
 
 /* line 312, ../sass/_dashboard.scss */
-.dashboard .widget .widget-whitelist .content {
+.dashboard .widget.widget-whitelist .content {
   padding: 15px;
-  text-align: center;
+  border: 1px solid #00b0b1;  
 }
 
 /* line 320, ../sass/_dashboard.scss */
@@ -10095,11 +10094,31 @@ dashboard .widget .widget-whitelist .form input {
 .dialog-form {}
 
 .dialog-form form input {
-  height: 42px;
   border-radius: 0px;
-  border-color: #F1F1F1;
+  border: none;
   background-color: #F1F1F1;
-  margin: 16px;
+  margin: 0px;
+  margin-top: 10px;
+  width: 100%;  
+  height: 42px;
+  padding: 6px 12px;
+  font-size: 18px;
+  line-height: 1.428571429;
+}
+
+.dashboard-form {}
+
+.dashboard-form form input {
+  border-radius: 0px;
+  border: none;
+  background-color: #F1F1F1;
+  margin: 0px;
+  margin-top: 10px;
+  margin-right: 10px;  
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
 }
 
 .menuheader {
