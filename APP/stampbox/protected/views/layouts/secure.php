@@ -22,11 +22,24 @@
 
 </script>
     </head>
-    <body class="logged-in">
-        <div class="containersecure">
-
-            <div id="mainmenu">
-                <a class="logo hidden-xs hidden-sm" href="<?php echo Yii::app()->createUrl('site/index') ?>"></a>
+    <body class="home">
+        <div class="menuheader">
+            <div class="container">
+            <div class="row header">
+                <div class="col-xs-1">
+                    <a class="" href="<?php echo Yii::app()->createUrl('site/index') ?>">
+                        <img src="images/logo-white-trans.png" height="42" width="42">
+                    </a>
+                </div>
+                <div class="col-xs-11">
+                    <a class="btn btn-dark pull-right" href="<?php echo Yii::app()->createUrl('site/logout') ?>">Logout</a>
+                </div>
+            </div>
+            </div>
+        </div>    
+        <div class="nav mainmenu">
+        <div class="container">
+            <div class="row header text-center">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),
@@ -36,22 +49,19 @@
                         array('label'=>'Invite', 'url'=>array('/invite/index')),
                         array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
                         array('label'=>'Help', 'url'=>array('/site/help')),
-                        array('label'=>'Logout', 'url'=>array('/site/logout')),
                         ),
-                    'htmlOptions' => array('class'=>'nav navbar-nav',
+                    'htmlOptions' => array('class'=>'mainmenu',
                         ),
                     )); ?>
+                </div>
             </div>
-
-            <div id="page-content-wrapper">
-                <div class="dashboard inset">
-                    <div class="row">
-                        <div class="col-md-12" id="menu-toggle"><i class="icon-menu"></i></div>
-                        <div class="col-md-12">
-                        <!-- content START -->
-                            <?php echo $content ?>
-                        <!-- content END -->
-                        </div>
+        </div>
+        <div class="container">
+            <div class="dashboard inset">
+                <div class="row">
+                    <div class="col-md-12" id="menu-toggle"><i class="icon-menu"></i></div>
+                    <div class="col-md-12">
+                        <?php echo $content ?>
                     </div>
                 </div>
             </div>

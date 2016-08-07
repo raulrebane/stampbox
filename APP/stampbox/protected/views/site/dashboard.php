@@ -27,32 +27,35 @@ $lasttransactions = Yii::app()->db->createCommand(array(
             'limit'=> '10',
             'params'=> array(':1'=>Yii::app()->user->getId()),
         ))->queryAll();
+$whitelistitems = Yii::app()->db->createCommand(array(
+            'select'=> array('*'),
+            'from'=> 'ds.t_whitelist',
+            'where'=> 'customer_id = :1',
+            'limit'=> '10',
+            'params'=> array(':1'=>Yii::app()->user->getId()),
+        ))->queryAll();
 
 foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
 }
 ?>
 
-<div class="col-md-4">
-    <div class="row">
-    <div class="col-md-12">
-        <div class="widget widget-balance">
-            <div class="content">
-            <div class="title">You have</div>
-            <div class="stamps">
-                <div class="count"><?php echo $stampcount['stamps_bal'] ?></div><div class="suffix">stamps</div>
-            </div>
-            <div class="credits">
-                <div class="count"><?php echo $stampcount['points_bal'] ?></div><div class="suffix">credits</div>
-            </div>
-            <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
-            </div>
+<div class="col-md-5 col-lg-5">
+    <div class="widget widget-balance">
+        <div class="content">
+        <div class="title">You have</div>
+        <div class="stamps">
+            <div class="count"><?php echo $stampcount['stamps_bal'] ?></div><div class="suffix">stamps</div>
         </div>
-    </div>
+        <div class="credits">
+            <div class="count"><?php echo $stampcount['points_bal'] ?></div><div class="suffix">credits</div>
+        </div>
+        <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
+        </div>
     </div>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-7 col-lg-7">
     <div class="row">
     <div class="col-md-12"><div class="widget widget-accounts">
         <div class="title">Stampboxed email's</div>
@@ -147,14 +150,50 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 </div>    
 
 <div class="col-md-12">
-    <div class="widget widget-invitations">
-    <div class="title">Invitations</div>
+    <div class="widget widget-whitelist">
+    <div class="title">My whitelist</div>
     <div class="content">
-        <div class="subtitle">Sent</div>
-        <p> <?php echo $invitationcount['invited'] ?><span>of</span> <?php echo $invitationcount['invitedtotal'] ?></p>
+        <?php 
+        $gridDataProvider = new CArrayDataProvider($whitelistitems, array('keyField'=>'e_mail', ));  
+
+        $gridColumns = array(
+            array('header'=>'E-mail', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')));
+      
+        $this->widget('zii.widgets.grid.CGridView',array(
+            'enablePagination'=>FALSE,
+            //'hideHeader'=>TRUE,
+            'template' => '{items}',
+            'htmlOptions'=>array('class'=>''),
+            'dataProvider' => $gridDataProvider,
+            'columns'=>$gridColumns));      
+        ?>
     </div>
     <div class="footer">
-        <a class="btn btn-dark" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
+        <?php 
+            $form = $this->beginWidget('CActiveForm',array(
+            'id' => 'Whitelist',
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'model'=>$model,
+                'name'=>'e_mail',
+                //'class'=>'form-control',
+                'value'=>'',
+                'source'=>$this->createUrl('whitelist/Autocomplete'),
+                // additional javascript options for the autocomplete plugin
+                'options'=>array('showAnim'=>'fold',),
+            ));
+            echo '<button type="submit" class="btn btn-aqua">Add to whitelist</button>';
+        $this->endWidget();
+        ?>
+    </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="widget widget-invitations">
+    <div class="title">Invitations</div>
+    <div class="footer">
+        <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
     </div>
     </div>
 </div>

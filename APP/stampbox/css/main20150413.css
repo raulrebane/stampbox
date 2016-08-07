@@ -8237,18 +8237,14 @@ button.close {
   content: '\e801';
 }
 
-/* '' */
+/* 
 @media (min-width: 768px) {
-  /* line 2, ../sass/_home.scss */
   .container {
-    width: 960px;
+    width: 740px;
   }
-  .containersecure
-  {
-    width: 960px;
-  }
-  
 }
+*/
+
 /* line 7, ../sass/_home.scss */
 body {
   overflow-x: hidden;
@@ -8265,13 +8261,17 @@ form:focus {
 
 /* line 19, ../sass/_home.scss */
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-  border-color: rgba(126, 239, 104, 0.8);
   box-shadow: none;
   outline: 0 none;
+  height: 42px;
+  border-radius: 0px;
+  border-color: #F1F1F1;
+  background-color: #F1F1F1;
+  margin: 16px;
+
 }
 /* line 23, ../sass/_home.scss */
 textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-  border-color: rgba(126, 239, 104, 0.8);
   box-shadow: none;
   outline: 0 none;
 }
@@ -8930,7 +8930,7 @@ table tr td {
 
 /* line 56, ../sass/_dashboard.scss */
 .inset {
-  padding: 20px;
+  
 }
 
 /* line 60, ../sass/_dashboard.scss */
@@ -9275,6 +9275,42 @@ width: 334px;
   text-transform: uppercase;
 }
 
+/* line 312, ../sass/_dashboard.scss */
+.dashboard .widget .widget-whitelist .content {
+  padding: 15px;
+  text-align: center;
+}
+
+/* line 320, ../sass/_dashboard.scss */
+.dashboard .widget.widget-whitelist .content p {
+  font-size: 30px;
+  line-height: 30px;
+  color: #3a3735;
+  font-family: "Brandon Grot W01 Medium";
+}
+/* line 325, ../sass/_dashboard.scss */
+.dashboard .widget .widget-whitelist .content p span {
+  font-size: 20px;
+  line-height: 20px;
+  color: #d3cbbc;
+  font-family: "BrandonGrotW01-RegularI";
+}
+/* line 334, ../sass/_dashboard.scss */
+.dashboard .widget .widget-whitelist .footer .btn {
+  width: 100%;
+  height: 42px;
+  line-height: 27px;
+  text-transform: uppercase;
+}
+
+dashboard .widget .widget-whitelist .form input {
+  height: 42px;
+  border-radius: 0px;
+  border-color: #F1F1F1;
+  background-color: #F1F1F1;
+  margin: 16px;
+}
+
 /* line 348, ../sass/_dashboard.scss */
 .content-header {
   height: 65px;
@@ -9296,7 +9332,7 @@ width: 334px;
 
 /* line 364, ../sass/_dashboard.scss */
 .inset {
-  padding: 20px;
+  
 }
 
 .sort-link.asc:after {
@@ -9375,7 +9411,7 @@ width: 334px;
 
   /* line 425, ../sass/_dashboard.scss */
   .inset {
-    padding: 15px;
+    
   }
 }
 /* line 2, ../sass/_login.scss */
@@ -10064,4 +10100,53 @@ width: 334px;
   border-color: #F1F1F1;
   background-color: #F1F1F1;
   margin: 16px;
+}
+
+.menuheader {
+  background-color: #00BEBF;    
+  padding: 5px;
+}
+
+.menuheader .a {
+    color: white;
+}
+
+.mainmenu {
+  background-color: #E5E5E5;    
+}
+
+.home .container .header ul.mainmenu {
+  display: inline-block;
+  margin: 0px;
+  margin-top: 12px;
+  list-style-type: none;
+  padding: 0px;
+  text-align: center;
+}
+/* line 70, ../sass/_home.scss */
+.home .container .header ul.mainmenu li {
+  display: inline-block;
+  margin: 0px 12px;
+  margin-bottom: 20px;
+  padding: 0px;
+}
+
+.home .container .header ul.mainmenu li.active  {
+  font-weight: bold;
+}
+
+/* line 74, ../sass/_home.scss */
+.home .container .header ul.mainmenu li a {
+  color: #5E5E5E;
+  font-family: "Brandon Grot W01 Light";
+  font-size: 12px;
+  text-decoration: none;
+}
+/* line 81, ../sass/_home.scss */
+.home .container .header ul.mainmenu li a:hover {
+  border-bottom: 1px solid #5E5E5E;
+}
+/* line 105, ../sass/_home.scss */
+.home .container .header ul.mainmenu li.active a {
+  font-family: "Brandon Grot W01 bold";
 }
