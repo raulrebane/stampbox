@@ -15,7 +15,7 @@
         //$gridColumns = 
         $this->widget('zii.widgets.CListView',array(
             'itemView' => 'saleitem',
-            'htmlOptions'=>array('class'=>'content'),
+            'htmlOptions'=>array('class'=>''),
             'dataProvider' => $dataProvider,
             'template' => '{items}'
             ));

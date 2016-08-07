@@ -107,7 +107,7 @@ if (isset($model->emailslist)) {
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
-                    'htmlOptions'=>array('class'=>'content'),
+                    'htmlOptions'=>array('class'=>''),
                     'dataProvider' => $model->dataProvider,
                     'columns'=>$gridColumns
                 ));      

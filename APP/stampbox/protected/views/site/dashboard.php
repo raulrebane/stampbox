@@ -178,6 +178,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'model'=>$model,
                 'name'=>'e_mail',
+                'htmlOptions' => array('placeholder'=>'Email'),
                 //'class'=>'form-control',
                 'value'=>'',
                 'source'=>$this->createUrl('whitelist/Autocomplete'),
@@ -194,8 +195,27 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 <div class="col-md-12">
     <div class="widget widget-invitations">
     <div class="title">Invitations</div>
-    <div class="footer">
-        <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('invite/index')?>">Invite friends</a>
+    <div class="footer dashboard-form">
+        <?php 
+            $model = new Invitations();
+            $form = $this->beginWidget('CActiveForm',array(
+            'id' => 'Invite',
+            'action' => Yii::app()->createUrl('invite/index'), 
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'model'=>$model,
+                'name'=>'invited_email',
+                'htmlOptions' => array('placeholder'=>'Email'),
+                //'class'=>'form-control',
+                'value'=>'',
+                'source'=>$this->createUrl('whitelist/Autocomplete'),
+                // additional javascript options for the autocomplete plugin
+                'options'=>array('showAnim'=>'fold',),
+            ));
+            echo '<button type="submit" class="btn btn-aqua">Send invitation</button>';
+        $this->endWidget();
+        ?>        
+        
     </div>
     </div>
 </div>

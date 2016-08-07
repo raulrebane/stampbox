@@ -108,14 +108,14 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 ));?>
             <div class="form-group">
             <?php
-                echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Enter email'));
+                echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Email'));
                 echo $form->error($model, 'username');
                 
                 echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder'=>'Password'));
                 echo $form->error($model, 'password');
             ?>  
             </div>
-            <button type="submit" class="btn btn-aqua btn-block">Login</button>
+            <button type="submit" class="btn btn-aqua btn-block dialog-form-btn">Login</button>
             <?php $this->endWidget();?>
         </div>
     </div>

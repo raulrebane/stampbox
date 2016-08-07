@@ -39,9 +39,22 @@ class InviteController extends Controller
                 $invite->invite = 'Y';
                 $invite->save();
             }
-            $this->redirect(array('site/index'));
+            $this->redirect(array('invite/index'));
         }
-        
+
+        if(isset($_POST['invited_email']))
+	{  
+            Yii::log('got invite email' .$_POST['e_mail'], 'info', 'application');
+            $model = new Invitations;
+            $model->invited_email =$_POST['invited_email'];
+            $model->customer_id = Yii::app()->user->getId();
+            if ($model->validate())
+            {
+                $model->save();
+            }
+            Yii::log('Invitation save errors: ' .CVarDumper::dumpAsString($model), 'info', 'application');
+            $this->redirect(array('invite/index'));
+        }        
         if(isset($_POST['refresh'])) {
             Yii::log('Invitation refresh', 'info', 'application');
             $mbox = $_POST['usermailbox'];
