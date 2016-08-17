@@ -5294,15 +5294,15 @@ tbody.collapse.in {
 /* line 194, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-toggle {
   position: relative;
-  float: right;
-  margin-right: 10px;
+  float: left;
+  margin-left: 25px;
   padding: 9px 10px;
   margin-top: 8px;
   margin-bottom: 8px;
   background-color: transparent;
   background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  border: 1px solid #00BEBF;
+  border-radius: 1px;
 }
 /* line 207, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-toggle:focus {
@@ -5314,6 +5314,7 @@ tbody.collapse.in {
   width: 22px;
   height: 2px;
   border-radius: 1px;
+  border: 1px solid #00BEBF;
 }
 /* line 218, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_navbar.scss */
 .navbar-toggle .icon-bar + .icon-bar {
@@ -9067,6 +9068,7 @@ table tr td {
 .dashboard .widget .footer {
   position: relative;
   height: 100%;
+  margin-top: 10px;
 }
 
 /* line 177, ../sass/_dashboard.scss */
@@ -9076,16 +9078,16 @@ width: 100%;
 }
 /* line 180, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .balance {
-  position: absolute;
+  display: inline;
   left: 0px;
-  top: 25px;
   font-family: "Brandon Grot W01 Medium";
-  font-size: 40px;
+  font-size: 20px;
   width: 100%;
-  padding-right: 104px;
-  text-align: center;
-  height: 134;
-  
+}
+
+.dashboard .widget.widget-balance .content .balance.suffix {
+  font-size: 12px;
+  color: #00BEBF;
 }
 
 .dashboard .widget.widget-balance .content .stamps {
@@ -9110,10 +9112,8 @@ width: 100%;
 /* line 194, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .stamps .suffix {
   display: inline-block;
-  font-size: 17px;
-  line-height: 17px;
-  width: 60px;
-  text-align: left;
+  font-size: 12px;
+  color: #00BEBF;
 }
 
 .dashboard .widget.widget-balance .content .credits {
@@ -9143,11 +9143,10 @@ width: 100%;
 
 /* line 203, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .buy-more {
-    position: relative;
     top: 10px;
     right: 0px;
-    width: 100%;
     font-size: 14px;
+    margin-left: 10px;
 }
 /* line 218, ../sass/_dashboard.scss */
 .dashboard .widget.widget-activity .content {
@@ -9196,7 +9195,6 @@ width: 100%;
 /* line 260, ../sass/_dashboard.scss */
 .dashboard .widget.widget-activity .footer .btn {
     position: relative;
-    top: 10px;
     right: 0px;
     width: 100%;
     font-size: 14px;
@@ -9238,7 +9236,6 @@ width: 100%;
 /* line 299, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .footer .btn {
   position: relative;
-  top: 10px;
   right: 0px;
   width: 100%;
   font-size: 14px;
@@ -10115,7 +10112,6 @@ dashboard .widget.widget-whitelist .form input {
   border: none;
   background-color: #F1F1F1;
   margin: 0px;
-  margin-top: 10px;
   margin-right: 10px;  
   height: 34px;
   padding: 6px 12px;
@@ -10138,9 +10134,7 @@ dashboard .widget.widget-whitelist .form input {
 }
 
 .home .container .header ul.mainmenu {
-  display: inline-block;
   margin: 0px;
-  margin-top: 12px;
   list-style-type: none;
   padding: 0px;
   text-align: center;
@@ -10149,7 +10143,6 @@ dashboard .widget.widget-whitelist .form input {
 .home .container .header ul.mainmenu li {
   display: inline-block;
   margin: 0px 12px;
-  margin-bottom: 20px;
   padding: 0px;
 }
 

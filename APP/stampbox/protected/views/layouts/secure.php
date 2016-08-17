@@ -46,18 +46,18 @@
                     <span class="icon-bar"></span> 
                 </button>
             </div>
-            <div "id"="mainmenu" class="row header text-center">
+            <div class="row header text-center">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),
+                        array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
+                        array('label'=>'Invite', 'url'=>array('/invite/index')),
+                        array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
                         array('label'=>'My activity', 'url'=>array('/account/statement')),
                         array('label'=>'Stampboxed e-mails', 'url'=>array('/usermailbox/index')),
-                        array('label'=>'Whitelist', 'url'=>array('/whitelist/index')),
-                        array('label'=>'Invite', 'url'=>array('/invite/index')),
-                        array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
                         array('label'=>'Help', 'url'=>array('/site/help')),
                         ),
-                    'htmlOptions' => array('class'=>'mainmenu', 
+                    'htmlOptions' => array('class'=>'nav navbar-nav collapse navbar-collapse mainmenu', 'id'=>'mainmenu' 
                         ),
                     )); ?>
                 </div>
@@ -66,7 +66,6 @@
         <div class="container">
             <div class="dashboard inset">
                 <div class="row">
-                    <div class="col-md-12" id="menu-toggle"><i class="icon-menu"></i></div>
                     <div class="col-md-12">
                         <?php echo $content ?>
                     </div>

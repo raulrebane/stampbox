@@ -42,14 +42,16 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 <div class="row">
 <div class="col-xs-12 col-md-5 col-lg-5">
     <div class="widget widget-balance">
+        <div class="title">You have</div>
         <div class="content">
-        <div class="title">You have <?php echo $stampcount['stamps_bal'] ?> stamps and 
-            <?php echo Yii::app()->numberFormatter->formatCurrency($stampcount['points_bal'], 'EUR') ?> credits
-        <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
-        </div>
+            <div class="balance"><?php echo $stampcount['stamps_bal'] ?></div>
+            <div class="balance suffix">stamps and </div>
+            <div class="balance"><?php echo Yii::app()->numberFormatter->formatCurrency($stampcount['points_bal'], 'EUR') ?></div> 
+            <div class="balance suffix">credits</div>
+            <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
         </div>
     </div>
-    </div>
+</div>
 
 <div class="col-xs-12 col-md-7">
     <div class="widget widget-invitations">
