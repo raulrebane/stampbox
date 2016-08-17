@@ -39,7 +39,14 @@
         </div>    
         <div class="nav mainmenu">
         <div class="container">
-            <div class="row header text-center">
+            <div class="navbar-header">
+                <button type="btn" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
+                </button>
+            </div>
+            <div "id"="mainmenu" class="row header text-center">
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'items'=>array(
                         array('label'=>'Overview', 'url'=>array('/site/index')),
@@ -50,7 +57,7 @@
                         array('label'=>'Buy stamps', 'url'=>array('/shop/buy')),
                         array('label'=>'Help', 'url'=>array('/site/help')),
                         ),
-                    'htmlOptions' => array('class'=>'mainmenu',
+                    'htmlOptions' => array('class'=>'mainmenu', 
                         ),
                     )); ?>
                 </div>

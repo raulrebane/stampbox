@@ -9071,8 +9071,8 @@ table tr td {
 
 /* line 177, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance {
-height: 250px;
-width: 334px;
+height: 100%;
+width: 100%;
 }
 /* line 180, ../sass/_dashboard.scss */
 .dashboard .widget.widget-balance .content .balance {

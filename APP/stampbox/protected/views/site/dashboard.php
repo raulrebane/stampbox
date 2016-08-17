@@ -39,64 +39,87 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
 }
 ?>
-
-<div class="col-md-5 col-lg-5">
+<div class="row">
+<div class="col-xs-12 col-md-5 col-lg-5">
     <div class="widget widget-balance">
         <div class="content">
-        <div class="title">You have</div>
-        <div class="stamps">
-            <div class="count"><?php echo $stampcount['stamps_bal'] ?></div><div class="suffix">stamps</div>
-        </div>
-        <div class="credits">
-            <div class="count"><?php echo $stampcount['points_bal'] ?></div><div class="suffix">credits</div>
-        </div>
+        <div class="title">You have <?php echo $stampcount['stamps_bal'] ?> stamps and 
+            <?php echo Yii::app()->numberFormatter->formatCurrency($stampcount['points_bal'], 'EUR') ?> credits
         <a class="btn btn-aqua buy-more" href="<?php echo Yii::app()->createUrl('shop/buy')?>">Buy stamps</a>
         </div>
+        </div>
+    </div>
+    </div>
+
+<div class="col-xs-12 col-md-7">
+    <div class="widget widget-invitations">
+    <div class="title">Invitations</div>
+    <div class="dashboard-form">
+        <?php 
+            $model = new Invitations();
+            $form = $this->beginWidget('CActiveForm',array(
+            'id' => 'Invite',
+            'action' => Yii::app()->createUrl('invite/index'), 
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'model'=>$model,
+                'name'=>'invited_email',
+                'htmlOptions' => array('placeholder'=>'Email'),
+                //'class'=>'form-control',
+                'value'=>'',
+                'source'=>$this->createUrl('whitelist/Autocomplete'),
+                // additional javascript options for the autocomplete plugin
+                'options'=>array('showAnim'=>'fold',),
+            ));
+            echo '<button type="submit" class="btn btn-aqua">Send invitation</button>';
+        $this->endWidget();
+        ?>        
+        
+    </div>
     </div>
 </div>
 
-<div class="col-md-7 col-lg-7">
-    <div class="row">
-    <div class="col-md-12"><div class="widget widget-accounts">
-        <div class="title">Stampboxed email's</div>
-            <div class="content table-responsive">
-                <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
-                    'criteria'=>array(
-                    'condition'=>'customer_id='.Yii::app()->user->getId(),
-                    'order'=>'e_mail ASC',),
-                    'pagination'=>array('pageSize'=>20,),
-                )); 
-                
-                $this->widget('zii.widgets.grid.CGridView', array(
-                    //'hideHeader'=>TRUE,
-                    'template' => '{items}',
-                    'htmlOptions'=>array('class'=>''),
-                    'selectableRows' => 0,
-                    'enableSorting' => false,
-                    'dataProvider'=>$mailboxdataprovider,
-                    'columns'=>array(
-                        array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),
-                        array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-                        array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->receiving_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-                        array('name'=>'sorting_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->sorting_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),                                
-                        array('class'=>'CButtonColumn','template'=>'{configure}', 
-                                'htmlOptions'=>array('class'=>'status'),
-                                'buttons'=>array('configure' => array(
-                                    'label'=>'',
-                                    'options'=>array('class'=>'glyphicon glyphicon-wrench'),
-                                    //'imageUrl'=>Yii::app()->request->baseUrl.'/images/btn-delete.png',
-                                    'url'=>'Yii::app()->createUrl("usermailbox/update", array("email"=>$data->e_mail))')
-                        )),                                    
-                    )
-                ));?>
-            </div>
-            <div class="footer">
-                <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
-            </div>
-        </div>
+</div>
+
+<div class="col-md-12">
+    <div class="widget widget-whitelist">
+    <div class="title">My whitelist</div>
+    <div class="content">
+        <?php 
+        $gridDataProvider = new CArrayDataProvider($whitelistitems, array('keyField'=>'e_mail', ));  
+
+        $gridColumns = array(
+            array('header'=>'E-mail', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')));
+      
+        $this->widget('zii.widgets.grid.CGridView',array(
+            'enablePagination'=>FALSE,
+            //'hideHeader'=>TRUE,
+            'template' => '{items}',
+            'htmlOptions'=>array('class'=>''),
+            'dataProvider' => $gridDataProvider,
+            'columns'=>$gridColumns));      
+        ?>
+    </div>
+    <div class="footer dashboard-form">
+        <?php 
+            $model = new Whitelist();
+            $form = $this->beginWidget('CActiveForm',array(
+            'id' => 'Whitelist',
+            'action' => Yii::app()->createUrl('whitelist/index'), 
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'model'=>$model,
+                'name'=>'e_mail',
+                'htmlOptions' => array('placeholder'=>'Email'),
+                //'class'=>'form-control',
+                'value'=>'',
+                'source'=>$this->createUrl('whitelist/Autocomplete'),
+                // additional javascript options for the autocomplete plugin
+                'options'=>array('showAnim'=>'fold',),
+            ));
+            echo '<button type="submit" class="btn btn-aqua">Add to whitelist</button>';
+        $this->endWidget();
+        ?>
     </div>
     </div>
 </div>
@@ -150,72 +173,44 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 </div>    
 
 <div class="col-md-12">
-    <div class="widget widget-whitelist">
-    <div class="title">My whitelist</div>
-    <div class="content">
-        <?php 
-        $gridDataProvider = new CArrayDataProvider($whitelistitems, array('keyField'=>'e_mail', ));  
-
-        $gridColumns = array(
-            array('header'=>'E-mail', 'name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')));
-      
-        $this->widget('zii.widgets.grid.CGridView',array(
-            'enablePagination'=>FALSE,
-            //'hideHeader'=>TRUE,
-            'template' => '{items}',
-            'htmlOptions'=>array('class'=>''),
-            'dataProvider' => $gridDataProvider,
-            'columns'=>$gridColumns));      
-        ?>
-    </div>
-    <div class="footer dashboard-form">
-        <?php 
-            $model = new Whitelist();
-            $form = $this->beginWidget('CActiveForm',array(
-            'id' => 'Whitelist',
-            'action' => Yii::app()->createUrl('whitelist/index'), 
-            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'model'=>$model,
-                'name'=>'e_mail',
-                'htmlOptions' => array('placeholder'=>'Email'),
-                //'class'=>'form-control',
-                'value'=>'',
-                'source'=>$this->createUrl('whitelist/Autocomplete'),
-                // additional javascript options for the autocomplete plugin
-                'options'=>array('showAnim'=>'fold',),
-            ));
-            echo '<button type="submit" class="btn btn-aqua">Add to whitelist</button>';
-        $this->endWidget();
-        ?>
-    </div>
-    </div>
-</div>
-
-<div class="col-md-12">
-    <div class="widget widget-invitations">
-    <div class="title">Invitations</div>
-    <div class="footer dashboard-form">
-        <?php 
-            $model = new Invitations();
-            $form = $this->beginWidget('CActiveForm',array(
-            'id' => 'Invite',
-            'action' => Yii::app()->createUrl('invite/index'), 
-            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'model'=>$model,
-                'name'=>'invited_email',
-                'htmlOptions' => array('placeholder'=>'Email'),
-                //'class'=>'form-control',
-                'value'=>'',
-                'source'=>$this->createUrl('whitelist/Autocomplete'),
-                // additional javascript options for the autocomplete plugin
-                'options'=>array('showAnim'=>'fold',),
-            ));
-            echo '<button type="submit" class="btn btn-aqua">Send invitation</button>';
-        $this->endWidget();
-        ?>        
-        
-    </div>
-    </div>
+    <div class="widget widget-accounts">
+        <div class="title">Stampboxed email's</div>
+            <div class="content table-responsive">
+                <?php $mailboxdataprovider = new CActiveDataProvider('usermailbox', array(
+                    'criteria'=>array(
+                    'condition'=>'customer_id='.Yii::app()->user->getId(),
+                    'order'=>'e_mail ASC',),
+                    'pagination'=>array('pageSize'=>20,),
+                )); 
+                
+                $this->widget('zii.widgets.grid.CGridView', array(
+                    //'hideHeader'=>TRUE,
+                    'template' => '{items}',
+                    'htmlOptions'=>array('class'=>''),
+                    'selectableRows' => 0,
+                    'enableSorting' => false,
+                    'dataProvider'=>$mailboxdataprovider,
+                    'columns'=>array(
+                        array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),),
+                        array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
+                        array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->receiving_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
+                        array('name'=>'sorting_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->sorting_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),                                
+                        array('class'=>'CButtonColumn','template'=>'{configure}', 
+                                'htmlOptions'=>array('class'=>'status'),
+                                'buttons'=>array('configure' => array(
+                                    'label'=>'',
+                                    'options'=>array('class'=>'glyphicon glyphicon-wrench'),
+                                    //'imageUrl'=>Yii::app()->request->baseUrl.'/images/btn-delete.png',
+                                    'url'=>'Yii::app()->createUrl("usermailbox/update", array("email"=>$data->e_mail))')
+                        )),                                    
+                    )
+                ));?>
+            </div>
+            <div class="footer">
+                <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
+            </div>
+        </div>
 </div>
