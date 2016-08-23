@@ -24,6 +24,7 @@ class Signup extends CFormModel
         public $incoming_socket_type;
         public $incoming_auth;
         
+        public $simpleservice;
         public $sendingservice;
         public $receivingservice;
         public $sortingservice;
@@ -41,20 +42,20 @@ class Signup extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, userpassword, agreewithterms', 'required', 'on'=>'Step1'),
-                        array('useremail', 'checkregistered', 'on'=>'Step1'),
-			array('useremail', 'length', 'max'=>128, 'on'=>'Step1'),
-			array('userpassword', 'length', 'max'=>255, 'on'=>'Step1'),
-                        array('useremail', 'email', 'on'=>'Step1'),
-                        array('agreewithterms', 'compare', 'compareValue'=>'1', 'message'=>'You have to agree with Terms and Conditions', 'on'=>'Step1'),
+			array('useremail, userpassword, agreewithterms', 'required', 'on'=>'Simple'),
                     
-                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step3'),
-                        array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step3'),
-                        array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step3'),
-                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step3'),
-                        array('emailusername, maildomain, incoming_auth', 'safe'),
-                    
-                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step2'),
+                        array('useremail, userpassword, agreewithterms, incoming_hostname, incoming_port, incoming_socket_type', 'required', 'on'=>'Extended'),
+                        array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Extended'),
+                        array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Extended'),
+                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Extended'),
+
+                        array('useremail', 'checkregistered'),
+			array('useremail', 'length', 'max'=>128),
+			array('userpassword', 'length', 'max'=>255),
+                        array('useremail', 'email'),
+                        array('agreewithterms', 'compare', 'compareValue'=>'1', 'message'=>'You have to agree with Terms and Conditions'),
+                        array('emailusername, emailpassword, maildomain, incoming_auth, simpleservice', 'safe'),
+                        array('sendingservice, receivingservice, sortingservice', 'safe'),
 		);
 	}
       
@@ -88,14 +89,15 @@ class Signup extends CFormModel
                         'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement',
                         'sendingservice'=>'Sending service: ',
                         'receivingservice'=>'Collection service: ',
-                        'sortingservice'=>'Protection service: '
+                        'sortingservice'=>'Protection service: ',
+                        'simpleservice'=>'Sign up for extended service: '
 		);
 	}
 
         public function Save($step)
         {
             switch ($step) {
-                case 'Step1':
+                case 'Simple':
                     // we are in step1, register customer, create account, save mailbox and issue free stamps
                     $customer = new TCustomer();
                     $customer->username = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");

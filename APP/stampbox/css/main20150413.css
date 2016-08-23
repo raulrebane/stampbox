@@ -10101,8 +10101,54 @@ dashboard .widget.widget-whitelist .form input {
   line-height: 1.428571429;
 }
 
+.dialog-form form-inline input {
+  border-radius: 0px;
+  border: none;
+  background-color: #F1F1F1;
+  margin: 0px;
+  margin-top: 10px;
+  width: 100%;  
+  height: 42px;
+  padding: 6px 12px;
+  font-size: 18px;
+  line-height: 1.428571429;
+}
+
+.dialog-form form label {
+    display: inline-block;
+    margin: 0px;
+    padding: 22px 0px;
+    height: 42px;
+}
+
 .dialog-form-btn {
     font-size: 18px;
+}
+
+.dialog-form form .select-style {
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+  width: 100%;
+  overflow: hidden;
+  background: #F1F1F1 url("../images/icon-arrow-down.png") no-repeat 96% 50%;
+}
+/* line 139, ../sass/_register.scss */
+.dialog-form form .select-style select {
+  padding: 6px 12px;
+  width: 100%;
+  height: 42px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* line 151, ../sass/_register.scss */
+.dialog-form form .select-style select:focus {
+  outline: none;
 }
 
 .dashboard-form {}

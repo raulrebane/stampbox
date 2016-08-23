@@ -8,7 +8,26 @@
 class SignupController extends Controller
 {
     public function actionIndex() {
-        $this->redirect(array('signup/step1'));     
+        $model = new Signup();
+        if(isset($_POST['ajax']) && $_POST['ajax']==='signup-form') {
+            $model->attributes=$_POST['Signup'];
+            if ($model->simpleservice == 0) { $model->scenario = 'Simple'; }
+            else { $model->scenario = 'Extended'; }
+            Yii::log("Signup: " .CVarDumper::dumpAsString($model), 'info', 'application');
+            $errors = CActiveForm::validate($model);
+            if ($errors != '[]')
+                {
+                Yii::log("Signup error: " .CVarDumper::dumpAsString($errors), 'info', 'application');
+                echo $errors;
+                Yii::app()->end();
+                }
+            else {
+                Yii::log("Signup complete: " .CVarDumper::dumpAsString($model), 'info', 'application');
+                echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
+                Yii::app()->end();
+            }
+        }
+
     }
     
     public function actionStep1() {

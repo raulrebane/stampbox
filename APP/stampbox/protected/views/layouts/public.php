@@ -125,7 +125,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
     
 <!-- Modal Signup-->
 <div class="modal fade" id="Signup" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-body">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -134,19 +134,19 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
             <?php
                 $model=new Signup;
                 $form = $this->beginWidget('CActiveForm',array(
-                    'id' => 'signup-form','action' => Yii::app()->createUrl('site/signup'), 
-                    'htmlOptions' => array('class' => 'form', 'role'=>'form'),
+                    'id' => 'signup-form','action' => Yii::app()->createUrl('signup/index'), 
+                    'htmlOptions' => array('class' => 'form form-inline', 'role'=>'form'),
                     'enableClientValidation'=>true,
                     'clientOptions' => array('validateOnSubmit' => true,'validateOnChange'=>false,
                         'afterValidate' => 'js:function(form, data, hasError) {
                             if (!hasError){
-                                str = $("#login-form").serialize() + "&ajax=login-form";
-                                $.ajax({type: "POST", url: "' . Yii::app()->createUrl('site/signup') . '",
+                                str = $("#signup-form").serialize() + "&ajax=signup-form";
+                                $.ajax({type: "POST", url: "' . Yii::app()->createUrl('signup/index') . '",
                                 data: str,
                                 dataType: "json",
-                                beforeSend : function() {$("#login").attr("disabled",true);},
+                                beforeSend : function() {$("#signup").attr("disabled",true);},
                                 success: function(data, status) {
-                                    if(data.authenticated) {
+                                    if(data.signupcomplete) {
                                         window.location = data.redirectUrl;}
                                     else {
                                         $.each(data, function(key, value) {
@@ -164,32 +164,89 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
     ),
 ));?>
             <div class="form-group">
-            <?php
-                echo $form->EmailField($model, 'useremail', array('class'=>'form-control col-xs-12', 'placeholder'=>'Enter email'));
+                <div class="row"><div class="col-xs-12">
+                <?php
+                echo $form->EmailField($model, 'useremail', array('class'=>'','style'=>'width:100%','placeholder'=>'Enter email'));
                 echo $form->error($model, 'useremail',array('validateOnChange'=>true));
-
-                echo $form->passwordField($model, 'userpassword', array('class'=>'form-control col-xs-12', 'placeholder'=>'Choose password'));
-                //echo $form->error($model, 'emailpassword', '', FALSE);
-
-                echo $form->checkBox($model, 'agreewithterms', array('class'=>'col-xs-1'));
-                echo $form->labelEx($model, 'agreewithterms', array('class'=>'col-xs-11'));
-            ?>  
-            <div id="Extendedsettings" style="display : none;">
-            <?php
-                echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
-                echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
-                echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
-            ?>
+                ?>
+                </div></div>
+                <div class="row"><div class="col-xs-12">
+                <?php
+                echo $form->passwordField($model, 'userpassword', array('class'=>'','style'=>'width:100%','placeholder'=>'password'));
+                echo $form->error($model, 'userpassword', '', FALSE);
+                ?>
+                </div></div>
+                <div class="row">
+                    <div class="col-xs-1"><?php echo $form->checkBox($model, 'simpleservice', array('class'=>''));?></div>
+                    <div class="col-xs-11"><?php echo $form->labelEx($model, 'simpleservice', array('class'=>''));?></div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-aqua btn-block dialog-form-btn">Login</button>
-            <?php $this->endWidget();?>
+                <div class="row">
+                <div id="Extendedsettings" style="display : none;">
+                <div class="row">
+                    <div class="col-xs-5">
+                    <?php echo $form->labelEx($model, 'emailusername', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                    <?php echo $form->textField($model, 'emailusername', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => '')); ?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo $form->textField($model, 'incoming_hostname', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_hostname', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo $form->numberField($model, 'incoming_port', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_port', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo '<div class="select-style">';
+                        echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => ''));
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-5'));?>
+                </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1"><?php echo $form->checkBox($model, 'agreewithterms', array('class'=>''));?></div>
+                    <div class="col-xs-11"><?php echo $form->labelEx($model, 'agreewithterms', array('class'=>''));?></div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'agreewithterms', array('class' => ''));?>
+                </div>
         </div>
+        <div class="row"><div class="col-xs-12">
+        <button type="submit" class="btn btn-aqua btn-block dialog-form-btn">Sign up</button>
+        </div></div>
+        <?php $this->endWidget();?>
     </div>
     </div>
 </div>
 <script type="text/javascript">
-$('#Signup_agreewithterms').change(function() {
+$('#Signup_simpleservice').change(function() {
     $('#Extendedsettings').toggle();
 });
 </script>
