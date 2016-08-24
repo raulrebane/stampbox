@@ -195,7 +195,7 @@ class SiteController extends Controller
                     $command->update('ds.t_customer', array('password'=>crypt($model->newpassword, TCustomer::blowfishSalt())),
                                 'customer_id=:id', array(':id'=>Yii::app()->session['uid']));
                     //if ($cust->save()) {
-                        $this->redirect($this->createUrl('site/login')); 
+                        $this->redirect($this->createUrl('site/index')); 
                     //}
                     //else {
                     //    $this->redirect($this->createUrl('index')); 

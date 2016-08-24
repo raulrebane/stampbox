@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link rel="stylesheet" href="css/main20150413.css">
-        <script src="scripts/vendor/d7100892.modernizr.js"></script>
+        <script src="scripts/plugins.js"></script>
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery');     
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
@@ -63,9 +63,11 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <div class="container">
             <?php echo $content ?>
         </div>
-        
+<!--        
     <script src="scripts/main.js"></script>
-    <script src="scripts/plugins.js"></script>
+-->
+
+
 
 <!-- Modal Login-->
 <div class="modal fade" id="Login" role="dialog" aria-hidden="true" data-backdrop="static">

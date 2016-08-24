@@ -22,156 +22,22 @@ class SignupController extends Controller
                 Yii::app()->end();
                 }
             else {
-                Yii::log("Signup complete: " .CVarDumper::dumpAsString($model), 'info', 'application');
+                $model->save();
+                if ($model->e_mail_verified == TRUE) {
+                    $loadinvitationdata = json_encode(array('customer_id'=>Yii::App()->user->getID(),
+                        'e_mail'=>$model->useremail, 'username'=>$model->emailusername, 'password'=>$model->userpassword,
+                        'hostname'=>$model->registereddomain->incoming_hostname, 'port'=>$model->registereddomain->incoming_port,
+                        'socket_type'=>$model->registereddomain->incoming_socket_type, 'auth_type'=>$model->registereddomain->incoming_auth));
+                    $gmclient= new GearmanClient();
+                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                    $result = json_decode($gmclient->doBackground("loadinvitations", $loadinvitationdata),TRUE);
+                }
                 echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
                 Yii::app()->end();
             }
         }
-
+        $this->redirect($this->createUrl('site/index')); 
     }
     
-    public function actionStep1() {
-        $this->layout = 'register';
-        $model = new Signup();
-        $model->scenario = 'Step1';
-        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
-            $model->attributes=$_POST['Signup'];
-            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
-            echo CActiveForm::validate($model); 
-            Yii::app()->end(); 
-        }
-        if(isset($_POST['Signup'])) {  
-            $model->attributes=$_POST['Signup'];     
-            if ($model->validate()) {
-                Yii::log("Step1 signup save: " .$model->useremail, 'info', 'application');
-                $model->Save('Step1');
-                $this->redirect(array('signup/step2')); 
-            }
-        }
-        $this->render('Step1',array('model'=>$model,)); 
-    }
-    
-    public function actionStep2() {
-        $this->layout = 'register';        
-        $model = new Signup();
-        $model->scenario = 'Step2';
-        $model->sendingservice = 1;
-        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
-                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
-        if ($model->registeredemail == NULL) {
-            Yii::log('In Step2, e-mail record not found: ' .Yii::app()->user->username, 'info', 'application');
-            $this->redirect(array('site/index'));
-        }
-        if(isset($_POST['Signup'])) {  
-            $model->attributes=$_POST['Signup'];     
-            if ($model->validate()) {
-                Yii::log("Step2 signup save: " .$model->useremail, 'info', 'application');
-                $model->Save('Step2');
-                $this->redirect(array('signup/step3')); 
-            }
-        }        
-        $this->render('Step2',array('model'=>$model));
-    }
-
-    public function actionStep3() {
-        $this->layout = 'register';        
-        $model = new Signup();
-        $model->useremail = Yii::app()->user->name;
-        list(, $model->maildomain) = explode("@", $model->useremail);
-        $model->mailtype = 'IMAP';
-        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
-                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
-        $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
-        if ($model->registereddomain !== NULL) {
-            $model->incoming_hostname = $model->registereddomain->incoming_hostname;
-            $model->incoming_port = $model->registereddomain->incoming_port;
-            $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
-            switch ($model->registereddomain->incoming_auth) {
-                case 'EMAIL':
-                    $model->emailusername = $model->useremail;
-                    break;
-                case 'USERNAME':
-                    list($model->emailusername,) = explode("@", $model->useremail);
-                    break;
-            }
-        }
-        $model->scenario = 'Step3';
-        if(isset($_POST['Signup'])) {  
-            Yii::log("Step3 debug: " .Yii::app()->user->name, 'info', 'application');
-            $model->attributes=$_POST['Signup'];     
-            if ($model->validate()) {
-		$mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
-			'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
-			'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
-		Yii::log('In Signup step3, verifying e-mail:' .CVarDumper::dumpAsString($model->registereddomain)
-		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
-		$gmclient= new GearmanClient();
-		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
-		if ($result['status'] == 'ERROR') {
-			//Changed to allow registering without e-mail username
-			$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct<br>' .CVarDumper::dumpAsString($result['reason']));
-			$this->render('Step3',array('model'=>$model,));
-			Yii::app()->end();
-		} 
-		else { $e_mail_verified = TRUE;}
-                Yii::log("Step3 signup save: " .Yii::app()->user->name, 'info', 'application');
-                $model->Save('Step3');
-                $this->redirect(array('site/index')); 
-            }
-            else {
-                Yii::log("Step3 validation error: " .CVarDumper::dumpAsString($model->getErrors()), 'info', 'application');
-            }
-        }
-        $this->render('Step3',array('model'=>$model));
-    }
-
-    public function actionStep4() {
-        $this->layout = 'register';        
-        $model = new Signup();
-        $model->scenario = 'Step4';
-        //$model->useremail = Yii::app()->user->name;
-        //list(, $model->maildomain) = explode("@", $model->useremail);
-        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
-                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->user->username));
-        if ($model->registeredemail == NULL) {
-            Yii::log('In Step4, e-mail record not found: ' .Yii::app()->user->username, 'info', 'application');
-            $this->redirect(array('site/index'));
-        }
-        if(isset($_POST['Signup'])) {  
-            $model->attributes=$_POST['Signup'];     
-            if ($model->validate()) {
-                Yii::log("Step4 services save: " .Yii::app()->user->name, 'info', 'application');
-                $model->Save('Step4');
-                $this->redirect(array('site/index')); 
-            }
-        }
-        $this->render('Step4',array('model'=>$model));
-    }
-    /*
-    public function ActionInvite($id,$name,$email,$rcount) {
-        Yii::log("$email with $id now invited", 'info','application');
-        if(!isset($_GET['ajax']))
-//            $this->redirect(Yii::app()->request->urlReferrer);
-            return true;
-    }
-     * 
-     */
-    
-  
-   
-    function LoadContacs($pmodel) {
-        $loadinvitationdata = json_encode(array('customer_id'=>Yii::App()->user->getID(),
-                    'e_mail'=>$pmodel->useremail,
-                    'username'=>$pmodel->emailusername,
-                    'password'=>$pmodel->emailpassword,
-                    'hostname'=>$pmodel->registereddomain->incoming_hostname,
-                    'port'=>$pmodel->registereddomain->incoming_port,
-                    'socket_type'=>$pmodel->registereddomain->incoming_socket_type,
-                    'auth_type'=>$pmodel->registereddomain->incoming_auth));
-        $gmclient= new GearmanClient();
-        $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-        $result = json_decode($gmclient->do("loadinvitations", $loadinvitationdata),TRUE);
-    }
 }
 ?>
