@@ -39,5 +39,16 @@ class SignupController extends Controller
         $this->redirect($this->createUrl('site/index')); 
     }
     
+    public function actionGetEmailServerParams($email) {
+        list(, $maildomain) = explode("@", mb_convert_case($email, MB_CASE_LOWER, "UTF-8"));
+        $registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$maildomain));
+        if ($registereddomain !== NULL) {
+            echo json_encode(array('incoming_hostname'=>$registereddomain->incoming_hostname, 
+                            'incoming_port'=>$registereddomain->incoming_port, 
+                            'incoming_socket_type'=>$registereddomain->incoming_socket_type));
+        }
+        else echo "";
+        Yii::app()->end();
+    }
 }
 ?>

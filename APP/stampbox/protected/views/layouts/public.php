@@ -168,7 +168,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
             <div class="form-group">
                 <div class="row"><div class="col-xs-12">
                 <?php
-                echo $form->EmailField($model, 'useremail', array('class'=>'','style'=>'width:100%','placeholder'=>'Enter email'));
+                echo $form->EmailField($model, 'useremail', array('class'=>'', 'id'=>'useremail', 'style'=>'width:100%','placeholder'=>'Enter email'));
                 echo $form->error($model, 'useremail',array('validateOnChange'=>true));
                 ?>
                 </div></div>
@@ -249,6 +249,13 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 </div>
 <script type="text/javascript">
 $('#Signup_simpleservice').change(function() {
+    var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
+    url = url + "&email=" + $("#useremail").val();
+    $.getJSON(url, function(data) {
+        $("#Signup_incoming_hostname").val(data.incoming_hostname);
+        $("#Signup_incoming_port").val(data.incoming_port);
+        $("#Signup_incoming_socket_type").val(data.incoming_socket_type);
+    })
     $('#Extendedsettings').toggle();
 });
 </script>
