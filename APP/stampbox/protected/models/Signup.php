@@ -134,7 +134,7 @@ class Signup extends CFormModel
                     $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
                     $this->registereddomain->incoming_port = $this->incoming_port;
                     $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
-                    if ($this->registeredemail->e_mail == $this->registeredemail->e_mail_username) {
+                    if ($this->useremail == $this->emailusername) {
                         $this->registereddomain->incoming_auth = 'EMAIL'; }
                     else {
                         $this->registereddomain->incoming_auth = NULL; }
