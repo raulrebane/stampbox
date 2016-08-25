@@ -249,6 +249,9 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 </div>
 <script type="text/javascript">
 $('#Signup_simpleservice').change(function() {
+    $('#Extendedsettings').toggle();
+});
+$('#useremail').change(function() {
     var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
     url = url + "&email=" + $("#useremail").val();
     $.getJSON(url, function(data) {
@@ -256,8 +259,8 @@ $('#Signup_simpleservice').change(function() {
         $("#Signup_incoming_port").val(data.incoming_port);
         $("#Signup_incoming_socket_type").val(data.incoming_socket_type);
     })
-    $('#Extendedsettings').toggle();
 });
+
 </script>
 </body>
 </html>

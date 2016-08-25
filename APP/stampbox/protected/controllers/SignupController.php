@@ -45,7 +45,7 @@ class SignupController extends Controller
         if ($registereddomain !== NULL) {
             echo json_encode(array('incoming_hostname'=>$registereddomain->incoming_hostname, 
                             'incoming_port'=>$registereddomain->incoming_port, 
-                            'incoming_socket_type'=>$registereddomain->incoming_socket_type));
+                            'incoming_socket_type'=>mb_convert_case($registereddomain->incoming_socket_type, MB_CASE_LOWER, "UTF-8")));
         }
         else echo "";
         Yii::app()->end();

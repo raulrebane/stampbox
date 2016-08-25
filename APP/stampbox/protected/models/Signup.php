@@ -128,7 +128,7 @@ class Signup extends CFormModel
                 list(, $this->maildomain) = explode("@", $this->useremail);
                 $this->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$this->maildomain));
                 if ($this->registereddomain == NULL OR $this->registereddomain->status <> 'A') {
-                    $this->registereddomain = new mailconfig();
+                    if ($this->registereddomain == NULL) { $this->registereddomain = new mailconfig();} 
                     $this->registereddomain->maildomain = $this->maildomain;
                     $this->registereddomain->mailtype = 'IMAP';
                     $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
