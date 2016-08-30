@@ -42,7 +42,6 @@ return array(
 //    			'tablePrefix'=>'ds',
     			'connectionString' => 'pgsql:host=localhost;port=6432;dbname=stampbox',
     			'username' => 'sbweb',
-    			'password' => '',
     			'charset' => 'UTF8',
 		),
                 'session' => array (

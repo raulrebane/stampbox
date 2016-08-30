@@ -48,12 +48,6 @@ class SiteController extends Controller
             return false;
         }
 
-        public function actionIntro()
-	{
-            $this->layout = 'register2';
-            $this->render('intro'); 
-        }
-
         /**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -150,7 +144,7 @@ class SiteController extends Controller
                                 ));
                         $gmclient= new GearmanClient();
                         $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                        $result = json_decode($gmclient->do("sendpasswdlink", $sendmailparams),TRUE);
+                        $result = json_decode($gmclient->do("Sendpasswdlink", $sendmailparams),TRUE);
                         $model->notified = TRUE;
                     }
                 }	
@@ -250,7 +244,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-            //$this->layout = 'login';
+                $this->layout = 'login';
 		$model=new LoginForm;
 
 		// if it is ajax validation request
@@ -272,13 +266,18 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-                            echo CJSON::encode(array( 'authenticated' => true,
-                                'redirectUrl' => CController::createUrl('site/index')));
-                            Yii::app()->end();
+                            if(isset($_POST['ajax'])) {
+                                echo CJSON::encode(array( 'authenticated' => true,
+                                    'redirectUrl' => CController::createUrl('site/index')));
+                                Yii::app()->end();
+                            }
+                            else {
+                                $this->redirect(CController::createUrl('site/index'));
+                            }
                             //$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		//$this->render('login',array('model'=>$model));
+		$this->render('login',array('model'=>$model));
 	}
 
 	/**

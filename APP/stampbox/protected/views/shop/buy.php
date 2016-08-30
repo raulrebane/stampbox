@@ -9,7 +9,7 @@
 <div id="p-shop" class="row">
     <div class="m-products col-md-12">
         
-    <div class="widget widget-activity"><div class="title">Shop</div>
+    <div class="widget"><div class="title">Select stamp package you want to buy</div>
     <div class="content">
         <?php 
         //$gridColumns = 

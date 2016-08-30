@@ -30,7 +30,7 @@ class SignupController extends Controller
                         'socket_type'=>$model->registereddomain->incoming_socket_type, 'auth_type'=>$model->registereddomain->incoming_auth));
                     $gmclient= new GearmanClient();
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                    $result = json_decode($gmclient->doBackground("loadinvitations", $loadinvitationdata),TRUE);
+                    $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
                 }
                 echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
                 Yii::app()->end();

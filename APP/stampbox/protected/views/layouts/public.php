@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                             //array('label'=>'Pricing', 'url'=>array('/site/pricing')),
                             array('label'=>'Terms & conditions', 'url'=>array('/site/terms')),
                             array('label'=>'Help', 'url'=>array('/site/help')),
-                            array('label'=>'Log in', 'url'=>array('/site/login'), 'linkOptions' => array('class'=>'btn btn-aqua login'), 
+                            array('label'=>'Log in', 'url'=>array('#'), 'linkOptions' => array('class'=>'btn btn-aqua login'), 
                                 'itemOptions' => array('data-toggle' => 'modal', 'data-target' =>'#Login')),
                             array('label'=>'Sign up', 'url'=>array('#'), 'linkOptions' => array('class'=>'btn btn-aqua signup'),
                                 'itemOptions' => array('data-toggle' => 'modal', 'data-target' =>'#Signup')),
@@ -63,12 +63,6 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <div class="container">
             <?php echo $content ?>
         </div>
-<!--        
-    <script src="scripts/main.js"></script>
--->
-
-
-
 <!-- Modal Login-->
 <div class="modal fade" id="Login" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-sm">

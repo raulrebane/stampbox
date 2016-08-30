@@ -6,12 +6,7 @@
  * and open the template in the editor.
  */
 
-$worker= new GearmanWorker();
-$worker->addServer("127.0.0.1", 4730);
-$worker->addFunction("checkmailbox", "checkMailbox_fn");
-while ($worker->work());
-
-function checkMailbox_fn($job)
+function CheckMailbox($job, $log)
 {
   $jsonstr = $job->workload();
   $mboxparams = json_decode($jsonstr);

@@ -163,7 +163,7 @@ class Signup extends CFormModel
                 Yii::log('In Signup, verifying e-mail:' .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
 		$gmclient= new GearmanClient();
 		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->doNormal("checkmailbox", $mailboxcheck),TRUE);
+		$result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
 		$this->e_mail_verified = FALSE;
                 if ($result['status'] == 'ERROR') { 
                     $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
@@ -204,7 +204,7 @@ class Signup extends CFormModel
                 $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                 $stampparams = json_encode(array('customer_id'=>Yii::app()->user->getId(), 'howmany'=>100, 
                                         'stampid'=>1, 'description'=>'Free stamps for joining'));
-                $result = json_decode($gmclient->doNormal("issuestamps", $stampparams),TRUE);
+                $result = json_decode($gmclient->doNormal("IssueStamps", $stampparams),TRUE);
             }
             else { 
                 Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'error', 'application');

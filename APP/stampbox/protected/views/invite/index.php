@@ -64,20 +64,29 @@ if ($model->loading_inprogress == TRUE) {
 <?php
 }
 
-$form = $this->beginWidget('CActiveForm',array(
-    'id' => 'Invite',
-    //'type'=>'horizontal',
-    'htmlOptions' => array('class'=>'form', 'role'=>'form'),
-    )); 
 
 if (isset($model->emailslist)) {
-    echo '<div id="p-invite" class="row">
-    <div class="col-md-12 m-refresh">';
-    echo '<h1>' .$form->labelEx($model->mailboxlist,'e_mail') .'</h1>';
-    echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
-    echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>
+?>
+    <div class="col-xs-12 col-md-7">
+    <div class="widget widget-invitations">
+        <div class="dashboard-form">
+        <?php 
+            $model = new Invitations();
+            $form = $this->beginWidget('CActiveForm',array(
+            'id' => 'Invite',
+            'action' => Yii::app()->createUrl('invite/index'), 
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+            echo $form->labelEx($model->mailboxlist,'e_mail');
+            echo '<div class="select-style">';
+                echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
+            echo '</div>';
+            echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>';
+        $this->endWidget();
+        ?>        
         </div>
-</div>';
+    </div>
+    </div>
+<?php
 }
 ?>
 
