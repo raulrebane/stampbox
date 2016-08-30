@@ -71,7 +71,7 @@ if (isset($model->emailslist)) {
     <div class="widget widget-invitations">
         <div class="dashboard-form">
         <?php 
-            $model = new Invitations();
+            //$model = new Invitations();
             $form = $this->beginWidget('CActiveForm',array(
             'id' => 'Invite',
             'action' => Yii::app()->createUrl('invite/index'), 
@@ -81,7 +81,7 @@ if (isset($model->emailslist)) {
                 echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
             echo '</div>';
             echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>';
-        $this->endWidget();
+        //$this->endWidget();
         ?>        
         </div>
     </div>

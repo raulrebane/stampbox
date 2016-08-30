@@ -63,8 +63,9 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <div class="container">
             <?php echo $content ?>
         </div>
-<!-- Modal Login-->
-<div class="modal fade" id="Login" role="dialog" aria-hidden="true" data-backdrop="static">
+<div class="container">
+        <!-- Modal Login-->
+<div class="modal fade" id="Login" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
     <div class="modal-content">
         <div class="modal-body">
@@ -168,7 +169,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 </div></div>
                 <div class="row"><div class="col-xs-12">
                 <?php
-                echo $form->passwordField($model, 'userpassword', array('class'=>'','style'=>'width:100%','placeholder'=>'password'));
+                echo $form->passwordField($model, 'userpassword', array('class'=>'','style'=>'width:100%','placeholder'=>'Create Stampbox password'));
                 echo $form->error($model, 'userpassword', '', FALSE);
                 ?>
                 </div></div>

@@ -170,7 +170,7 @@ class Signup extends CFormModel
 			'username'=>  $this->useremail,'password'=>$this->userpassword,
                         'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
 			'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
-                        $result = json_decode($gmclient->doNormal("checkmailbox", $mailboxcheck),TRUE);
+                        $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
                     if ($result['status'] == 'ERROR') { $this->e_mail_verified = FALSE; } 
                     else { 
                         $this->emailusername = $this->useremail;

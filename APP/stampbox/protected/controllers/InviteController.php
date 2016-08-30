@@ -136,6 +136,7 @@ class InviteController extends Controller
         else {
             unset($model->emailslist);
         }
+        //Yii::log('Invite model dump: ' .CVarDumper::dumpAsString($model), 'info', 'application');
         $this->render('index',array('model'=>$model,));
     }
     
