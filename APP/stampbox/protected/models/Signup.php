@@ -71,7 +71,7 @@ class Signup extends CFormModel
                 $this->addError('useremail', 'This e-mail address is already registered');
                 return false;
             }
-         return true;
+            return true;
         }
 	/**
 	 * Declares attribute labels.
@@ -124,65 +124,7 @@ class Signup extends CFormModel
                   'points_bal'=>0,
                   'stamps_bal'=>0));
 
-                // Check if we can access customer mailbox
-                list(, $this->maildomain) = explode("@", $this->useremail);
-                $this->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$this->maildomain));
-                if ($this->registereddomain == NULL OR $this->registereddomain->status <> 'A') {
-                    if ($this->registereddomain == NULL) { $this->registereddomain = new mailconfig();} 
-                    $this->registereddomain->maildomain = $this->maildomain;
-                    $this->registereddomain->mailtype = 'IMAP';
-                    $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
-                    $this->registereddomain->incoming_port = $this->incoming_port;
-                    $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
-                    if ($this->useremail == $this->emailusername) {
-                        $this->registereddomain->incoming_auth = 'EMAIL'; }
-                    else {
-                        $this->registereddomain->incoming_auth = NULL; }
-                    $this->registereddomain->outgoing_hostname = NULL;
-                    $this->registereddomain->outgoing_port = NULL;
-                    $this->registereddomain->outgoing_socket_type = NULL;
-                    $this->registereddomain->status = 'V';
-                    if (!$this->registereddomain->save()) {
-                        Yii::log('save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
-                                .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'error', 'application');
-                    }
-                }
-                if (isset($this->emailusername)) {
-                    $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
-			'username'=>  $this->emailusername,'password'=>$this->userpassword,
-                        'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
-			'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
-                }
-                else {
-                    $this->emailusername = $this->useremail;
-                    $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
-			'username'=>  $this->useremail,'password'=>$this->userpassword,
-                        'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
-			'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
-                }
-                Yii::log('In Signup, verifying e-mail:' .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
-		$gmclient= new GearmanClient();
-		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
-		$this->e_mail_verified = FALSE;
-                if ($result['status'] == 'ERROR') { 
-                    $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
-			'username'=>  $this->useremail,'password'=>$this->userpassword,
-                        'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
-			'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
-                        $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
-                    if ($result['status'] == 'ERROR') { $this->e_mail_verified = FALSE; } 
-                    else { 
-                        $this->emailusername = $this->useremail;
-                        $this->e_mail_verified = TRUE; 
-                    }
-                } 
-		else { 
-                    $this->e_mail_verified = TRUE;
-                    $this->registereddomain->status = 'A';
-                    $this->registereddomain->save();
-                }
-
+                $this->checkMailbox();
                 // Save customer e-mail
                 $this->registeredemail = new usermailbox();
                 $this->registeredemail->customer_id = Yii::app()->user->getId();
@@ -190,11 +132,11 @@ class Signup extends CFormModel
                 if ($this->e_mail_verified == TRUE) { $this->registeredemail->status = 'A'; }
                 else { $this->registeredemail->status = 'U';}
                 $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
-                $this->registeredemail->e_mail_username = $this->emailusername;
+                $this->registeredemail->e_mail_username = $this->useremail;
                 $this->registeredemail->e_mail_password = $this->userpassword;
                 $this->registeredemail->sending_service = TRUE;
-                $this->registeredemail->receiving_service = ($this->simpleservice == 1) ? TRUE : FALSE;
-                $this->registeredemail->sorting_service = ($this->simpleservice == 1) ? TRUE : FALSE;
+                $this->registeredemail->receiving_service = FALSE;
+                $this->registeredemail->sorting_service = FALSE;
                 if (!$this->registeredemail->save()) {
                    Yii::log('customer mailbox save failed during registration' .CVarDumper::dumpAsString($this->registeredemail)
                         .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'error', 'application');
@@ -209,6 +151,64 @@ class Signup extends CFormModel
             else { 
                 Yii::log('Error saving new customer' .CVarDumper::dumpAsString($customer->getErrors()), 'error', 'application');
                 throw new CHttpException(500,'We are sorry for not being able to service you. Request was sent for our administrators to investigate this problem. Please try again later.');
+            }
+        }
+        
+        function checkMailbox() {
+            // Check if we can access customer mailbox
+            list(, $this->maildomain) = explode("@", $this->useremail);
+            $this->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$this->maildomain));
+            // old logic for getting mailbox parameters
+            /*
+            if ($this->registereddomain !== NULL and $this->registereddomain->status == 'A') {
+                if ($this->registereddomain == NULL) { $this->registereddomain = new mailconfig();} 
+                $this->registereddomain->maildomain = $this->maildomain;
+                $this->registereddomain->mailtype = 'IMAP';
+                $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
+                $this->registereddomain->incoming_port = $this->incoming_port;
+                $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
+                if ($this->useremail == $this->emailusername) {
+                    $this->registereddomain->incoming_auth = 'EMAIL'; }
+                else {
+                    $this->registereddomain->incoming_auth = NULL; }
+                $this->registereddomain->outgoing_hostname = NULL;
+                $this->registereddomain->outgoing_port = NULL;
+                $this->registereddomain->outgoing_socket_type = NULL;
+                $this->registereddomain->status = 'V';
+                if (!$this->registereddomain->save()) {
+                    Yii::log('save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
+                            .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'error', 'application');
+                }
+            }
+            if (isset($this->emailusername)) {
+                $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
+                    'username'=>  $this->emailusername,'password'=>$this->userpassword,
+                    'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
+                    'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
+            }
+             * 
+             */
+            if ($this->registereddomain !== NULL) {
+                $this->emailusername = $this->useremail;
+                $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8"),
+                    'username'=>  $this->useremail,'password'=>$this->userpassword,
+                    'hostname'=>$this->registereddomain->incoming_hostname,'port'=>$this->registereddomain->incoming_port,
+                    'socket_type'=>$this->registereddomain->incoming_socket_type,'auth_type'=>$this->registereddomain->incoming_auth));
+                Yii::log('In Signup, verifying e-mail:' .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
+                $gmclient= new GearmanClient();
+                $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+                $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
+                if ($result['status'] == 'ERROR') { 
+                    $this->e_mail_verified = FALSE; } 
+                else { 
+                    $this->e_mail_verified = TRUE; 
+                    $command = Yii::app()->db->createCommand();
+                    $command->update('ds.t_mailbox_config', array('status'=>'A'),
+                                     'maildomain=:1', array(':1'=>$this->maildomain));
+                }
+            }
+            else {
+                $this->e_mail_verified = FALSE;
             }
         }
         

@@ -34,7 +34,7 @@ if ($model->loading_inprogress == TRUE) {
         'value'=>$model->percent_complete,
         //'htmlOptions'=>array('style'=>'width:200px; height:20px; float:center;')
     ));
-    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    //$this->endWidget('zii.widgets.jui.CJuiDialog');
 ?>
 
     <script type="text/javascript">
@@ -128,7 +128,6 @@ if (isset($model->emailslist)) {
 </div>
 
 <?php
-$this->endWidget(); 
-unset($form);
-
+//$this->endWidget(); 
+//unset($form);
 ?>

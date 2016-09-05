@@ -32,6 +32,7 @@
                     </a>
                 </div>
                 <div class="col-xs-11">
+                    <a class="btn btn-dark pull-right" style="margin-left: 10px;" href="<?php echo Yii::app()->createUrl('site/closeaccount') ?>">Close account</a>
                     <a class="btn btn-dark pull-right" href="<?php echo Yii::app()->createUrl('site/logout') ?>">Logout</a>
                 </div>
             </div>

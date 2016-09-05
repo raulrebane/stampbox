@@ -32,6 +32,14 @@ class SignupController extends Controller
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
                 }
+                Yii::app()->user->setFlash('success', '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                        . '<h4>Thank you, you are now ready to use the sending stamps service. </h4>'
+                        . 'We recommend you to sign up for the extended service which allows you to receive money for '
+                        . 'every stamped e-mail you receive. For the extended service we need your email password and'
+                        . 'IMAP settings to your e-mail account. You can configure your services by following this '
+                        . '<a class="alert-link" style="text-decoration: underline;" href="' .Yii::app()->createUrl('usermailbox/update') 
+                        .'&email=' .$model->useremail .'">link</a>'
+                        . '<br>You can also sign up for this service later in Stampboxed e-mails menu.');
                 echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
                 Yii::app()->end();
             }

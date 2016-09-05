@@ -19,7 +19,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('invite','update','changepsw', 'logout', 'index', 'intro'),
+				'actions'=>array('invite','update','changepsw', 'logout', 'index', 'intro', 'closeAccount'),
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -79,6 +79,13 @@ class SiteController extends Controller
                     $this->render('dashboard'); }
 	}
 
+        public function actionCloseAccount() {
+            $command = Yii::app()->db->createCommand('SELECT * FROM ds.clear_data();');
+            $command->queryRow();            
+            Yii::app()->user->logout();
+            $this->redirect(Yii::app()->homeUrl);
+            
+        }
         
 	public function actionInvite()
 	{   

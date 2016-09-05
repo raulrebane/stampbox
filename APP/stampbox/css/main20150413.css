@@ -6155,7 +6155,8 @@ a.thumbnail.active {
 /* line 9, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_alerts.scss */
 .alert {
   padding: 15px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -7197,6 +7198,7 @@ button.close {
 }
 /* line 72, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_modals.scss */
 .modal-backdrop.in {
+  min-height: 100%;
   opacity: 0.5;
   filter: alpha(opacity=50);
 }

@@ -174,6 +174,60 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 ?>
                 </div></div>
                 <div class="row">
+                    <div class="col-xs-1"><?php echo $form->checkBox($model, 'simpleservice', array('class'=>''));?></div>
+                    <div class="col-xs-11"><?php echo $form->labelEx($model, 'simpleservice', array('class'=>''));?></div>
+                </div>
+                <div class="row">
+                <div id="Extendedsettings" style="display : none;">
+                <div class="row">
+                    <div class="col-xs-5">
+                    <?php echo $form->labelEx($model, 'emailusername', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                    <?php echo $form->textField($model, 'emailusername', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => '')); ?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo $form->textField($model, 'incoming_hostname', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_hostname', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo $form->numberField($model, 'incoming_port', array('class' => ''));?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_port', array('class' => 'col-xs-offset-5')); ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?>
+                    </div>
+                    <div class="col-xs-7">
+                        <?php echo '<div class="select-style">';
+                        echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => ''));
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-5'));?>
+                </div>
+                </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-1"><?php echo $form->checkBox($model, 'agreewithterms', array('class'=>''));?></div>
                     <div class="col-xs-11"><?php echo $form->labelEx($model, 'agreewithterms', array('class'=>''));?></div>
                 </div>
@@ -188,5 +242,19 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
     </div>
     </div>
 </div>
+<script type="text/javascript">
+$('#Signup_simpleservice').change(function() {
+    $('#Extendedsettings').toggle();
+});
+$('#useremail').change(function() {
+    var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
+    url = url + "&email=" + $("#useremail").val();
+    $.getJSON(url, function(data) {
+        $("#Signup_incoming_hostname").val(data.incoming_hostname);
+        $("#Signup_incoming_port").val(data.incoming_port);
+        $("#Signup_incoming_socket_type").val(data.incoming_socket_type);
+    })
+});
+</script>
 </body>
 </html>

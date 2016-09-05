@@ -113,7 +113,7 @@ class UsermailboxController extends Controller
 		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
 		$gmclient= new GearmanClient();
 		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+		$result = json_decode($gmclient->do("CheckMailbox", $mailboxcheck),TRUE);
 		if ($result['status'] == 'ERROR') {
 			//Changed to allow registering without e-mail username
 			//$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct<br>' .CVarDumper::dumpAsString($result['reason']));
@@ -187,7 +187,7 @@ class UsermailboxController extends Controller
 		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
 		$gmclient= new GearmanClient();
 		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->do("checkmailbox", $mailboxcheck),TRUE);
+		$result = json_decode($gmclient->do("CheckMailbox", $mailboxcheck),TRUE);
 		if ($result['status'] == 'ERROR') {
 			//Changed to allow registering without e-mail username
                         Yii::app()->user->setFlash('danger', 'We could not access your e-mail inbox.<br>' 

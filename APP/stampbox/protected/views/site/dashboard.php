@@ -36,7 +36,7 @@ $whitelistitems = Yii::app()->db->createCommand(array(
         ))->queryAll();
 
 foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+        echo '<div class="alert alert-' .$key .' alert-dismissable">' .$message ."</div>\n";
 }
 ?>
 <div class="row">
