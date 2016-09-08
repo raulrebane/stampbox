@@ -32,17 +32,16 @@ class SignupController extends Controller
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                     $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
                 }
-                $signupmessages = json_encode(array('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                Yii::app()->user->setFlash('success',
+                	'<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                         . '<h4>Thank you, you are now ready to use the basic service. As a sign up bonus we have '
-                        . 'credited you with 100 stamps free of charge.</h4>', 
-                        'We recommend you to sign up for the extended service which automatically filters '
-                        . ' e-mails with digital stamps to your inbox and those without stamps into no-stamp-box email folder.'
+                        . 'credited you with 100 stamps free of charge.</h4></div>' 
+                        . '<div class="alert alert-success">We recommend you to sign up for the extended service which automatically filters '
+                        . 'e-mails with digital stamps to your inbox and those without stamps into no-stamp-box email folder.<br>'
                         . 'With the extended service you also earn money for every stamped e-mail you receive. To be able to give '
                         . 'you this service we need your email password. Upgrade to extended service '
                         . '<a class="alert-link" style="text-decoration: underline;" href="' .Yii::app()->createUrl('usermailbox/update') 
-                        .'&email=' .$model->useremail .'">here</a>'));
-                Yii::log("Signup flashes: " .$signupmessages, 'info', 'application');
-                Yii::app()->user->setFlash('success', $signupmessages);
+                        .'&email=' .$model->useremail .'">here</a></div>');
                 echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
                 Yii::app()->end();
             }

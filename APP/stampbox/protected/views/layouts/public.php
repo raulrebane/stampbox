@@ -132,7 +132,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 $model=new Signup;
                 $form = $this->beginWidget('CActiveForm',array(
                     'id' => 'signup-form','action' => Yii::app()->createUrl('signup/index'), 
-                    'htmlOptions' => array('class' => 'form form-inline', 'role'=>'form'),
+                    'htmlOptions' => array('class' => 'form', 'role'=>'form'),
                     'enableClientValidation'=>true,
                     'clientOptions' => array('validateOnSubmit' => true,'validateOnChange'=>false,
                         'afterValidate' => 'js:function(form, data, hasError) {

@@ -89,36 +89,30 @@ $gridcolumns = array(
                 <div class="col-xs-1">
                     <?php echo $form->checkBox($model, 'sendingservice'); ?>
                 </div>                        
-                <div class="col-xs-11">
+                <div class="col-xs-3">
                     <?php echo $form->labelEx($model, 'sendingservice', array('class' => ''));?>
                 </div>                        
-            </div>
-            <div class="row">
-            <div class="col-xs-offset-4">This service enables sending stamped e-mails to other users.</div>
+                <div class="col-xs-8">This service enables sending stamped e-mails to other users.</div>
             </div>
             <div class="row">
                 <div class="col-xs-1">
-                    <?php echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-4'));?>
-                </div>
-                <div class="col-xs-11">
                     <?php echo $form->checkBox($model, 'receivingservice');?>
                 </div>
-            </div>
-            <div class="row">
-            <div class="col-xs-offset-4">This service enables receiving credits for e-mails that are stamped and
-            sent to you. You can receive up to 0.79 EUR for each e-mail.</div>
+                <div class="col-xs-3">
+                    <?php echo $form->labelEx($model, 'receivingservice', array('class' => ''));?>
+                </div>
+                <div class="col-xs-8">This service enables receiving credits for e-mails that are stamped and
+            	  sent to you. You can receive up to 0.79 EUR for each e-mail.</div>
             </div>
             <div class="row">
                 <div class="col-xs-1">
                     <?php echo $form->checkBox($model, 'sortingservice'); ?>
                 </div>
-                <div class="col-xs-11">
-                    <?php echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-4'));?>
+                <div class="col-xs-3">
+                    <?php echo $form->labelEx($model, 'sortingservice', array('class' => ''));?>
                 </div>
-            </div>
-            <div class="row">
-            <div class="col-xs-offset-4">This service sorts automatically incoming e-mail between inbox and no-stamp-emails
-            folder based on whether e-mail is stamped or not.<br></div>
+                <div class="col-xs-8">This service sorts automatically incoming e-mail between inbox and no-stamp-emails
+            	  folder based on whether e-mail is stamped or not.</div>
             </div>
                 <div class="row">
                 <div id="Extendedsettings" style="display : none;">
@@ -194,6 +188,9 @@ $gridcolumns = array(
 </div>
 <script type="text/javascript">
 $('#NewMailbox_receivingservice').change(function() {
+    $('#Extendedsettings').toggle();
+});
+$('#NewMailbox_sortingservice').change(function() {
     $('#Extendedsettings').toggle();
 });
 $('#useremail').change(function() {
