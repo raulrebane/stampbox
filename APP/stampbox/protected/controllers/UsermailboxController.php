@@ -22,13 +22,18 @@ class UsermailboxController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create', 'step2', 'update','index', 'delete'),
+                    'actions'=>array('new', 'update','index', 'delete'),
                     'users'=>array('@')),
             array('deny',  // deny all users
                 'users'=>array('*')),
         );
     }
 
+//    public function actionNew($e_mail)
+//    {
+//        
+//    }
+    
     public function actionCreate()
     {
         $model=new NewMailbox;

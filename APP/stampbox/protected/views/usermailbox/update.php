@@ -1,13 +1,13 @@
 <?php
-$form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAjaxValidation'=>true,));
+    $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAjaxValidation'=>true,));
 ?>
-<div id="p-usermailbox" class="row">
-<div class="col-xs-6">
+    <div id="p-usermailbox" class="row">
+    <div class="col-xs-6">
 <?php foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
 }
 ?>
-<div class="widget widget-accounts"><div class="title">Configue e-mail</div>
+<div class="widget widget-accounts"><div class="title">Configure e-mail</div>
 <?php
 echo $form->hiddenField($model, 'maildomain');
 echo $form->hiddenField($model, 'mailtype');

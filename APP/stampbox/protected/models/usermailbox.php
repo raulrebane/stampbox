@@ -94,9 +94,9 @@ class usermailbox extends CActiveRecord
 			'e_mail_username' => 'E Mail Username',
 			'e_mail_password' => 'E Mail Password',
 			'status' => 'Status',
-                        'sending_service'=>'Sending stamps',
-                        'receiving_service'=>'Receiving stamps',
-                        'sorting_service'=>'E-mail sorting'
+                        'sending_service'=>'Sending service',
+                        'receiving_service'=>'Collection service',
+                        'sorting_service'=>'Protection service'
 		);
 	}
 

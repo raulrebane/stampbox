@@ -102,6 +102,31 @@ WITH (
   OIDS=FALSE
 );
 
+CREATE TABLE ds.t_contacts
+(
+  customer_id bigint NOT NULL,
+  e_mail character varying(128) NOT NULL,
+  contact_email character varying(100) NOT NULL,
+  name character varying(100),
+  from_count integer,
+  to_count integer,
+  last_email_date timestamp without time zone,
+  CONSTRAINT pk_contacts PRIMARY KEY (customer_id, e_mail, contact_email),
+  CONSTRAINT fk_contacts_t_customer FOREIGN KEY (customer_id)
+      REFERENCES ds.t_customer (customer_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_contacts_t_customer_mailbox FOREIGN KEY (e_mail)
+      REFERENCES ds.t_customer_mailbox (e_mail) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ds.t_contacts
+  OWNER TO sbadmin;
+GRANT ALL ON TABLE ds.t_contacts TO sbadmin;
+GRANT SELECT, UPDATE, INSERT ON TABLE ds.t_contacts TO sbweb;
+
 CREATE TABLE ds.t_invitations
 (
   customer_id bigint NOT NULL,

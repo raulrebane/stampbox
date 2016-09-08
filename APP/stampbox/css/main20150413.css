@@ -9237,10 +9237,6 @@ width: 100%;
 }
 /* line 299, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .footer .btn {
-  position: relative;
-  right: 0px;
-  width: 100%;
-  font-size: 14px;
 }
 /* line 304, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .footer .btn i {

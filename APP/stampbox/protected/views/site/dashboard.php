@@ -36,7 +36,16 @@ $whitelistitems = Yii::app()->db->createCommand(array(
         ))->queryAll();
 
 foreach(Yii::app()->user->getFlashes() as $key => $message) {
+    Yii::log("flashes: " .$message, 'info', 'application');
+    if ($message[1] == '{') {
+        $messages = json_decode($message);
+        foreach ($messages as $value) {
+            echo '<div class="alert alert-' .$key .' alert-dismissable">' .$value ."</div>\n";
+        }
+    }
+    else  {
         echo '<div class="alert alert-' .$key .' alert-dismissable">' .$message ."</div>\n";
+    }
 }
 ?>
 <div class="row">
@@ -96,6 +105,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
             //'hideHeader'=>TRUE,
+            'emptyText' => '',
             'template' => '{items}',
             'htmlOptions'=>array('class'=>''),
             'dataProvider' => $gridDataProvider,
@@ -161,6 +171,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         $this->widget('zii.widgets.grid.CGridView',array(
             'enablePagination'=>FALSE,
             //'hideHeader'=>TRUE,
+            'emptyText' => '',
             'template' => '{items}',
             'htmlOptions'=>array('class'=>''),
             'dataProvider' => $gridDataProvider,
@@ -187,6 +198,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                 
                 $this->widget('zii.widgets.grid.CGridView', array(
                     //'hideHeader'=>TRUE,
+                    'emptyText' => '',
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>''),
                     'selectableRows' => 0,
@@ -211,8 +223,17 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                     )
                 ));?>
             </div>
-            <div class="footer">
-                <a class="btn btn-aqua" href="<?php echo Yii::app()->createUrl('usermailbox/create')?>"><i class="sbicon-plus-circled"></i>Add new e-mail</a>
+            <div class="footer dashboard-form">
+                <?php 
+                    $model = new NewMailbox();
+                    $form = $this->beginWidget('CActiveForm',array(
+                        'id' => 'NewMailbox',
+                        'action' => Yii::app()->createUrl('usermailbox/new'), 
+                        'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+                    echo $form->EmailField($model, 'useremail', array('class'=>'', 'id'=>'useremail', 'placeholder'=>'Enter email'));
+                    echo '<button type="submit" class="btn btn-aqua">Stampbox new e-mail</button>';
+                    $this->endWidget();
+                ?>
             </div>
         </div>
 </div>

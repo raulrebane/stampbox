@@ -34,7 +34,7 @@ function CheckMailbox($job, $log)
   else {
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     $mail_errors = imap_errors();
-    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mboxparams) .var_dump($mail_errors));
+    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mail_errors));
     closelog();
     return json_encode(array('status'=>'ERROR', 'reason'=>$mail_errors));
   }
