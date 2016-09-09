@@ -188,10 +188,16 @@ $gridcolumns = array(
 </div>
 <script type="text/javascript">
 $('#NewMailbox_receivingservice').change(function() {
-    $('#Extendedsettings').toggle();
+  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
+    $('#Extendedsettings').show();
+  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
+    $('#Extendedsettings').hide();
 });
 $('#NewMailbox_sortingservice').change(function() {
-    $('#Extendedsettings').toggle();
+  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
+    $('#Extendedsettings').show();
+  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
+    $('#Extendedsettings').hide();
 });
 $('#useremail').change(function() {
     var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
