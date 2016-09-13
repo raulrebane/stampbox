@@ -74,9 +74,8 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                 'options'=>array('showAnim'=>'fold',),
             ));
             echo '<button type="submit" class="btn btn-aqua">Send invitation</button>';
-        $this->endWidget();
+            $this->endWidget();
         ?>        
-        
     </div>
     </div>
 </div>

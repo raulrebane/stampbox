@@ -1,135 +1,143 @@
-<?php
-    $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','enableAjaxValidation'=>true,));
-?>
-    <div id="p-usermailbox" class="row">
-    <div class="col-xs-6">
-<?php foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
-}
-?>
-<div class="widget widget-accounts"><div class="title">Configure e-mail</div>
-<?php
-echo $form->hiddenField($model, 'maildomain');
-echo $form->hiddenField($model, 'mailtype');
-echo $form->hiddenField($model, 'incoming_auth');
-?>
-<div class="header-row">E-mail login settings</div>
-<?php
-if ($model->registereddomain == NULL OR 
-        ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) {
-echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
-echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail login name'));
-echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
-} else {
-echo $form->labelEx($model, 'emailusername', array('class' => 'col-xs-4'));
-echo $form->textField($model, 'emailusername', array('class' => 'form-control col-xs-8', 'disabled' => true));
-echo $form->error($model, 'emailusername', array('class' => 'col-xs-offset-4'));
-}
-?>
 <div class="row">
-<?php echo $form->labelEx($model, 'emailpassword', array('class' => 'col-xs-4')); ?>
-<?php echo $form->passwordField($model, 'emailpassword', array('class' => 'form-control col-xs-8', 'placeholder' => 'password for e-mail')); ?>
+    <div class="col-xs-8 col-xs-offset-2 dialog-form" style="padding:20px;">
+    <div class="widget widget-accounts">
+        <div class="title">Configure e-mail</div>
+    <?php
+        $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','htmlOptions' => array('class' => 'form', 'role'=>'form'), 'enableAjaxValidation'=>true,));
+        echo $form->hiddenField($model, 'maildomain');
+        echo $form->hiddenField($model, 'mailtype');
+        echo $form->hiddenField($model, 'incoming_auth');
+    ?>
+    <div class="row">
+        <?php
+        if ($model->registereddomain == NULL OR ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) {
+            echo $form->textField($model, 'emailusername', array('class' => '', 'placeholder' => 'e-mail login name')); }
+        else { echo $form->textField($model, 'emailusername', array('class' => '', 'disabled' => true)); } ?>
+    </div>
+    <div class="row">
+        <?php echo $form->error($model, 'emailusername', array('class' => '')); ?>
+    </div>
+    <div class="row">
+        <?php echo $form->passwordField($model, 'emailpassword', array('class' => '', 'placeholder' => 'password for e-mail')); ?>
+    </div>
+    <div class="row">
+        <?php echo $form->error($model, 'emailpassword', array('class' => '')); ?>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+        <?php echo $form->checkBox($model, 'sendingservice');?>
+        </div>
+        <div class="col-xs-11">
+        <?php echo $form->labelEx($model, 'sendingservice', array('class' => '')); ?>
+         - This service enables sending stamped e-mails to other users.            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+        <?php echo $form->checkBox($model, 'receivingservice'); ?>
+        </div>
+        <div class="col-xs-11">
+        <?php echo $form->labelEx($model, 'receivingservice', array('class' => '')); ?>
+        - This service enables receiving credits for e-mails that are stamped and
+        sent to you. You can receive up to 0.79 EUR for each e-mail.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+            <?php echo $form->checkBox($model, 'sortingservice'); ?>
+        </div>
+        <div class="col-xs-11">
+            <?php echo $form->labelEx($model, 'sortingservice', array('class' => ''));?>
+            - This service sorts automatically incoming e-mail between inbox and no-stamp-emails
+            folder based on whether e-mail is stamped or not.
+        </div>
+    </div>
+    <div id="Extendedsettings" style="display : none;">
+        <div class="row">
+            <div class="col-xs-3">
+            <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => ''));?>
+        </div>
+            <div class="col-xs-8">
+            <?php
+                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+                    echo $form->textField($model, 'incoming_hostname', array('class' => '', 'placeholder' => 'e-mail server name')); }
+                else { echo $form->textField($model, 'incoming_hostname', array('class' => '', 'disabled' => true));} ?>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $form->error($model, 'incoming_hostname', array('class' => '')); ?>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?>
+            </div>
+            <div class="col-xs-8">
+                <?php
+                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+                    echo $form->numberField($model, 'incoming_port', array('class' => 'form-control ', 'placeholder' => 'Port'));}
+                else { echo $form->numberField($model, 'incoming_port', array('class' => 'form-control ', 'disabled' => true)); }?>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $form->error($model, 'incoming_port', array('class' => '')); ?>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?>
+            </div>
+            <div class="col-xs-8">
+                <?php
+                    if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
+                        echo '<div class="select-style">';
+                        echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control '));
+                        echo '</div>';} 
+                    else { echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control ', 'disabled' => true)); }?>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $form->error($model, 'incoming_socket_type', array('class' => ''));?>
+        </div>
+    </div>
+        <div class="row"><div class="col-xs-6">
+            <?php $this->widget('zii.widgets.jui.CJuiButton', array(
+                'buttonType'=>'submit',
+                'caption'=>'Save',
+                'name'=>'emailbtn',
+                'htmlOptions'=>array('class'=>'btn btn-aqua')
+                )); ?>
+            </div><div class="col-xs-6">
+            <?php $this->widget('zii.widgets.jui.CJuiButton', array(
+                'buttonType'=>'submit',
+                'caption'=>'Cancel',
+                'name'=>'cancelbtn',
+                'htmlOptions'=>array('class'=>'btn btn-default')
+                )); ?>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
-<div class="row">
-<?php echo $form->error($model, 'emailpassword', array('class' => 'col-xs-offset-4')); ?>
-</div>
-<div class="header-row">Select services</div>
-<div class="row">
-<?php
-echo $form->labelEx($model, 'sendingservice', array('class' => 'col-xs-4'));
-echo $form->checkBox($model, 'sendingservice');
-?>
-</div>
-<div class="row">
-<div class="col-xs-offset-4">This service enables sending stamped e-mails to other users.<br></div>
-</div>
-<div class="row">
-<?php
-echo $form->labelEx($model, 'receivingservice', array('class' => 'col-xs-4'));
-echo $form->checkBox($model, 'receivingservice');
-?>
-</div>
-<div class="row">
-<div class="col-xs-offset-4">This service enables receiving credits for e-mails that are stamped and
-sent to you. You can receive up to 0.79 EUR for each e-mail.<br></div>
-</div>
-<div class="row">
-<?php
-echo $form->labelEx($model, 'sortingservice', array('class' => 'col-xs-4'));
-echo $form->checkBox($model, 'sortingservice');
-?>
-</div>
-<div class="row">
-<div class="col-xs-offset-4">This service sorts automatically incoming e-mail between inbox and no-stamp-emails
-folder based on whether e-mail is stamped or not.<br></div>
-</div>
-<div class="header-row">E-mail server settings</div>
-<div class="row">
-<?php echo $form->labelEx($model, 'incoming_hostname', array('class' => 'col-xs-4'));
-if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'placeholder' => 'e-mail server name'));
-} else {
-echo $form->textField($model, 'incoming_hostname', array('class' => 'form-control col-xs-8', 'disabled' => true));
-} ?>
-</div>
-<div class="row">
-<?php echo $form->error($model, 'incoming_hostname', array('class' => 'col-xs-offset-4')); ?>
-</div>
-<div class="row">
-<?php echo $form->labelEx($model, 'incoming_port', array('class' => 'col-xs-4'));
-if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'placeholder' => 'Port'));
-} else {
-echo $form->numberField($model, 'incoming_port', array('class' => 'form-control col-xs-4', 'disabled' => true));
-}?>
-</div>
-<div class="row">
-<?php echo $form->error($model, 'incoming_port', array('class' => 'col-xs-offset-4')); ?>
-</div>
-<div class="row">
-<?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => 'col-xs-4'));
-if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-echo '<div class="select-style">';
-echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control col-xs-4'));
-echo '</div>';
-} else {
-echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control col-xs-4', 'disabled' => true));
-}?>
-</div>
-<div class="row">
-<?php echo $form->error($model, 'incoming_socket_type', array('class' => 'col-xs-offset-4'));?>
-</div>
-<div class="header-row"></div>
-<?php $this->widget('zii.widgets.jui.CJuiButton', array(
-'buttonType'=>'submit',
-'caption'=>'Save',
-'name'=>'emailbtn',
-'htmlOptions'=>array('class'=>'btn btn-aqua')
-)); ?>
-<?php $this->widget('zii.widgets.jui.CJuiButton', array(
-'buttonType'=>'submit',
-'caption'=>'Cancel',
-'name'=>'cancelbtn',
-'htmlOptions'=>array('class'=>'btn btn-default')
-)); ?>
-<div class="help"><button type="button" class="btn btn-aqua pull-right" data-toggle="modal" data-target="#SignupHelpDlg">Help</button></div>
-</div>
-</div>
-</div>
-<?php $this->widget('ext.ibutton.IButton', array('selector' => ':checkbox',
-'options' =>array('labelOn'=>'Yes','labelOff'=>'No')));
-$this->endWidget(); 
-unset($form); ?>
-<!-- Modal -->
-<div class="modal fade" id="SignupHelpDlg" tabindex="-1" role="dialog" aria-labelledby="signuphelp" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">IMAP settings help</div>
-<div class="modal-body">
-<?php
-?>
-</div>
-<div class="modal-footer"></div>
-</div>
-</div>
-</div>
+<?php $this->endWidget(); unset($form); ?>
+<script type="text/javascript">
+$('#NewMailbox_receivingservice').change(function() {
+  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
+    $('#Extendedsettings').show();
+  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
+    $('#Extendedsettings').hide();
+});
+$('#NewMailbox_sortingservice').change(function() {
+  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
+    $('#Extendedsettings').show();
+  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
+    $('#Extendedsettings').hide();
+});
+$('#useremail').change(function() {
+    var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
+    url = url + "&email=" + $("#useremail").val();
+    $.getJSON(url, function(data) {
+        $("#NewMailbox_incoming_hostname").val(data.incoming_hostname);
+        $("#NewMailbox_incoming_port").val(data.incoming_port);
+        $("#NewMailbox_incoming_socket_type").val(data.incoming_socket_type);
+    })
+});
+</script>

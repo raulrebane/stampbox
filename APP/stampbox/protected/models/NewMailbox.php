@@ -75,9 +75,9 @@ class NewMailbox extends CFormModel
                         'incoming_hostname'=>'Mail server name',
                         'incoming_port'=>'Port',
                         'incoming_socket_type'=>'Connection security',
-                        'sendingservice'=>'Sending service: ',
-                        'receivingservice'=>'Collection service: ',
-                        'sortingservice'=>'Protection service: '
+                        'sendingservice'=>'Enable Sending service ',
+                        'receivingservice'=>'Enable Collection service ',
+                        'sortingservice'=>'Enable Protection service '
 		);
 	}
 
