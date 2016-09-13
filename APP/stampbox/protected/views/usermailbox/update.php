@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-8 col-xs-offset-2 dialog-form" style="padding:20px;">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 dialog-form" style="padding:20px;">
     <div class="widget widget-accounts">
         <div class="title">Configure e-mail</div>
     <?php
