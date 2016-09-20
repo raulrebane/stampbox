@@ -9,10 +9,12 @@
 function CheckMailbox($job, $log)
 {
   $jsonstr = $job->workload();
+  $log = $jsonstr;
   $mboxparams = json_decode($jsonstr);
   // No such server exists
   $mailserver = gethostbyname($mboxparams->hostname .'.');
   if ($mailserver == $mboxparams->hostname) {
+      $log = 'ERROR: No such server $mboxparams->hostname';
       return json_encode(array('status'=>'ERROR', 'reason'=>'No such server'));
   }
   if ($mboxparams->port == '') {
@@ -34,7 +36,8 @@ function CheckMailbox($job, $log)
   else {
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     $mail_errors = imap_errors();
-    syslog(LOG_ERR, "Error loggin in with $jsonstr" .var_dump($mail_errors));
+    $log = $mail_errors;
+    syslog(LOG_ERR, "Error loggin in with $jsonstr" .json_encode($mail_errors));
     closelog();
     return json_encode(array('status'=>'ERROR', 'reason'=>$mail_errors));
   }

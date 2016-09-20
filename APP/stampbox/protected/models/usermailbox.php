@@ -49,7 +49,7 @@ class usermailbox extends CActiveRecord
                         array('e_mail', 'email'),
                         //array('e_mail', 'checkregistered'),
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
-			array('e_mail_password', 'length', 'max'=>32),
+			array('e_mail_password', 'length', 'max'=>500),
                         array('status', 'length', 'max'=>1),
 			array('e_mail_username, customer_id, maildomain, sending_service, receiving_service, sorting_service', 'safe'),
 			// The following rule is used by search().

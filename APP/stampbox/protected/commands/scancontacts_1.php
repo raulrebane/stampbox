@@ -75,7 +75,7 @@ if ($customermailboxes) {
                                         ));
                                         //$gmclient= new GearmanClient();
                                         //$gmclient->addServer("127.0.0.1", 4730);
-                                        //$result = json_decode($gmclient->do("invitesender", $inviteparams),TRUE);                                        
+                                        //$result = json_decode($gmclient->doNormal("invitesender", $inviteparams),TRUE);                                        
                                         //imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                         syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
                                         break;

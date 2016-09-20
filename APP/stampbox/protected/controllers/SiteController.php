@@ -151,7 +151,7 @@ class SiteController extends Controller
                                 ));
                         $gmclient= new GearmanClient();
                         $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                        $result = json_decode($gmclient->do("Sendpasswdlink", $sendmailparams),TRUE);
+                        $result = json_decode($gmclient->doNormal("Sendpasswdlink", $sendmailparams),TRUE);
                         $model->notified = TRUE;
                     }
                 }	

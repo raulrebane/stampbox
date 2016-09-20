@@ -4,6 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+include '../../config/commands.php';
 
     function IssueStamps($job, $log)
     {
@@ -45,7 +46,7 @@
         openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
         syslog(LOG_INFO, "Got issue stamps request with: " .$jsonstr);
         $stampsparams = json_decode($jsonstr);
-        $dbconnection = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb"); 
+        $dbconnection = pg_connect($dbconnectstring); 
         $stamps['batch_id'] = $stampsparams->stampid;
         $stamps['customer_id'] = $stampsparams->customer_id;
         $stamps['status'] = 'A';

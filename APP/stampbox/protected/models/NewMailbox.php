@@ -34,22 +34,22 @@ class NewMailbox extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail', 'required', 'on'=>'Step1'),
-			array('useremail', 'length', 'max'=>128, 'on'=>'Step1'),
-                        array('useremail', 'email', 'on'=>'Step1'),
-                        array('useremail', 'checkregistered', 'on'=>'Step1'),
-                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Step1'),
-                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'required', 'on'=>'Step2'),
-                        array('incoming_hostname', 'length', 'max'=>'255', 'on'=>'Step2'),
-                        array('incoming_port', 'numerical', 'integerOnly'=>true, 'on'=>'Step2'),
-                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false, 'on'=>'Step2'),
+			array('useremail', 'required'),
+			array('useremail', 'length', 'max'=>100),
+                        array('useremail', 'email'),
+                        array('useremail', 'checkRegistered', 'on'=>'New'),
+                        array('emailpassword', 'length', 'max'=>'500'),
+                        array('incoming_hostname', 'length', 'max'=>'255'),
+                        array('incoming_port', 'numerical', 'integerOnly'=>true),
+                        array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
-                        array('sendingservice, receivingservice, sortingservice', 'safe', 'on'=>'Update'),
-                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'safe', 'on'=>'Update'),
+                        array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'checkFields'),
+                        array('sendingservice, receivingservice, sortingservice', 'required'),
+                        array('sendingservice, receivingservice, sortingservice', 'in', 'range'=>array('0','1'))
 		);
 	}
       
-        public function checkregistered($attribute,$params)
+        public function checkRegistered($attribute,$params)
         {
             $customer = Yii::app()->db->createCommand(array('select'=> array('customer_id'),
                         'from' => 'ds.v_registered_email',
@@ -61,6 +61,14 @@ class NewMailbox extends CFormModel
                 return false;
             }
          return true;
+        }
+        
+        public function checkFields($attribute,$params)
+        {
+            if ($this->receivingservice == 1 OR $this->sortingservice == 1) {
+                $ev = CValidator::createValidator('required', $this, $attribute, $params);
+                $ev->validate($this);
+            }
         }
 	/**
 	 * Declares attribute labels.
@@ -143,6 +151,8 @@ class NewMailbox extends CFormModel
                     }
                     break;
                 case 'Update':
+                    Yii::log('In update mailbox: ' .CVarDumper::dumpAsString($this)
+                                        , 'info', 'application');
                     //list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
@@ -155,30 +165,28 @@ class NewMailbox extends CFormModel
                     else {
                         $this->registeredemail->status = 'V';
                     }
+                    Yii::log('In update mailbox about to save: ' .CVarDumper::dumpAsString($this->registeredemail)
+                                        , 'info', 'application');
                     if (!$this->registeredemail->save()) {
                         Yii::log('In update mailbox save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
                                         .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
                     }
+                    if ($this->registereddomain <> NULL AND $this->registereddomain->status == 'A') { break; }
                     if ($this->registereddomain == NULL) {
                         $this->registereddomain = new mailconfig();
                         $this->registereddomain->maildomain = $this->maildomain;
                         $this->registereddomain->mailtype = 'IMAP';
 		    }
-		    $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
-	            $this->registereddomain->incoming_port = $this->incoming_port;
-        	    $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
+                    $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
+                    $this->registereddomain->incoming_port = $this->incoming_port;
+                    $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
                     if ($this->registeredemail->e_mail == $this->registeredemail->e_mail_username) {
                             $this->registereddomain->incoming_auth = 'EMAIL';
                     }
                     else {
                             $this->registereddomain->incoming_auth = 'OTHER';
                     }
-                    if ($this->e_mail_verified) {
-                        $this->registereddomain->status = 'A';
-                    }
-                    else {
-                        $this->registereddomain->status = 'V';
-                    }
+                    if ($this->e_mail_verified) { $this->registereddomain->status = 'A'; } else { $this->registereddomain->status = 'V'; }
                     if (!$this->registereddomain->save()) {
                             Yii::log('In update save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
                                         .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');

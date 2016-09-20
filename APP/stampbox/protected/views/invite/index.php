@@ -34,7 +34,7 @@ if ($model->loading_inprogress == TRUE) {
         'value'=>$model->percent_complete,
         //'htmlOptions'=>array('style'=>'width:200px; height:20px; float:center;')
     ));
-    //$this->endWidget('zii.widgets.jui.CJuiDialog');
+    $this->endWidget();
 ?>
 
     <script type="text/javascript">
@@ -81,7 +81,7 @@ if (isset($model->emailslist)) {
                 echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
             echo '</div>';
             echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>';
-        //$this->endWidget();
+            $this->endWidget();
         ?>        
         </div>
     </div>
@@ -120,6 +120,7 @@ if (isset($model->emailslist)) {
                     'dataProvider' => $model->dataProvider,
                     'columns'=>$gridColumns
                 ));      
+                //$this->endWidget(); 
             ?>
             <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>
             </div>
@@ -128,6 +129,6 @@ if (isset($model->emailslist)) {
 </div>
 
 <?php
-//$this->endWidget(); 
+
 //unset($form);
 ?>

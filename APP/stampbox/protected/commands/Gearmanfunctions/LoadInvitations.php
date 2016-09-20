@@ -1,4 +1,5 @@
 <?php
+include '../../config/commands.php';
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -12,7 +13,7 @@ function LoadInvitations($job, $log)
     $mboxparams = json_decode($jsonstr);
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     syslog(LOG_INFO, "Starting invitation load: " .$jsonstr);
-    $dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
+    $dbconn = pg_connect($dbconnectstring) or die('Query failed: ' . pg_last_error());
     $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' and customer_id = " 
             .$mboxparams->customer_id ." and e_mail='" .$mboxparams->e_mail ."';");
     if (pg_num_rows($customermailboxes) > 0) {
@@ -23,6 +24,13 @@ function LoadInvitations($job, $log)
             $mailconf = pg_fetch_assoc($mailboxconfig);
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
+            if (substr($custmailbox['e_mail_password'],0,5) == 'SBPKI') {
+                $gmclient= new GearmanClient();
+                $gmclient->addServer('127.0.0.1', 4730);
+                $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$custmailbox['e_mail_password']))),TRUE);
+                $custmailbox['e_mail_password'] = $result['opentext'];
+            }
+            
             $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}",
                     $username,$custmailbox['e_mail_password']);
 	    if ($inbox) {

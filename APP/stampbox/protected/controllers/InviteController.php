@@ -75,7 +75,7 @@ class InviteController extends Controller
                         'auth_type'=>$maildomain->incoming_auth));
                     $gmclient= new GearmanClient();
                     $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                    //$result = json_decode($gmclient->do("loadinvitations", $loadinvitations),TRUE);
+                    //$result = json_decode($gmclient->doNormal("loadinvitations", $loadinvitations),TRUE);
                     // implementing backgroung load of contacts
                     $jobhandle = $gmclient->doBackground("LoadInvitations", $loadinvitations);
                     $dbcommand = Yii::app()->db->createCommand();

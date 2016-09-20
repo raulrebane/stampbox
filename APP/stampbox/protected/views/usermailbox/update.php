@@ -1,27 +1,35 @@
 <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 dialog-form" style="padding:20px;">
     <div class="widget widget-accounts">
-        <div class="title">Configure e-mail</div>
+        <div class="title">Configure <?php echo $model->useremail;?> e-mail</div>
     <?php
-        $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form','htmlOptions' => array('class' => 'form', 'role'=>'form'), 'enableAjaxValidation'=>true,));
+        $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form',
+            'htmlOptions' => array('class' => 'form', 'role'=>'form'), 
+            'enableAjaxValidation'=>true,));
         echo $form->hiddenField($model, 'maildomain');
         echo $form->hiddenField($model, 'mailtype');
         echo $form->hiddenField($model, 'incoming_auth');
+        echo $form->hiddenField($model, 'incoming_hostname');
+        echo $form->hiddenField($model, 'incoming_port');
+        echo $form->hiddenField($model, 'incoming_socket_type');
     ?>
     <div class="row">
         <?php
         if ($model->registereddomain == NULL OR ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) {
             echo $form->textField($model, 'emailusername', array('class' => '', 'placeholder' => 'e-mail login name')); }
-        else { echo $form->textField($model, 'emailusername', array('class' => '', 'disabled' => true)); } ?>
+        else { 
+            echo $form->textField($model, 'emailusername', array('class' => '', 'disabled' => true)); 
+            echo $form->hiddenField($model, 'emailusername');
+        } ?>
     </div>
     <div class="row">
-        <?php echo $form->error($model, 'emailusername', array('class' => '')); ?>
+        <?php echo $form->error($model, 'emailusername', array('class' => 'alert alert-danger')); ?>
     </div>
     <div class="row">
         <?php echo $form->passwordField($model, 'emailpassword', array('class' => '', 'placeholder' => 'password for e-mail')); ?>
     </div>
     <div class="row">
-        <?php echo $form->error($model, 'emailpassword', array('class' => '')); ?>
+        <?php echo $form->error($model, 'emailpassword', array('class' => 'alert alert-danger')); ?>
     </div>
     <div class="row">
         <div class="col-xs-1">
@@ -52,9 +60,12 @@
             folder based on whether e-mail is stamped or not.
         </div>
     </div>
-    <div id="Extendedsettings" style="display : none;">
+    <?php if ($model->receivingservice == 1 OR $model->sortingservice == 1) {
+            echo '<div id="Extendedsettings">';} 
+        else { echo '<div id="Extendedsettings" style="display : none;">';}
+    ?>
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-4">
             <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => ''));?>
         </div>
             <div class="col-xs-8">
@@ -65,10 +76,10 @@
             </div>
         </div>
         <div class="row">
-            <?php echo $form->error($model, 'incoming_hostname', array('class' => '')); ?>
+            <?php echo $form->error($model, 'incoming_hostname', array('class' => 'alert alert-danger')); ?>
         </div>
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?>
             </div>
             <div class="col-xs-8">
@@ -79,10 +90,10 @@
             </div>
         </div>
         <div class="row">
-            <?php echo $form->error($model, 'incoming_port', array('class' => '')); ?>
+            <?php echo $form->error($model, 'incoming_port', array('class' => 'alert alert-danger')); ?>
         </div>
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?>
             </div>
             <div class="col-xs-8">
@@ -95,7 +106,7 @@
             </div>
         </div>
         <div class="row">
-            <?php echo $form->error($model, 'incoming_socket_type', array('class' => ''));?>
+            <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'alert alert-danger'));?>
         </div>
     </div>
         <div class="row"><div class="col-xs-6">

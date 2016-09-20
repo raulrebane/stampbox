@@ -107,10 +107,10 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
             <div class="form-group">
             <?php
                 echo $form->emailField($model, 'username', array('class' => 'form-control', 'id'=>'email', 'placeholder'=>'Email'));
-                echo $form->error($model, 'username');
+                echo $form->error($model, 'username', array('class' => 'alert alert-danger'));
                 
                 echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder'=>'Password'));
-                echo $form->error($model, 'password');
+                echo $form->error($model, 'password', array('class' => 'alert alert-danger'));
             ?>  
             </div>
             <button type="submit" class="btn btn-aqua btn-block dialog-form-btn">Login</button>
@@ -164,13 +164,13 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 <div class="row"><div class="col-xs-12">
                 <?php
                 echo $form->EmailField($model, 'useremail', array('class'=>'', 'id'=>'useremail', 'style'=>'width:100%','placeholder'=>'Enter email'));
-                echo $form->error($model, 'useremail',array('validateOnChange'=>true));
+                echo $form->error($model, 'useremail',array('validateOnChange'=>true, 'class' => 'alert alert-danger'), TRUE);
                 ?>
                 </div></div>
                 <div class="row"><div class="col-xs-12">
                 <?php
                 echo $form->passwordField($model, 'userpassword', array('class'=>'','style'=>'width:100%','placeholder'=>'Create Stampbox password'));
-                echo $form->error($model, 'userpassword', '', FALSE);
+                echo $form->error($model, 'userpassword', array('class' => 'alert alert-danger'), FALSE);
                 ?>
                 </div></div>
                 <div class="row">
@@ -178,7 +178,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                     <div class="col-xs-11"><?php echo $form->labelEx($model, 'agreewithterms', array('class'=>''));?></div>
                 </div>
                 <div class="row">
-                    <?php echo $form->error($model, 'agreewithterms', array('class' => ''));?>
+                    <?php echo $form->error($model, 'agreewithterms', array('class' => 'alert alert-danger'));?>
                 </div>
         </div>
         <div class="row"><div class="col-xs-12">
