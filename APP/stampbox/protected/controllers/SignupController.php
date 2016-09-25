@@ -8,16 +8,17 @@
 class SignupController extends Controller
 {
     public function actionIndex() {
+        $log_line = new LogAction;
         $model = new Signup();
         if(isset($_POST['ajax']) && $_POST['ajax']==='signup-form') {
             $model->attributes=$_POST['Signup'];
-            if ($model->simpleservice == 0) { $model->scenario = 'Simple'; }
-            else { $model->scenario = 'Extended'; }
-            Yii::log("Signup: " .CVarDumper::dumpAsString($model), 'info', 'application');
+            $model->scenario = 'Simple';
+            $log_line->WriteLog(CVarDumper::dumpAsString($model));
             $errors = CActiveForm::validate($model);
-            if ($errors != '[]')
+            if ($errors !== '[]')
                 {
-                Yii::log("Signup error: " .CVarDumper::dumpAsString($errors), 'info', 'application');
+                $log_line->WriteLog(CVarDumper::dumpAsString($errors));
+                //Yii::log("Signup error: " .CVarDumper::dumpAsString($errors), 'info', 'application');
                 echo $errors;
                 Yii::app()->end();
                 }

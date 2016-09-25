@@ -317,4 +317,21 @@ WITH (
   OIDS=FALSE
 );
 
+-- Table: ds.t_log_line
 
+-- DROP TABLE ds.t_log_line;
+
+CREATE TABLE ds.t_log_line
+(
+  log_datetime timestamp without time zone,
+  log_ip inet,
+  log_session character varying(32),
+  log_customer_id bigint,
+  log_path character varying(100),
+  log_data character varying(4000)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ds.t_log_line
+  OWNER TO sbadmin;

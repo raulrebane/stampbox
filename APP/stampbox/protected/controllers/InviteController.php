@@ -30,6 +30,16 @@ class InviteController extends Controller
             );
     }
         
+    protected function beforeAction($action)
+    {
+        if(parent::beforeAction($action))
+        {
+            $log_line = new LogAction;
+            $log_line->WriteLog(CVarDumper::dumpAsString($_GET) .' ' .CVarDumper::dumpAsString($_POST));
+            return true;
+        }
+    }
+
     public function actionIndex() {
        
         if (isset($_POST['invite']) && isset($_POST['selectedIds'])) {

@@ -34,6 +34,16 @@ class UsermailboxController extends Controller
 //        
 //    }
     
+    protected function beforeAction($action)
+    {
+        if(parent::beforeAction($action))
+        {
+            $log_line = new LogAction;
+            $log_line->WriteLog(CVarDumper::dumpAsString($_GET) .' ' .CVarDumper::dumpAsString($_POST));
+            return true;
+        }
+    }
+
     public function actionCreate()
     {
         $model=new NewMailbox;
@@ -149,18 +159,21 @@ class UsermailboxController extends Controller
             Yii::log('In e-mail update, '.Yii::app()->user->getId() .' ' .$email
                         .' missing user mailbox record' , 'info', 'application');
                 // should redirect to site/index
+            Yii::app()->user->setFlash('danger',
+                '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;'
+                . ' E-mail not found');
             $this->redirect(array('usermailbox/index'));
         }
         else {
             $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
         }
         
-        if (Yii::app()->getRequest()->getIsAjaxRequest()) {
-            $model->attributes=$_POST['NewMailbox'];
-            Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
+//        if (Yii::app()->getRequest()->getIsAjaxRequest()) {
+//            $model->attributes=$_POST['NewMailbox'];
+//            Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
+//            echo CActiveForm::validate($model);
+//            Yii::app()->end();
+//        }
         if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
             $this->redirect(array('usermailbox/index'));
             Yii::app()->end();
@@ -175,7 +188,7 @@ class UsermailboxController extends Controller
                         $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$model->emailpassword))),TRUE);
                         $model->emailpassword = $result['opentext'];
                     }
-                    if ($model->registeredemail->status == 'A')  {
+                    if ($model->registeredemail->status == 'A' AND $model->emailpassword == $model->registeredemail->e_mail_password)  {
                         $model->e_mail_verified = TRUE; }
                     else {
                         $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
@@ -185,8 +198,11 @@ class UsermailboxController extends Controller
                         $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
                         if ($result['status'] == 'ERROR') {
                                 //Changed to allow registering without e-mail username
-                                Yii::app()->user->setFlash('danger', 'We could not access your e-mail inbox.' 
-                                            .CVarDumper::dumpAsString($result['reason'])); 
+                                Yii::app()->user->setFlash('danger',
+                                    '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                                    .'We could not access your e-mail inbox.<br>' 
+                                    .$result['reason']['0'] 
+                                    .'</div>'); 
                                 $this->render('update',array('model'=>$model,));
                                 Yii::app()->end();
                         } 
@@ -202,6 +218,9 @@ class UsermailboxController extends Controller
                 }
                 $model->Save('Update');
 		//Yii::app()->session->remove('updateemail');
+                Yii::app()->user->setFlash('success',
+                    '<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .'Updated configuration for '.$model->useremail .' saved</div>');                 
                 $this->redirect(array('usermailbox/index'));
 	    }
             else {
@@ -232,8 +251,6 @@ class UsermailboxController extends Controller
             }
         }
 
-        Yii::log('Render e-mail update: ' .CVarDumper::dumpAsString($model)
-                  , 'info', 'application');
         $this->render('update',array('model'=>$model,));
         Yii::app()->end();
     }

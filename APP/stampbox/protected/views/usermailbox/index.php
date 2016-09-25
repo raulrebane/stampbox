@@ -1,8 +1,15 @@
+
+
 <div class="widget widget-accounts"><div class="title">Stampboxed e-mail accounts</div>
 
 <?php
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo  $message;
+}
+
 $gridcolumns = array(
-    array('name'=>'e_mail', 'header'=>'e-mail'),
+    array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),'type'=>'raw', 'value'=>function($data) {
+        if ($data->status !== 'A') return '<del>' .$data->e_mail .'</del>'; else return $data->e_mail; }),
     array('name'=>'e_mail_username', 'header'=>'Username', 'htmlOptions'=>array('class'=>'hidden-xs', 'align'=>'left'), 
            'headerHtmlOptions'=>array('class'=>'hidden-xs')),
     array('name'=>'e_mail_password', 'header'=>'Password', 'htmlOptions'=>array('class'=>'hidden-xs', 'align'=>'center'), 'value'=>'"******"',

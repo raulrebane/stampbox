@@ -9,6 +9,16 @@ class ShopController extends Controller
 {
     public $layout = '//layouts/secure';
     
+    protected function beforeAction($action)
+    {
+        if(parent::beforeAction($action))
+        {
+            $log_line = new LogAction;
+            $log_line->WriteLog(CVarDumper::dumpAsString($_REQUEST));
+            return true;
+        }
+    }
+
     public function actionBuy() 
        {
         $dataProvider = new CActiveDataProvider('Offers', array('pagination'=>array('pageSize'=>100,)));

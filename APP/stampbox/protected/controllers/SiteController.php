@@ -38,6 +38,8 @@ class SiteController extends Controller
         {
             if(parent::beforeAction($action))
             {
+                $log_line = new LogAction;
+                $log_line->WriteLog(CVarDumper::dumpAsString($_GET) .' ' .CVarDumper::dumpAsString($_POST));
                 if (Yii::app()->user->isGuest) 
                     { $this->layout = 'public'; }
                 else 

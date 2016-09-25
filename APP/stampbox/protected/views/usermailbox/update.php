@@ -1,3 +1,8 @@
+<?php
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo  $message;
+}
+?>
 <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 dialog-form" style="padding:20px;">
     <div class="widget widget-accounts">
@@ -5,7 +10,7 @@
     <?php
         $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form',
             'htmlOptions' => array('class' => 'form', 'role'=>'form'), 
-            'enableAjaxValidation'=>true,));
+            'enableAjaxValidation'=>false,));
         echo $form->hiddenField($model, 'maildomain');
         echo $form->hiddenField($model, 'mailtype');
         echo $form->hiddenField($model, 'incoming_auth');

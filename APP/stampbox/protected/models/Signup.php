@@ -124,16 +124,15 @@ class Signup extends CFormModel
                   'points_bal'=>0,
                   'stamps_bal'=>0));
 
-                $this->checkMailbox();
+                //$this->checkMailbox();
                 // Save customer e-mail
                 $this->registeredemail = new usermailbox();
                 $this->registeredemail->customer_id = Yii::app()->user->getId();
                 $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
-                if ($this->e_mail_verified == TRUE) { $this->registeredemail->status = 'A'; }
-                else { $this->registeredemail->status = 'U';}
+                $this->registeredemail->status = 'V';
                 $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
-                $this->registeredemail->e_mail_username = $this->useremail;
-                $this->registeredemail->e_mail_password = $this->userpassword;
+//                $this->registeredemail->e_mail_username = $this->useremail;
+//                $this->registeredemail->e_mail_password = $this->userpassword;
                 $this->registeredemail->sending_service = TRUE;
                 $this->registeredemail->receiving_service = FALSE;
                 $this->registeredemail->sorting_service = FALSE;

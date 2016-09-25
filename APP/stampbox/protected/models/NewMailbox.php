@@ -151,8 +151,6 @@ class NewMailbox extends CFormModel
                     }
                     break;
                 case 'Update':
-                    Yii::log('In update mailbox: ' .CVarDumper::dumpAsString($this)
-                                        , 'info', 'application');
                     //list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
@@ -165,8 +163,6 @@ class NewMailbox extends CFormModel
                     else {
                         $this->registeredemail->status = 'V';
                     }
-                    Yii::log('In update mailbox about to save: ' .CVarDumper::dumpAsString($this->registeredemail)
-                                        , 'info', 'application');
                     if (!$this->registeredemail->save()) {
                         Yii::log('In update mailbox save failed: ' .CVarDumper::dumpAsString($this->registeredemail)
                                         .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
@@ -187,10 +183,10 @@ class NewMailbox extends CFormModel
                             $this->registereddomain->incoming_auth = 'OTHER';
                     }
                     if ($this->e_mail_verified) { $this->registereddomain->status = 'A'; } else { $this->registereddomain->status = 'V'; }
-                    if (!$this->registereddomain->save()) {
-                            Yii::log('In update save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
-                                        .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
-                    }
+//                    if (!$this->registereddomain->save()) {
+//                            Yii::log('In update save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
+//                                        .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
+//                    }
                     break;
             }
         }
