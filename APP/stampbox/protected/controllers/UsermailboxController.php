@@ -22,7 +22,7 @@ class UsermailboxController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('new', 'update','index', 'delete'),
+                    'actions'=>array('create', 'update','index', 'delete'),
                     'users'=>array('@')),
             array('deny',  // deny all users
                 'users'=>array('*')),
@@ -44,10 +44,9 @@ class UsermailboxController extends Controller
         }
     }
 
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model=new NewMailbox;
-        $model->scenario = 'Step1';
+        $model->scenario = 'Create';
         if(Yii::app()->getRequest()->getIsAjaxRequest()) {
             $model->attributes=$_POST['NewMailbox'];
             //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
@@ -63,88 +62,35 @@ class UsermailboxController extends Controller
         {
             $model->attributes=$_POST['NewMailbox'];
             if ($model->validate()) {
-                Yii::log("New e-mail step1 save: " .$model->useremail, 'info', 'application');
-                $model->Save('Step1');
+                $model->e_mail_verified = FALSE;
+                $gmclient= new GearmanClient();
+                $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
                 if ($model->receivingservice == 1 or $model->sortingservice == 1) {
-                    Yii::app()->session['newemail'] = $model->useremail;
-                    $this->redirect(array('usermailbox/step2'));
+                    $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
+                        'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
+                        'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
+                    $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
+                    if ($result['status'] == 'ERROR') {
+                        Yii::app()->user->setFlash('danger',
+                            '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                            .'We could not access your e-mail inbox.<br>' 
+                            .$result['reason']['0'] 
+                            .'</div>'); 
+                        $this->render('create',array('model'=>$model,));
+                        Yii::app()->end();
+                    } 
+                    else { $model->e_mail_verified = TRUE;}
                 }
+                $result = json_decode($gmclient->doNormal("EncryptData", json_encode(array('opentext'=>$model->emailpassword))),TRUE);
+                $model->emailpassword = $result['cryptedtext'];
+                $model->Save('Create');
+                Yii::app()->user->setFlash('success',
+                    '<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .'New email '.$model->useremail .' saved successfully</div>');                 
                 $this->redirect(array('usermailbox/index'));
             }
         }
-        $this->render('step1',array('model'=>$model,));
-    }
-
-    public function actionStep2()
-    {
-        if (!isset(Yii::app()->session['newemail'])) {
-            $this->redirect(array('usermailbox/index'));
-        }
-        $model=new NewMailbox;
-        $model->scenario = 'Step2';
-        $model->useremail = Yii::app()->session['newemail']; 
-        $model->registeredemail = usermailbox::model()->find('customer_id=:1 and e_mail=:2', 
-                    array(':1'=>Yii::app()->user->getId(), ':2'=>$model->useremail));
-        if ($model->registeredemail == NULL) {
-            // how did we got here at all?
-            Yii::log('In Step2, '.Yii::app()->user->getId() .' ' .Yii::app()->user->username 
-                        .' missing user mailbox record' , 'info', 'application');
-                // should redirect to site/index
-            $this->redirect(array('usermailbox/index'));
-        }
-        $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
-        if ($model->registereddomain !== NULL)  {
-            $model->incoming_hostname = $model->registereddomain->incoming_hostname;
-            $model->incoming_port = $model->registereddomain->incoming_port;
-            $model->incoming_socket_type = $model->registereddomain->incoming_socket_type;
-            switch ($model->registereddomain->incoming_auth) {
-                case 'EMAIL':
-                    $model->emailusername = $model->useremail;
-                    break;
-                case 'USERNAME':
-                    list($model->emailusername,) = explode("@", $model->useremail);
-                    break;
-            }
-        }
-        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
-            $model->attributes=$_POST['NewMailbox'];
-            //Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
-            echo CActiveForm::validate($model); 
-            Yii::app()->end(); 
-        }
-
-        if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
-            $this->redirect(array('usermailbox/index'));
-        }
-        
-        if(isset($_POST['NewMailbox']))
-        {
-            $model->attributes=$_POST['NewMailbox'];
-            if ($model->validate()) {
-		$mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
-			'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
-			'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
-		Yii::log('In Signup step3, verifying e-mail:' .CVarDumper::dumpAsString($model->registereddomain)
-		 .CVarDumper::dumpAsString($mailboxcheck), 'info', 'application');
-		$gmclient= new GearmanClient();
-		$gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		$result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
-		if ($result['status'] == 'ERROR') {
-			//Changed to allow registering without e-mail username
-			//$model->addError('emailusername', 'We could not access your e-mail inbox. Please verify that your username and password is correct<br>' .CVarDumper::dumpAsString($result['reason']));
-                        Yii::app()->user->setFlash('danger', 'We could not access your e-mail inbox.<br>' 
-                                    .CVarDumper::dumpAsString($result['reason'])); 
-			$this->render('step2',array('model'=>$model,));
-			Yii::app()->end();
-		} 
-		else { $model->e_mail_verified = TRUE;}
-                Yii::log("New e-mail step2 save: " .$model->useremail, 'info', 'application');
-                $model->Save('Step2');
-                Yii::app()->session->remove('newemail');
-                $this->redirect(array('usermailbox/index'));
-            }
-        }
-        $this->render('step2',array('model'=>$model,));
+        $this->render('create',array('model'=>$model,));
     }
 
     public function actionUpdate($email)
@@ -160,24 +106,19 @@ class UsermailboxController extends Controller
                         .' missing user mailbox record' , 'info', 'application');
                 // should redirect to site/index
             Yii::app()->user->setFlash('danger',
-                '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;'
-                . ' E-mail not found');
+                '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                . 'E-mail not found</div>');
             $this->redirect(array('usermailbox/index'));
         }
         else {
             $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->registeredemail->maildomain));
         }
         
-//        if (Yii::app()->getRequest()->getIsAjaxRequest()) {
-//            $model->attributes=$_POST['NewMailbox'];
-//            Yii::log("Ajax validation activated: " .$model->useremail, 'info', 'application');
-//            echo CActiveForm::validate($model);
-//            Yii::app()->end();
-//        }
         if(isset($_POST['NewMailbox']) && isset($_POST['cancelbtn'])) {
             $this->redirect(array('usermailbox/index'));
             Yii::app()->end();
         }
+
         if(isset($_POST['NewMailbox'])) {
             $model->attributes=$_POST['NewMailbox'];
             if ($model->validate()) {

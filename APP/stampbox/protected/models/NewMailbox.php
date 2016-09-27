@@ -37,7 +37,7 @@ class NewMailbox extends CFormModel
 			array('useremail', 'required'),
 			array('useremail', 'length', 'max'=>100),
                         array('useremail', 'email'),
-                        array('useremail', 'checkRegistered', 'on'=>'New'),
+                        array('useremail', 'checkRegistered', 'on'=>'Create'),
                         array('emailpassword', 'length', 'max'=>'500'),
                         array('incoming_hostname', 'length', 'max'=>'255'),
                         array('incoming_port', 'numerical', 'integerOnly'=>true),
@@ -92,35 +92,25 @@ class NewMailbox extends CFormModel
         public function Save($step)
         {
             switch ($step) {
-                case 'Step1':
-                  // Save customer e-mail
-        	  list(, $this->maildomain) = explode("@", $this->useremail);
-                  $this->registeredemail = new usermailbox();
-                  $this->registeredemail->customer_id = Yii::app()->user->getId();
-                  $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
-		  $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
-                  $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
-                  $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
-                  $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
-                  $this->registeredemail->status = 'V';
-                  if (!$this->registeredemail->save()) {
-                    Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
-                                .$this->registeredemail->getErrors(), 'info', 'application');
-                  }
-                  break;
-                case 'Step2':
-		    list(, $this->maildomain) = explode("@", $this->useremail);
+                case 'Create':
+                // Save customer e-mail
+                    list(, $this->maildomain) = explode("@", $this->useremail);
+                    $this->registeredemail = new usermailbox();
+                    $this->registeredemail->customer_id = Yii::app()->user->getId();
+                    $this->registeredemail->e_mail = mb_convert_case($this->useremail, MB_CASE_LOWER, "UTF-8");
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
+                    $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
+                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
                     if ($this->e_mail_verified) {
-                        $this->registeredemail->status = 'A';
-                    }
+                        $this->registeredemail->status = 'A'; }
                     else {
-                        $this->registeredemail->status = 'V';
-                    }
+                        $this->registeredemail->status = 'V'; }
                     if (!$this->registeredemail->save()) {
-                        Yii::log('In step2 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
-                                .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'info', 'application');
+                        Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
+                                .$this->registeredemail->getErrors(), 'info', 'application');
                     }
                     if ($this->registereddomain == NULL) {
                         $this->registereddomain = new mailconfig();
@@ -147,6 +137,22 @@ class NewMailbox extends CFormModel
                         if (!$this->registereddomain->save()) {
                             Yii::log('In Step2, save registered domain failed: ' .CVarDumper::dumpAsString($this->registereddomain)
                                         .CVarDumper::dumpAsString($this->registereddomain->getErrors()), 'info', 'application');
+                        }
+                    }
+                    else {
+                        if ($this->registereddomain->status !== 'A') {
+                            $this->registereddomain->incoming_hostname = mb_convert_case($this->incoming_hostname, MB_CASE_LOWER, "UTF-8");
+                            $this->registereddomain->incoming_port = $this->incoming_port;
+                            $this->registereddomain->incoming_socket_type = $this->incoming_socket_type;
+                            if ($this->registeredemail->e_mail == $this->registeredemail->e_mail_username) {
+                                $this->registereddomain->incoming_auth = 'EMAIL';
+                            }
+                            else {
+                                $this->registereddomain->incoming_auth = 'OTHER';
+                            }
+                            $this->registereddomain->status = 'A';
+                            if (!$this->registereddomain->save()) {
+                            }
                         }
                     }
                     break;

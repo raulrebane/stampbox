@@ -13,26 +13,26 @@ class SignupController extends Controller
         if(isset($_POST['ajax']) && $_POST['ajax']==='signup-form') {
             $model->attributes=$_POST['Signup'];
             $model->scenario = 'Simple';
-            $log_line->WriteLog(CVarDumper::dumpAsString($model));
+            $log_line->WriteLog(CVarDumper::dumpAsString($_POST));
             $errors = CActiveForm::validate($model);
             if ($errors !== '[]')
                 {
-                $log_line->WriteLog(CVarDumper::dumpAsString($errors));
-                //Yii::log("Signup error: " .CVarDumper::dumpAsString($errors), 'info', 'application');
+                //$log_line->WriteLog(CVarDumper::dumpAsString($errors));
+                Yii::log("Signup error: " .CVarDumper::dumpAsString($errors), 'info', 'application');
                 echo $errors;
                 Yii::app()->end();
                 }
             else {
                 $model->save();
-                if ($model->e_mail_verified == TRUE) {
-                    $loadinvitationdata = json_encode(array('customer_id'=>Yii::App()->user->getID(),
-                        'e_mail'=>$model->useremail, 'username'=>$model->emailusername, 'password'=>$model->userpassword,
-                        'hostname'=>$model->registereddomain->incoming_hostname, 'port'=>$model->registereddomain->incoming_port,
-                        'socket_type'=>$model->registereddomain->incoming_socket_type, 'auth_type'=>$model->registereddomain->incoming_auth));
-                    $gmclient= new GearmanClient();
-                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                    $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
-                }
+//                if ($model->e_mail_verified == TRUE) {
+//                    $loadinvitationdata = json_encode(array('customer_id'=>Yii::App()->user->getID(),
+//                        'e_mail'=>$model->useremail, 'username'=>$model->emailusername, 'password'=>$model->userpassword,
+//                        'hostname'=>$model->registereddomain->incoming_hostname, 'port'=>$model->registereddomain->incoming_port,
+//                        'socket_type'=>$model->registereddomain->incoming_socket_type, 'auth_type'=>$model->registereddomain->incoming_auth));
+//                    $gmclient= new GearmanClient();
+//                    $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
+//                    $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
+//                }
                 Yii::app()->user->setFlash('success',
                 	'<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                         . '<h4>Thank you, you are now ready to use the basic service. As a sign up bonus we have '
