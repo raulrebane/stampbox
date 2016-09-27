@@ -1,13 +1,14 @@
 <?php
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 function DecryptData($job, $log)
 {
-    include '../../config/commands.php';
+    $config=dirname(__FILE__).'/../config/commands.php';
+    require $config;
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     $jsonstr = $job->workload();
     $data = json_decode($jsonstr);

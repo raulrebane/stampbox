@@ -1,4 +1,6 @@
 <?php
+$config=dirname(__FILE__).'/../config/commands.php';
+require $config;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
