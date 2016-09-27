@@ -1,5 +1,5 @@
 <?php
-$config=dirname(__FILE__).'/../config/commands.php';
+$config=dirname(__FILE__).'/../../config/commands.php';
 require $config;
 
 /* 

@@ -7,7 +7,7 @@
  */
 function EncryptData($job, $log)
 {
-    $config=dirname(__FILE__).'/../config/commands.php';
+    $config=dirname(__FILE__).'/../../config/commands.php';
     require $config;
     $jsonstr = $job->workload();
     $data = json_decode($jsonstr);

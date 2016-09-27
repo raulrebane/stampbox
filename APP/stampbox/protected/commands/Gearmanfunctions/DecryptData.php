@@ -7,7 +7,7 @@
 
 function DecryptData($job, $log)
 {
-    $config=dirname(__FILE__).'/../config/commands.php';
+    $config=dirname(__FILE__).'/../../config/commands.php';
     require $config;
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     $jsonstr = $job->workload();

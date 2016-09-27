@@ -1,6 +1,6 @@
 <?php
 require_once '/usr/share/php/Swift/swift_required.php';
-$config=dirname(__FILE__).'/../config/commands.php';
+$config=dirname(__FILE__).'/../../config/commands.php';
 require $config;
 
 /* 
