@@ -51,6 +51,7 @@ class Signup extends CFormModel
 		return array(
 			'useremail'=>'E-mail: ',
                         'userpassword'=>'Password',
+                        'agreewithterms'=>'I agree to the <a href="' .Yii::app()->createUrl('site/terms') .'">Terms of Service</a> which form an integral part of the agreement',
 		);
 	}
 
