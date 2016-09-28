@@ -55,7 +55,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 
 <div class="col-xs-12 col-md-7">
     <div class="widget widget-invitations">
-    <div class="title">Invitations</div>
+    <div class="title">Invite e-mail to stampbox <span class="glyphicon glyphicon-question-sign"></span></div>
     <div class="dashboard-form">
         <?php 
             $model = new Invitations();
