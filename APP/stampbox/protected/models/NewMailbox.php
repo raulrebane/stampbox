@@ -112,6 +112,7 @@ class NewMailbox extends CFormModel
                         Yii::log('In step1 - customer mailbox save failed ' .CVarDumper::dumpAsString($this->registeredemail)
                                 .$this->registeredemail->getErrors(), 'info', 'application');
                     }
+                    $this->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$this->maildomain));
                     if ($this->registereddomain == NULL) {
                         $this->registereddomain = new mailconfig();
                         $this->registereddomain->maildomain = $this->maildomain;

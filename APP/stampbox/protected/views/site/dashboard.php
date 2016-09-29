@@ -229,9 +229,9 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                     $model = new NewMailbox();
                     $form = $this->beginWidget('CActiveForm',array(
                         'id' => 'NewMailbox',
-                        'action' => Yii::app()->createUrl('usermailbox/new'), 
+                        'action' => Yii::app()->createUrl('usermailbox/create'), 
                         'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-                    echo $form->EmailField($model, 'useremail', array('class'=>'', 'id'=>'useremail', 'placeholder'=>'Enter email'));
+                    //echo $form->EmailField($model, 'useremail', array('class'=>'', 'id'=>'useremail', 'placeholder'=>'Enter email'));
                     echo '<button type="submit" class="btn btn-aqua">Stampbox new e-mail</button>';
                     $this->endWidget();
                 ?>
