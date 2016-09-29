@@ -55,7 +55,12 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 
 <div class="col-xs-12 col-md-7">
     <div class="widget widget-invitations">
-    <div class="title">Invite e-mail to stampbox <span class="glyphicon glyphicon-question-sign"></span></div>
+    <div class="title">Invite e-mail to stampbox
+	<a href="#" data-toggle="popover" data-placement="bottom" title="Invitations help" 
+		data-content="Specify e-mail address here and we will send e-mail to invite person to join stampbox service.">
+	  <span class="glyphicon glyphicon-question-sign"></span>
+	</a>
+    </div>
     <div class="dashboard-form">
         <?php 
             $model = new Invitations();
@@ -81,7 +86,11 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 </div>
 
 </div>
-
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
 <div class="col-md-12">
     <div class="widget widget-whitelist">
     <div class="title">My whitelist</div>
