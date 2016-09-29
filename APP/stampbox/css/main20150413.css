@@ -9238,6 +9238,9 @@ width: 100%;
 .dashboard .widget.widget-accounts .content table tr td.status .glyphicon.glyphicon-warning-sign {
   color: #8a6d3b;
 }
+.dashboard .widget .glyphicon.glyphicon-question-sign {
+  color: #d9edf7;
+}
 
 /* line 299, ../sass/_dashboard.scss */
 .dashboard .widget.widget-accounts .footer .btn {

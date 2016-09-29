@@ -86,14 +86,13 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 </div>
 
 </div>
-<script>
-$(function () {
-  $('[data-toggle="popover"]').popover()
-})
-</script>
 <div class="col-md-12">
     <div class="widget widget-whitelist">
-    <div class="title">My whitelist</div>
+    <div class="title">My whitelist	
+        <a href="#" data-toggle="popover" data-placement="bottom" title="Whitelist help" 
+            data-content="Whitelisted e-mail addresses can send you e-mail without requiring stamps. When you have protection service enabled those e-mails are kept in your inbox">
+	  <span class="glyphicon glyphicon-question-sign"></span>
+	</a></div>
     <div class="content">
         <?php 
         $gridDataProvider = new CArrayDataProvider($whitelistitems, array('keyField'=>'e_mail', ));  
@@ -239,3 +238,8 @@ $(function () {
             </div>
         </div>
 </div>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>

@@ -1,7 +1,4 @@
 <?php
-$config=dirname(__FILE__).'/../../config/commands.php';
-require $config;
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,6 +7,8 @@ require $config;
 
 function LoadInvitations($job, $log)
 {
+    $config=dirname(__FILE__).'/../../config/commands.php';
+    require $config;
     $jsonstr = $job->workload();
     $mboxparams = json_decode($jsonstr);
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
