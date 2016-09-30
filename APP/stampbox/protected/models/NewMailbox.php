@@ -41,6 +41,7 @@ class NewMailbox extends CFormModel
                         array('emailpassword', 'length', 'max'=>'500'),
                         array('incoming_hostname', 'length', 'max'=>'255'),
                         array('incoming_port', 'numerical', 'integerOnly'=>true),
+                        array('incoming_socket_type', 'filter', 'strtolower'),
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
                         array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'checkFields'),

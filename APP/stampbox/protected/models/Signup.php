@@ -21,7 +21,7 @@ class Signup extends CFormModel
 	{
 		return array(
 			// required fields
-			array('useremail, userpassword, agreewithterms', 'required'),
+			array('useremail, userpassword', 'required'),
                         array('useremail', 'checkregistered'),
 			array('useremail', 'length', 'max'=>128),
 			array('userpassword', 'length', 'max'=>255),
