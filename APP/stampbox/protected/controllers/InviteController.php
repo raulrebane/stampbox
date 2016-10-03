@@ -54,7 +54,7 @@ class InviteController extends Controller
 
         if(isset($_POST['invited_email']))
 	{  
-            Yii::log('got invite email' .$_POST['e_mail'], 'info', 'application');
+            //Yii::log('got invite email' .$_POST['invited_email'], 'info', 'application');
             $model = new Invitations;
             $model->invited_email =$_POST['invited_email'];
             $model->customer_id = Yii::app()->user->getId();
@@ -62,7 +62,7 @@ class InviteController extends Controller
             {
                 $model->save();
             }
-            Yii::log('Invitation save errors: ' .CVarDumper::dumpAsString($model), 'info', 'application');
+            //Yii::log('Invitation save errors: ' .CVarDumper::dumpAsString($model), 'info', 'application');
             $this->redirect(array('invite/index'));
         }        
         if(isset($_POST['refresh'])) {
