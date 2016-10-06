@@ -335,3 +335,39 @@ WITH (
 );
 ALTER TABLE ds.t_log_line
   OWNER TO sbadmin;
+
+-- Sequence: ds.t_messages_message_id_seq
+DROP TABLE ds.t_messages;
+DROP SEQUENCE ds.t_messages_message_id_seq;
+
+CREATE SEQUENCE ds.t_messages_message_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE ds.t_messages_message_id_seq
+  OWNER TO sbadmin;
+GRANT USAGE ON TABLE ds.t_messages_message_id_seq TO sbweb;  
+
+-- Table: ds.t_messages
+CREATE TABLE ds.t_messages
+(
+  message_id bigint NOT NULL DEFAULT nextval('ds.t_messages_message_id_seq'::regclass),
+  customer_id bigint,
+  message_type character varying(10),
+  page_id character varying(30),
+  message character varying(5000),
+  CONSTRAINT pk_messages PRIMARY KEY (message_id),
+  CONSTRAINT fk_customer_message FOREIGN KEY (customer_id)
+      REFERENCES ds.t_customer (customer_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ds.t_messages
+  OWNER TO sbadmin;
+GRANT ALL ON TABLE ds.t_messages TO sbadmin;
+GRANT ALL ON TABLE ds.t_messages TO sbweb;
+

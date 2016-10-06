@@ -1,6 +1,12 @@
 @charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /* line 9, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_normalize.scss */
+
+@font-face {
+  font-family: 'PFAgoraSlabPro';
+  src: url(../fonts/AgoraSlabPro/PFAgoraSlabPro-Reg.ttf);
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -1604,7 +1610,7 @@ h3, .h3 {
 
 /* line 50, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_type.scss */
 h4, .h4 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* line 51, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_type.scss */
@@ -6162,7 +6168,7 @@ a.thumbnail.active {
 }
 /* line 16, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_alerts.scss */
 .alert h4 {
-  margin-top: 0;
+  
   color: inherit;
 }
 /* line 22, ../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.1.0/assets/stylesheets/bootstrap/_alerts.scss */
@@ -8344,7 +8350,7 @@ ul li:last-of-type {
 .home .container .header ul.menu li a {
   color: #FFF;
   text-transform: uppercase;
-  font-family: "Brandon Grot W01 Bold";
+  font-family: "PFAgoraSlabPro";
   font-size: 12px;
   text-decoration: none;
 }
@@ -8383,7 +8389,7 @@ ul li:last-of-type {
 /* line 114, ../sass/_home.scss */
 .home .container .hero h1 {
   color: #FFF;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   font-size: 50px;
   text-align: center;
   letter-spacing: -2px;
@@ -8392,12 +8398,12 @@ ul li:last-of-type {
 }
 /* line 122, ../sass/_home.scss */
 .home .container .hero h1 b {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 126, ../sass/_home.scss */
 .home .container .hero h2 {
   color: #FFF;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   font-size: 30px;
   text-align: center;
   margin-top: 3px;
@@ -8405,7 +8411,7 @@ ul li:last-of-type {
 }
 .home .container .hero h3 {
   color: #FFF;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   font-size: 24px;
   text-align: center;
   margin-top: 3px;
@@ -8432,7 +8438,7 @@ ul li:last-of-type {
 }
 /* line 147, ../sass/_home.scss */
 .home .container .feature h3 {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 40px;
   color: #3a3735;
   letter-spacing: -2px;
@@ -8445,7 +8451,7 @@ ul li:last-of-type {
 }
 
 .home .container .feature h4 {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 24px;
   color: #00b0b1;
   letter-spacing: -2px;
@@ -8457,14 +8463,14 @@ ul li:last-of-type {
 
 /* line 156, ../sass/_home.scss */
 .home .container .feature p {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
   line-height: 23px;
   margin-bottom: 23px;
 }
 /* line 161, ../sass/_home.scss */
 .home .container .feature p b {
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 167, ../sass/_home.scss */
 .home .container .split {
@@ -8484,14 +8490,14 @@ ul li:last-of-type {
 }
 /* line 181, ../sass/_home.scss */
 .home .wide h2 {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 24px;
   margin-top: 20px;
   margin-bottom: 0px;
 }
 /* line 187, ../sass/_home.scss */
 .home .wide h1 {
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   font-size: 42px;
   text-align: center;
   letter-spacing: -2px;
@@ -8499,11 +8505,11 @@ ul li:last-of-type {
 }
 /* line 193, ../sass/_home.scss */
 .home .wide h1 b {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 197, ../sass/_home.scss */
 .home .wide p {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
   max-width: 640px;
   margin: 31px auto;
@@ -8520,7 +8526,7 @@ ul li:last-of-type {
 /* line 215, ../sass/_home.scss */
 .home .footer h1 {
   color: #3a3735;
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 31px;
   letter-spacing: -1px;
   margin-top: 56px;
@@ -8788,7 +8794,7 @@ ul li:last-of-type {
   /* line 466, ../sass/_home.scss */
   .home .footer h1 {
     color: #3a3735;
-    font-family: "BrandonGrotW01-Regular";
+    font-family: "PFAgoraSlabPro";
     font-size: 31px;
     letter-spacing: -1px;
     margin-top: 40px;
@@ -8808,7 +8814,7 @@ ul li:last-of-type {
 /* line 489, ../sass/_home.scss */
 .widget table tr th {
   padding: 10px;
-  font-family: "Brandon Grot W01 regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 10px;
   color: #00BEBF;
   text-align: center;
@@ -8822,7 +8828,7 @@ ul li:last-of-type {
 /* line 491, ../sass/_home.scss */
 .widget table tr th a {
   color: #00b0b1;
-  font-family: "Brandon Grot W01 regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 10px;
 }
 /* line 498, ../sass/_home.scss */
@@ -8841,7 +8847,7 @@ ul li:last-of-type {
 }
 /* line 510, ../sass/_home.scss */
 .ui-autocomplete li a {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-size: 14px;
   color: #3a3735;
   border: none;
@@ -8867,7 +8873,7 @@ ul li:last-of-type {
 /* line 1, ../sass/_dashboard.scss */
 body {
   //background-color: #f5f5f5;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
 }
 
 /* line 6, ../sass/_dashboard.scss */
@@ -8982,7 +8988,7 @@ table tr td {
   display: block;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: "Brandon Grot W01 Bold";
+  font-family: "PFAgoraSlabPro";
   font-size: 1em;
   letter-spacing: 1px;
 }
@@ -8996,7 +9002,7 @@ table tr td {
   display: block;
   text-decoration: none;
   text-transform: uppercase;
-  font-family: "Brandon Grot W01 Bold";
+  font-family: "PFAgoraSlabPro";
   font-size: 0.7em;
   letter-spacing: 1px;
   text-align: center;
@@ -9026,7 +9032,7 @@ table tr td {
   color: #FFF;
   display: block;
   text-decoration: none;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 14px;
 }
 /* line 137, ../sass/_dashboard.scss */
@@ -9059,7 +9065,7 @@ table tr td {
   line-height: 30px;
   font-size: 16px;
   font-weight: bold;
-  font-family: "Brandon Grot W01 Black";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 172, ../sass/_dashboard.scss */
 .dashboard .widget .content {
@@ -9082,7 +9088,7 @@ width: 100%;
 .dashboard .widget.widget-balance .content .balance {
   display: inline;
   left: 0px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 20px;
   width: 100%;
 }
@@ -9239,7 +9245,7 @@ width: 100%;
   color: #8a6d3b;
 }
 .dashboard .widget .glyphicon.glyphicon-question-sign {
-  color: #d9edf7;
+  color: #14a7f0;
 }
 
 /* line 299, ../sass/_dashboard.scss */
@@ -9258,21 +9264,21 @@ width: 100%;
 .dashboard .widget.widget-invitations .content .subtitle {
   font-size: 15px;
   color: #625b53;
-  font-family: "BrandonGrotW01-RegularI";
+  font-family: "PFAgoraSlabProI";
 }
 /* line 320, ../sass/_dashboard.scss */
 .dashboard .widget.widget-invitations .content p {
   font-size: 30px;
   line-height: 30px;
   color: #3a3735;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 325, ../sass/_dashboard.scss */
 .dashboard .widget.widget-invitations .content p span {
   font-size: 20px;
   line-height: 20px;
   color: #d3cbbc;
-  font-family: "BrandonGrotW01-RegularI";
+  font-family: "PFAgoraSlabProI";
 }
 /* line 334, ../sass/_dashboard.scss */
 .dashboard .widget.widget-invitations .footer .btn {
@@ -9289,14 +9295,14 @@ width: 100%;
   font-size: 30px;
   line-height: 30px;
   color: #3a3735;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 325, ../sass/_dashboard.scss */
 .dashboard .widget.widget-whitelist .content p span {
   font-size: 20px;
   line-height: 20px;
   color: #d3cbbc;
-  font-family: "BrandonGrotW01-RegularI";
+  font-family: "PFAgoraSlabProI";
 }
 /* line 334, ../sass/_dashboard.scss */
 .dashboard .widget.widget-whitelist .footer .btn {
@@ -9452,11 +9458,11 @@ dashboard .widget.widget-whitelist .form input {
 .logged-out .login-form h1 {
   color: #FFF;
   font-size: 60px;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 38, ../sass/_login.scss */
 .logged-out .login-form h1 b {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 42, ../sass/_login.scss */
 .logged-out .login-form form {
@@ -9561,7 +9567,7 @@ dashboard .widget.widget-whitelist .form input {
 }
 /* line 4, ../sass/_statement.scss */
 #p-statement .m-period-select h1 {
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
 }
 /* line 8, ../sass/_statement.scss */
@@ -9580,7 +9586,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 17, ../sass/_statement.scss */
 #p-statement .m-period-select ul li a {
   color: #00b0b1;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 14px;
   text-decoration: underline;
   line-height: 35px;
@@ -9612,7 +9618,7 @@ dashboard .widget.widget-whitelist .form input {
   padding-left: 17px;
   padding-right: 17px;
   color: #3a3735;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   background-image: url(../images/icon-date.png);
   background-position: right 10px center;
   background-repeat: no-repeat;
@@ -9624,7 +9630,7 @@ dashboard .widget.widget-whitelist .form input {
 }
 /* line 4, ../sass/_whitelist.scss */
 #p-whitelist .m-add h1 {
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
 }
 /* line 8, ../sass/_whitelist.scss */
@@ -9635,7 +9641,7 @@ dashboard .widget.widget-whitelist .form input {
   font-size: 14px;
   padding-left: 17px;
   color: #3a3735;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   margin-right: 5px;
 }
 /* line 19, ../sass/_whitelist.scss */
@@ -9658,7 +9664,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 7, ../sass/_usermailbox.scss */
 #p-usermailbox .widget table tr th a {
   color: #00b0b1;
-  font-family: "Brandon Grot W01 Bold";
+  font-family: "PFAgoraSlabPro";
   font-size: 10px;
   text-transform: uppercase;
 }
@@ -9676,7 +9682,7 @@ dashboard .widget.widget-whitelist .form input {
 }
 
 #p-invite .m-refresh h1 {
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
   display: inline-block;
   padding-right: 20px;
@@ -9686,7 +9692,7 @@ dashboard .widget.widget-whitelist .form input {
 }
 
 #p-shop .m-products h1 {
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   font-size: 18px;
 }
 #p-shop .m-products .w-product {
@@ -9790,18 +9796,18 @@ dashboard .widget.widget-whitelist .form input {
   color: #FFF;
   font-size: 50px;
   text-align: center;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   margin-bottom: 20px;
 }
 /* line 13, ../sass/_register.scss */
 .register-form h1 b {
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
 }
 /* line 18, ../sass/_register.scss */
 .register-form h2 {
   color: #FFF;
   font-size: 30px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   text-align: center;
   padding: 0px;
   margin: 0px;
@@ -9810,7 +9816,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 26, ../sass/_register.scss */
 .register-form h3 {
   font-size: 15px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   padding: 0px;
   margin: 0px;
   margin-bottom: 10px;
@@ -9819,7 +9825,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 35, ../sass/_register.scss */
 .register-form p {
   font-size: 14px;
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   padding: 0px;
   margin: 0px;
   line-height: 110%;
@@ -9827,7 +9833,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 41, ../sass/_register.scss */
 .register-form p a {
   color: #00b0b1;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   text-decoration: underline;
 }
 /* line 48, ../sass/_register.scss */
@@ -9864,14 +9870,14 @@ dashboard .widget.widget-whitelist .form input {
   margin-left: 20px;
   margin-right: 20px;
   font-size: 1em;
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   padding-bottom: 34px;
   text-align: left;
 }
 /* line 81, ../sass/_register.scss */
 .register-form .feature:first-child {
   font-size: 18px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   margin-top: 32px;
   border-bottom: 1px solid #e9e5dd;
 }
@@ -9895,7 +9901,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 108, ../sass/_register.scss */
 .register-form .step-a form h2 {
   font-size: 30px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   padding: 0px;
   margin: 0px;
   margin-bottom: 12px;
@@ -9907,7 +9913,7 @@ dashboard .widget.widget-whitelist .form input {
   line-height: 100%;
   color: #3a3735;
   font-size: 14px;
-  font-family: "BrandonGrotW01-Regular";
+  font-family: "PFAgoraSlabPro";
   font-weight: 400;
 }
 /* line 124, ../sass/_register.scss */
@@ -10023,7 +10029,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 24, ../sass/_setup.scss */
 .setup .row h1 {
   font-size: 18px;
-  font-family: "Brandon Grot W01 Medium";
+  font-family: "PFAgoraSlabPro";
   color: #3a3735;
 }
 
@@ -10204,7 +10210,7 @@ dashboard .widget.widget-whitelist .form input {
 /* line 74, ../sass/_home.scss */
 .home .container .header ul.mainmenu li a {
   color: #5E5E5E;
-  font-family: "Brandon Grot W01 Light";
+  font-family: "PFAgoraSlabPro";
   font-size: 14px;
   text-decoration: none;
 }
@@ -10214,5 +10220,5 @@ dashboard .widget.widget-whitelist .form input {
 }
 /* line 105, ../sass/_home.scss */
 .home .container .header ul.mainmenu li.active a {
-  font-family: "Brandon Grot W01 bold";
+  font-family: "PFAgoraSlabPro";
 }

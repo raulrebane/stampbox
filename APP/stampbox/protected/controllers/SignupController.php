@@ -34,15 +34,16 @@ class SignupController extends Controller
 //                    $result = json_decode($gmclient->doBackground("LoadInvitations", $loadinvitationdata),TRUE);
 //                }
                 Yii::app()->user->setFlash('success',
-                	'<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                         . '<h4>Thank you, you are now ready to use the basic service. As a sign up bonus we have '
-                        . 'credited you with 100 stamps free of charge.</h4></div>' 
-                        . '<div class="alert alert-success"><h4>We recommend you to sign up for the extended service which automatically filters '
+                        . 'credited you with 100 stamps free of charge.</h4>' );
+                $message = new Message();
+                $message->addMessage('success', 'site/index', '<h4>We recommend you to sign up for the extended service which automatically filters '
                         . 'e-mails with digital stamps to your inbox and those without stamps into no-stamp-box email folder.<br>'
                         . 'With the extended service you also earn money for every stamped e-mail you receive. To be able to give '
-                        . 'you this service we need your email password. Upgrade to extended service '
+                        . 'you this service we need your email password. '
                         . '<a class="alert-link" style="text-decoration: underline;" href="' .Yii::app()->createUrl('usermailbox/update') 
-                        .'&email=' .$model->useremail .'">here</a></h4></div>');
+                        .'&email=' .$model->useremail .'">Upgrade to extended service here</a></h4>');
                 echo CJSON::encode(array( 'signupcomplete' => true, 'redirectUrl' => CController::createUrl('site/index')));
                 Yii::app()->end();
             }
