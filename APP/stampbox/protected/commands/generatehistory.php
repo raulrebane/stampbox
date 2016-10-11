@@ -1,5 +1,6 @@
 <?php
-
+$config=dirname(__FILE__).'/../config/commands.php';
+require $config;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,7 +8,7 @@
  */
 
 openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
-$dbconn = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234") or die('Query failed: ' . pg_last_error());
+$dbconn = pg_connect($dbconnectstring) or die('Query failed: ' . pg_last_error());
 $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A';");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) 

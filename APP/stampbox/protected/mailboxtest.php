@@ -2,7 +2,7 @@
     /* connect to gmail */
     $hostname = '{imap.googlemail.com:993/ssl/novalidate-cert}';
     $username = 'raulrebane71@gmail.com';
-    $password = 'Wfd9epa41';
+    $password = '';
 
     /* try to connect */
     $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Gmail: ' . imap_last_error());

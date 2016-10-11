@@ -38,8 +38,10 @@
                         return strtr(substr(base64_encode($randomBytes),0,$length),array('+'=>'_','/'=>'~'));
                 return false;
         }
-        
-$dbconnection = pg_connect("host=localhost dbname=ds user=ds_user password=Apua1234"); 
+
+$config=dirname(__FILE__).'/../config/commands.php';
+require $config;
+$dbconnection = pg_connect($dbconnectstring); 
         //$stamps['stamp_token'] = '';
         //$stamps['stamp_id'] = 'NULL';
         $stamps['batch_id'] = 1;

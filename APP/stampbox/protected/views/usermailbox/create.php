@@ -153,6 +153,7 @@ $('#NewMailbox_useremail').change(function() {
     var url = '<?php echo Yii::app()->createUrl('signup/GetEmailServerParams');?>';
     url = url + "&email=" + $("#NewMailbox_useremail").val();
     $.getJSON(url, function(data) {
+        $("#NewMailbox_status").val(data.status);
         $("#NewMailbox_incoming_hostname").val(data.incoming_hostname);
         $("#NewMailbox_incoming_port").val(data.incoming_port);
         $("#NewMailbox_incoming_socket_type").val(data.incoming_socket_type);

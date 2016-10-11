@@ -1,11 +1,12 @@
 <?php
 $url = 'https://autoconfig.thunderbird.net/v1.1/';
-
 $html = file_get_contents($url);
-
 $count = preg_match_all('#href=\".*\..*\"#', $html, $files);
-//var_dump($files);
-$dbconn = pg_connect("host=localhost port=5432 dbname=stampbox user=raulr password=Wfd9epa4"); 
+
+$config=dirname(__FILE__).'/../config/commands.php';
+require $config;
+
+$dbconn = pg_connect($dbconnectstring); 
 
 for ($i = 1; $i < $count; ++$i) {
     $files[0][$i] = substr($files[0][$i], 6, strlen($files[0][$i])-7);

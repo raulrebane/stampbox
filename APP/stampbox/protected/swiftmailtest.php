@@ -8,7 +8,7 @@ require_once '/usr/share/php/Swift/swift_required.php';
  */
 
     $test = json_encode(array('outgoing_hostname'=>'smtp.googlemail.com', 'outgoing_port'=>'465', 'e_mail_username'=>'raulrebane71@gmail.com', 
-        'e_mail_password'=>'Wfd9epa4', 'subject'=>'join Stampbox', 'from'=>'raulrebane71@gmail.com', 'fromname'=>'Raul',
+        'e_mail_password'=>'', 'subject'=>'join Stampbox', 'from'=>'raulrebane71@gmail.com', 'fromname'=>'Raul',
         'to'=>'raul.rebane@outlook.com', 'toname'=>'Raul'));
     $mboxparams = json_decode($test);
     $transport = Swift_SmtpTransport::newInstance($mboxparams->outgoing_hostname, $mboxparams->outgoing_port, 'ssl')

@@ -1,5 +1,7 @@
 <?php
 require_once '/usr/share/php/Swift/swift_required.php';
+$config=dirname(__FILE__).'/../config/commands.php';
+require $config;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -11,7 +13,7 @@ openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
 $fp = fopen("/var/lock/stampbox/scancontacts.lock", "w+");
 // Locked, start processing
 if (flock($fp, LOCK_EX | LOCK_NB)) {
-$dbconn = pg_connect("host=localhost port=6432 dbname=stampbox user=sbweb") or die('Query failed: ' . pg_last_error());
+$dbconn = pg_connect($dbconnectstring) or die('Query failed: ' . pg_last_error());
 $customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' AND (receiving_service = TRUE OR sorting_service = TRUE);");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) {
