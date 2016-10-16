@@ -19,7 +19,7 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('invite','update','changepsw', 'logout', 'index', 'intro', 'closeAccount'),
+				'actions'=>array('invite','update','changepsw', 'logout', 'index', 'intro', 'closeAccount', 'closeMessage'),
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -297,4 +297,13 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+        public function actionCloseMessage($message_id) {
+            $message = Message::model()->find('customer_id=:1 and message_id=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$message_id));
+            if ($message) {
+                $message->delete();
+            }
+        }
+        
 }

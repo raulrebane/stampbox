@@ -55,11 +55,13 @@ class SignupController extends Controller
         list(, $maildomain) = explode("@", mb_convert_case($email, MB_CASE_LOWER, "UTF-8"));
         $registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$maildomain));
         if ($registereddomain !== NULL) {
-            echo json_encode(array('status'=>$registereddomain->status, 'incoming_hostname'=>$registereddomain->incoming_hostname, 
-                            'incoming_port'=>$registereddomain->incoming_port, 
-                            'incoming_socket_type'=>mb_convert_case($registereddomain->incoming_socket_type, MB_CASE_LOWER, "UTF-8")));
+            echo json_encode(array('status'=>$registereddomain->status, 
+                'incoming_auth'=>$registereddomain->incoming_auth, 
+                'incoming_hostname'=>$registereddomain->incoming_hostname, 
+                'incoming_port'=>$registereddomain->incoming_port, 
+                'incoming_socket_type'=>mb_convert_case($registereddomain->incoming_socket_type, MB_CASE_LOWER, "UTF-8")));
         }
-        else echo "";
+        else echo json_encode(array('status'=>"N"));
         Yii::app()->end();
     }
 }

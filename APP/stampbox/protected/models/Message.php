@@ -8,6 +8,7 @@ class Message extends CActiveRecord
 {
     public $message_id;
     public $customer_id;
+    public $showcount;
     public $message_type;
     public $page_id;
     public $message;
@@ -22,6 +23,7 @@ class Message extends CActiveRecord
         
     public function addMessage($i_type, $i_page, $i_message) {
         $this->customer_id = Yii::app()->user->getId();
+        $this->showcount = 5;
         $this->message_type = $i_type;
         $this->page_id = $i_page;
         $this->message = $i_message;

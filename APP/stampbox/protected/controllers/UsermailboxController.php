@@ -72,9 +72,9 @@ class UsermailboxController extends Controller
                     $result = json_decode($gmclient->doNormal("CheckMailbox", $mailboxcheck),TRUE);
                     if ($result['status'] == 'ERROR') {
                         Yii::app()->user->setFlash('danger',
-                            '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                            .'We could not access your e-mail inbox.<br>' 
-                            .$result['reason']['0'] 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                            .'We could not access your e-mail inbox. <br>' 
+                            .'Can not authenticate to IMAP server'
                             .'</div>'); 
                         $this->render('create',array('model'=>$model,));
                         Yii::app()->end();
@@ -88,6 +88,12 @@ class UsermailboxController extends Controller
                     '<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                     .'New email '.$model->useremail .' saved successfully</div>');                 
                 $this->redirect(array('usermailbox/index'));
+            }
+            else {
+                list(, $model->maildomain) = explode("@", $model->useremail);
+                $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->maildomain));
+                $this->render('create',array('model'=>$model,));
+                Yii::app()->end();
             }
         }
         $this->render('create',array('model'=>$model,));
@@ -125,10 +131,10 @@ class UsermailboxController extends Controller
                 $gmclient= new GearmanClient();
                 $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
 		if ($model->receivingservice == 1 OR $model->sortingservice == 1) {
-                    if (substr($model->emailpassword,0,5) == 'SBPKI') {
-                        $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$model->emailpassword))),TRUE);
-                        $model->emailpassword = $result['opentext'];
-                    }
+//                    if (substr($model->emailpassword,0,5) == 'SBPKI') {
+//                        $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$model->emailpassword))),TRUE);
+//                        $model->emailpassword = $result['opentext'];
+//                    }
                     if ($model->registeredemail->status == 'A' AND $model->emailpassword == $model->registeredemail->e_mail_password)  {
                         $model->e_mail_verified = TRUE; }
                     else {
@@ -153,31 +159,27 @@ class UsermailboxController extends Controller
                 if (substr($model->emailpassword,0,5) <> 'SBPKI') {
                     $result = json_decode($gmclient->doNormal("EncryptData", json_encode(array('opentext'=>$model->emailpassword))),TRUE);
                     $model->emailpassword = $result['cryptedtext'];
-                    Yii::log('Encypting password:' .CVarDumper::dumpAsString($result), 'info', 'application');
-//                    $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$model->emailpassword))),TRUE);
-//                    Yii::log('Decrypted password:' .CVarDumper::dumpAsString($result), 'info', 'application');
                 }
                 $model->Save('Update');
-		//Yii::app()->session->remove('updateemail');
                 Yii::app()->user->setFlash('success',
-                    '<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                     .'Updated configuration for '.$model->useremail .' saved</div>');                 
                 $this->redirect(array('usermailbox/index'));
 	    }
             else {
+                //Validation failed
                 //Yii::log('Update customer mailbox failed' .CVarDumper::dumpAsString($model), 'info', 'application');
                 $this->render('update',array('model'=>$model,));
                 Yii::app()->end();
             }
         }
 
-        //Yii::app()->session['updateemail'] =  $email;
         $model->emailusername = $model->registeredemail->e_mail_username;
         $model->emailpassword = $model->registeredemail->e_mail_password;
         $model->maildomain = $model->registeredemail->maildomain;
-        $model->receivingservice = $model->registeredemail->receiving_service;
-        $model->sendingservice = $model->registeredemail->sending_service;
-        $model->sortingservice = $model->registeredemail->sorting_service;
+        $model->receivingservice = ($model->registeredemail->receiving_service == TRUE) ? 1 : 0;
+        $model->sendingservice = ($model->registeredemail->sending_service == TRUE) ? 1 : 0;
+        $model->sortingservice = ($model->registeredemail->sorting_service == TRUE) ? 1 : 0;
         if ($model->registereddomain !== NULL)  {
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;

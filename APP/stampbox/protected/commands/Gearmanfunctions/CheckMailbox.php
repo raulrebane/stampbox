@@ -12,6 +12,13 @@ function CheckMailbox($job, $log)
   $log = $jsonstr;
   $mboxparams = json_decode($jsonstr);
   // No such server exists
+  $config=dirname(__FILE__).'/../../config/commands.php';
+  require $config;
+  if (substr($mboxparams->password,0,5) == 'SBPKI') {
+    $privKey = openssl_pkey_get_private($privatekey, $privatekeypassword);
+    $cryptedtext = base64_decode(substr($data->cryptedtext, 5, strlen($data->cryptedtext)-5));
+    openssl_private_decrypt($cryptedtext, $mboxparams->password, $privKey);
+  }
   $mailserver = gethostbyname($mboxparams->hostname .'.');
   if ($mailserver == $mboxparams->hostname) {
       $log = 'ERROR: No such server $mboxparams->hostname';
@@ -20,7 +27,7 @@ function CheckMailbox($job, $log)
   if ($mboxparams->port == '') {
       return json_encode(array('status'=>'ERROR', 'reason'=>'Port is needed'));
   }
-  if ($mboxparams->socket_type == '') {
+  if ($mboxparams->socket_type == '' OR $mboxparams->socket_type == 'None') {
       $inbox = imap_open("{".$mboxparams->hostname .":" .$mboxparams->port ."/novalidate-cert}", $mboxparams->username,$mboxparams->password);  
   }
   else {

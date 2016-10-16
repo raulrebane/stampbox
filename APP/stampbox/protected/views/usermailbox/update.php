@@ -1,12 +1,8 @@
-<?php
-foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo  $message;
-}
-?>
 <div class="row">
-    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 dialog-form" style="padding:20px;">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-8 dialog-form" style="padding:20px;">
     <div class="widget widget-accounts">
         <div class="title">Configure <?php echo $model->useremail;?> e-mail</div>
+        <div class="header-row"></div>
     <?php
         $form=$this->beginWidget('CActiveForm',array('id'=>'usermailbox-form',
             'htmlOptions' => array('class' => 'form', 'role'=>'form'), 
@@ -18,24 +14,6 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         echo $form->hiddenField($model, 'incoming_port');
         echo $form->hiddenField($model, 'incoming_socket_type');
     ?>
-    <div class="row">
-        <?php
-        if ($model->registereddomain == NULL OR ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) {
-            echo $form->textField($model, 'emailusername', array('class' => '', 'placeholder' => 'e-mail login name')); }
-        else { 
-            echo $form->textField($model, 'emailusername', array('class' => '', 'disabled' => true)); 
-            echo $form->hiddenField($model, 'emailusername');
-        } ?>
-    </div>
-    <div class="row">
-        <?php echo $form->error($model, 'emailusername', array('class' => 'alert alert-danger')); ?>
-    </div>
-    <div class="row">
-        <?php echo $form->passwordField($model, 'emailpassword', array('class' => '', 'placeholder' => 'password for e-mail')); ?>
-    </div>
-    <div class="row">
-        <?php echo $form->error($model, 'emailpassword', array('class' => 'alert alert-danger')); ?>
-    </div>
     <div class="row">
         <div class="col-xs-1">
         <?php echo $form->checkBox($model, 'sendingservice');?>
@@ -52,7 +30,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         <div class="col-xs-11">
         <?php echo $form->labelEx($model, 'receivingservice', array('class' => '')); ?>
         - This service enables receiving credits for e-mails that are stamped and
-        sent to you. You can receive up to 0.79 EUR for each e-mail.
+        sent to you. You can receive up to 0.07 EUR for each e-mail.
         </div>
     </div>
     <div class="row">
@@ -70,50 +48,52 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
         else { echo '<div id="Extendedsettings" style="display : none;">';}
     ?>
         <div class="row">
-            <div class="col-xs-4">
-            <?php echo $form->labelEx($model, 'incoming_hostname', array('class' => ''));?>
-        </div>
-            <div class="col-xs-8">
             <?php
-                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-                    echo $form->textField($model, 'incoming_hostname', array('class' => '', 'placeholder' => 'e-mail server name')); }
-                else { echo $form->textField($model, 'incoming_hostname', array('class' => '', 'disabled' => true));} ?>
-            </div>
+            if ($model->registereddomain == NULL OR ($model->registereddomain->incoming_auth <> 'EMAIL' AND $model->registereddomain->incoming_auth <> 'USERNAME')) { ?>
+                <div class="col-xs-3"><?php echo $form->labelEx($model, 'emailusername', array('class' => ''));?></div>
+                <div class="col-xs-9"><?php echo $form->textField($model, 'emailusername', array('class' => '', 'placeholder' => 'e-mail login name'));?></div> 
         </div>
         <div class="row">
-            <?php echo $form->error($model, 'incoming_hostname', array('class' => 'alert alert-danger')); ?>
+            <?php echo $form->error($model, 'emailusername', array('class' => 'alert alert-danger')); ?>
+        </div>
+            <?php }
+            else { echo $form->hiddenField($model, 'emailusername');} ?>
+        <div class="row">
+            <div class="col-xs-3"><?php echo $form->labelEx($model, 'emailpassword', array('class' => ''));?></div>
+            <div class="col-xs-9"><?php echo $form->passwordField($model, 'emailpassword', array('class' => '', 'placeholder' => 'password for e-mail')); ?></div>
         </div>
         <div class="row">
-            <div class="col-xs-4">
-                <?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?>
-            </div>
-            <div class="col-xs-8">
-                <?php
-                if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-                    echo $form->numberField($model, 'incoming_port', array('class' => 'form-control ', 'placeholder' => 'Port'));}
-                else { echo $form->numberField($model, 'incoming_port', array('class' => 'form-control ', 'disabled' => true)); }?>
-            </div>
+            <?php echo $form->error($model, 'emailpassword', array('class' => 'alert alert-danger')); ?>
         </div>
-        <div class="row">
-            <?php echo $form->error($model, 'incoming_port', array('class' => 'alert alert-danger')); ?>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                <?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?>
+        <?php if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') { ?>
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-1"><?php echo $form->labelEx($model, 'incoming_hostname', array('class' => ''));?></div>
+                <div class="col-xs-8"><?php echo $form->textField($model, 'incoming_hostname', array('class' => '', 'placeholder' => 'e-mail server name'));?></div>
             </div>
-            <div class="col-xs-8">
-                <?php
-                    if ($model->registereddomain == NULL OR $model->registereddomain->status <> 'A') {
-                        echo '<div class="select-style">';
-                        echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control '));
-                        echo '</div>';} 
-                    else { echo $form->textField($model, 'incoming_socket_type', array('class' => 'form-control ', 'disabled' => true)); }?>
+            <div class="row">
+                <?php echo $form->error($model, 'incoming_hostname', array('class' => 'alert alert-danger')); ?>
             </div>
-        </div>
-        <div class="row">
-            <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'alert alert-danger'));?>
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-1"><?php echo $form->labelEx($model, 'incoming_port', array('class' => ''));?></div>
+                <div class="col-xs-3"><?php echo $form->numberField($model, 'incoming_port', array('class' => 'form-control ', 'placeholder' => 'Port'));?></div>
+            </div>
+            <div class="row">
+                <?php echo $form->error($model, 'incoming_port', array('class' => 'alert alert-danger')); ?>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-1"><?php echo $form->labelEx($model, 'incoming_socket_type', array('class' => ''));?></div>
+                <div class="col-xs-3"><div class="select-style">
+                    <?php echo $form->dropDownList($model, 'incoming_socket_type', array('NULL' => 'None', 'ssl' => 'SSL', 'tls' => 'TLS'), array('class' => 'form-control '));?>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <?php echo $form->error($model, 'incoming_socket_type', array('class' => 'alert alert-danger'));?>
+            </div>
+        <?php } ?>
         </div>
     </div>
+    <div class="header-row"></div>
         <div class="row"><div class="col-xs-6">
             <?php $this->widget('zii.widgets.jui.CJuiButton', array(
                 'buttonType'=>'submit',

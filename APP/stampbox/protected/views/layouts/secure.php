@@ -68,10 +68,35 @@
             <div class="dashboard inset">
                 <div class="row">
                     <div class="col-md-12">
-                        <?php echo $content ?>
+                        <?php foreach(Yii::app()->user->getFlashes() as $key => $message) {
+                            echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
+                        }
+
+                        $usermessages = Message::model()->findAll('(customer_id=:1 and (page_id=:2 OR page_id = NULL) AND showcount > 0) OR customer_id = NULL', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>Yii::app()->controller->getId() 
+                                            .'/' .Yii::app()->controller->getAction()->getId()));
+                        if ($usermessages) {
+                            foreach ($usermessages as $message) {
+                                echo '<div class="alert alert-dismissible alert-' .$message->message_type .'" data-id="'.$message->message_id .'">'
+                                    .'<a class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                                    ."$message->message</div>";
+                                $message->showcount = $message->showcount-1;
+                                $message->save();
+                            }
+                        }
+                        echo $content 
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function($) {		
+		$('.alert-dismissible').bind('closed.bs.alert', function () {
+                    var id = $(this).data('id') || 0;
+                    $.get('index.php?r=site/closemessage&message_id=' + escape(id));
+			});
+		});
+        </script>
     </body>
 </html>

@@ -10,9 +10,6 @@
 <?php
 //$model->task_id = 'test';
 //$model->loading_inprogress = TRUE;
-foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
-}
 
 if ($model->loading_inprogress == TRUE) {
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(

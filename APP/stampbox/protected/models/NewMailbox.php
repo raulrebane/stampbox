@@ -45,7 +45,7 @@ class NewMailbox extends CFormModel
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
                         array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'checkFields'),
-                        array('sendingservice, receivingservice, sortingservice', 'required'),
+                        //array('sendingservice, receivingservice, sortingservice', 'required'),
                         array('sendingservice, receivingservice, sortingservice', 'in', 'range'=>array('0','1'))
 		);
 	}

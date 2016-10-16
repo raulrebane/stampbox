@@ -35,18 +35,6 @@ $whitelistitems = Yii::app()->db->createCommand(array(
             'params'=> array(':1'=>Yii::app()->user->getId()),
         ))->queryAll();
 
-foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="alert alert-' .$key .'">' .$message ."</div>\n";
-}
-
-$usermessages = Message::model()->findAll('(customer_id=:1 and (page_id=:2 OR page_id = NULL)) OR customer_id = NULL', 
-                                    array(':1'=>Yii::app()->user->getId(), ':2'=>'site/index'));
-if ($usermessages) {
-    foreach ($usermessages as $message) {
-        echo '<div class="alert alert-' .$message->message_type .'">' .$message->message ."</div>\n";
-    }
-}
-
 ?>
 <div class="row">
 <div class="col-xs-12 col-md-5 col-lg-5">

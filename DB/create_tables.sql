@@ -351,10 +351,12 @@ ALTER TABLE ds.t_messages_message_id_seq
 GRANT USAGE ON TABLE ds.t_messages_message_id_seq TO sbweb;  
 
 -- Table: ds.t_messages
+
 CREATE TABLE ds.t_messages
 (
   message_id bigint NOT NULL DEFAULT nextval('ds.t_messages_message_id_seq'::regclass),
   customer_id bigint,
+  showcount smallint,
   message_type character varying(10),
   page_id character varying(30),
   message character varying(5000),
