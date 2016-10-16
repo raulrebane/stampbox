@@ -1,5 +1,4 @@
 <?php
-include '../config/commands.php';
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +12,8 @@ while ($worker->work());
 
 function DecryptData($job)
 {
+    $config=dirname(__FILE__).'/../config/commands.php';
+    require $config;
     openlog("STAMPBOX", LOG_NDELAY, LOG_LOCAL0);
     $jsonstr = $job->workload();
     $data = json_decode($jsonstr);

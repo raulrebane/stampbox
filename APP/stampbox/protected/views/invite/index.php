@@ -64,22 +64,23 @@ if ($model->loading_inprogress == TRUE) {
 
 if (isset($model->emailslist)) {
 ?>
-    <div class="col-xs-12 col-md-7">
+    <div class="col-xs-12 col-md-8 col-lg-8">
     <div class="widget widget-invitations">
-        <div class="dashboard-form">
+        <div class="dialog-form">
         <?php 
             //$model = new Invitations();
             $form = $this->beginWidget('CActiveForm',array(
             'id' => 'Invite',
             'action' => Yii::app()->createUrl('invite/index'), 
             'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
-            echo $form->labelEx($model->mailboxlist,'e_mail');
-            echo '<div class="select-style">';
-                echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);
-            echo '</div>';
-            echo '<button type="submit" name="refresh" class="btn btn-aqua">Refresh contacts</button>';
-            $this->endWidget();
-        ?>        
+        ?>
+        <div class="row">
+            <div class="col-xs-6"><div class="select-style">
+                <?php echo $form->dropDownList($model->mailboxlist, 'e_mail',$model->emailslist);?>
+            </div></div>
+            <div class="col-xs-4"><button type="submit" name="refresh" class="btn btn-aqua refresh-btn">Refresh contacts</button></div>
+        <?php $this->endWidget();?>
+        </div>
         </div>
     </div>
     </div>
@@ -89,10 +90,15 @@ if (isset($model->emailslist)) {
 
 <div class="row">
     <div class="col-md-12">
-    <div class="widget widget-activity">
-            <div class="title"></div>
+    <ul class="nav nav-tabs" data-tabs="tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Invite" aria-controls="Invite" role="tab" data-toggle="tab">Invite people</a></li>
+        <li role="presentation"><a href="#Invited" aria-controls="Invited" role="tab" data-toggle="tab">Invited list</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="Invite">
+        <div class="widget widget-activity">
             <div class="content">
-                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>
+                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite selected</button></div></div>
             <?php   
                 $gridColumns = array(
                     array(
@@ -119,9 +125,36 @@ if (isset($model->emailslist)) {
                 ));      
                 //$this->endWidget(); 
             ?>
-            <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite</button></div></div>
+            <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite selected</button></div></div>
             </div>
         </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane" id="Invited">
+        <div class="widget widget-activity">
+            <div class="content">
+            <?php   
+                $gridColumns = array(
+                    array('name'=>'name', 'header'=>'Name'),
+                    array('name'=>'invited_email', 'header'=>'E-mail'),
+                    array('name'=>'invited_when', 'header'=> 'Date invited')
+                );
+                $this->widget('zii.widgets.grid.CGridView',array(
+                    'id'=>'invitation-grid',
+                    'enablePagination'=>FALSE,
+                    //'hideHeader'=>TRUE,
+                    'template' => '{items}',
+                    'htmlOptions'=>array('class'=>''),
+                    'dataProvider' => $model->dataProvider,
+                    'columns'=>$gridColumns
+                ));      
+                //$this->endWidget(); 
+            ?>
+            </div>
+        </div>
+        </div>
+    </div>
     </div>
 </div>
 

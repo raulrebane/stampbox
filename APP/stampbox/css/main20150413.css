@@ -10131,6 +10131,10 @@ dashboard .widget.widget-whitelist .form input {
     font-size: 18px;
 }
 
+.dialog-form .form .refresh-btn {
+    margin-top: 13px;
+}
+
 .dialog-form form .select-style {
   padding: 0;
   margin: 0;

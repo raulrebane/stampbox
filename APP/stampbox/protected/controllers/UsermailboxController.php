@@ -74,8 +74,8 @@ class UsermailboxController extends Controller
                         Yii::app()->user->setFlash('danger',
                             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                             .'We could not access your e-mail inbox. <br>' 
-                            .'Can not authenticate to IMAP server'
-                            .'</div>'); 
+                            .'Can not authenticate to IMAP server'); 
+                        Yii::log('user mailbox login error' .CVarDumper::dumpAsString($result), 'info', 'application');
                         $this->render('create',array('model'=>$model,));
                         Yii::app()->end();
                     } 
@@ -85,8 +85,8 @@ class UsermailboxController extends Controller
                 $model->emailpassword = $result['cryptedtext'];
                 $model->Save('Create');
                 Yii::app()->user->setFlash('success',
-                    '<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                    .'New email '.$model->useremail .' saved successfully</div>');                 
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .'New email '.$model->useremail .' saved successfully');                 
                 $this->redirect(array('usermailbox/index'));
             }
             else {
@@ -112,7 +112,7 @@ class UsermailboxController extends Controller
                         .' missing user mailbox record' , 'info', 'application');
                 // should redirect to site/index
             Yii::app()->user->setFlash('danger',
-                '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                 . 'E-mail not found</div>');
             $this->redirect(array('usermailbox/index'));
         }
@@ -146,7 +146,7 @@ class UsermailboxController extends Controller
                         if ($result['status'] == 'ERROR') {
                                 //Changed to allow registering without e-mail username
                                 Yii::app()->user->setFlash('danger',
-                                    '<div class="alert alert-danger alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                                     .'We could not access your e-mail inbox.<br>' 
                                     .$result['reason']['0'] 
                                     .'</div>'); 
@@ -163,7 +163,7 @@ class UsermailboxController extends Controller
                 $model->Save('Update');
                 Yii::app()->user->setFlash('success',
                     '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                    .'Updated configuration for '.$model->useremail .' saved</div>');                 
+                    .'Updated configuration for '.$model->useremail .' saved');                 
                 $this->redirect(array('usermailbox/index'));
 	    }
             else {

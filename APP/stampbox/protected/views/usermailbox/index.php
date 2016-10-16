@@ -5,14 +5,11 @@
 <?php
 
 $gridcolumns = array(
-    array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email'),'type'=>'raw', 'value'=>function($data) {
-        if ($data->status !== 'A') return '<del>' .$data->e_mail .'</del>'; else return $data->e_mail; }),
+    array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')),
     array('name'=>'e_mail_username', 'header'=>'Username', 'htmlOptions'=>array('class'=>'hidden-xs', 'align'=>'left'), 
            'headerHtmlOptions'=>array('class'=>'hidden-xs')),
     array('name'=>'e_mail_password', 'header'=>'Password', 'htmlOptions'=>array('class'=>'hidden-xs', 'align'=>'center'), 'value'=>'"******"',
            'headerHtmlOptions'=>array('class'=>'hidden-xs')),
-    array('name'=>'status', 'header'=>'Status', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-        if ($data->status == 'A') return '<span class="glyphicon glyphicon-ok"></span>'; else return '<span class="glyphicon glyphicon-warning-sign"></span>'; }),
     array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
         if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
     array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {

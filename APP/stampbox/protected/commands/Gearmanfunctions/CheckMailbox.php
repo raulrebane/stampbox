@@ -46,7 +46,7 @@ function CheckMailbox($job, $log)
     $log = $mail_errors;
     syslog(LOG_ERR, "Error loggin in with $jsonstr" .json_encode($mail_errors));
     closelog();
-    return json_encode(array('status'=>'ERROR', 'reason'=>$mail_errors));
+    return json_encode(array('status'=>'ERROR', 'reason'=>'Cannot log in into mailbox. Please check username and/or password'));
   }
 }
 ?>
