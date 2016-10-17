@@ -91,8 +91,8 @@ if (isset($model->emailslist)) {
 <div class="row">
     <div class="col-md-12">
     <ul class="nav nav-tabs" data-tabs="tabs" role="tablist" id="Invitetabs">
-        <li role="presentation" class="active"><a href="#Invitetab" aria-controls="Invitetab" role="tab" data-toggle="tab">Invite people</a></li>
-        <li role="presentation"><a href="#Invitedtab" aria-controls="Invitedtab" role="tab" data-toggle="tab">Invited list</a></li>
+        <li role="presentation" class="active"><a href="Invitetab" aria-controls="Invitetab" role="tab" data-toggle="tab">Invite people</a></li>
+        <li role="presentation"><a href="Invitedtab" aria-controls="Invitedtab" role="tab" data-toggle="tab">Invited list</a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="Invitetab">
@@ -157,14 +157,19 @@ if (isset($model->emailslist)) {
     </div>
     </div>
 </div>
-<!--
+
 <script>
-$('#Invitetabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+$(document).on('hide.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    var contentId = $(e.target).attr("href");
+    var tab = document.getElementById($(e.target).attr("href"));
+    $(tab).removeClass('active');
+    });
+$(document).on('show.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    var contentId = $(e.target).attr("href");
+    var tab = document.getElementById($(e.target).attr("href"));
+    $(tab).addClass('active');
+    });
 </script>
--->
 <?php
 
 //unset($form);
