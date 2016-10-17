@@ -90,12 +90,12 @@ if (isset($model->emailslist)) {
 
 <div class="row">
     <div class="col-md-12">
-    <ul class="nav nav-tabs" data-tabs="tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#Invite" aria-controls="Invite" role="tab" data-toggle="tab">Invite people</a></li>
-        <li role="presentation"><a href="#Invited" aria-controls="Invited" role="tab" data-toggle="tab">Invited list</a></li>
+    <ul class="nav nav-tabs" data-tabs="tabs" role="tablist" id="Invitetabs">
+        <li role="presentation" class="active"><a href="#Invitetab" aria-controls="Invitetab" role="tab" data-toggle="tab">Invite people</a></li>
+        <li role="presentation"><a href="#Invitedtab" aria-controls="Invitedtab" role="tab" data-toggle="tab">Invited list</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="Invite">
+        <div role="tabpanel" class="tab-pane active" id="Invitetab">
         <div class="widget widget-activity">
             <div class="content">
                 <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Invite selected</button></div></div>
@@ -131,7 +131,7 @@ if (isset($model->emailslist)) {
         </div>
     </div>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane" id="Invited">
+        <div role="tabpanel" class="tab-pane" id="Invitedtab">
         <div class="widget widget-activity">
             <div class="content">
             <?php   
@@ -157,7 +157,14 @@ if (isset($model->emailslist)) {
     </div>
     </div>
 </div>
-
+<!--
+<script>
+$('#Invitetabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+-->
 <?php
 
 //unset($form);
