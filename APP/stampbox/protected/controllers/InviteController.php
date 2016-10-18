@@ -63,6 +63,7 @@ class InviteController extends Controller
             $invite = new Invitations;
             $invite->invited_email =$_POST['invited_email'];
             $invite->customer_id = Yii::app()->user->getId();
+            $invite->invite = 'Y';
             if ($invite->validate())
             {
                 $invite->save();
