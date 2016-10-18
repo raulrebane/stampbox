@@ -64,6 +64,7 @@ if ($model->loading_inprogress == TRUE) {
 
 if (isset($model->emailslist)) {
 ?>
+    <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-8">
     <div class="widget widget-invitations">
         <div class="dialog-form">
@@ -84,6 +85,7 @@ if (isset($model->emailslist)) {
         </div>
     </div>
     </div>
+    </div>
 <?php
 }
 ?>
@@ -93,6 +95,30 @@ if (isset($model->emailslist)) {
     <ul class="nav nav-tabs" data-tabs="tabs" role="tablist" id="Invitetabs">
         <li role="presentation" class="active"><a href="Invitetab" aria-controls="Invitetab" role="tab" data-toggle="tab">Invite people</a></li>
         <li role="presentation"><a href="Invitedtab" aria-controls="Invitedtab" role="tab" data-toggle="tab">Invited list</a></li>
+        <li>
+            <div class="dashboard-form">
+                <!--<div class="navbar-form navbar-left">-->
+                <?php 
+                $invite = new Invitations();
+                $form = $this->beginWidget('CActiveForm',array(
+                'id' => 'Invite',
+                'action' => Yii::app()->createUrl('invite/index'), 
+                'htmlOptions' => array('class' => 'form', 'role'=>'form'),));
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'model'=>$invite,
+                    'name'=>'invited_email',
+                    'htmlOptions' => array('placeholder'=>'Enter e-mail', 'style'=>'width:auto;margin-left:15px;'),
+                    //'class'=>'form-control',
+                    'value'=>'',
+                    'source'=>$this->createUrl('whitelist/Autocomplete'),
+                    // additional javascript options for the autocomplete plugin
+                    'options'=>array('showAnim'=>'fold',),
+                ));
+            ?>  
+                <button type="submit" class="btn btn-aqua">Invite</button>
+            <!--</div>-->
+            </div>
+        </li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="Invitetab">
@@ -120,7 +146,7 @@ if (isset($model->emailslist)) {
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>''),
-                    'dataProvider' => $model->dataProvider,
+                    'dataProvider' => $model->invite_list,
                     'columns'=>$gridColumns
                 ));      
                 //$this->endWidget(); 
@@ -141,12 +167,12 @@ if (isset($model->emailslist)) {
                     array('name'=>'invited_when', 'header'=> 'Date invited')
                 );
                 $this->widget('zii.widgets.grid.CGridView',array(
-                    'id'=>'invitation-grid',
+                    'id'=>'invited-grid',
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
                     'htmlOptions'=>array('class'=>''),
-                    'dataProvider' => $model->dataProvider,
+                    'dataProvider' => $model->invited_list,
                     'columns'=>$gridColumns
                 ));      
                 //$this->endWidget(); 
@@ -171,6 +197,6 @@ $(document).on('show.bs.tab', 'a[data-toggle="tab"]', function (e) {
     });
 </script>
 <?php
-
+$this->endWidget();
 //unset($form);
 ?>

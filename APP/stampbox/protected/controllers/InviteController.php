@@ -60,18 +60,23 @@ class InviteController extends Controller
         if(isset($_POST['invited_email']))
 	{  
             //Yii::log('got invite email' .$_POST['invited_email'], 'info', 'application');
-            $model = new Invitations;
-            $model->invited_email =$_POST['invited_email'];
-            $model->customer_id = Yii::app()->user->getId();
-            if ($model->validate())
+            $invite = new Invitations;
+            $invite->invited_email =$_POST['invited_email'];
+            $invite->customer_id = Yii::app()->user->getId();
+            if ($invite->validate())
             {
-                $model->save();
-            }
+                $invite->save();
             //Yii::log('Invitation save errors: ' .CVarDumper::dumpAsString($model), 'info', 'application');
-            Yii::app()->user->setFlash('success',
-                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                .$model->invited_email .' were invited. Invitation e-mails will be sent out by server shortly'); 
-            $this->redirect(array('invite/index'));
+                Yii::app()->user->setFlash('success',
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .$invite->invited_email .' were invited. Invitation e-mails will be sent out by server shortly'); 
+                $this->redirect(Yii::app()->user->returnUrl);
+            }
+             else {
+                Yii::app()->user->setFlash('danger',
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .CHtml::ErrorSummary($invite)); 
+                }
         }
         
         if(isset($_POST['refresh'])) {
@@ -107,7 +112,7 @@ class InviteController extends Controller
             }
         }
 
-        $model = new stdClass();
+        $model = new Invite;
         $model->loading_inprogress = FALSE;
         
         // first let's check if there is currently loading from customer mailbox in progress
@@ -143,8 +148,8 @@ class InviteController extends Controller
         );
         $sort->defaultOrder=array('last_email_date'=>CSort::SORT_DESC);
 
-        $model->dataProvider=new CActiveDataProvider('Invitations', array(
-            'criteria'=>array('condition'=>'customer_id='.Yii::app()->user->getId()),
+        $model->invite_list=new CActiveDataProvider('Invitations', array(
+            'criteria'=>array('condition'=>'invite IS NULL and customer_id='.Yii::app()->user->getId()),
             'sort'=>$sort, 'pagination'=>array('pageSize'=>1000,)));
         
         $model->mailboxlist = new usermailbox;
@@ -155,7 +160,21 @@ class InviteController extends Controller
         else {
             unset($model->emailslist);
         }
+
+        $sort = new CSort();
+        $sort->attributes = array(
+            'invited_email',
+            'name',
+            'invited_when',
+        );
+        $sort->defaultOrder=array('name'=>CSort::SORT_ASC);
+
+        $model->invited_list=new CActiveDataProvider('Invitations', array(
+            'criteria'=>array('condition'=>'invite = \'Y\' and customer_id='.Yii::app()->user->getId()),
+            'sort'=>$sort, 'pagination'=>array('pageSize'=>1000,)));
+
         //Yii::log('Invite model dump: ' .CVarDumper::dumpAsString($model), 'info', 'application');
+        Yii::app()->user->returnUrl=array('invite/index');
         $this->render('index',array('model'=>$model,));
     }
     

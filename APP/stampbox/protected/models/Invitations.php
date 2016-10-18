@@ -41,6 +41,7 @@ class Invitations extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('customer_id, invited_email', 'required'),
+                        array('invited_email', 'email'),
 			array('from_count, to_count', 'numerical', 'integerOnly'=>true),
 			array('invited_email, name', 'length', 'max'=>100),
 			array('invite', 'length', 'max'=>1),

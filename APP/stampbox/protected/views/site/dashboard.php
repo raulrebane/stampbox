@@ -76,6 +76,7 @@ $whitelistitems = Yii::app()->db->createCommand(array(
                 'options'=>array('showAnim'=>'fold',),
             ));
             echo '<button type="submit" class="btn btn-aqua">Send invitation</button>';
+            Yii::app()->user->returnUrl=array('site/index');
             $this->endWidget();
         ?>        
     </div>

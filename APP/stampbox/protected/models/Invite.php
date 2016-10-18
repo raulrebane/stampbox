@@ -12,7 +12,10 @@
 class Invite extends CFormModel
 {
     public $invite_email;
+    public $mailboxlist;
     public $emailslist;
     public $loading_inprogress;
+    public $invite_list;
+    public $invited_list;
     
 }
