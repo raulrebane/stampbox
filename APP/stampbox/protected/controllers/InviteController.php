@@ -43,12 +43,17 @@ class InviteController extends Controller
     public function actionIndex() {
        
         if (isset($_POST['invite']) && isset($_POST['selectedIds'])) {
+            $invitecount = 0;
             foreach ($_POST['selectedIds'] as $id) {
                 $invite = Invitations::model()->find('customer_id=:1 and invited_email=:2', 
                                     array(':1'=>Yii::app()->user->getId(), ':2'=>$id));
                 $invite->invite = 'Y';
                 $invite->save();
+                $invitecount += 1;
             }
+            Yii::app()->user->setFlash('success',
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                .$invitecount .' people were invited. Invitation e-mails will be sent out by server shortly'); 
             $this->redirect(array('invite/index'));
         }
 
@@ -63,8 +68,12 @@ class InviteController extends Controller
                 $model->save();
             }
             //Yii::log('Invitation save errors: ' .CVarDumper::dumpAsString($model), 'info', 'application');
+            Yii::app()->user->setFlash('success',
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                .$model->invited_email .' were invited. Invitation e-mails will be sent out by server shortly'); 
             $this->redirect(array('invite/index'));
-        }        
+        }
+        
         if(isset($_POST['refresh'])) {
             Yii::log('Invitation refresh', 'info', 'application');
             $mbox = $_POST['usermailbox'];
