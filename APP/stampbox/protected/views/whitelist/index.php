@@ -52,7 +52,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>False,
                     'template' => '{items}',
-                    'htmlOptions'=>array('class'=>''),
+                    'htmlOptions'=>array('class'=>'table-responsive'),
                     'dataProvider' => $dataProvider,
                     'columns'=>$gridColumns));
                 ?>
@@ -90,7 +90,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                         'enablePagination'=>FALSE,
                         //'hideHeader'=>TRUE,
                         'template' => '{items}',
-                        'htmlOptions'=>array('class'=>''),
+                        'htmlOptions'=>array('class'=>'table-responsive'),
                         'dataProvider' => $contactDataProvider,
                         'columns'=>$gridColumns
                     )); 

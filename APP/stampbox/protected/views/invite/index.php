@@ -145,7 +145,7 @@ if (isset($model->emailslist)) {
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
-                    'htmlOptions'=>array('class'=>''),
+                    'htmlOptions'=>array('class'=>'table-responsive'),
                     'dataProvider' => $model->invite_list,
                     'columns'=>$gridColumns
                 ));      
@@ -171,7 +171,7 @@ if (isset($model->emailslist)) {
                     'enablePagination'=>FALSE,
                     //'hideHeader'=>TRUE,
                     'template' => '{items}',
-                    'htmlOptions'=>array('class'=>''),
+                    'htmlOptions'=>array('class'=>'table-responsive'),
                     'dataProvider' => $model->invited_list,
                     'columns'=>$gridColumns
                 ));      

@@ -100,7 +100,7 @@ $form = $this->beginWidget('CActiveForm',array(
             'enablePagination'=>FALSE,
             //'hideHeader'=>TRUE,
             'template' => '{items}',
-            'htmlOptions'=>array('class'=>''),
+            'htmlOptions'=>array('class'=>'table-responsive'),
             'dataProvider' => $gridDataProvider,
             'columns'=>$gridColumns));      
         ?>
