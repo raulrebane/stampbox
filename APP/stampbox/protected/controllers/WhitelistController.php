@@ -45,6 +45,7 @@ class WhitelistController extends Controller
         Yii::log('Whitelist - index', 'info', 'application');
         
         if (isset($_POST['whitelistsubmit']) && isset($_POST['selectedIds'])) {
+            $whitelistcount = 0;
             foreach ($_POST['selectedIds'] as $id) {
                 $add2whitelist = Whitelist::model()->find('customer_id=:1 and e_mail=:2', 
                                     array(':1'=>Yii::app()->user->getId(), ':2'=>$id));
@@ -53,7 +54,12 @@ class WhitelistController extends Controller
                 $add2whitelist->customer_id = Yii::app()->user->getId();
                 $add2whitelist->e_mail = $id;
                 $add2whitelist->save();
+                $whitelistcount += 1;
+
             }
+            Yii::app()->user->setFlash('success',
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                .$whitelistcount .' e-mails added to whitelist. They can now send you e-mail without stamps needed'); 
             //$this->redirect(array('site/index'));
         }
         
@@ -67,6 +73,9 @@ class WhitelistController extends Controller
             if ($model->validate())
             {
                 $model->save();
+                Yii::app()->user->setFlash('success',
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                    .$model->e_mail .' added to whitelist.'); 
             }
         }
         $dataProvider = new CActiveDataProvider('Whitelist', array('pagination'=>array('pageSize'=>100,)));
