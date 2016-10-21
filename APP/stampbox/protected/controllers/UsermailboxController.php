@@ -90,8 +90,8 @@ class UsermailboxController extends Controller
                 $this->redirect(array('usermailbox/index'));
             }
             else {
-                list(, $model->maildomain) = explode("@", $model->useremail);
-                $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->maildomain));
+                //list(, $model->maildomain) = explode("@", $model->useremail);
+                //$model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->maildomain));
                 $this->render('create',array('model'=>$model,));
                 Yii::app()->end();
             }
