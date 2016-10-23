@@ -91,7 +91,7 @@ class UsermailboxController extends Controller
             }
             else {
                 if (isset($model->useremail)) {
-                    list(, $model->maildomain) = explode("@", $model->useremail);
+                    list($tmp, $model->maildomain) = explode("@", $model->useremail);
                     $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->maildomain));
                 }
                 $this->render('create',array('model'=>$model,));
