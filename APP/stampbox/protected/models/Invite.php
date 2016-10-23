@@ -17,5 +17,6 @@ class Invite extends CFormModel
     public $loading_inprogress;
     public $invite_list;
     public $invited_list;
-    
+    public $task_id;
+    public $percent_complete;
 }

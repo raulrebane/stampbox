@@ -60,9 +60,13 @@ class InviteController extends Controller
         if(isset($_POST['invited_email']))
 	{  
             //Yii::log('got invite email' .$_POST['invited_email'], 'info', 'application');
-            $invite = new Invitations;
-            $invite->invited_email =$_POST['invited_email'];
-            $invite->customer_id = Yii::app()->user->getId();
+            $invite = Invitations::model()->find('customer_id =:1 and invited_email=:2', 
+                    array(':1'=>Yii::app()->user->GetId(), ':2'=>mb_convert_case($_POST['invited_email'], MB_CASE_LOWER, "UTF-8")));
+            if ($invite == NULL) {
+                $invite = new Invitations ;
+                $invite->invited_email =$_POST['invited_email'];
+                $invite->customer_id = Yii::app()->user->getId();
+            }
             $invite->invite = 'Y';
             if ($invite->validate())
             {

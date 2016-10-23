@@ -25,12 +25,11 @@ function LoadInvitations($job, $log)
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
             if (substr($custmailbox['e_mail_password'],0,5) == 'SBPKI') {
-                $gmclient= new GearmanClient();
-                $gmclient->addServer('127.0.0.1', 4730);
-                $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$custmailbox['e_mail_password']))),TRUE);
-                $custmailbox['e_mail_password'] = $result['opentext'];
+                $privKey = openssl_pkey_get_private($privatekey, $privatekeypassword);
+                $cryptedtext = base64_decode(substr($custmailbox['e_mail_password'], 5, strlen($custmailbox['e_mail_password'])-5));
+                openssl_private_decrypt($cryptedtext, $custmailbox['e_mail_password'], $privKey);
+                syslog(LOG_INFO, "Decrypted password: " .$custmailbox['e_mail_password']);
             }
-            
             $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}",
                     $username,$custmailbox['e_mail_password']);
 	    if ($inbox) {
@@ -52,6 +51,13 @@ function LoadInvitations($job, $log)
                             $job->sendstatus(round(($percent_done / $total_percent)*100, 0), $total_percent);
                         }
                         $overview = imap_fetch_overview($inbox,$email_number,0);
+                        syslog(LOG_INFO, "Processing e-mail: " .json_encode($overview));
+//                        if (array_key_exists('from', $overview) == FALSE) {
+//                            continue;
+//                        }
+//                        if (strpos($overview[0]->from, 'no') >= 0 AND strpos($overview[0]->from,'reply') >=0 ) {
+//                            continue;
+//                        }
                         $mailfrom = imap_mime_header_decode($overview[0]->from);
                         if (count($mailfrom) == 2) {
                             $fromname = utf8_encode(rtrim($mailfrom[0]->text));

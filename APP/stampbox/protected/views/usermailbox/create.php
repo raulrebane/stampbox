@@ -135,6 +135,9 @@ $('#NewMailbox_useremail').change(function() {
     $.getJSON(url, function(data) {
         if (data.status == "A") {$('#serversettings').hide();} else {$('#serversettings').show();}
         if (data.status == "A" && data.incoming_auth !== "OTHER") {$('#username').hide();} else {$('#username').show();}
+        if (data.status == "A" && data.incoming_auth == "EMAIL") {$('#NewMailbox_emailusername').val($("#NewMailbox_useremail").val());}
+        else if (data.status == "A" && data.incoming_auth == "USERNAME") 
+            {$('#NewMailbox_emailusername').val($("#NewMailbox_useremail").val().slice(0, $("#NewMailbox_useremail").val().indexOf("@")));}
         $("#NewMailbox_incoming_hostname").val(data.incoming_hostname);
         $("#NewMailbox_incoming_port").val(data.incoming_port);
         $("#NewMailbox_incoming_socket_type").val(data.incoming_socket_type);

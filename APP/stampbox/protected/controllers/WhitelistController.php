@@ -63,21 +63,30 @@ class WhitelistController extends Controller
             //$this->redirect(array('site/index'));
         }
         
-        $model = new Whitelist();
-        
         if(isset($_POST['e_mail']))
 	{  
-            Yii::log('got email' .$_POST['e_mail'], 'info', 'application');
-            $model->e_mail=$_POST['e_mail'];
-            $model->customer_id = Yii::app()->user->getId();
-            if ($model->validate())
-            {
-                $model->save();
-                Yii::app()->user->setFlash('success',
-                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                    .$model->e_mail .' added to whitelist.'); 
+            //Yii::log('got email' .$_POST['e_mail'], 'info', 'application');
+            $model = Whitelist::model()->find('customer_id=:1 and e_mail=:2', 
+                                    array(':1'=>Yii::app()->user->getId(), ':2'=>$_POST['e_mail']));
+            if ($model == NULL) {
+                $model = new Whitelist();
+                $model->e_mail=$_POST['e_mail'];
+                $model->customer_id = Yii::app()->user->getId();
+                if ($model->validate())
+                {
+                    $model->save();
+                    Yii::app()->user->setFlash('success',
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                        .$model->e_mail .' added to whitelist.'); 
+                }
+            }
+            else {
+                    Yii::app()->user->setFlash('info',
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                        .$model->e_mail .' is already whitelisted.'); 
             }
         }
+        $model = new Whitelist();
         $dataProvider = new CActiveDataProvider('Whitelist', array('pagination'=>array('pageSize'=>100,)));
         $this->render('index',array('model'=>$model, 'dataProvider'=>$dataProvider,)); 
     }
