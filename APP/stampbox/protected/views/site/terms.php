@@ -19,7 +19,7 @@
 	<b>Content.</b> These terms of service (“<b>Terms</b>”) govern
 	your use and access to the Digital Stamp services (&quot;<b>Services</b>&quot;)
 	provided by Good Wind Communications OÜ, registry code 12317469,
-	address Rotermanni 8, 10111 Tallinn, Estonia, e-mail <span style="background: #ffff00">support@stampbox.email</span>
+        address Rotermanni 8, 10111 Tallinn, Estonia, e-mail <b>support@stampbox.email</b>
 	(“<b>us</b>” or “<b>GWC</b>”). References in these Terms to
 	“<b>you</b>” or to “<b>User</b>” are references to you, the
 	person or entity accessing or using the Services. The Terms contain
@@ -62,19 +62,20 @@
 	address that you have provided in your registration information. In
 	addition, we may notify you via the website <span style="background: #ffff00">www.stampbox.email</span>.
 	Your notices to us must be sent via e-mail to the e-mail address
-	<span style="background: #ffff00">support@stampbox.email</span>.</p>
+        <b>support@stampbox.email</b>.</p>
 </ol>
 <ol start="2">
 	<li><p lang="en-GB" align="justify" style="margin-top: 0.25in; margin-bottom: 0.17in; text-transform: uppercase; line-height: 115%; page-break-after: avoid">
 	<b>Services</b></p>
 </ol>
 <ol start="8">
-	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
-	<b>Plug-In. </b>To use our Services, you are required to download
+<!--	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
+	<b>Plug-In. </b>To use our Services, you may be required to download
 	and install a relevant plug-in provided by us (“<b>Plug-In</b>”).
 	You
-	can download the Plug-In at <span style="background: #ffff00">[website]</span>.</p>
-	<li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
+	can download the Plug-In at <b>www.stampbox.email</b>.</p>
+-->
+        <li><p lang="en-GB" align="justify" style="margin-top: 0.08in; margin-bottom: 0.08in; font-variant: normal; font-weight: normal; line-height: 115%; page-break-after: auto">
 	<b>Digital Stamp. </b>A “<b>Digital Stamp</b>” is information
 	added to the header of an e-mail by the sender that determines the
 	folder in which the e-mail is displayed for Users of our Protection
@@ -175,7 +176,7 @@
 		Services are only available for a fee (“</span><b>Paid
 		Services</b><span style="font-weight: normal">”). Paid Services
 		may be available on both a pay-as-you-go basis and on a
-		subscription basis. Fee amounts are specified at </span><span style="font-weight: normal"><span style="background: #ffff00">[website]</span></span><span style="font-weight: normal">.</span><b>
+		subscription basis. Fee amounts are specified at </span><span style="font-weight: normal"><b>www.stampbox.email</b></span><span style="font-weight: normal">.</span><b>
 		</b><span style="font-weight: normal">GWC reserves the right, to be
 		exercised in its sole discretion, to convert any free portion or
 		feature of the Services, into a Paid Service, or vice versa. </span>
@@ -297,13 +298,17 @@
 <ol>
 	<ol>
 		<li><p lang="en-GB" align="justify" style="margin-top: 0.17in; margin-bottom: 0.17in; font-variant: normal; line-height: 115%; page-break-after: auto">
-		<b>Direct <!-- Direct marketing means using the client’s contact details to send marketing messages, e.g. via text message or e-mail.
+		<b>Direct marketing.
+<!-- Direct marketing means using the client’s contact details to send marketing messages, e.g. via text message or e-mail.
+I Direct marketing for services or goods that are similar to your services is allowed without the client’s express consent.
+ However, the client has to be informed that their contact information will be used for such messages at the time when they 
+ provide you with their contact information. The client must also have an option to opt out from receiving such messages. 
+ Therefore, there can be a checked checkbox in the registration form, with the confirmation that the client wishes to receive 
+ marketing materials. 
 
-I
-Direct marketing for services or goods that are similar to your services is allowed without the client’s express consent. However, the client has to be informed that their contact information will be used for such messages at the time when they provide you with their contact information. The client must also have an option to opt out from receiving such messages. Therefore, there can be a checked checkbox in the registration form, with the confirmation that the client wishes to receive marketing materials. 
-
-II
-Direct marketing for services or goods that are different from your services is only allowed if you have express consent from the client. In this case, there would need to be an unchecked checkbox in the registration form, where the client consents to their contact information being used for direct marketing. -->marketing.
+II Direct marketing for services or goods that are different from your services is only allowed if you have express consent 
+ from the client. In this case, there would need to be an unchecked checkbox in the registration form, where the client 
+ consents to their contact information being used for direct marketing. -->
 		</b><span style="font-weight: normal">Your personal data may be
 		used for direct marketing purposes if you have granted a respective
 		consent during registration or in the Services Account settings or
@@ -389,7 +394,7 @@ Direct marketing for services or goods that are different from your services is 
 		In case of subscription Services agreement incorporating these
 		Terms is valid until the end of such subscription. You may
 		terminate these Terms at any time by way of cancellation, by
-		sending an e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">support@stampbox.email</span></span><span style="font-weight: normal">.</span></p>
+                sending an e-mail to </span><span style="font-weight: normal"><b>support@stampbox.email</b></span><span style="font-weight: normal">.</span></p>
 	</ol>
 </ol>
 <ol>
@@ -417,12 +422,12 @@ Direct marketing for services or goods that are different from your services is 
 		have not used any Digital Stamps yet. You acknowledge and agree
 		that if you use any Digital Stamps purchased, you lose your right
 		of withdrawal. The right of withdrawal can be used by sending an
-		e-mail to </span><span style="font-weight: normal"><span style="background: #ffff00">support@stampbox.email</span></span><span style="font-weight: normal">.
+                e-mail to </span><span style="font-weight: normal"><b>support@stampbox.email</b></span><span style="font-weight: normal">.
                 </span></span><span style="font-weight: normal">.</span></p>
 		<li><p lang="en-GB" align="justify" style="margin-top: 0.17in; margin-bottom: 0.17in; font-variant: normal; line-height: 115%; page-break-after: auto"><a name="_Ref396730439"></a>
 		<b>Amendments to the Terms. </b><span style="font-weight: normal">The
 		Terms may be amended by GWC at any time by posting an updated
-		version of the Terms on the website </span><span style="font-weight: normal"><span style="background: #ffff00">www.stampbox.email</span></span><span style="font-weight: normal">
+                version of the Terms on the website </span><span style="font-weight: normal"><b>www.stampbox.email</b></span><span style="font-weight: normal">
 		at least thirty (30) days in advance</span><font color="#676767"><font face="Helvetica, serif"><font size="3" style="font-size: 11pt"><span style="font-weight: normal"><span style="background: #ffffff">
 		</span></span></font></font></font><span style="font-weight: normal">of
 		the effective date of any such amendments. When we amend the Terms,
