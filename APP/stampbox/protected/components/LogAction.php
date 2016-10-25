@@ -16,6 +16,7 @@ class LogAction extends CComponent {
     
     
     public function WriteLog($log_data) {
+        if (Yii::App()->user->isGuest) { return;}              
         $headers = apache_request_headers();
         if ( array_key_exists( 'X-Forwarded-For', $headers ) && filter_var( $headers['X-Forwarded-For'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
             $log_ip = $headers['X-Forwarded-For']; }

@@ -90,8 +90,8 @@ class UsermailboxController extends Controller
                 $this->redirect(array('usermailbox/index'));
             }
             else {
-                if (isset($model->useremail)) {
-                    list($tmp, $model->maildomain) = explode("@", $model->useremail);
+                if (strpos($model->useremail, '@')) {
+                    list(, $model->maildomain) = explode("@", $model->useremail);
                     $model->registereddomain = mailconfig::model()->find('maildomain=:1', array(':1'=>$model->maildomain));
                 }
                 $this->render('create',array('model'=>$model,));
@@ -150,7 +150,7 @@ class UsermailboxController extends Controller
                                 Yii::app()->user->setFlash('danger',
                                     '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                                     .'We could not access your e-mail inbox.<br>' 
-                                    .$result['reason']['0'] 
+                                    .$result['reason']
                                     .'</div>'); 
                                 $this->render('update',array('model'=>$model,));
                                 Yii::app()->end();
