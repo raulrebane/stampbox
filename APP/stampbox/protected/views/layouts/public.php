@@ -61,6 +61,14 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
             </div>
         </div>
         <div class="container">
+            <div class="row hero text-center">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 hero">
+                    <h1><b>Stampbox</b> - the email courier</h1>
+                    <h2>The only way to make emails worth your time</h2>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
             <?php echo $content ?>
         </div>
 <div class="container">
