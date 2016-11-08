@@ -17,9 +17,7 @@ class NewMailbox extends CFormModel
         public $incoming_port;
         public $incoming_socket_type;
         public $incoming_auth;
-        public $sendingservice;
-        public $receivingservice;
-        public $sortingservice;
+        public $extendedservice;
         public $registereddomain;
         public $registeredemail;
         
@@ -45,8 +43,7 @@ class NewMailbox extends CFormModel
                         array('incoming_socket_type', 'in','range'=>array('NULL', 'ssl', 'tls'), 'allowEmpty'=>false),
                         array('emailusername, maildomain, incoming_auth', 'safe'),
                         array('incoming_hostname, incoming_port, incoming_socket_type, emailpassword', 'checkFields'),
-                        //array('sendingservice, receivingservice, sortingservice', 'required'),
-                        array('sendingservice, receivingservice, sortingservice', 'in', 'range'=>array('0','1'))
+                        array('extendedservice', 'in', 'range'=>array('0','1'))
 		);
 	}
       
@@ -66,7 +63,7 @@ class NewMailbox extends CFormModel
         
         public function checkFields($attribute,$params)
         {
-            if ($this->receivingservice == 1 OR $this->sortingservice == 1) {
+            if ($this->extendedservice == 1) {
                 $ev = CValidator::createValidator('required', $this, $attribute, $params);
                 $ev->validate($this);
             }
@@ -84,9 +81,7 @@ class NewMailbox extends CFormModel
                         'incoming_hostname'=>'Mail server name',
                         'incoming_port'=>'Port',
                         'incoming_socket_type'=>'Connection security',
-                        'sendingservice'=>'Enable Sending service ',
-                        'receivingservice'=>'Enable Collection service ',
-                        'sortingservice'=>'Enable Protection service '
+                        'extendedservice'=>'Enable Extended service',
 		);
 	}
 
@@ -102,9 +97,7 @@ class NewMailbox extends CFormModel
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
                     $this->registeredemail->maildomain = mb_convert_case($this->maildomain, MB_CASE_LOWER, "UTF-8");
-                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->extended_service = ($this->extendedservice == 1) ? TRUE : FALSE;
                     if ($this->e_mail_verified) {
                         $this->registeredemail->status = 'A'; }
                     else {
@@ -162,9 +155,7 @@ class NewMailbox extends CFormModel
                     //list(, $this->maildomain) = explode("@", $this->useremail);
                     $this->registeredemail->e_mail_username = $this->emailusername;
                     $this->registeredemail->e_mail_password = $this->emailpassword;
-                    $this->registeredemail->sending_service = ($this->sendingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->receiving_service = ($this->receivingservice == 1) ? TRUE : FALSE;
-                    $this->registeredemail->sorting_service = ($this->sortingservice == 1) ? TRUE : FALSE;
+                    $this->registeredemail->extended_service = ($this->extendedservice == 1) ? TRUE : FALSE;
                     if ($this->e_mail_verified) {
                         $this->registeredemail->status = 'A';
                     }

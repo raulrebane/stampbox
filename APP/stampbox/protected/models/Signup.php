@@ -92,9 +92,7 @@ class Signup extends CFormModel
                 $registeredemail->status = 'V';
                 list(, $maildomain) = explode("@", $this->useremail);
                 $registeredemail->maildomain = mb_convert_case($maildomain, MB_CASE_LOWER, "UTF-8");
-                $registeredemail->sending_service = TRUE;
-                $registeredemail->receiving_service = FALSE;
-                $registeredemail->sorting_service = FALSE;
+                $registeredemail->extended_service = FALSE;
                 if (!$registeredemail->save()) {
                    Yii::log('customer mailbox save failed during registration' .CVarDumper::dumpAsString($this->registeredemail)
                         .CVarDumper::dumpAsString($this->registeredemail->getErrors()), 'error', 'application');

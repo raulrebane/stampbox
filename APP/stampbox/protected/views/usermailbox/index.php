@@ -10,12 +10,8 @@ $gridcolumns = array(
            'headerHtmlOptions'=>array('class'=>'hidden-xs')),
     array('name'=>'e_mail_password', 'header'=>'Password', 'htmlOptions'=>array('class'=>'hidden-xs', 'align'=>'center'), 'value'=>'"******"',
            'headerHtmlOptions'=>array('class'=>'hidden-xs')),
-    array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-        if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-    array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-        if ($data->receiving_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-    array('name'=>'sorting_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-        if ($data->sorting_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),                                
+    array('header'=>'Service type', 'name'=>'extended_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+        if ($data->extended_service === TRUE) return 'Extended'; else return 'Simple'; }),
     array('class'=>'CButtonColumn','template'=>'{configure}', 'htmlOptions'=>array('class'=>'status'),
         'buttons'=>array('configure' => array('label'=>'','options'=>array('class'=>'glyphicon glyphicon-wrench'),
             'url'=>'Yii::app()->createUrl("usermailbox/update", array("email"=>$data->e_mail))'))),

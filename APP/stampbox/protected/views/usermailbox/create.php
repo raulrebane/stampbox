@@ -20,34 +20,16 @@
 
     <div class="row">
         <div class="col-xs-1">
-        <?php echo $form->checkBox($model, 'sendingservice');?>
+        <?php echo $form->checkBox($model, 'extendedservice');?>
         </div>
         <div class="col-xs-11">
-        <?php echo $form->labelEx($model, 'sendingservice', array('class' => '')); ?>
-         - This service enables sending stamped e-mails to other users.            
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-1">
-        <?php echo $form->checkBox($model, 'receivingservice'); ?>
-        </div>
-        <div class="col-xs-11">
-        <?php echo $form->labelEx($model, 'receivingservice', array('class' => '')); ?>
+        <?php echo $form->labelEx($model, 'extendedservice', array('class' => '')); ?>
         - This service enables receiving credits for e-mails that are stamped and
-        sent to you. You can receive up to 0.07 EUR for each e-mail.
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-1">
-            <?php echo $form->checkBox($model, 'sortingservice'); ?>
-        </div>
-        <div class="col-xs-11">
-            <?php echo $form->labelEx($model, 'sortingservice', array('class' => ''));?>
-            - This service sorts automatically incoming e-mail between inbox and no-stamp-emails
+        sent to you and sorts automatically incoming e-mail between inbox and no-stamp-emails
             folder based on whether e-mail is stamped or not.
         </div>
     </div>
-        <div id="Extendedsettings" <?php if ($model->receivingservice == 0 AND $model->sortingservice == 0) {echo 'style="display : none;"';}?> >
+        <div id="Extendedsettings" <?php if ($model->extendedservice == 0) {echo 'style="display : none;"';}?> >
             <div id="username" <?php if (isset($model->registereddomain)) {
                 if ($model->registereddomain->status == 'A' AND $model->registereddomain->incoming_auth <> 'OTHER') { echo 'style="display : none;"';}
                 }?>
@@ -115,17 +97,8 @@
 </div>
 <?php $this->endWidget(); unset($form); ?>
 <script type="text/javascript">
-$('#NewMailbox_receivingservice').change(function() {
-  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
-    $('#Extendedsettings').show();
-  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
-    $('#Extendedsettings').hide();
-});
-$('#NewMailbox_sortingservice').change(function() {
-  if (document.getElementById('NewMailbox_receivingservice').checked || document.getElementById('NewMailbox_sortingservice').checked)  
-    $('#Extendedsettings').show();
-  if (document.getElementById('NewMailbox_receivingservice').checked == 0 && document.getElementById('NewMailbox_sortingservice').checked == 0)  
-    $('#Extendedsettings').hide();
+$('#NewMailbox_extendedservice').change(function() {
+    $('#Extendedsettings').toggle();
 });
 </script>
 <script type="text/javascript">

@@ -51,7 +51,7 @@ $whitelistitems = Yii::app()->db->createCommand(array(
 </div>
 
 <div class="col-xs-12 col-md-7">
-    <div class="widget widget-invitations">
+    <div class="widget widget-invitations" data-toggle="tooltip" data-placement="top" title="You can invite people to start using stampbox. Enter their e-mail adress and we will send out invitation e-mail">
     <div class="title">Invite e-mail to stampbox
 	<a data-toggle="popover" data-placement="bottom" title="Invitations help" 
 		data-content="Specify e-mail address here and we will send e-mail to invite person to join stampbox service.">
@@ -202,12 +202,8 @@ $whitelistitems = Yii::app()->db->createCommand(array(
                     'dataProvider'=>$mailboxdataprovider,
                     'columns'=>array(
                         array('name'=>'e_mail', 'htmlOptions'=>array('class'=>'email')),
-                        array('name'=>'sending_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->sending_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-                        array('name'=>'receiving_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->receiving_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),
-                        array('name'=>'sorting_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
-                            if ($data->sorting_service === TRUE) return '<span class="glyphicon glyphicon-ok-sign"></span>'; else return '<span class="glyphicon glyphicon-ban-circle"></span>'; }),                                
+                        array('header'=>'Service type', 'name'=>'extended_service', 'htmlOptions'=>array('class'=>'status', 'align'=>'center'), 'type'=>'raw', 'value'=>function($data) {
+                            if ($data->extended_service === TRUE) return 'Extended'; else return 'Simple'; }),
                         array('class'=>'CButtonColumn','template'=>'{configure}', 
                                 'htmlOptions'=>array('class'=>'status'),
                                 'buttons'=>array('configure' => array(

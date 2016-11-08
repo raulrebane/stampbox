@@ -10,12 +10,7 @@
  * @property string $e_mail_password
  * @property string $status
  * @property string $maildomain
- * @property boolean $sending_service 
- * @property boolean $receiving_service 
- * @property boolean $sorting_service
- * @property string $worker_ip
- * @property string $worker_type
- * @property string $last_seen
+ * @property boolean $extended_service
  */
 class usermailbox extends CActiveRecord
 {
@@ -51,7 +46,7 @@ class usermailbox extends CActiveRecord
 			array('e_mail, e_mail_username, maildomain', 'length', 'max'=>100),
 			array('e_mail_password', 'length', 'max'=>500),
                         array('status', 'length', 'max'=>1),
-			array('e_mail_username, customer_id, maildomain, sending_service, receiving_service, sorting_service', 'safe'),
+			array('e_mail_username, customer_id, maildomain, extended_service', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('customer_id, e_mail, e_mail_username, e_mail_password, status, maildomain', 'safe', 'on'=>'search'),
@@ -94,9 +89,7 @@ class usermailbox extends CActiveRecord
 			'e_mail_username' => 'E Mail Username',
 			'e_mail_password' => 'E Mail Password',
 			'status' => 'Status',
-                        'sending_service'=>'Sending service',
-                        'receiving_service'=>'Collection service',
-                        'sorting_service'=>'Protection service'
+                        'extended_service'=>'Extended service',
 		);
 	}
 

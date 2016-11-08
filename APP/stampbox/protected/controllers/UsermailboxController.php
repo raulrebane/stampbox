@@ -65,7 +65,7 @@ class UsermailboxController extends Controller
                 $model->e_mail_verified = FALSE;
                 $gmclient= new GearmanClient();
                 $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-                if ($model->receivingservice == 1 or $model->sortingservice == 1) {
+                if ($model->extendedservice == 1) {
                     $mailboxcheck = json_encode(array('e_mail'=>mb_convert_case($model->useremail, MB_CASE_LOWER, "UTF-8"),
                         'username'=>$model->emailusername,'password'=>$model->emailpassword,'hostname'=>$model->incoming_hostname,'port'=>$model->incoming_port,
                         'socket_type'=>$model->incoming_socket_type,'auth_type'=>$model->incoming_auth));
@@ -132,7 +132,7 @@ class UsermailboxController extends Controller
             if ($model->validate()) {
                 $gmclient= new GearmanClient();
                 $gmclient->addServer(Yii::app()->params['gearman']['gearmanserver'], Yii::app()->params['gearman']['port']);
-		if ($model->receivingservice == 1 OR $model->sortingservice == 1) {
+		if ($model->extendedservice == 1) {
 //                    if (substr($model->emailpassword,0,5) == 'SBPKI') {
 //                        $result = json_decode($gmclient->doNormal("DecryptData", json_encode(array('cryptedtext'=>$model->emailpassword))),TRUE);
 //                        $model->emailpassword = $result['opentext'];
@@ -179,9 +179,7 @@ class UsermailboxController extends Controller
         $model->emailusername = $model->registeredemail->e_mail_username;
         $model->emailpassword = $model->registeredemail->e_mail_password;
         $model->maildomain = $model->registeredemail->maildomain;
-        $model->receivingservice = ($model->registeredemail->receiving_service == TRUE) ? 1 : 0;
-        $model->sendingservice = ($model->registeredemail->sending_service == TRUE) ? 1 : 0;
-        $model->sortingservice = ($model->registeredemail->sorting_service == TRUE) ? 1 : 0;
+        $model->extendedservice = ($model->registeredemail->extended_service == TRUE) ? 1 : 0;
         if ($model->registereddomain !== NULL)  {
             $model->incoming_hostname = $model->registereddomain->incoming_hostname;
             $model->incoming_port = $model->registereddomain->incoming_port;
