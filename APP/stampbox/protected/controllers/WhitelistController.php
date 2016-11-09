@@ -79,6 +79,11 @@ class WhitelistController extends Controller
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                         .$model->e_mail .' added to whitelist.'); 
                 }
+                else {
+                    Yii::app()->user->setFlash('danger',
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                        .CHtml::ErrorSummary($model)); 
+                }
             }
             else {
                     Yii::app()->user->setFlash('info',
