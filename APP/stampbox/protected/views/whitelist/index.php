@@ -31,7 +31,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                         'options'=>array('showAnim'=>'fold',),
                     ));
                 ?>  
-                <button type="submit" class="btn btn-aqua">Add to whitelist</button>
+                <button type="submit" name="whitelistemail" class="btn btn-aqua">Add to whitelist</button>
             </div>
         </li>
     </ul>
@@ -64,7 +64,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <div role="tabpanel" class="tab-pane" id="Addtab">
         <div class="widget widget-activity">
             <div class="content">
-                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Whitelist selected</button></div></div>
+                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="whitelist" class="btn btn-aqua">Whitelist selected</button></div></div>
                 <?php
                     $sort = new CSort();
                     $sort->attributes = array('invited_email','name');
@@ -95,7 +95,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                         'columns'=>$gridColumns
                     )); 
                     ?>
-                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="invite" class="btn btn-aqua">Whitelist selected</button></div></div>
+                <div class="row"><div class="col-xs-offset-1"><button type="submit" name="whitelist" class="btn btn-aqua">Whitelist selected</button></div></div>
             </div>
           </div>
         </div>
