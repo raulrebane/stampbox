@@ -115,7 +115,7 @@ if (isset($model->emailslist)) {
                     'options'=>array('showAnim'=>'fold',),
                 ));
             ?>  
-                <button type="submit" class="btn btn-aqua">Invite</button>
+                <button type="submit" name="invitemail" class="btn btn-aqua">Invite</button>
             <!--</div>-->
             </div>
         </li>

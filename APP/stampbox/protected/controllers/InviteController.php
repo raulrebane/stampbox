@@ -57,7 +57,7 @@ class InviteController extends Controller
             $this->redirect(array('invite/index'));
         }
 
-        if(isset($_POST['invited_email']))
+        if(isset($_POST['invited_email']) && isset($_POST['invitemail']))
 	{  
             //Yii::log('got invite email' .$_POST['invited_email'], 'info', 'application');
             $invite = Invitations::model()->find('customer_id =:1 and invited_email=:2', 
