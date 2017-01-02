@@ -44,7 +44,7 @@ class WhitelistController extends Controller
     {
         Yii::log('Whitelist - index', 'info', 'application');
         
-        if (isset($_POST['whitelistsubmit']) && isset($_POST['selectedIds'])) {
+        if (isset($_POST['whitelist']) && isset($_POST['selectedIds'])) {
             $whitelistcount = 0;
             foreach ($_POST['selectedIds'] as $id) {
                 $add2whitelist = Whitelist::model()->find('customer_id=:1 and e_mail=:2', 
@@ -63,7 +63,7 @@ class WhitelistController extends Controller
             //$this->redirect(array('site/index'));
         }
         
-        if(isset($_POST['e_mail']))
+        if(isset($_POST['e_mail']) && isset($_POST['whitelistemail']))
 	{  
             //Yii::log('got email' .$_POST['e_mail'], 'info', 'application');
             $model = Whitelist::model()->find('customer_id=:1 and e_mail=:2', 
@@ -78,6 +78,11 @@ class WhitelistController extends Controller
                     Yii::app()->user->setFlash('success',
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
                         .$model->e_mail .' added to whitelist.'); 
+                }
+                else {
+                    Yii::app()->user->setFlash('danger',
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+                        .CHtml::ErrorSummary($model)); 
                 }
             }
             else {
