@@ -80,7 +80,6 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                             'selectableRows'=>1000,
                             'header'=>'',
                             'name'=>'invited_email',
-                            //'checked'=>'($row<100 AND $data["invite"] <> "Y")'
                             ),
                         array('name'=>'name', 'header'=>'Name'),
                         array('name'=>'invited_email', 'header'=>'E-mail'),
