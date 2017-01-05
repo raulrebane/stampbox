@@ -133,8 +133,9 @@ if (isset($model->emailslist)) {
                     'selectableRows'=>1000,
                     'header'=>'Invite',
                     'name'=>'invited_email',
-                    'disabled'=>function($data) {if ($data['invite']==='Y') return TRUE; else return FALSE;},
-                    'checked'=>'($row<100 AND $data["invite"] <> "Y")'),
+                    //'disabled'=>function($data) {if ($data['invite']==='Y') return TRUE; else return FALSE;},
+                    //'checked'=>'($row<100 AND $data["invite"] <> "Y")'
+                    ),
                     array('name'=>'name', 'header'=>'Name'),
                     array('name'=>'invited_email', 'header'=>'E-mail'),
                     array('name'=>'from_count', 'header'=>'# of mails'),
