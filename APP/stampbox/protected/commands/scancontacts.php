@@ -14,7 +14,7 @@ $fp = fopen("/var/lock/stampbox/scancontacts.lock", "w+");
 // Locked, start processing
 if (flock($fp, LOCK_EX | LOCK_NB)) {
 $dbconn = pg_connect($dbconnectstring) or die('Query failed: ' . pg_last_error());
-$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' AND (receiving_service = TRUE OR sorting_service = TRUE);");
+$customermailboxes = pg_query($dbconn, "select * from ds.t_customer_mailbox where status = 'A' AND extended_service = TRUE;");
 if ($customermailboxes) {
     while ($custmailbox = pg_fetch_assoc($customermailboxes)) {
         $mailboxconfig = pg_query($dbconn, "select * from ds.t_mailbox_config where maildomain = '" .$custmailbox['maildomain'] ."';");
@@ -41,6 +41,16 @@ if ($customermailboxes) {
 		    syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
                     foreach($emails as $email_number) {
                         $overview = imap_fetch_overview($inbox,$email_number,0);
+                        $alreadyprocessed = pg_query($dbconn, "select * from ds.t_processed_emails where customer_id = '"
+                                .$foundsender['customer_id'] ."' and email_id = '" .$overview[0]->message_id ."';");
+                            if (pg_num_rows($alreadyproccessed) >= 1) { 
+				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - email " .$overview[0]->message_id ." already processed");
+				continue; 
+                            }
+                            else {
+                                $res = pg_query($dbconn, "insert into ds.t_processed_emails values (" .$custmailbox['customer_id']
+                                        ."," .$custmailbox['e_mail'] ."," .$overview[0]->message_id .",now()");
+                            }
                         $mailfrom = imap_mime_header_decode($overview[0]->from);
 	                if (count($mailfrom) == 2) {
                             $fromname = utf8_encode(rtrim($mailfrom[0]->text));
@@ -72,7 +82,6 @@ if ($customermailboxes) {
 				$stampedstamp = pg_fetch_assoc($alreadystamped);
 				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - email already processed with stampid: " .$stampedstamp['email_id']);
 				continue; 
-				syslog(LOG_INFO, "This should never happen when stamp was found");
                             }
                             $transactionstampres = pg_query($dbconn, "select * from ds.t_stamps_issued where customer_id = '".$foundsender['customer_id'] 
                                 ."' and status = 'A' limit 1");
@@ -111,6 +120,11 @@ if ($customermailboxes) {
                             $res = pg_query($dbconn, "update ds.t_account set stamps_bal = stamps_bal-1 where customer_id = " .$foundsender['customer_id'] .";");
                         }
                         else {
+                            $ignoreemails = pg_query($dbconn, "select * from ds.t_ignored_emailaddresses where e_mail = '".$fromemail .";");
+                            if (pg_num_rows($ignoreemails) >= 1) {
+                                syslog(LOG_INFO, "e-mail sender " .$fromemail ." is ignored");
+                                continue;
+                            }
                             $toemail = $toname = $custmailbox['e_mail'];
 			    $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
 			    $mailer = Swift_Mailer::newInstance($transport);
