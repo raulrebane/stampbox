@@ -24,7 +24,7 @@ if ($customermailboxes) {
             else {$username = $custmailbox['e_mail_username'];}
             if (substr($custmailbox['e_mail_password'],0,5) == 'SBPKI') {
                 $privKey = openssl_pkey_get_private($privatekey, $privatekeypassword);
-                $cryptedtext = base64_decode($custmailbox['e_mail_password'],0,5);
+                $cryptedtext = base64_decode(substr($custmailbox['e_mail_password'],5, strlen($custmailbox['e_mail_password'])-5));
                 openssl_private_decrypt($cryptedtext, $custmailbox['e_mail_password'], $privKey);
                 syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - decrypted: " .$custmailbox['e_mail'] ." username: " .$username ." pass: ". $custmailbox['e_mail_password']);
             }
