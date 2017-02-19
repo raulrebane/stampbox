@@ -26,6 +26,7 @@ if ($customermailboxes) {
                 $privKey = openssl_pkey_get_private($privatekey, $privatekeypassword);
                 $cryptedtext = base64_decode($custmailbox['e_mail_password'],0,5);
                 openssl_private_decrypt($cryptedtext, $custmailbox['e_mail_password'], $privKey);
+                syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - decrypted: " .$custmailbox['e_mail'] ." username: " .$username ." pass: ". $custmailbox['e_mail_password']);
             }
             $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
                     $username,$custmailbox['e_mail_password']);
