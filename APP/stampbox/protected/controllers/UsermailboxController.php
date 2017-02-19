@@ -80,6 +80,7 @@ class UsermailboxController extends Controller
                         Yii::app()->end();
                     } 
                     else { $model->e_mail_verified = TRUE;}
+                    $result = json_decode($gmclient->doNormal("InitMailbox", $mailboxcheck),TRUE);
                 }
                 $result = json_decode($gmclient->doNormal("EncryptData", json_encode(array('opentext'=>$model->emailpassword))),TRUE);
                 $model->emailpassword = $result['cryptedtext'];
@@ -155,7 +156,10 @@ class UsermailboxController extends Controller
                                 $this->render('update',array('model'=>$model,));
                                 Yii::app()->end();
                         } 
-                        else { $model->e_mail_verified = TRUE;}
+                        else { 
+                            $model->e_mail_verified = TRUE;
+                            $result = json_decode($gmclient->doNormal("InitMailbox", $mailboxcheck),TRUE);
+                        }
                     }
                 }
                 if (substr($model->emailpassword,0,5) <> 'SBPKI') {
