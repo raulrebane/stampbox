@@ -41,15 +41,15 @@ if ($customermailboxes) {
 		    syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - Processing " .count($emails) ." e-mails");
                     foreach($emails as $email_number) {
                         $overview = imap_fetch_overview($inbox,$email_number,0);
-                        $alreadyprocessed = pg_query($dbconn, "select * from ds.t_processed_emails where customer_id = '"
-                                .$foundsender['customer_id'] ."' and email_id = '" .$overview[0]->message_id ."';");
-                            if (pg_num_rows($alreadyproccessed) >= 1) { 
+                        $alreadyprocessed = pg_query($dbconn, "select * from ds.t_processed_emails where customer_id = "
+                                .$custmailbox['customer_id'] ." and email_id = '" .$overview[0]->message_id ."';");
+                            if (pg_num_rows($alreadyprocessed) >= 1) { 
 				syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - email " .$overview[0]->message_id ." already processed");
 				continue; 
                             }
                             else {
                                 $res = pg_query($dbconn, "insert into ds.t_processed_emails values (" .$custmailbox['customer_id']
-                                        ."," .$custmailbox['e_mail'] ."," .$overview[0]->message_id .",now()");
+                                        .",'" .$custmailbox['e_mail'] ."','" .$overview[0]->message_id ."',now());");
                             }
                         $mailfrom = imap_mime_header_decode($overview[0]->from);
 	                if (count($mailfrom) == 2) {
@@ -120,26 +120,29 @@ if ($customermailboxes) {
                             $res = pg_query($dbconn, "update ds.t_account set stamps_bal = stamps_bal-1 where customer_id = " .$foundsender['customer_id'] .";");
                         }
                         else {
-                            $ignoreemails = pg_query($dbconn, "select * from ds.t_ignored_emailaddresses where e_mail = '".$fromemail .";");
+                            $ignoreemails = pg_query($dbconn, "select * from ds.t_ignored_emailaddresses where e_mail = '".$fromemail ."';");
                             if (pg_num_rows($ignoreemails) >= 1) {
-                                syslog(LOG_INFO, "e-mail sender " .$fromemail ." is ignored");
-                                continue;
-                            }
-                            $toemail = $toname = $custmailbox['e_mail'];
-			    $transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
-			    $mailer = Swift_Mailer::newInstance($transport);
-			    $message = Swift_Message::newInstance('RE: ' .$overview[0]->subject)
-				->setFrom(array($custmailbox['e_mail'] => $custmailbox['e_mail']))
-				->setTo(array($fromemail => $fromname))
-				->setBody("Hello " .$fromname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail "
-					."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
-					."this link https://www.stampbox.email/index.php?r=signup/step1 and you will receive a free trial and ensure that your emails "
-					."will always be on top of my list.\r\n\r\n"
-					."Best regards,\r\n"
-					.$custmailbox['e_mail']);
-			    $result = $mailer->send($message);
-                            syslog(LOG_INFO, "Sending invitation: " .$custmailbox['customer_id'] ." : ".$overview[0]->uid
+                            	$toemail = $toname = $custmailbox['e_mail'];
+                            	$transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
+                            	$mailer = Swift_Mailer::newInstance($transport);
+                            	$message = Swift_Message::newInstance('RE: ' .$overview[0]->subject)
+                                	//->setFrom(array($custmailbox['e_mail'] => $custmailbox['e_mail']))
+                                	->setFrom('no-reply@stampbox.email')
+                                	->setTo(array($fromemail => $fromname))
+                                	->setBody("Hello " .$fromname . "\r\nThe amount of emails I receive have lately been a nightmare, so I cannot guarantee that the mail "
+                                        ."you sent me will be noticed. To be able to sort out the important ones I have joined Stambox service. Please join the service from "
+                                        ."this link https://www.stampbox.email/index.php?r=signup/step1 and you will receive a free trial and ensure that your emails "
+                                        ."will always be on top of my list.\r\n\r\n"
+                                        ."Best regards,\r\n"
+                                        .$custmailbox['e_mail']);
+                            	$result = $mailer->send($message);
+                            	syslog(LOG_INFO, "Sending invitation: " .$custmailbox['customer_id'] ." : ".$overview[0]->uid
                                     ." From: " .$custmailbox['e_mail'] . "To: $fromname $fromemail");
+			    } 
+			    else {
+                                syslog(LOG_INFO, "e-mail sender " .$fromemail ." is ignored");
+                                //continue;
+                            }
 /*
                                 $inviteparams = json_encode(array(
                                 'outgoing_hostname'=>$mailconf['outgoing_hostname'],
@@ -156,7 +159,7 @@ if ($customermailboxes) {
                             $gmclient->addServer("127.0.0.1", 4730);
                             $result = json_decode($gmclient->doNormal("invitesender", $inviteparams),TRUE);
 */
-                            if ($custmailbox['sorting_service'] == TRUE) {
+                            if ($custmailbox['extended_service'] == TRUE) {
                                 imap_mail_move($inbox, $overview[0]->uid,'no-stamp-box',CP_UID);
                                 syslog(LOG_INFO, "Customer: " .$custmailbox['customer_id'] ." - moving mail: ".$overview[0]->uid);
                             }

@@ -82,9 +82,10 @@ class ShopController extends Controller
         {
             /* Here we assume that customer session is lost.
              */
+            //Yii::log('Got Paypal return: ' .CVarDumper::dumpAsString($_REQUEST), 'error', 'application');
             $ppal=new ExpressCheckout;
-            $paymentDetails=$ppal->getPaymentDetails($_REQUEST['TOKEN']);
-            $model = Shoppingcart::model()->find('paypal_token=:1', array(':1'=>$_REQUEST['TOKEN']));
+            $paymentDetails=$ppal->getPaymentDetails($_REQUEST['token']);
+            $model = Shoppingcart::model()->find('paypal_token=:1', array(':1'=>$_REQUEST['token']));
             if ($model === NULL)
             {   
                 Yii::log('Got Paypal payment but no such cart: ' .CVarDumper::dumpAsString($paymentDetails), 'error', 'application');
