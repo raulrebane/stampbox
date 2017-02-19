@@ -22,6 +22,11 @@ if ($customermailboxes) {
             $mailconf = pg_fetch_assoc($mailboxconfig);
             if ($mailconf['incoming_auth'] == 'USERNAME') {list($username, ) = explode("@", $custmailbox['e_mail_username']);}
             else {$username = $custmailbox['e_mail_username'];}
+            if (substr($custmailbox['e_mail_password'],0,5) == 'SBPKI') {
+                $privKey = openssl_pkey_get_private($privatekey, $privatekeypassword);
+                $cryptedtext = base64_decode($custmailbox['e_mail_password'],0,5);
+                openssl_private_decrypt($cryptedtext, $custmailbox['e_mail_password'], $privKey);
+            }
             $inbox = imap_open("{".$mailconf['incoming_hostname'] .":" .$mailconf['incoming_port'] ."/" .$mailconf['incoming_socket_type'] ."/novalidate-cert}INBOX",
                     $username,$custmailbox['e_mail_password']);
 	    if (!$inbox) {
