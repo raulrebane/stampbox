@@ -102,7 +102,7 @@ class ShopController extends Controller
                 $stampparams = json_encode(array('customer_id'=>$model->customer_id, 'howmany'=>$model->stamp_amount, 
                                                 'stampid'=>$model->batch_id, 'description'=>'Paypal transaction: ' 
                                                 .$ack['TRANSACTIONID']));
-                $result = json_decode($gmclient->doNormal("issuestamps", $stampparams),TRUE);
+                $result = json_decode($gmclient->doNormal("IssueStamps", $stampparams),TRUE);
                 $this->redirect(array('site/index'));
             }
         }
